@@ -1,0 +1,43 @@
+---
+/**
+ * Infinite-scroll credibility marquee — org logos rendered as
+ * mono-set wordmarks, keeping the editorial VT100 aesthetic.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const LOGOS = [
+  "UC Berkeley",
+  "Keysight",
+  "MTC",
+  "Bloom",
+  "Five9",
+  "TechWadi",
+  "Devin Max",
+  "Quora",
+];
+---
+
+<div class={`marquee-wrap overflow-hidden border-y border-[var(--color-line)] bg-[var(--color-foam)] ${className}`} aria-hidden="true">
+  <div class="marquee-track flex w-max gap-12 px-6 py-4">
+    {[...LOGOS, ...LOGOS].map((name) => (
+      <span class="whitespace-nowrap font-mono text-sm tracking-wide text-[var(--color-slate)]">
+        {name}
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee-track {
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+</style>
