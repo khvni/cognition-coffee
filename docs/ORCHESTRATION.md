@@ -83,14 +83,17 @@ You are building one workstream of cognitioncoffee.co (The Cognition Coffee Comp
 a portfolio/proposal site for Cognition's Developer Community Manager role.
 
 1. Read README.md, AGENTS.md, docs/BRAND.md, docs/DESIGN_SYSTEM.md, docs/ARCHITECTURE.md.
-2. Your workstream is: <🅐/🅑/🅒/🅓/🅔/🅕 — paste the section from docs/ORCHESTRATION.md>.
-3. Build ONLY the files your workstream owns. Reuse brand primitives + tokens.
-4. Use only verified copy from src/data/ and docs/content/. Invent nothing.
-5. Run `npm run build` — it must pass. Test responsive at 375/768/1280.
-6. Open a single PR titled "ws/<name>: <summary>" listing files touched + any new deps.
+2. Enter /poteto-mode (read the poteto-mode SKILL.md first). Code /caveman-concise.
+   For any UI/design-system work, apply /impeccable principles.
+3. Your workstream is: <🅐/🅑/🅒/🅓/🅔/🅕 — paste the section from docs/ORCHESTRATION.md>.
+4. Build ONLY the files your workstream owns. Reuse brand primitives + tokens.
+5. Use only verified copy from src/data/ and docs/content/. Invent nothing.
+6. Run `npm run build` (must pass) and `deslop -b main` (0 high-severity; score <20).
+   Test responsive at 375/768/1280.
+7. Open a single PR titled "ws/<name>: <summary>" listing files touched + any new deps.
 ```
 
 ## Definition of done (whole site)
-All workstreams merged · builds green · Lighthouse a11y + perf ≥ 90 · 3 finished blog
-posts · interactive community globe · deployed to `cognitioncoffee.co` · reviewed by Ali
-before any outreach to Nader.
+All workstreams merged · builds green · **`deslop` clean (0 high-severity)** · Lighthouse
+a11y + perf ≥ 90 · 3 finished blog posts · interactive community globe · deployed to
+`cognitioncoffee.co` · reviewed by Ali before any outreach to Nader.

@@ -12,6 +12,32 @@ Community Manager** role, aimed at hiring manager **Nader Dabit**. The brand is 
 Cognition/Devin's visual language (Devin blue `#317CFF`, wax-paper cream `#EDECEB`,
 editorial serif headlines, mono accents, the Devin otter, a VT100 terminal motif).
 
+## Required skills & modes
+
+Every Devin working in this repo operates in these modes. They keep the code clean,
+concise, and well-engineered, and the UI distinctive (not generic "AI aesthetic").
+
+- **`/poteto-mode`** — adopt poteto's disciplined engineering style. Read the
+  `poteto-mode` skill's `SKILL.md` (including its inline Principles index) **before**
+  writing code. Resume the same `poteto-agent` for the session; don't spawn siblings.
+- **`/caveman` when coding** — maximum signal, minimum tokens. Terse, well-factored
+  code: no filler, no over-engineering, no defensive bloat, minimal comments, shared
+  abstractions over copy-paste. Concise ≠ clever — keep it readable.
+- **`/impeccable` for design-system & UI work** — apply impeccable principles when
+  building or extending components, layouts, and tokens: distinctive, production-grade
+  interfaces that avoid the generic AI look. Pairs with `docs/DESIGN_SYSTEM.md`.
+- **`deslop` (by Nader Dabit) before every PR** — a git-diff slop detector
+  (`github.com/dabit3/deslop`, installed globally on Ali's machine via
+  `npm i -g github:dabit3/deslop`). Run `deslop -b main` and `deslop score` on your
+  branch. **Required gate: 0 high-severity findings and a slop score in the clean band
+  (0–19).** It flags AI tells — obvious comments, triple null-checks, debug logs, empty
+  catch blocks, needless try/catch. Fix them, don't suppress them.
+
+> Note on comments: deslop rightly flags *obvious in-function comments* as slop. The
+> intentional file-header docblocks in this scaffold (explaining brand/architecture
+> intent for the next Devin) are not slop — keep those terse and purposeful, and don't
+> add new line-by-line narration inside functions.
+
 ## Golden rules
 
 1. **The design system is law.** All colors, fonts, radii, and motifs come from
@@ -57,6 +83,8 @@ editorial serif headlines, mono accents, the Devin otter, a VT100 terminal motif
 ## What "done" looks like for any page
 
 - [ ] Builds clean (`npm run build`)
+- [ ] **`deslop -b main` → 0 high-severity; `deslop score` in the clean band (0–19)**
+- [ ] Built in `/poteto-mode`; coded `/caveman`-concise; UI follows `/impeccable`
 - [ ] Uses tokens + brand primitives (no rogue hexes/fonts)
 - [ ] Real, verified copy (or clearly-marked `TODO`)
 - [ ] Responsive at 375 / 768 / 1280
