@@ -11,6 +11,7 @@ import { SITE, CTA } from "../lib/site";
 ---
 
 <Base>
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}.tline{opacity:1!important;transform:none!important}</style></noscript>
   {/* ===================== HERO ===================== */}
   <section class="relative overflow-hidden">
     <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:grid-cols-[1.1fr_0.9fr]">
@@ -41,7 +42,7 @@ import { SITE, CTA } from "../lib/site";
       <div class="parallax-panel relative reveal" data-parallax="0.04">
         <Terminal title="VT100 · DEVIN">
           <div class="terminal-lines">
-            <p class="font-mono text-xs text-[#c8a06b]">devin@cognition-coffee:~$ run community.sh</p>
+            <p class="font-mono text-xs text-[var(--color-crema)]">devin@cognition-coffee:~$ run community.sh</p>
             <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; scanning Ali's dossier...</p>
             <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; 30+ chapters &middot; 1,800 students &middot; 6M views</p>
             <p class="tline font-mono text-xs text-[#7ad17a]">&rarr; community strategy: READY</p>
