@@ -16,10 +16,14 @@ editorial serif headlines, mono accents, the Devin otter, a VT100 terminal motif
 
 Every Devin working in this repo operates in these modes. They keep the code clean,
 concise, and well-engineered, and the UI distinctive (not generic "AI aesthetic").
+The first three are **vendored into this repo at `.devin/skills/`**, so they're available
+in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` directly.
 
-- **`/poteto-mode`** — adopt poteto's disciplined engineering style. Read the
-  `poteto-mode` skill's `SKILL.md` (including its inline Principles index) **before**
-  writing code. Resume the same `poteto-agent` for the session; don't spawn siblings.
+- **`/poteto-mode`** — adopt poteto's disciplined engineering style. Read
+  `.devin/skills/poteto-mode/SKILL.md` (especially its **Principles** section) **before**
+  writing code. Note: its trigger list references sibling skills (`how`, `architect`,
+  `unslop`, `babysit`, …) that are **not** all vendored here — apply its Principles
+  regardless; don't block on a missing leaf skill.
 - **`/caveman` when coding** — maximum signal, minimum tokens. Terse, well-factored
   code: no filler, no over-engineering, no defensive bloat, minimal comments, shared
   abstractions over copy-paste. Concise ≠ clever — keep it readable.
