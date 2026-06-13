@@ -1,0 +1,86 @@
+---
+/**
+ * Filterable event list — renders MOCK_EVENTS with client-side kind filter.
+ * Data flows from src/lib/events.ts; never hardcodes events in the template.
+ */
+import type { CommunityEvent } from "../lib/events";
+
+interface Props {
+  events: CommunityEvent[];
+  class?: string;
+}
+const { events, class: className = "" } = Astro.props;
+
+const fmt = (d: string) =>
+  new Date(d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+
+const kinds = [...new Set(events.map((e) => e.kind))];
+---
+
+<div class={`event-list-wrap ${className}`}>
+  <div class="mb-6 flex flex-wrap gap-2" role="toolbar" aria-label="Filter events by type">
+    <button class="event-filter-btn active font-mono text-xs" data-kind="all">All</button>
+    {kinds.map((k) => (
+      <button class="event-filter-btn font-mono text-xs" data-kind={k}>{k.replace("-", " ")}</button>
+    ))}
+  </div>
+
+  <ul class="event-list divide-y divide-white/10">
+    {events.map((e) => (
+      <li class="event-item flex items-center justify-between gap-4 py-4" data-kind={e.kind}>
+        <div>
+          <p class="font-serif text-lg text-[var(--color-foam)]">{e.title}</p>
+          <p class="font-mono text-xs text-[var(--color-crema)]">
+            {fmt(e.date)} &middot; {e.city}, {e.country} &middot; {e.host}
+          </p>
+        </div>
+        <a href={e.rsvpUrl} class="shrink-0 rounded-full border border-white/20 px-3 py-1 text-xs text-[var(--color-foam)] transition-colors hover:border-[var(--color-crema)]">
+          RSVP &rarr;
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  function initFilter(wrap: HTMLElement) {
+    const buttons = wrap.querySelectorAll<HTMLButtonElement>(".event-filter-btn");
+    const items = wrap.querySelectorAll<HTMLLIElement>(".event-item");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const kind = btn.dataset.kind;
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        items.forEach((item) => {
+          const show = kind === "all" || item.dataset.kind === kind;
+          item.style.display = show ? "" : "none";
+        });
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>(".event-list-wrap").forEach(initFilter);
+</script>
+
+<style>
+  .event-filter-btn {
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--color-crema);
+    background: transparent;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-transform: capitalize;
+  }
+  .event-filter-btn:hover {
+    border-color: var(--color-crema);
+  }
+  .event-filter-btn.active {
+    background: var(--color-blue);
+    border-color: var(--color-blue);
+    color: #fff;
+  }
+</style>

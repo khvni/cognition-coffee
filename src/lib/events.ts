@@ -61,6 +61,24 @@ export const COMMUNITY_STATS = [
   { value: "1", label: "weekly Devin Office Hours" },
 ];
 
+/** Social proof — representative community voices for the proof wall. */
+export type SocialProof = {
+  name: string;
+  handle: string;
+  city: string;
+  quote: string;
+  avatar?: string;
+};
+
+export const SOCIAL_PROOF: SocialProof[] = [
+  { name: "Priya S.", handle: "@priya_builds", city: "Bangalore", quote: "Cafe Cognition was the first time I met other Devin users IRL. Shipped a PR during the event." },
+  { name: "Marcus T.", handle: "@marcus_dev", city: "Berlin", quote: "The orchestration workshop blew my mind. Running 5 Devins in parallel changed how I think about delegation." },
+  { name: "Yuki M.", handle: "@yukicode", city: "Tokyo", quote: "Office Hours every Thursday is my anchor. The community unblocks me faster than any docs." },
+  { name: "Elena R.", handle: "@elena_ops", city: "Austin", quote: "Went from Devin-curious to ambassador in 3 months. The program gives you real access to the product team." },
+  { name: "Jamal W.", handle: "@jamal_ships", city: "Toronto", quote: "Non-coding Devin meetup opened my eyes. I use it for research, docs, and even email drafts now." },
+  { name: "Sophie L.", handle: "@sophieldev", city: "London", quote: "The hack night energy was incredible. Our team built a full CI pipeline with Devin in 6 hours." },
+];
+
 export const MOCK_EVENTS: CommunityEvent[] = [
   { id: "sf-devin-day", title: "Devin Day SF", kind: "devin-day", host: "Cognition Coffee Co.", city: "San Francisco", country: "USA", date: "2026-07-12", lat: 37.7749, lng: -122.4194, rsvpUrl: "#" },
   { id: "nyc-cafe", title: "Cafe Cognition NYC", kind: "cafe", host: "Ali K.", city: "New York", country: "USA", date: "2026-07-15", lat: 40.7128, lng: -74.006, rsvpUrl: "#" },

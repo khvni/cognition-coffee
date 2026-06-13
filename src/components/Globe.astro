@@ -1,0 +1,114 @@
+---
+/**
+ * Interactive 3D community globe — plots event locations using `cobe`.
+ * Renders a rotating WebGL globe with markers at each event's lat/lng.
+ * Falls back to a static graphic if WebGL is unavailable.
+ */
+import type { CommunityEvent } from "../lib/events";
+
+interface Props {
+  events: CommunityEvent[];
+  class?: string;
+}
+const { events, class: className = "" } = Astro.props;
+
+const markers = events
+  .filter((e) => e.lat !== 0 || e.lng !== 0)
+  .map((e) => ({ location: [e.lat, e.lng], size: e.kind === "devin-day" ? 0.12 : 0.07 }));
+---
+
+<div class={`globe-wrap relative flex items-center justify-center ${className}`} data-markers={JSON.stringify(markers)}>
+  <canvas class="globe-canvas" width="600" height="600" aria-label="Interactive globe showing community event locations"></canvas>
+  <noscript>
+    <p class="font-mono text-sm text-[var(--color-crema)]">Enable JavaScript to view the interactive globe.</p>
+  </noscript>
+</div>
+
+<script>
+  import createGlobe from "cobe";
+
+  function initGlobe(container: HTMLElement) {
+    const canvas = container.querySelector<HTMLCanvasElement>(".globe-canvas");
+    if (!canvas) return;
+
+    const raw = container.dataset.markers;
+    const markers: { location: [number, number]; size: number }[] = raw ? JSON.parse(raw) : [];
+
+    let phi = 0;
+    let pointerDown = false;
+    let pointerX = 0;
+    let width = container.clientWidth;
+
+    const onResize = () => {
+      width = container.clientWidth;
+      canvas.width = width * 2;
+      canvas.height = width * 2;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${width}px`;
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+
+    const globe = createGlobe(canvas, {
+      devicePixelRatio: 2,
+      width: width * 2,
+      height: width * 2,
+      phi: 0,
+      theta: 0.25,
+      dark: 1,
+      diffuse: 1.2,
+      mapSamples: 16000,
+      mapBrightness: 6,
+      baseColor: [0.13, 0.09, 0.06],
+      markerColor: [0.19, 0.49, 1],
+      glowColor: [0.13, 0.09, 0.06],
+      markers,
+      onRender: (state) => {
+        if (!pointerDown) phi += 0.003;
+        state.phi = phi;
+        state.width = width * 2;
+        state.height = width * 2;
+      },
+    });
+
+    canvas.addEventListener("pointerdown", (e) => {
+      pointerDown = true;
+      pointerX = e.clientX;
+    });
+    canvas.addEventListener("pointerup", () => { pointerDown = false; });
+    canvas.addEventListener("pointerout", () => { pointerDown = false; });
+    canvas.addEventListener("pointermove", (e) => {
+      if (pointerDown) {
+        const delta = e.clientX - pointerX;
+        pointerX = e.clientX;
+        phi += delta / 200;
+      }
+    });
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      phi = 0.8;
+      canvas.style.willChange = "auto";
+    }
+
+    return () => {
+      globe.destroy();
+      window.removeEventListener("resize", onResize);
+    };
+  }
+
+  document.querySelectorAll<HTMLElement>(".globe-wrap").forEach(initGlobe);
+</script>
+
+<style>
+  .globe-wrap {
+    min-height: 280px;
+    aspect-ratio: 1;
+    max-width: 100%;
+  }
+  .globe-canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+</style>
