@@ -1,0 +1,191 @@
+---
+import Base from "../../layouts/Base.astro";
+import Section from "../../components/Section.astro";
+import WaxPaper from "../../components/WaxPaper.astro";
+import { INITIATIVES } from "../../data/initiatives";
+import { CTA } from "../../lib/site";
+
+export function getStaticPaths() {
+  return INITIATIVES.map((it) => ({ params: { slug: it.slug }, props: { initiative: it } }));
+}
+
+type Props = { initiative: (typeof INITIATIVES)[number] };
+const { initiative: it } = Astro.props;
+
+const prev = INITIATIVES[INITIATIVES.indexOf(it) - 1];
+const next = INITIATIVES[INITIATIVES.indexOf(it) + 1];
+---
+
+<Base title={`${it.roast} · ${it.title}`} description={it.tagline}>
+  {/* ---- Hero ---- */}
+  <section class="relative overflow-hidden border-b border-[var(--color-line)]">
+    <div class="mx-auto max-w-6xl px-5 pb-16 pt-20 sm:px-8 sm:pb-24 sm:pt-28">
+      <a href="/#menu" class="group inline-flex items-center gap-1.5 font-mono text-xs text-[var(--color-slate)] transition-colors hover:text-[var(--color-blue)]">
+        <span aria-hidden="true">&larr;</span> Back to The Menu
+      </a>
+
+      <div class="mt-8 flex items-baseline gap-4">
+        <span class="font-mono text-sm text-[var(--color-slate)]">{it.index}</span>
+        <span class="eyebrow text-[var(--color-bean)]">{it.roast}</span>
+      </div>
+
+      <h1 class="mt-4 max-w-3xl font-serif text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+        {it.title}
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)]">
+        {it.tagline}
+      </p>
+
+      {it.metric && (
+        <div class="mt-8 inline-flex items-baseline gap-2 rounded-full border border-[var(--color-line-strong)] px-4 py-2">
+          <span class="font-mono text-lg text-[var(--color-blue)]">{it.metric.value}</span>
+          <span class="text-sm text-[var(--color-slate)]">{it.metric.label}</span>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {/* ---- The Problem ---- */}
+  <Section index={`${it.index}.1`} eyebrow="The gap">
+    <div class="max-w-2xl">
+      <h2 class="font-serif text-3xl sm:text-4xl">Why this matters now.</h2>
+      <p class="mt-6 text-lg leading-relaxed text-[var(--color-ink-soft)]">{it.problem}</p>
+    </div>
+  </Section>
+
+  {/* ---- The Program ---- */}
+  <Section index={`${it.index}.2`} eyebrow="The program">
+    <div class="max-w-2xl">
+      <h2 class="font-serif text-3xl sm:text-4xl">How it works.</h2>
+      <p class="mt-6 text-lg leading-relaxed text-[var(--color-ink-soft)]">{it.summary}</p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {it.pillars.map((p) => (
+        <WaxPaper class="p-5">
+          <h3 class="font-serif text-xl">{p.name}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-[var(--color-slate)]">{p.detail}</p>
+        </WaxPaper>
+      ))}
+    </div>
+  </Section>
+
+  {/* ---- Phases ---- */}
+  {it.phases && it.phases.length > 0 && (
+    <Section index={`${it.index}.3`} eyebrow="Execution roadmap" tone="roast">
+      <h2 class="font-serif text-3xl sm:text-4xl">Ship in three phases.</h2>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {it.phases.map((phase, i) => (
+          <div class="relative rounded-[var(--radius-card)] border border-white/10 p-6">
+            <div class="flex items-baseline gap-3">
+              <span class="font-mono text-sm text-[var(--color-crema)]">Phase {i + 1}</span>
+              <span class="text-sm text-[color-mix(in_srgb,var(--color-foam)_60%,transparent)]">{phase.timeline}</span>
+            </div>
+            <h3 class="mt-3 font-serif text-2xl">{phase.name}</h3>
+            <ul class="mt-4 space-y-2 text-sm leading-relaxed text-[color-mix(in_srgb,var(--color-foam)_75%,transparent)]">
+              {phase.deliverables.map((d) => (
+                <li class="flex gap-2">
+                  <span class="mt-1 shrink-0 text-[var(--color-crema)]">&bull;</span>
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  {/* ---- KPIs ---- */}
+  {it.kpis && it.kpis.length > 0 && (
+    <Section index={`${it.index}.4`} eyebrow="Success metrics">
+      <h2 class="font-serif text-3xl sm:text-4xl">How we measure it.</h2>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {it.kpis.map((kpi) => (
+          <WaxPaper class="p-6 text-center">
+            <span class="block font-mono text-3xl text-[var(--color-blue)]">{kpi.value}</span>
+            <span class="mt-2 block text-sm text-[var(--color-slate)]">{kpi.label}</span>
+          </WaxPaper>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  {/* ---- Cursor Parallel ---- */}
+  <Section index={`${it.index}.5`} eyebrow="The Cursor parallel">
+    <div class="grid items-start gap-10 lg:grid-cols-[1fr_1fr]">
+      <div class="max-w-lg">
+        <h2 class="font-serif text-3xl sm:text-4xl">What Cursor does. Where Cognition wins.</h2>
+        <p class="mt-6 text-lg leading-relaxed text-[var(--color-ink-soft)]">
+          {it.cursorDetail || it.cursorParallel}
+        </p>
+      </div>
+      <WaxPaper tone="kraft" class="p-6 sm:p-8">
+        <p class="eyebrow mb-3 text-[var(--color-bean)]">TL;DR</p>
+        <p class="font-serif text-xl leading-snug">{it.cursorParallel}</p>
+      </WaxPaper>
+    </div>
+  </Section>
+
+  {/* ---- Ali's Proof Points ---- */}
+  <Section index={`${it.index}.6`} eyebrow="Why Ali" tone="roast">
+    <div class="max-w-2xl">
+      <h2 class="font-serif text-3xl sm:text-4xl">The builder behind the blueprint.</h2>
+      <p class="mt-6 text-lg leading-relaxed text-[color-mix(in_srgb,var(--color-foam)_80%,transparent)]">
+        {it.proof}
+      </p>
+    </div>
+
+    {it.proofPoints && it.proofPoints.length > 0 && (
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+        {it.proofPoints.map((pp) => (
+          <li class="flex gap-3 rounded-[var(--radius-card)] border border-white/10 p-5">
+            <span class="mt-0.5 shrink-0 text-[var(--color-crema)]">&bull;</span>
+            <span class="text-sm leading-relaxed text-[color-mix(in_srgb,var(--color-foam)_75%,transparent)]">{pp}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </Section>
+
+  {/* ---- Navigation + CTA ---- */}
+  <Section>
+    <div class="flex flex-col items-center gap-10">
+      <WaxPaper class="w-full max-w-2xl p-8 text-center sm:p-12">
+        <h2 class="font-serif text-2xl sm:text-3xl">
+          Interested? Let's brew this together.
+        </h2>
+        <p class="mx-auto mt-3 max-w-md text-sm text-[var(--color-slate)]">
+          This isn't a deck. It's a working plan — built with Devin, before applying.
+        </p>
+        <a href={CTA.href} class="mt-6 inline-block rounded-full bg-[var(--color-blue)] px-6 py-3 text-sm font-medium text-white transition-transform hover:-translate-y-0.5">
+          {CTA.emoji} Start a conversation
+        </a>
+      </WaxPaper>
+
+      <nav class="flex w-full max-w-2xl items-center justify-between font-mono text-sm" aria-label="Initiative navigation">
+        {prev ? (
+          <a href={`/menu/${prev.slug}`} class="group flex items-center gap-2 text-[var(--color-slate)] transition-colors hover:text-[var(--color-ink)]">
+            <span aria-hidden="true">&larr;</span>
+            <span>
+              <span class="block text-xs text-[var(--color-slate)]">{prev.index}</span>
+              <span class="group-hover:text-[var(--color-ink)]">{prev.roast}</span>
+            </span>
+          </a>
+        ) : <span />}
+
+        {next ? (
+          <a href={`/menu/${next.slug}`} class="group flex items-center gap-2 text-right text-[var(--color-slate)] transition-colors hover:text-[var(--color-ink)]">
+            <span>
+              <span class="block text-xs text-[var(--color-slate)]">{next.index}</span>
+              <span class="group-hover:text-[var(--color-ink)]">{next.roast}</span>
+            </span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        ) : <span />}
+      </nav>
+    </div>
+  </Section>
+</Base>
