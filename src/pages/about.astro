@@ -1,0 +1,96 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import WaxPaper from "../components/WaxPaper.astro";
+import { BIO, PILLARS, EXPERIENCE, WHY_COGNITION } from "../data/experience";
+import { SITE } from "../lib/site";
+---
+
+<Base title="About" description="Ali Khani — community builder, AI-native GTM engineer, and top-200 Devin power user.">
+  {/* INTRO */}
+  <Section eyebrow="About" index="☕">
+    <div class="grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
+      <div>
+        <h1 class="font-serif text-4xl sm:text-5xl">Hi, I'm {BIO.name}.</h1>
+        <p class="mt-6 text-lg leading-relaxed text-[var(--color-ink-soft)]">{BIO.oneLiner}</p>
+        <p class="mt-4 max-w-xl font-serif text-xl text-[var(--color-slate)]">{BIO.thesis}</p>
+      </div>
+      <WaxPaper class="self-start p-6">
+        <p class="eyebrow">Coordinates</p>
+        <dl class="mt-3 space-y-2 text-sm">
+          <div class="flex justify-between gap-4"><dt class="text-[var(--color-slate)]">Based in</dt><dd>{BIO.location}</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-[var(--color-slate)]">Site</dt><dd><a class="link-blue" href={SITE.authorUrl}>alikhani.co</a></dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-[var(--color-slate)]">X</dt><dd><a class="link-blue" href={SITE.authorX}>@alikhvni</a></dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-[var(--color-slate)]">GitHub</dt><dd><a class="link-blue" href={SITE.authorGithub}>khvni</a></dd></div>
+        </dl>
+      </WaxPaper>
+    </div>
+  </Section>
+
+  {/* PILLARS: build / teach / connect */}
+  <Section index="01" eyebrow="Build · Teach · Connect">
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        PILLARS.map((p) => (
+          <WaxPaper class="p-6">
+            <p class="eyebrow text-[var(--color-bean)]">{p.verb}</p>
+            <h3 class="mt-1 font-serif text-2xl">{p.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--color-ink-soft)]">{p.body}</p>
+          </WaxPaper>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* EXPERIENCE TIMELINE */}
+  <Section index="02" eyebrow="The track record">
+    <div class="space-y-px overflow-hidden rounded-md border border-[var(--color-line)] bg-[var(--color-line)]">
+      {
+        EXPERIENCE.map((e) => (
+          <div class="grid gap-1 bg-[var(--color-foam)] p-6 sm:grid-cols-[1fr_2fr]">
+            <div>
+              <p class="font-serif text-lg">{e.org}</p>
+              <p class="font-mono text-xs text-[var(--color-slate)]">{e.when}</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium">{e.role}</p>
+              <p class="mt-1 text-sm text-[var(--color-slate)]">{e.detail}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* WHY COGNITION */}
+  <Section index="03" eyebrow="Why Cognition, why this" tone="roast">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <h2 class="font-serif text-3xl sm:text-4xl">The permissionless apprenticeship.</h2>
+      <ul class="space-y-4">
+        {
+          WHY_COGNITION.map((w) => (
+            <li class="flex gap-3 text-[color-mix(in_srgb,var(--color-foam)_82%,transparent)]">
+              <span class="text-[var(--color-crema)]">&#9656;</span>
+              <span>{w}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  {/* CONTACT */}
+  <Section id="contact" index="04" eyebrow="Let's talk">
+    <WaxPaper tone="kraft" class="p-10 text-center sm:p-14">
+      <h2 class="font-serif text-3xl sm:text-4xl">Coffee's on me. ☕</h2>
+      <p class="mx-auto mt-4 max-w-lg text-[var(--color-ink-soft)]">
+        {SITE.recipient.name} — if this resonates, I'd love to compare notes on where
+        Cognition's community goes next.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href={`mailto:${SITE.authorEmail}`} class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white">Email me</a>
+        <a href={SITE.authorX} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium">DM on X</a>
+      </div>
+    </WaxPaper>
+  </Section>
+</Base>

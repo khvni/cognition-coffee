@@ -1,0 +1,94 @@
+---
+import Base from "./Base.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">["data"];
+}
+const { post } = Astro.props;
+const dateStr = post.date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<Base title={post.title} description={post.description}>
+  <!--
+    EDITORIAL SERIF LAYOUT — the cognition.ai/blog feel.
+    Title + subheaders + body all share the serif family; highlighting reveals
+    Devin blue (from global.css ::selection). Keep measures tight (~68ch).
+  -->
+  <article class="mx-auto w-full max-w-2xl px-5 py-20 sm:px-8 sm:py-28">
+    <header class="mb-12">
+      <div class="eyebrow mb-5 flex items-center gap-3">
+        <span>{post.category}</span>
+        <span class="text-[var(--color-line-strong)]">/</span>
+        <time datetime={post.date.toISOString()}>{dateStr}</time>
+      </div>
+      <h1 class="font-serif text-4xl leading-[1.08] tracking-tight sm:text-5xl">
+        {post.title}
+      </h1>
+      <p class="mt-6 font-serif text-xl leading-snug text-[var(--color-slate)]">
+        {post.description}
+      </p>
+    </header>
+
+    <!--
+      Body uses the serif family at a comfortable reading size. The `prose-coffee`
+      class (see global.css / Tailwind) styles headings, links, blockquotes.
+    -->
+    <div class="prose-coffee font-serif text-[1.12rem] leading-[1.7]">
+      <slot />
+    </div>
+
+    <footer class="mt-16 border-t border-[var(--color-line)] pt-6">
+      <a href="/blog" class="link-blue font-sans text-sm">&larr; All field notes</a>
+    </footer>
+  </article>
+</Base>
+
+<style is:global>
+  /* Minimal editorial prose styling (serif subheaders, blue links). */
+  .prose-coffee h2 {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    margin: 2.4rem 0 0.8rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-coffee h3 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    margin: 1.8rem 0 0.6rem;
+  }
+  .prose-coffee p {
+    margin: 0 0 1.1rem;
+  }
+  .prose-coffee a {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-coffee blockquote {
+    border-left: 2px solid var(--color-blue);
+    padding-left: 1.1rem;
+    margin: 1.6rem 0;
+    color: var(--color-slate);
+    font-style: italic;
+  }
+  .prose-coffee ul,
+  .prose-coffee ol {
+    margin: 0 0 1.1rem 1.2rem;
+    list-style: disc;
+  }
+  .prose-coffee li {
+    margin: 0.3rem 0;
+  }
+  .prose-coffee code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--color-blue-soft);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+</style>

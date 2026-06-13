@@ -1,0 +1,35 @@
+---
+/**
+ * WAX PAPER — the central translucent design motif.
+ *
+ * A frosted, grainy cream panel (the "wax paper sheet" from Cognition's blog
+ * graphics) that floats over textured backdrops. Use it to frame hero content,
+ * cards, quotes, and callouts across the site.
+ *
+ * Props:
+ *   as     -> element tag (default "div")
+ *   tone   -> "cream" (default) | "kraft" | "roast"
+ *   grain  -> show the paper grain overlay (default true)
+ *   class  -> extra classes
+ */
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  tone?: "cream" | "kraft" | "roast";
+  grain?: boolean;
+  class?: string;
+}
+const { as: Tag = "div", tone = "cream", grain = true, class: className = "" } = Astro.props;
+
+const toneClass =
+  tone === "roast"
+    ? "roast"
+    : tone === "kraft"
+      ? "bg-[color-mix(in_srgb,var(--color-kraft)_70%,transparent)]"
+      : "wax";
+---
+
+<Tag class={`relative overflow-hidden ${toneClass} ${grain ? "grain" : ""} ${className}`}>
+  <div class="relative z-10">
+    <slot />
+  </div>
+</Tag>

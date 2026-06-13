@@ -1,0 +1,46 @@
+---
+import { SITE } from "../lib/site";
+import Hexagon from "./Hexagon.astro";
+const year = new Date().getFullYear();
+---
+
+<footer class="roast grain relative">
+  <div class="relative z-10 mx-auto max-w-6xl px-5 py-16 sm:px-8">
+    <div class="flex flex-col gap-10 sm:flex-row sm:justify-between">
+      <div class="max-w-sm">
+        <div class="flex items-center gap-2.5">
+          <Hexagon size={26} class="text-[var(--color-crema)]" />
+          <span class="font-serif text-lg">Cognition Coffee Co.</span>
+        </div>
+        <p class="mt-4 text-sm leading-relaxed text-[color-mix(in_srgb,var(--color-foam)_72%,transparent)]">
+          {SITE.tagline} An unsolicited, lovingly over-engineered community proposal —
+          built with Devin, before applying.
+        </p>
+      </div>
+
+      <div class="flex gap-14 font-mono text-sm">
+        <div>
+          <p class="eyebrow mb-3 text-[var(--color-crema)]">Resources</p>
+          <ul class="space-y-2 text-[color-mix(in_srgb,var(--color-foam)_80%,transparent)]">
+            <li><a href="/blog" class="hover:text-white">Blog</a></li>
+            <li><a href="/community" class="hover:text-white">Community</a></li>
+            <li><a href="/about" class="hover:text-white">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow mb-3 text-[var(--color-crema)]">Ali</p>
+          <ul class="space-y-2 text-[color-mix(in_srgb,var(--color-foam)_80%,transparent)]">
+            <li><a href={SITE.authorX} class="hover:text-white">X / Twitter</a></li>
+            <li><a href={SITE.authorGithub} class="hover:text-white">GitHub</a></li>
+            <li><a href={`mailto:${SITE.authorEmail}`} class="hover:text-white">Email</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-[color-mix(in_srgb,var(--color-foam)_55%,transparent)] sm:flex-row sm:justify-between">
+      <span>&copy; {year} {SITE.author}. Not affiliated with Cognition (yet).</span>
+      <span class="font-mono">Brewed with Devin &amp; Astro · {SITE.domain}</span>
+    </div>
+  </div>
+</footer>
