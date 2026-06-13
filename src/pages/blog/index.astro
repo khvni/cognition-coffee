@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Section from "../../components/Section.astro";
 import { getCollection } from "astro:content";
+import { getReadingTime } from "../../lib/reading-time";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order || +b.data.date - +a.data.date
@@ -9,8 +10,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
 
 const readingTimes = new Map<string, number>();
 for (const post of posts) {
-  const wordCount = post.body ? post.body.split(/\s+/).length : 0;
-  readingTimes.set(post.id, Math.max(1, Math.round(wordCount / 230)));
+  readingTimes.set(post.id, getReadingTime(post.body));
 }
 ---
 
