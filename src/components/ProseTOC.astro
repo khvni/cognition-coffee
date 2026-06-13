@@ -1,0 +1,31 @@
+---
+/**
+ * Table of contents for blog posts.
+ * Renders as a wax-paper sidebar panel with jump links.
+ */
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+const { headings } = Astro.props;
+const filtered = headings.filter((h) => h.depth === 2);
+---
+
+{filtered.length > 0 && (
+  <nav aria-label="Table of contents" class="prose-toc my-8 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-foam)] px-6 py-5">
+    <p class="mb-3 font-mono text-xs tracking-widest text-[var(--color-slate)] uppercase">
+      In this post
+    </p>
+    <ol class="list-none space-y-1.5 pl-0">
+      {filtered.map((h) => (
+        <li>
+          <a
+            href={`#${h.slug}`}
+            class="block font-serif text-[0.95rem] leading-snug text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-blue)]"
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

@@ -1,0 +1,27 @@
+---
+/**
+ * Wax-paper inline figure — a cognition.ai-style callout panel
+ * for diagrams, lists, or visual asides inside prose.
+ * Wraps content in the WaxPaper motif at blog reading width.
+ */
+import WaxPaper from "./WaxPaper.astro";
+
+interface Props {
+  caption?: string;
+  tone?: "cream" | "kraft";
+}
+const { caption, tone = "cream" } = Astro.props;
+---
+
+<figure class="prose-wax-figure my-10 -mx-2 sm:-mx-4">
+  <WaxPaper tone={tone} class="px-6 py-6 sm:px-8 sm:py-7">
+    <div class="font-sans text-[0.92rem] leading-relaxed text-[var(--color-ink-soft)]">
+      <slot />
+    </div>
+  </WaxPaper>
+  {caption && (
+    <figcaption class="mt-3 text-center font-mono text-xs tracking-wide text-[var(--color-slate)] uppercase">
+      {caption}
+    </figcaption>
+  )}
+</figure>
