@@ -73,33 +73,37 @@ import { SITE, CTA } from "../lib/site";
     <div class="grid gap-5 md:grid-cols-3">
       {
         INITIATIVES.map((it) => (
-          <WaxPaper class="flex flex-col p-6">
-            <div class="flex items-baseline justify-between">
-              <span class="font-mono text-sm text-[var(--color-slate)]">{it.index}</span>
-              {it.metric && (
-                <span class="text-right">
-                  <span class="block font-mono text-base text-[var(--color-blue)]">{it.metric.value}</span>
-                </span>
-              )}
-            </div>
-            <p class="eyebrow mt-5 text-[var(--color-bean)]">{it.roast}</p>
-            <h3 class="mt-1 font-serif text-2xl leading-tight">{it.title}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-[var(--color-ink-soft)]">{it.tagline}</p>
-            <ul class="mt-5 space-y-1.5 border-t border-[var(--color-line)] pt-4 text-sm text-[var(--color-slate)]">
-              {it.pillars.map((pillar) => (
-                <li class="flex gap-2">
-                  <span class="text-[var(--color-blue)]">&bull;</span>
-                  <span>{pillar.name}</span>
-                </li>
-              ))}
-            </ul>
-          </WaxPaper>
+          <a href={`/menu/${it.slug}`} class="group">
+            <WaxPaper class="flex h-full flex-col p-6 transition-shadow duration-200 group-hover:shadow-lg">
+              <div class="flex items-baseline justify-between">
+                <span class="font-mono text-sm text-[var(--color-slate)]">{it.index}</span>
+                {it.metric && (
+                  <span class="text-right">
+                    <span class="block font-mono text-base text-[var(--color-blue)]">{it.metric.value}</span>
+                  </span>
+                )}
+              </div>
+              <p class="eyebrow mt-5 text-[var(--color-bean)]">{it.roast}</p>
+              <h3 class="mt-1 font-serif text-2xl leading-tight">{it.title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-ink-soft)]">{it.tagline}</p>
+              <ul class="mt-5 space-y-1.5 border-t border-[var(--color-line)] pt-4 text-sm text-[var(--color-slate)]">
+                {it.pillars.map((pillar) => (
+                  <li class="flex gap-2">
+                    <span class="text-[var(--color-blue)]">&bull;</span>
+                    <span>{pillar.name}</span>
+                  </li>
+                ))}
+              </ul>
+              <span class="mt-auto pt-4 font-mono text-xs text-[var(--color-blue)] opacity-0 transition-opacity group-hover:opacity-100">
+                Deep dive &rarr;
+              </span>
+            </WaxPaper>
+          </a>
         ))
       }
     </div>
     <p class="mt-6 font-mono text-xs text-[var(--color-slate)]">
-      {/* TODO(cloud-devin): link each card to a dedicated /menu/[slug] deep-dive page. */}
-      Full program deep-dives coming to <span class="link-blue">/menu/[slug]</span>.
+      Click any card above for the full program deep-dive.
     </p>
   </Section>
 
