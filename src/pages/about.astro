@@ -2,6 +2,8 @@
 import Base from "../layouts/Base.astro";
 import Section from "../components/Section.astro";
 import WaxPaper from "../components/WaxPaper.astro";
+import Terminal from "../components/Terminal.astro";
+import Timeline from "../components/Timeline.astro";
 import { BIO, PILLARS, EXPERIENCE, WHY_COGNITION } from "../data/experience";
 import { SITE } from "../lib/site";
 ---
@@ -44,26 +46,54 @@ import { SITE } from "../lib/site";
 
   {/* EXPERIENCE TIMELINE */}
   <Section index="02" eyebrow="The track record">
-    <div class="space-y-px overflow-hidden rounded-md border border-[var(--color-line)] bg-[var(--color-line)]">
-      {
-        EXPERIENCE.map((e) => (
-          <div class="grid gap-1 bg-[var(--color-foam)] p-6 sm:grid-cols-[1fr_2fr]">
-            <div>
-              <p class="font-serif text-lg">{e.org}</p>
-              <p class="font-mono text-xs text-[var(--color-slate)]">{e.when}</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">{e.role}</p>
-              <p class="mt-1 text-sm text-[var(--color-slate)]">{e.detail}</p>
-            </div>
-          </div>
-        ))
-      }
+    <Timeline entries={EXPERIENCE} />
+  </Section>
+
+  {/* HOW THIS SITE WAS BUILT */}
+  <Section index="03" eyebrow="Built with Devin" tone="roast">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="font-serif text-3xl sm:text-4xl">This site is the demo.</h2>
+        <p class="mt-4 text-sm leading-relaxed text-[color-mix(in_srgb,var(--color-foam)_75%,transparent)]">
+          Every page of cognitioncoffee.co was orchestrated by a fleet of parallel Devin
+          sessions &mdash; each owning a distinct workstream, writing real code into a
+          shared repo without collisions. The architecture, design system, data layer,
+          and collision-free orchestration strategy were all built in Devin.
+        </p>
+        <ul class="mt-6 space-y-3 text-sm text-[color-mix(in_srgb,var(--color-foam)_75%,transparent)]">
+          <li class="flex gap-2">
+            <span class="text-[var(--color-crema)]">&#9656;</span>
+            <span>5 parallel workstreams &mdash; Home, Community, Blog, About, Menu deep-dives</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="text-[var(--color-crema)]">&#9656;</span>
+            <span>Astro + Tailwind v4 &mdash; matches devin.ai's own stack</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="text-[var(--color-crema)]">&#9656;</span>
+            <span>Collision-free by design &mdash; file ownership per workstream</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="text-[var(--color-crema)]">&#9656;</span>
+            <span>Quality gated by deslop, Lighthouse, responsive QA</span>
+          </li>
+        </ul>
+      </div>
+      <Terminal title="DEVIN SESSION" prompt="devin@cognition-coffee:~$">
+        <pre class="font-mono text-xs leading-relaxed"><span class="text-[#c8a06b]">$</span> astro build
+<span class="text-[#9fe89f]">  ✓</span> pages rendered
+<span class="text-[#9fe89f]">  ✓</span> 0 errors, 0 warnings
+
+<span class="text-[#c8a06b]">$</span> deslop score
+<span class="text-[#9fe89f]">  slop score: 0</span> (clean band)
+
+{/* TODO: Add real Devin session links + screenshots once available */}</pre>
+      </Terminal>
     </div>
   </Section>
 
   {/* WHY COGNITION */}
-  <Section index="03" eyebrow="Why Cognition, why this" tone="roast">
+  <Section index="04" eyebrow="Why Cognition, why this" tone="roast">
     <div class="grid gap-10 lg:grid-cols-2">
       <h2 class="font-serif text-3xl sm:text-4xl">The permissionless apprenticeship.</h2>
       <ul class="space-y-4">
@@ -80,16 +110,17 @@ import { SITE } from "../lib/site";
   </Section>
 
   {/* CONTACT */}
-  <Section id="contact" index="04" eyebrow="Let's talk">
+  <Section id="contact" index="05" eyebrow="Let's talk">
     <WaxPaper tone="kraft" class="p-10 text-center sm:p-14">
-      <h2 class="font-serif text-3xl sm:text-4xl">Coffee's on me. ☕</h2>
+      <h2 class="font-serif text-3xl sm:text-4xl">Coffee's on me.</h2>
       <p class="mx-auto mt-4 max-w-lg text-[var(--color-ink-soft)]">
-        {SITE.recipient.name} — if this resonates, I'd love to compare notes on where
+        {SITE.recipient.name} &mdash; if this resonates, I'd love to compare notes on where
         Cognition's community goes next.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href={`mailto:${SITE.authorEmail}`} class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white">Email me</a>
-        <a href={SITE.authorX} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium">DM on X</a>
+        <a href={`mailto:${SITE.authorEmail}?subject=Cognition Coffee — let's talk`} class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-lg">Email me</a>
+        <a href={SITE.authorX} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--color-foam)]">DM on X</a>
+        <a href={SITE.recipient.x} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--color-foam)]">@dabit3</a>
       </div>
     </WaxPaper>
   </Section>

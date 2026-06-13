@@ -1,0 +1,63 @@
+---
+/**
+ * Timeline — vertical experience track with org logos and a connecting line.
+ * Renders the EXPERIENCE array from src/data/experience.ts.
+ */
+interface TimelineEntry {
+  org: string;
+  role: string;
+  when: string;
+  logo?: string;
+  detail: string;
+  note?: string;
+}
+interface Props {
+  entries: TimelineEntry[];
+  class?: string;
+}
+const { entries, class: className = "" } = Astro.props;
+---
+
+<div class={`relative ${className}`}>
+  {/* Vertical connector line */}
+  <div class="absolute left-6 top-0 hidden h-full w-px bg-[var(--color-line-strong)] sm:block" aria-hidden="true"></div>
+
+  <ol class="space-y-0">
+    {entries.map((e, i) => (
+      <li class="relative grid gap-4 border-b border-[var(--color-line)] py-7 first:pt-0 last:border-0 sm:grid-cols-[3.5rem_1fr_2fr] sm:gap-6">
+        {/* Logo mark */}
+        <div class="hidden items-start justify-center sm:flex">
+          {e.logo ? (
+            <img
+              src={e.logo}
+              alt={`${e.org} logo`}
+              width="40"
+              height="40"
+              class="relative z-10 h-10 w-10 rounded-full border border-[var(--color-line)] bg-[var(--color-foam)] object-contain p-1.5"
+              loading="lazy"
+            />
+          ) : (
+            <span class="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-line)] bg-[var(--color-foam)] font-mono text-xs text-[var(--color-slate)]">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+          )}
+        </div>
+
+        {/* Org + date */}
+        <div>
+          <p class="font-serif text-lg leading-tight">{e.org}</p>
+          <p class="mt-1 font-mono text-xs text-[var(--color-slate)]">{e.when}</p>
+        </div>
+
+        {/* Role + detail */}
+        <div>
+          <p class="text-sm font-medium">{e.role}</p>
+          <p class="mt-1 text-sm leading-relaxed text-[var(--color-slate)]">{e.detail}</p>
+          {e.note && (
+            <p class="mt-2 font-mono text-xs text-[var(--color-bean)]">{e.note}</p>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>
