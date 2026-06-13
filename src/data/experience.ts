@@ -52,12 +52,13 @@ export const PILLARS = [
   },
 ];
 
-/** Experience timeline. */
+/** Experience timeline. Logo paths relative to /public/logos/. */
 export const EXPERIENCE = [
   {
     org: "Keysight Technologies",
     role: "Growth Insights / GTM Engineer",
     when: "Dec 2025 \u2013 present",
+    logo: "/logos/keysight.svg",
     detail:
       "AI-native GTM engineer driving RapidCanvas partnerships and Clay-powered lead-gen " +
       "across 6+ business verticals. One of the main operators for internal AI tooling.",
@@ -66,14 +67,17 @@ export const EXPERIENCE = [
     org: "Bloom",
     role: "Co-founder & CEO",
     when: "Feb \u2013 Apr 2025",
+    logo: "/logos/bloom.svg",
     detail:
       "AI-powered conference matchmaking. Idea to live product in 6 days; first paying customer " +
       "(TechWadi) in 4. Ran live for 550+ attendees with a 85% match-accept rate.",
+    note: "First customer: TechWadi",
   },
   {
     org: "Muslim Tech Collaborative (MTC)",
     role: "Founder & National Lead",
     when: "2023 \u2013 present",
+    logo: "/logos/mtc.svg",
     detail:
       "Scaled from one Berkeley club to 30+ university chapters and 4 city hubs across a " +
       "three-tier org model. North America's largest Muslim tech ecosystem.",
@@ -82,6 +86,7 @@ export const EXPERIENCE = [
     org: "UC Berkeley",
     role: "B.S. Computer Science \u00b7 CS 61B TA",
     when: "Grad. Dec 2024",
+    logo: "/logos/berkeley.svg",
     detail:
       "Taught Data Structures to 1,800 students alongside 90 course staff \u2014 the scaling " +
       "lesson that became the MTC playbook. SCET Entrepreneurship & Technology certificate.",
@@ -90,6 +95,7 @@ export const EXPERIENCE = [
     org: "Five9",
     role: "Product Security Intern",
     when: "2023",
+    logo: "/logos/five9.svg",
     detail: "Product security on contact-center infrastructure used by CVS, Alaska Airlines, and more.",
   },
 ];
