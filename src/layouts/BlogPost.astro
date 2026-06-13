@@ -1,11 +1,14 @@
 ---
 import Base from "./Base.astro";
+import ProseTOC from "../components/ProseTOC.astro";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"blog">["data"];
+  headings?: { depth: number; slug: string; text: string }[];
+  readingTime?: number;
 }
-const { post } = Astro.props;
+const { post, headings = [], readingTime } = Astro.props;
 const dateStr = post.date.toLocaleDateString("en-US", {
   year: "numeric",
   month: "short",
@@ -14,17 +17,18 @@ const dateStr = post.date.toLocaleDateString("en-US", {
 ---
 
 <Base title={post.title} description={post.description}>
-  <!--
-    EDITORIAL SERIF LAYOUT — the cognition.ai/blog feel.
-    Title + subheaders + body all share the serif family; highlighting reveals
-    Devin blue (from global.css ::selection). Keep measures tight (~68ch).
-  -->
   <article class="mx-auto w-full max-w-2xl px-5 py-20 sm:px-8 sm:py-28">
     <header class="mb-12">
       <div class="eyebrow mb-5 flex items-center gap-3">
         <span>{post.category}</span>
         <span class="text-[var(--color-line-strong)]">/</span>
         <time datetime={post.date.toISOString()}>{dateStr}</time>
+        {readingTime && (
+          <>
+            <span class="text-[var(--color-line-strong)]">/</span>
+            <span>{readingTime} min read</span>
+          </>
+        )}
       </div>
       <h1 class="font-serif text-4xl leading-[1.08] tracking-tight sm:text-5xl">
         {post.title}
@@ -34,10 +38,8 @@ const dateStr = post.date.toLocaleDateString("en-US", {
       </p>
     </header>
 
-    <!--
-      Body uses the serif family at a comfortable reading size. The `prose-coffee`
-      class (see global.css / Tailwind) styles headings, links, blockquotes.
-    -->
+    <ProseTOC headings={headings} />
+
     <div class="prose-coffee font-serif text-[1.12rem] leading-[1.7]">
       <slot />
     </div>
@@ -49,7 +51,6 @@ const dateStr = post.date.toLocaleDateString("en-US", {
 </Base>
 
 <style is:global>
-  /* Minimal editorial prose styling (serif subheaders, blue links). */
   .prose-coffee h2 {
     font-family: var(--font-serif);
     font-size: 1.6rem;
@@ -81,6 +82,9 @@ const dateStr = post.date.toLocaleDateString("en-US", {
     margin: 0 0 1.1rem 1.2rem;
     list-style: disc;
   }
+  .prose-coffee ol {
+    list-style: decimal;
+  }
   .prose-coffee li {
     margin: 0.3rem 0;
   }
@@ -90,5 +94,13 @@ const dateStr = post.date.toLocaleDateString("en-US", {
     background: var(--color-blue-soft);
     padding: 0.1em 0.35em;
     border-radius: 4px;
+  }
+  .prose-coffee hr {
+    border: none;
+    border-top: 1px solid var(--color-line);
+    margin: 2.4rem 0;
+  }
+  .prose-coffee strong {
+    font-weight: 600;
   }
 </style>
