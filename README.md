@@ -71,8 +71,10 @@ This repo is **intentionally scaffolded, not finished.** The foundation (design
 system, layout, nav, brand components, data layer, page skeletons) is in place so
 that **multiple Devin sessions can build the remaining work in parallel without
 colliding**. See **[`docs/ORCHESTRATION.md`](docs/ORCHESTRATION.md)** for the
-collision-free workstream breakdown, and **[`AGENTS.md`](AGENTS.md)** for the
-conventions every Devin must follow.
+collision-free workstream breakdown, **[`docs/HANDOFF.md`](docs/HANDOFF.md)** for the
+ready-to-paste Devin Cloud session prompts + launch steps, and **[`AGENTS.md`](AGENTS.md)**
+for the conventions every Devin must follow (incl. `/poteto-mode`, `/caveman`,
+`/impeccable`, and the `deslop` gate).
 
 ## Status
 
