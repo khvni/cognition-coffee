@@ -11,42 +11,62 @@ import { SOCIALS, CTA } from "../lib/site";
   <section class="relative overflow-hidden border-b border-[var(--color-line)]">
     <Backdrop wordmark="COFFEE" code />
     <div class="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.02fr_0.98fr]">
-      <div class="wax grain p-8 sm:p-10">
-        <p class="eyebrow">
-          Cognition Coffee Co. <span class="text-[var(--color-coffee)]">//</span> developer community
-        </p>
-        <h1 class="mt-6 font-serif text-[2.5rem] leading-[1.04] tracking-tight sm:text-[3.4rem]">
-          {BIO.hook}
-        </h1>
-        <p class="mt-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
-          {BIO.thesis}
-        </p>
-        <div class="mt-7 flex flex-wrap items-center gap-3">
-          <a
-            href={CTA.href}
-            class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
-          >
-            {CTA.label}
-          </a>
-          <a
-            href="/about"
-            class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:border-[var(--color-ink)]"
-          >
-            Why me
-          </a>
-        </div>
-        <div class="mt-7 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-line)] pt-5 font-mono text-xs">
-          {
-            SOCIALS.map((s) => (
-              <a href={s.href} class="text-[var(--color-slate)] transition-colors hover:text-[var(--color-blue)]">
-                {s.label}
-              </a>
-            ))
-          }
+      <div class="relative">
+        {/* stacked-wax sheet peeking behind — taped-sheet motif */}
+        <div class="wax absolute -right-5 -top-5 -z-10 hidden h-full w-full rotate-3 lg:block" aria-hidden="true"></div>
+        <div class="wax grain relative p-8 sm:p-10">
+          <p class="eyebrow">
+            Cognition Coffee Co. <span class="text-[var(--color-coffee)]">//</span> developer community
+          </p>
+          <h1 class="mt-6 font-serif text-[2.5rem] leading-[1.04] tracking-tight sm:text-[3.4rem]">
+            {BIO.hook}
+          </h1>
+          <p class="mt-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
+            {BIO.thesis}
+          </p>
+          <div class="mt-7 flex flex-wrap items-center gap-3">
+            <a
+              href={CTA.href}
+              class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
+            >
+              {CTA.label}
+            </a>
+            <a
+              href="/about"
+              class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:border-[var(--color-ink)]"
+            >
+              Why me
+            </a>
+          </div>
+          <div class="mt-7 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-line)] pt-5 font-mono text-xs">
+            {
+              SOCIALS.map((s) => (
+                <a href={s.href} class="text-[var(--color-slate)] transition-colors hover:text-[var(--color-blue)]">
+                  {s.label}
+                </a>
+              ))
+            }
+          </div>
         </div>
       </div>
       <DevinCli />
     </div>
   </section>
 
+  {/* ===================== POSITIONING (DARK ANCHOR) ===================== */}
+  <section class="roast relative overflow-hidden border-b border-white/10">
+    <Backdrop wordmark="BUILD" code />
+    {/* frosted sheet floating on the dark — reads as a light wax sheet */}
+    <div class="wax absolute -right-10 bottom-12 hidden h-52 w-80 rotate-6 lg:block" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+      <p class="eyebrow text-[color-mix(in_srgb,var(--color-foam)_78%,transparent)]">
+        {BIO.name} <span class="text-[color-mix(in_srgb,var(--color-coffee)_72%,var(--color-foam))]">//</span> {BIO.location}
+      </p>
+      <p
+        class="mt-8 max-w-4xl border-l-2 border-[var(--color-blue)] pl-6 font-serif text-2xl leading-snug tracking-tight text-[var(--color-foam)] sm:pl-8 sm:text-3xl lg:text-[2.6rem] lg:leading-[1.15]"
+      >
+        {BIO.oneLiner}
+      </p>
+    </div>
+  </section>
 </Base>

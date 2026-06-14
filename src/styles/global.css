@@ -193,6 +193,21 @@
     color: #fff;
   }
 
+  /* Canvas motifs invert on the dark surface (light grid / ghost / code). */
+  .roast .grid-paper {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-foam) 9%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-foam) 9%, transparent) 1px, transparent 1px);
+  }
+  .roast .ghost {
+    color: var(--color-foam);
+    opacity: 0.06;
+  }
+  .roast .codefrag {
+    color: var(--color-foam);
+    opacity: 0.09;
+  }
+
   /* Prose-style blue link. */
   .link-blue {
     color: var(--color-blue);
