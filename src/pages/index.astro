@@ -7,7 +7,7 @@ import OtterAscii from "../components/OtterAscii.astro";
 import Marquee from "../components/Marquee.astro";
 import { INITIATIVES } from "../data/initiatives";
 import { BIO, PROOF_POINTS } from "../data/experience";
-import { SITE, CTA } from "../lib/site";
+import { CTA } from "../lib/site";
 ---
 
 <Base>
@@ -24,9 +24,9 @@ import { SITE, CTA } from "../lib/site";
           {BIO.thesis}
         </p>
         <p class="mt-4 max-w-xl text-[var(--color-slate)]">
-          The Cognition Coffee Company is an unsolicited, lovingly over-engineered
-          community strategy for <span class="link-blue">Devin</span> — three programs,
-          built with Devin, before applying.
+          The Cognition Coffee Company is a lovingly over-engineered community strategy
+          for <span class="link-blue">Devin</span>: three programs, a reimagined community
+          home, and field notes &mdash; all built with Devin.
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-3">
           <a href="#menu" class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5">
@@ -43,7 +43,7 @@ import { SITE, CTA } from "../lib/site";
         <Terminal title="VT100 · DEVIN">
           <div class="terminal-lines">
             <p class="font-mono text-xs text-[var(--color-crema)]">devin@cognition-coffee:~$ run community.sh</p>
-            <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; scanning Ali's dossier...</p>
+            <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; loading community playbook...</p>
             <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; 30+ chapters &middot; 1,800 students &middot; 7M views</p>
             <p class="tline font-mono text-xs text-[#7ad17a]">&rarr; community strategy: READY</p>
           </div>
@@ -124,9 +124,9 @@ import { SITE, CTA } from "../lib/site";
       <div class="reveal">
         <h2 class="font-serif text-3xl sm:text-4xl">This whole thing was brewed with Devin.</h2>
         <p class="mt-4 max-w-lg text-[color-mix(in_srgb,var(--color-foam)_78%,transparent)]">
-          The site, the design system, the content scaffold — orchestrated across multiple
-          Devin sessions. The best way to pitch a community manager is to show you're already
-          the kind of power user that community is for.
+          The site, the design system, the content — orchestrated across multiple
+          Devin sessions. The best way to talk about developer community is to build like
+          the developers you're building it for.
         </p>
         <a href="/about" class="mt-6 inline-block font-mono text-sm text-[var(--color-crema)] underline underline-offset-4">
           Read how it was built &rarr;
@@ -142,14 +142,14 @@ import { SITE, CTA } from "../lib/site";
   </Section>
 
   {/* ===================== CLOSING CTA ===================== */}
-  <Section index="03" eyebrow="The ask">
+  <Section index="03" eyebrow="Let's talk">
     <WaxPaper tone="kraft" class="reveal p-10 text-center sm:p-16">
       <h2 class="mx-auto max-w-2xl font-serif text-3xl sm:text-4xl">
-        Not "hire me." Let's talk about how to execute this.
+        If this resonates, let's build it.
       </h2>
       <p class="mx-auto mt-4 max-w-xl text-[var(--color-ink-soft)]">
         If any of this aligns with where you want Cognition's community to go,
-        I'd love to compare notes — {SITE.recipient.name}, this one's for you.
+        I'd love to compare notes.
       </p>
       <a href={CTA.href} class="mt-8 inline-block rounded-full bg-[var(--color-blue)] px-6 py-3 font-medium text-white transition-transform hover:-translate-y-0.5">
         {CTA.emoji} Start a conversation

@@ -1,16 +1,14 @@
 # AGENTS.md — Conventions for building cognitioncoffee.co
 
-You are one of several Devin sessions building **The Cognition Coffee Company**.
-Read this fully before touching code. Then read the doc for **your** workstream in
-[`docs/ORCHESTRATION.md`](docs/ORCHESTRATION.md).
+Read this fully before touching code.
 
 ## The one-paragraph brief
 
-This is a portfolio + proposal site pitching Ali Khani for Cognition's **Developer
-Community Manager** role, aimed at hiring manager **Nader Dabit**. The brand is a
-**balanced hybrid** of an artisan coffee roaster and an applied AI lab, executed in
-Cognition/Devin's visual language (Devin blue `#317CFF`, wax-paper cream `#EDECEB`,
-editorial serif headlines, mono accents, the Devin otter, a VT100 terminal motif).
+**The Cognition Coffee Company** is a concept site presenting a developer-community
+strategy for Cognition's Devin. The brand is a **balanced hybrid** of an artisan coffee
+roaster and an applied AI lab, executed in Cognition/Devin's visual language (Devin blue
+`#317CFF`, wax-paper cream `#EDECEB`, editorial serif headlines, mono accents, the Devin
+otter, a VT100 terminal motif).
 
 ## Required skills & modes
 
@@ -30,17 +28,15 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 - **`/impeccable` for design-system & UI work** — apply impeccable principles when
   building or extending components, layouts, and tokens: distinctive, production-grade
   interfaces that avoid the generic AI look. Pairs with `docs/DESIGN_SYSTEM.md`.
-- **`deslop` (by Nader Dabit) before every PR** — a git-diff slop detector
-  (`github.com/dabit3/deslop`, installed globally on Ali's machine via
-  `npm i -g github:dabit3/deslop`). Run `deslop -b main` and `deslop score` on your
+- **`deslop` before every PR** — a git-diff slop detector
+  (`github.com/dabit3/deslop`). Run `deslop -b main` and `deslop score` on your
   branch. **Required gate: 0 high-severity findings and a slop score in the clean band
   (0–19).** It flags AI tells — obvious comments, triple null-checks, debug logs, empty
   catch blocks, needless try/catch. Fix them, don't suppress them.
 
 > Note on comments: deslop rightly flags *obvious in-function comments* as slop. The
-> intentional file-header docblocks in this scaffold (explaining brand/architecture
-> intent for the next Devin) are not slop — keep those terse and purposeful, and don't
-> add new line-by-line narration inside functions.
+> intentional file-header docblocks (explaining brand/architecture intent) are not slop —
+> keep those terse and purposeful, and don't add line-by-line narration inside functions.
 
 ## Golden rules
 
@@ -54,8 +50,8 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 4. **Keep it editorial.** Headlines + blog body use the **serif** (`font-serif`).
    UI/labels use **sans** (`font-sans`). Eyebrows/terminal/code use **mono** (`font-mono`).
    Highlighting text must reveal Devin blue (already set via `::selection`).
-5. **Stay in your lane.** Build only the files your workstream owns (see ORCHESTRATION).
-   This prevents merge collisions between parallel Devins.
+5. **Scope your changes.** Touch only the files your task needs, so parallel work
+   doesn't collide.
 6. **It must build.** Run `npm run build` before you finish. Zero errors. Fix warnings
    you introduce.
 7. **No new deps without reason.** Prefer the existing stack. If you must add one, use
@@ -69,7 +65,7 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 - **Astro content**: blog posts are MDX in `src/content/blog/`; schema in
   `src/content.config.ts`. Route is `src/pages/blog/[...slug].astro` (slug = file id).
 - **Data lives in `src/data/` and `src/lib/`**, not inline in pages, so multiple pages
-  (and Devins) share one source of truth.
+  share one source of truth.
 - **Images**: put static assets in `public/`. Optimize before committing. Prefer SVG
   for marks/textures. Do not commit anything > ~500 KB without compressing.
 - **Accessibility**: real `alt` text, semantic headings (one `<h1>` per page),
@@ -80,7 +76,7 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 
 - Small, scoped commits. Conventional-ish messages (`feat:`, `fix:`, `content:`,
   `style:`, `docs:`).
-- One PR per workstream. In the description, list files touched and any new deps.
+- One PR per logical change. In the description, list files touched and any new deps.
 - Don't reformat files you didn't change.
 - Don't push to `main` directly if a branch workflow is set up.
 

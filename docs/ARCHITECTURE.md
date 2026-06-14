@@ -8,8 +8,8 @@
 | `/community` | `pages/community.astro` | 🟡 structure | **Centerpiece.** Redesign of devin.ai/community. Needs interactive globe + polish |
 | `/about` | `pages/about.astro` | 🟢 built | Bio, Build/Teach/Connect, timeline, why-Cognition, contact |
 | `/blog` | `pages/blog/index.astro` | 🟢 built | Editorial index ("The Roastery") |
-| `/blog/<slug>` | `pages/blog/[...slug].astro` | 🟡 stubs | 3 posts exist as **outline stubs**; prose TODO |
-| `/menu/<slug>` | _not created_ | 🔴 todo | Optional deep-dive page per initiative |
+| `/blog/<slug>` | `pages/blog/[...slug].astro` | � built | Field notes (MDX) |
+| `/menu/<slug>` | `pages/menu/[slug].astro` | � built | Deep-dive page per initiative |
 | `sitemap-index.xml` | auto | 🟢 | via `@astrojs/sitemap` |
 
 ## Navigation (`src/lib/site.ts`)
@@ -40,9 +40,9 @@ To go live later, implement `lumaProvider` against `https://luma.com/devin` and 
 
 ## Page specs (what each page is trying to do)
 
-### `/` Home — the pitch
+### `/` Home
 Hero (hook + thesis + VT100 otter) → proof bar (5 metrics) → **The Menu** (3 wax-paper
-initiative cards) → "built with Devin" dark-roast meta beat → closing CTA to Nader.
+initiative cards) → "built with Devin" dark-roast meta beat → closing CTA.
 
 ### `/community` — the centerpiece (redesign of devin.ai/community)
 Today's real page is 5 links + a Google Form. This redesign borrows Cursor's warmth:
@@ -52,8 +52,8 @@ hero → vision stats → **What we do** (Cafe Cognition / Workshops / Meetups /
 (`discord.gg/GjCYNGChrw`).
 
 ### `/about` — Ali Khani
-Intro + coordinates → Build/Teach/Connect pillars → experience timeline → why-Cognition
-(permissionless apprenticeship) → contact (email + X), addressed to Nader.
+Intro + coordinates → Build/Teach/Connect pillars → experience timeline → why this, why
+now → contact (email + X + GitHub).
 
 ### `/blog` — "The Roastery"
 Editorial serif index of 3 posts. Posts are the proof-of-thinking:

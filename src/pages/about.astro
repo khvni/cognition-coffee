@@ -95,7 +95,7 @@ import { SITE } from "../lib/site";
   {/* WHY COGNITION */}
   <Section index="04" eyebrow="Why Cognition, why this" tone="roast">
     <div class="grid gap-10 lg:grid-cols-2">
-      <h2 class="font-serif text-3xl sm:text-4xl">The permissionless apprenticeship.</h2>
+      <h2 class="font-serif text-3xl sm:text-4xl">Why this, why now.</h2>
       <ul class="space-y-4">
         {
           WHY_COGNITION.map((w) => (
@@ -114,13 +114,13 @@ import { SITE } from "../lib/site";
     <WaxPaper tone="kraft" class="p-10 text-center sm:p-14">
       <h2 class="font-serif text-3xl sm:text-4xl">Coffee's on me.</h2>
       <p class="mx-auto mt-4 max-w-lg text-[var(--color-ink-soft)]">
-        {SITE.recipient.name} &mdash; if this resonates, I'd love to compare notes on where
-        Cognition's community goes next.
+        If this resonates, I'd love to compare notes on where Cognition's community
+        goes next.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
         <a href={`mailto:${SITE.authorEmail}?subject=Cognition Coffee — let's talk`} class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-lg">Email me</a>
         <a href={SITE.authorX} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--color-foam)]">DM on X</a>
-        <a href={SITE.recipient.x} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--color-foam)]">@dabit3</a>
+        <a href={SITE.authorGithub} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--color-foam)]">GitHub</a>
       </div>
     </WaxPaper>
   </Section>

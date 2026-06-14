@@ -10,15 +10,13 @@ export const SITE = {
   url: "https://cognitioncoffee.co",
   tagline: "Freshly brewed community for the first AI software engineer.",
   description:
-    "A community strategy for Cognition — built with Devin, before applying. " +
-    "Curriculum, a global meetup network, and an ambassador program for the people who build with Devin.",
+    "A community strategy for the people who build with Devin, designed and built with Devin. " +
+    "Curriculum, a global meetup network, and an ambassador program.",
   author: "Ali Khani",
   authorUrl: "https://alikhani.co",
   authorX: "https://x.com/alikhvni",
   authorGithub: "https://github.com/khvni",
   authorEmail: "byalikhani@gmail.com",
-  // The person this site is ultimately a pitch to.
-  recipient: { name: "Nader Dabit", x: "https://x.com/dabit3", site: "https://nader.codes" },
 } as const;
 
 /**

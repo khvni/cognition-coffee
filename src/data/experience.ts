@@ -1,24 +1,21 @@
 /**
  * ALI KHANI — bio, proof points, and experience.
- * Sourced from the Obsidian vault dossier + the replitdotcv narrative.
- * Cloud-Devin note: every claim here is verified. Do not inflate numbers.
+ * Every claim here is verified. Do not inflate numbers.
  */
 
 export const BIO = {
   name: "Ali Khani",
   location: "San Francisco Bay Area",
-  // The hero pattern that worked on replitdotcv, adapted for Cognition.
-  hook: "Hey Cognition \u2014 heard you're hiring.",
+  hook: "Cognition built the engineer. This is how you build the community.",
   oneLiner:
     "I'm a community builder and AI-native GTM engineer. I scaled a national tech " +
     "nonprofit from one Berkeley club to 30+ chapters \u2014 and I'm a top-200 global Devin " +
-    "power user. I built this site with Devin to show, not tell, what I'd build for your community.",
-  // The metaphor (a Cognition/coffee remix of replitdotcv's "superpowers").
+    "power user. I built this site with Devin to show, not tell, what a community for Devin could be.",
   thesis:
     "Devin gives engineers superpowers. I build the community that teaches the world how to use them.",
 };
 
-/** Headline proof points (every claim is a number — the replitdotcv playbook). */
+/** Headline proof points — every claim is a number. */
 export const PROOF_POINTS = [
   { value: "30+", label: "MTC chapters scaled in 18 months" },
   { value: "1,800", label: "Berkeley CS 61B students taught" },
@@ -27,7 +24,7 @@ export const PROOF_POINTS = [
   { value: "6 days", label: "idea to live product at Bloom" },
 ];
 
-/** The narrative arc: Build / Teach / Connect (reused + sharpened from replitdotcv). */
+/** The narrative arc: Build / Teach / Connect. */
 export const PILLARS = [
   {
     verb: "Build",
@@ -105,5 +102,5 @@ export const WHY_COGNITION = [
   "Cognition is early in community \u2014 that's the greenfield I do my best work in.",
   "Cursor is ahead on events; I can bring a sustained chapter network they don't have.",
   "I'm a power user first, community builder second \u2014 technical credibility plus reach.",
-  "Permissionless apprenticeship: I'd rather build the strategy than just pitch it.",
+  "I'd rather build the strategy than just describe it \u2014 so I did.",
 ];

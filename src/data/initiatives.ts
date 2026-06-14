@@ -3,9 +3,8 @@
  *
  * Each is framed as a coffee "roast" (the artisan-coffee half of the brand)
  * but carries concrete, executable DevRel substance (the AI-lab half).
- * Derived from the strategy in the Obsidian vault + Cursor playbook analysis.
  *
- * Cloud-Devin note: keep `slug` stable — pages and anchors depend on it.
+ * Keep `slug` stable — pages and anchors depend on it.
  */
 
 export type Phase = {
