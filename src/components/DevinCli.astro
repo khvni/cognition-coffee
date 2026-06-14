@@ -1,0 +1,236 @@
+---
+/**
+ * DevinCli — a skeuomorphic CRT "Devin CLI" hero centerpiece. Walks a visitor
+ * through a short discovery prompt (name -> curiosity -> feedback), typing each
+ * question and showing a fake "working" loader between steps. Every answer is
+ * sent to PostHog (events + person properties). Degrades to a real <form> with
+ * no JS. Blue-tinted phosphor keeps it on-brand instead of the cliche green.
+ */
+---
+
+<div class="cli-bezel grain">
+  <div class="cli-bar">
+    <span class="cli-dot"></span>
+    <span class="cli-dot"></span>
+    <span class="cli-dot"></span>
+    <span class="cli-title">devin@cognition-coffee</span>
+  </div>
+  <div class="cli-frame">
+    <div class="cli-scroll" id="cli-scroll">
+      <div id="cli-output" class="cli-stream" role="log" aria-live="polite"></div>
+      <form id="cli-form" class="cli-line" hidden>
+        <label class="cli-sigil" for="cli-input" aria-hidden="true">&rsaquo;</label>
+        <input
+          id="cli-input"
+          class="cli-input"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-label="Type your answer and press enter"
+        />
+      </form>
+      <noscript>
+        <form class="cli-fallback" aria-label="Say hello">
+          <p>Say hello to Devin:</p>
+          <label>Your name<input name="name" required /></label>
+          <label>What are you curious about?<textarea name="curiosity" required></textarea></label>
+          <label>Any feedback on this site?<textarea name="feedback"></textarea></label>
+        </form>
+      </noscript>
+    </div>
+  </div>
+</div>
+
+<script>
+  import posthog from "posthog-js";
+
+  const STEPS = [
+    { id: "name", q: "what should I call you?" },
+    { id: "curiosity", q: "what are you curious about?" },
+    { id: "feedback", q: "any feedback on this site? (enter to skip)" },
+  ];
+
+  const out = document.getElementById("cli-output");
+  const form = document.getElementById("cli-form") as HTMLFormElement | null;
+  const input = document.getElementById("cli-input") as HTMLInputElement | null;
+  const box = document.getElementById("cli-scroll");
+
+  if (out && form && input && box) {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const answers: Record<string, string> = {};
+    let step = 0;
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const toBottom = () => (box.scrollTop = box.scrollHeight);
+
+    const line = (cls: string, text = "") => {
+      const p = document.createElement("p");
+      p.className = cls;
+      p.textContent = text;
+      out.appendChild(p);
+      toBottom();
+      return p;
+    };
+
+    async function type(text: string) {
+      const p = line("cli-say");
+      if (reduce) return void (p.textContent = text);
+      for (const ch of text) {
+        p.textContent += ch;
+        toBottom();
+        await sleep(16);
+      }
+    }
+
+    async function working() {
+      const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧"];
+      const p = line("cli-work");
+      const until = Date.now() + 1000;
+      for (let i = 0; Date.now() < until; i++) {
+        p.textContent = `${frames[i % frames.length]} thinking…`;
+        await sleep(90);
+      }
+      p.remove();
+    }
+
+    async function ask() {
+      await type(`devin · ${STEPS[step].q}`);
+      form.hidden = false;
+      input.focus();
+      toBottom();
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const s = STEPS[step];
+      const val = input.value.trim();
+      if (!val && s.id !== "feedback") return;
+      line("cli-you", `› ${val || "(skipped)"}`);
+      answers[s.id] = val;
+      input.value = "";
+      form.hidden = true;
+      if (import.meta.env.PROD) posthog.capture("cli_answer", { step: s.id, value: val });
+      step++;
+      await working();
+      if (step < STEPS.length) {
+        await ask();
+      } else {
+        await type("devin · got it. brewing something good — talk soon.");
+        if (import.meta.env.PROD) {
+          if (answers.name) posthog.identify(answers.name);
+          posthog.setPersonProperties(answers);
+          posthog.capture("cli_completed", answers);
+        }
+      }
+    });
+
+    (async () => {
+      await type("booting devin cli…");
+      await sleep(220);
+      await ask();
+    })();
+  }
+</script>
+
+<style>
+  .cli-bezel {
+    position: relative;
+    border-radius: 16px;
+    padding: 13px;
+    background: linear-gradient(155deg, #1b1d24 0%, #0c0d11 100%);
+    box-shadow:
+      0 32px 72px -38px rgba(0, 0, 0, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.6);
+  }
+  .cli-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 1px 4px 10px;
+  }
+  .cli-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #353a46;
+  }
+  .cli-title {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b7180;
+  }
+  .cli-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 9px;
+    background: radial-gradient(125% 120% at 50% 25%, #11151e 0%, #07080c 100%);
+  }
+  .cli-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+  }
+  .cli-scroll {
+    height: clamp(280px, 38vh, 360px);
+    overflow-y: auto;
+    padding: 16px 18px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: #bcd2ff;
+    text-shadow: 0 0 8px rgba(49, 124, 255, 0.35);
+  }
+  .cli-stream :global(.cli-you) {
+    color: #eaf1ff;
+  }
+  .cli-stream :global(.cli-work) {
+    color: #7fa8ff;
+  }
+  .cli-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cli-sigil {
+    color: var(--color-blue);
+  }
+  .cli-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #eaf1ff;
+    font: inherit;
+    caret-color: var(--color-blue);
+  }
+  .cli-fallback {
+    color: #bcd2ff;
+  }
+  .cli-fallback label {
+    display: block;
+    margin: 0.55rem 0;
+  }
+  .cli-fallback input,
+  .cli-fallback textarea {
+    width: 100%;
+    margin-top: 0.25rem;
+    background: #0b0d12;
+    color: #eaf1ff;
+    border: 1px solid #2a3344;
+    font: inherit;
+    padding: 0.4rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cli-scroll {
+      text-shadow: none;
+    }
+  }
+</style>

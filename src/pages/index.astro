@@ -1,7 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 import Backdrop from "../components/Backdrop.astro";
-import { BIO, PILLARS, PROOF_POINTS } from "../data/experience";
+import DevinCli from "../components/DevinCli.astro";
+import { BIO } from "../data/experience";
 import { SOCIALS, CTA } from "../lib/site";
 ---
 
@@ -9,18 +10,18 @@ import { SOCIALS, CTA } from "../lib/site";
   {/* ===================== HERO ===================== */}
   <section class="relative overflow-hidden border-b border-[var(--color-line)]">
     <Backdrop wordmark="COFFEE" code />
-    <div class="relative mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
-      <div class="wax grain max-w-3xl p-8 sm:p-12">
+    <div class="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.02fr_0.98fr]">
+      <div class="wax grain p-8 sm:p-10">
         <p class="eyebrow">
           Cognition Coffee Co. <span class="text-[var(--color-coffee)]">//</span> developer community
         </p>
-        <h1 class="mt-6 font-serif text-[2.6rem] leading-[1.04] tracking-tight sm:text-6xl">
+        <h1 class="mt-6 font-serif text-[2.5rem] leading-[1.04] tracking-tight sm:text-[3.4rem]">
           {BIO.hook}
         </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-ink-soft)]">
+        <p class="mt-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
           {BIO.thesis}
         </p>
-        <div class="mt-8 flex flex-wrap items-center gap-3">
+        <div class="mt-7 flex flex-wrap items-center gap-3">
           <a
             href={CTA.href}
             class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
@@ -34,7 +35,7 @@ import { SOCIALS, CTA } from "../lib/site";
             Why me
           </a>
         </div>
-        <div class="mt-8 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-line)] pt-5 font-mono text-xs">
+        <div class="mt-7 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-line)] pt-5 font-mono text-xs">
           {
             SOCIALS.map((s) => (
               <a href={s.href} class="text-[var(--color-slate)] transition-colors hover:text-[var(--color-blue)]">
@@ -44,32 +45,8 @@ import { SOCIALS, CTA } from "../lib/site";
           }
         </div>
       </div>
+      <DevinCli />
     </div>
   </section>
 
-  {/* ===================== WHY THIS GUY ===================== */}
-  <section class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-    <p class="eyebrow">Why this guy</p>
-    <div class="mt-10 grid gap-px border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-3">
-      {
-        PILLARS.map((p, i) => (
-          <div class="bg-[var(--color-paper)] p-7">
-            <span class="font-mono text-xs text-[var(--color-coffee)]">0{i + 1}</span>
-            <h3 class="mt-3 font-serif text-xl tracking-tight">{p.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-[var(--color-slate)]">{p.body}</p>
-          </div>
-        ))
-      }
-    </div>
-    <div class="mt-12 flex flex-wrap gap-x-10 gap-y-3 border-t border-[var(--color-line)] pt-6">
-      {
-        PROOF_POINTS.map((p) => (
-          <div class="flex items-baseline gap-2">
-            <span class="font-mono text-base text-[var(--color-blue)]">{p.value}</span>
-            <span class="text-sm text-[var(--color-slate)]">{p.label}</span>
-          </div>
-        ))
-      }
-    </div>
-  </section>
 </Base>
