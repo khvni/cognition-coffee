@@ -37,7 +37,25 @@ work) → why this grows community (PMs, analysts, founders, not just senior eng
 
 ---
 
+## Field Notes (supplementary essays)
+
+These sit alongside the 3-post proposal as personal/editorial proof points. They
+are not part of the core proposal arc but reinforce Ali's voice and credibility.
+
+### 4. `what-quora-taught-me.mdx` — *The View Counter*
+**Angle:** personal origin story. Ali's first-person account of learning to read
+signal from a Quora view counter at fourteen, and how that instinct maps to
+community building and DevRel. Ties to Omar Waseem's essay on Alif Press.
+
+### 5. `running-internal-hackathons.mdx` — *How to run an internal hackathon that actually goes somewhere*
+**Angle:** field guide. A 1:1 repurpose of Ali's own long-form hackathons guide
+into MDX. Covers planning, format, teams, judging, afterlife, measurement, and
+case studies (Microsoft, Ramp). External stats are attributed to public sources.
+
+---
+
 ### Hard rules
-- No invented metrics. Pull from `src/data/` and the vault facts above.
+- No invented metrics about Ali. Pull from `src/data/` and the vault facts above.
+  External company stats (e.g. Ramp case studies) must cite the public source.
 - Keep claims defensible — this goes to the person who'd hire Ali.
 - Each post ends with a soft CTA back to `/#menu` or `/about#contact`.

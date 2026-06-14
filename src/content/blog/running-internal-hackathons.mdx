@@ -1,0 +1,97 @@
+---
+title: "How to run an internal hackathon that actually goes somewhere"
+description: "Most corporate hackathons produce a weekend of energy and a graveyard of demos. The ones that stick do boring work up front, and even more boring work after the demos. This guide is that work."
+date: 2026-06-11
+category: "Field Notes"
+order: 5
+draft: false
+---
+
+import ProsePullQuote from "../../components/ProsePullQuote.astro";
+
+Most corporate hackathons produce a weekend of energy and a graveyard of demos. The ones that stick spend organizer time on two unglamorous things: clarity before, and a funded path after. Here is that work.
+
+## 1. The honest baseline
+
+Run well, you get ideas, cross-team trust, and hands-on time with new tools. Run poorly, you burn goodwill and leadership writes off hackathons for years.
+
+The research is blunt ([Nolte et al., IEEE 2020](https://doi.org/10.1109/TSE.2018.2862550); [Pe-Than et al., CSCW 2022](https://doi.org/10.1007/s10606-021-09408-9)). About 35% of projects show any follow-up activity. About 5% are still alive five months later. The bottleneck is rarely the weekend. It is the planning before and the follow-through after.
+
+The hackathon is the cheap part. The expensive part is the funded path that turns good demos into tools people use.
+
+<ProsePullQuote cite="Benjamin Levick, Head of Internal AI, Ramp">
+Most companies wait for an executive mandate and formal funding before starting. We had conceptual support and a culture where people could lend their time freely. That was enough.
+</ProsePullQuote>
+
+## 2. Pick one falsifiable goal
+
+Decide why you are running this before you pick a date or theme. That choice shapes who is invited, how long it runs, and what gets judged.
+
+An event that is at once an innovation engine, a recruiting stunt, and a marketing moment usually fails at all of them. Pick the primary goal; treat the rest as side benefits.
+
+> **Make it falsifiable**
+>
+> Write the goal so you could be wrong. "Increase engagement" is not measurable. "At least 60% of the org participates, and three projects enter a real backlog within 30 days" is. Without a number, sponsors cannot tell if it worked.
+
+## 3. What you're really moving: skill, not output
+
+For AI hackathons, the output that lasts is not the demo deck. It is people climbing a capability curve, and the payoff shows up months later.
+
+| Level | Name | What it looks like |
+|-------|------|--------------------|
+| L0 | Occasional chat user | Pastes the odd question into a chatbot. No workflow has changed. |
+| L1 | Dabbler | Has tried a custom GPT or coding agent. Sees the possibility, hasn't made it repeatable. |
+| L2 | Workflow automator | Built an app or agent that automates part of their own job, with a real trigger and a human checkpoint. |
+| L3 | Systems builder | Builds the connectors and templates that raise everyone else's ceiling. |
+
+Design for moving the broad middle from L1 to L2: one person, one repeatable workflow. Expect only 10-20% of the org to build agents themselves. Everyone else wins when they can install what builders ship.
+
+## 4. Format and duration
+
+Most corporate teams land on about 48 hours across three calendar days: kick off Wednesday afternoon, checkpoint mid-week, present and judge on day three. Cap demos at ten minutes; short slots force clarity. End to end, expect 30-40 days to organize.
+
+One caution: programs that glorify sleep deprivation get a loud weekend and a narrow crowd. If you want non-engineers and caregivers in the room, skip the overnight.
+
+## 5. The 5% problem: life after the demo
+
+Most playbooks stop at the awards slide. Inboxes refill, and within a quarter the projects are dead. Treat continuation as a system, not a hope: capture demos and the contact list before the weekend ends, define how a promising build earns a sponsor and a backlog slot, publish reusable workflows so one person's weekend build becomes someone else's Tuesday install, and check in at 30, 60, and 90 days.
+
+<ProsePullQuote cite="operating pattern behind programs that keep hackathon output alive">
+Build from the center, drive from the spokes.
+</ProsePullQuote>
+
+A small central team owns the platform, connectors, and enablement. Functional teams build on top and send requirements back. Projects ride shared rails instead of dying as one-offs.
+
+## 6. How these go wrong
+
+- Themes stay vague, or stakeholders bolt on requirements the week before.
+- No mentors, so non-technical teams stall on setup while engineers race ahead.
+- No afterlife: winners announced, then silence.
+- Built for coders only, so the largest pool of pain never shows up.
+- Access never lands, so the demo only ever ran on someone's laptop.
+
+## 7. How the best programs do it
+
+**Microsoft's Global Hackathon** grew from a 2014 culture experiment into the largest private hackathon reported: open to all employees, with work allowed before and after the weekend. Leadership treats it as a way of working, not an annual party.
+
+**[Ramp](https://engineering.ramp.com/)** is the more copyable AI case. It started with one part-time PM, little budget, and a culture where people could lend time without a mandate.
+
+| Stat | Value |
+|------|-------|
+| Active on AI tools | 99.5% of the team |
+| Internal apps shipped in six weeks | 1,500+ |
+| Non-engineers in one hackathon | 700, coached by ~100 engineers |
+
+The lesson that holds at any scale: investment followed results at Ramp, not the reverse. Start before the perfect budget, make L1 frictionless, and plan to replace your tools every few months. Problems stay; vendors and models churn.
+
+## 8. A starting checklist
+
+- [ ] Write the one primary goal as a measurable claim
+- [ ] Name owners for comms, judging, mentoring, logistics, and infra
+- [ ] Frame themes as business problems, and trial-run them for feasibility
+- [ ] File access, SSO, and data requests early, with a manual fallback
+- [ ] Open by restating the goal; checkpoint at the mid-point
+- [ ] Judge on real use and reusability, not demo polish
+- [ ] Capture outputs and route winners onto a funded roadmap
+
+**Takeaway:** the weekend is the visible part. Spend your effort on the parts most teams skip, and you get a company that works differently, not a fond memory.
