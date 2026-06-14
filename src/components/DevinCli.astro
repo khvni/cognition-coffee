@@ -5,15 +5,20 @@
  * question and showing a fake "working" loader between steps. Every answer is
  * sent to PostHog (events + person properties). Degrades to a real <form> with
  * no JS. Blue-tinted phosphor keeps it on-brand instead of the cliche green.
+ *
+ * Skeuomorphism is pure CSS/SVG over a crisp, editable DOM terminal: a chunky
+ * bezel, screen vignette + curvature glare, animated scanline roll, flicker,
+ * phosphor bloom, and chromatic aberration. Effects are decorative overlays
+ * (pointer-events: none) so real input + accessibility are untouched, and all
+ * motion is disabled under prefers-reduced-motion.
  */
 ---
 
-<div class="cli-bezel grain">
+<div class="cli-bezel">
   <div class="cli-bar">
-    <span class="cli-dot"></span>
-    <span class="cli-dot"></span>
-    <span class="cli-dot"></span>
-    <span class="cli-title">devin@cognition-coffee</span>
+    <span class="cli-led" aria-hidden="true"></span>
+    <span class="cli-title">devin &middot; vt-220</span>
+    <span class="cli-meta" aria-hidden="true">online</span>
   </div>
   <div class="cli-frame">
     <div class="cli-scroll" id="cli-scroll">
@@ -38,6 +43,8 @@
         </form>
       </noscript>
     </div>
+    <div class="cli-roll" aria-hidden="true"></div>
+    <div class="cli-glare" aria-hidden="true"></div>
   </div>
 </div>
 
@@ -133,59 +140,100 @@
 </script>
 
 <style>
+  /* ---- Physical bezel: chunky dark plastic with beveled edges ---- */
   .cli-bezel {
     position: relative;
-    border-radius: 16px;
-    padding: 13px;
-    background: linear-gradient(155deg, #1b1d24 0%, #0c0d11 100%);
+    border-radius: 18px;
+    padding: 16px 16px 18px;
+    background:
+      linear-gradient(155deg, #23262e 0%, #14161c 38%, #0a0b0f 100%);
     box-shadow:
-      0 32px 72px -38px rgba(0, 0, 0, 0.8),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      inset 0 -2px 6px rgba(0, 0, 0, 0.6);
+      0 38px 80px -40px rgba(0, 0, 0, 0.85),
+      inset 0 2px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -3px 8px rgba(0, 0, 0, 0.7),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.5);
   }
   .cli-bar {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 1px 4px 10px;
+    gap: 9px;
+    padding: 1px 4px 11px;
   }
-  .cli-dot {
-    width: 9px;
-    height: 9px;
+  .cli-led {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #353a46;
+    background: var(--color-blue);
+    box-shadow: 0 0 8px 1px rgba(49, 124, 255, 0.8);
   }
   .cli-title {
-    margin-left: 8px;
     font-family: var(--font-mono);
     font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #767d8c;
+  }
+  .cli-meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #6b7180;
+    color: #4f94ff;
   }
+
+  /* ---- Screen: deep glass with vignette + inset curvature ---- */
   .cli-frame {
     position: relative;
     overflow: hidden;
-    border-radius: 9px;
-    background: radial-gradient(125% 120% at 50% 25%, #11151e 0%, #07080c 100%);
+    border-radius: 10px;
+    background: radial-gradient(125% 120% at 50% 22%, #121722 0%, #070a10 70%, #04050a 100%);
+    box-shadow:
+      inset 0 0 70px 8px rgba(0, 0, 0, 0.85),
+      inset 0 0 0 1px rgba(120, 160, 255, 0.05);
+    animation: cli-flicker 5.5s infinite steps(60);
   }
+  /* static scanlines */
   .cli-frame::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+    z-index: 4;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.26) 0 1px, transparent 1px 3px);
     mix-blend-mode: multiply;
   }
+  /* curved-glass top sheen */
+  .cli-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(140% 90% at 50% -25%, rgba(150, 185, 255, 0.1) 0%, transparent 45%);
+  }
+
   .cli-scroll {
+    position: relative;
+    z-index: 1;
     height: clamp(280px, 38vh, 360px);
     overflow-y: auto;
-    padding: 16px 18px;
+    padding: 18px 20px;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     line-height: 1.75;
     color: #bcd2ff;
-    text-shadow: 0 0 8px rgba(49, 124, 255, 0.35);
+    text-shadow:
+      0 0 1px rgba(150, 185, 255, 0.9),
+      0 0 9px rgba(49, 124, 255, 0.45),
+      0 0 22px rgba(49, 124, 255, 0.18);
+  }
+  /* chromatic aberration + phosphor on streamed lines */
+  .cli-stream :global(p) {
+    text-shadow:
+      -0.6px 0 0 rgba(255, 70, 90, 0.28),
+      0.6px 0 0 rgba(60, 220, 255, 0.28),
+      0 0 9px rgba(49, 124, 255, 0.4);
   }
   .cli-stream :global(.cli-you) {
     color: #eaf1ff;
@@ -193,6 +241,7 @@
   .cli-stream :global(.cli-work) {
     color: #7fa8ff;
   }
+
   .cli-line {
     display: flex;
     align-items: center;
@@ -211,6 +260,27 @@
     font: inherit;
     caret-color: var(--color-blue);
   }
+
+  /* rolling scanline band sweeping down the screen */
+  .cli-roll {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 38%;
+    pointer-events: none;
+    z-index: 3;
+    background: linear-gradient(180deg, transparent, rgba(120, 165, 255, 0.05) 60%, transparent);
+    animation: cli-roll 7s linear infinite;
+  }
+  /* diagonal glass glare */
+  .cli-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0%, transparent 22%, transparent 78%, rgba(255, 255, 255, 0.03) 100%);
+  }
+
   .cli-fallback {
     color: #bcd2ff;
   }
@@ -228,8 +298,41 @@
     font: inherit;
     padding: 0.4rem;
   }
+
+  @keyframes cli-roll {
+    0% {
+      transform: translateY(-110%);
+    }
+    100% {
+      transform: translateY(320%);
+    }
+  }
+  @keyframes cli-flicker {
+    0%, 96%, 100% {
+      opacity: 1;
+    }
+    97% {
+      opacity: 0.96;
+    }
+    98% {
+      opacity: 0.99;
+    }
+    99% {
+      opacity: 0.94;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .cli-frame {
+      animation: none;
+    }
+    .cli-roll {
+      display: none;
+    }
     .cli-scroll {
+      text-shadow: 0 0 6px rgba(49, 124, 255, 0.3);
+    }
+    .cli-stream :global(p) {
       text-shadow: none;
     }
   }
