@@ -22,7 +22,7 @@ export const BIO = {
 export const PROOF_POINTS = [
   { value: "30+", label: "MTC chapters scaled in 18 months" },
   { value: "1,800", label: "Berkeley CS 61B students taught" },
-  { value: "6M+", label: "views written on Quora as a teen" },
+  { value: "7M+", label: "Quora views as a teen (under a pseudonym)" },
   { value: "Top 200", label: "global Devin power user (Max plan)" },
   { value: "6 days", label: "idea to live product at Bloom" },
 ];
