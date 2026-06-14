@@ -3,14 +3,17 @@
  * DevinCli — a skeuomorphic CRT "Devin CLI" hero centerpiece. Walks a visitor
  * through a short discovery prompt (name -> curiosity -> feedback), typing each
  * question and showing a fake "working" loader between steps. Every answer is
- * sent to PostHog (events + person properties). Degrades to a real <form> with
- * no JS. Blue-tinted phosphor keeps it on-brand instead of the cliche green.
+ * sent to PostHog (events + person properties).
  *
- * Skeuomorphism is pure CSS/SVG over a crisp, editable DOM terminal: a chunky
- * bezel, screen vignette + curvature glare, animated scanline roll, flicker,
- * phosphor bloom, and chromatic aberration. Effects are decorative overlays
- * (pointer-events: none) so real input + accessibility are untouched, and all
- * motion is disabled under prefers-reduced-motion.
+ * Two presentation tiers:
+ *  - Base: an accessible DOM terminal with CSS skeuomorphism (scanlines, glow,
+ *    vignette, glare). This is the source of truth, the no-JS <form> fallback,
+ *    and the reduced-motion / no-WebGL experience.
+ *  - Enhanced: a WebGL2 CRT shader (src/lib/crt.ts) renders the live terminal
+ *    onto curved glass with barrel distortion, bloom, chromatic aberration,
+ *    scanline roll, vignette and flicker. The DOM stays underneath for input +
+ *    accessibility; the canvas is decorative and gated behind feature/motion
+ *    detection so it never breaks the form.
  */
 ---
 
@@ -45,11 +48,13 @@
     </div>
     <div class="cli-roll" aria-hidden="true"></div>
     <div class="cli-glare" aria-hidden="true"></div>
+    <canvas id="crt-gl" aria-hidden="true"></canvas>
   </div>
 </div>
 
 <script>
   import posthog from "posthog-js";
+  import { startCrt } from "../lib/crt";
 
   const STEPS = [
     { id: "name", q: "what should I call you?" },
@@ -136,6 +141,51 @@
       await sleep(220);
       await ask();
     })();
+
+    // Enhanced tier: render the live DOM terminal onto a WebGL CRT screen.
+    const glCanvas = document.getElementById("crt-gl") as HTMLCanvasElement | null;
+    const frameEl = box.parentElement;
+    if (glCanvas && frameEl && !reduce) {
+      const colorFor = (cls: string) =>
+        cls.includes("cli-you") ? "#eaf1ff" : cls.includes("cli-work") ? "#7fa8ff" : "#bcd2ff";
+
+      const paint = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
+        ctx.fillStyle = "#070a10";
+        ctx.fillRect(0, 0, w, h);
+        ctx.textBaseline = "top";
+        ctx.font = "14px 'Geist Mono Variable', ui-monospace, monospace";
+        const lh = 22;
+        const padX = 18;
+        const padY = 16;
+        const rows: { text: string; color: string }[] = [];
+        for (const el of Array.from(out.children)) {
+          rows.push({ text: el.textContent || "", color: colorFor(el.className) });
+        }
+        if (!form.hidden) rows.push({ text: `› ${input.value}`, color: "#eaf1ff" });
+        const maxRows = Math.max(1, Math.floor((h - padY * 2) / lh));
+        const shown = rows.slice(Math.max(0, rows.length - maxRows));
+        ctx.shadowColor = "rgba(49,124,255,0.55)";
+        ctx.shadowBlur = 8;
+        let y = padY;
+        for (const r of shown) {
+          ctx.fillStyle = r.color;
+          ctx.fillText(r.text, padX, y);
+          y += lh;
+        }
+        ctx.shadowBlur = 0;
+        if (!form.hidden && Math.floor(performance.now() / 500) % 2 === 0) {
+          const cw = ctx.measureText(`› ${input.value}`).width;
+          ctx.fillStyle = "#317cff";
+          ctx.fillRect(padX + cw + 2, y - lh, 9, 16);
+        }
+      };
+
+      const handle = startCrt(glCanvas, paint);
+      if (handle) {
+        frameEl.classList.add("gl-active");
+        frameEl.addEventListener("click", () => input.focus());
+      }
+    }
   }
 </script>
 
@@ -145,8 +195,7 @@
     position: relative;
     border-radius: 18px;
     padding: 16px 16px 18px;
-    background:
-      linear-gradient(155deg, #23262e 0%, #14161c 38%, #0a0b0f 100%);
+    background: linear-gradient(155deg, #23262e 0%, #14161c 38%, #0a0b0f 100%);
     box-shadow:
       0 38px 80px -40px rgba(0, 0, 0, 0.85),
       inset 0 2px 0 rgba(255, 255, 255, 0.07),
@@ -193,7 +242,6 @@
       inset 0 0 0 1px rgba(120, 160, 255, 0.05);
     animation: cli-flicker 5.5s infinite steps(60);
   }
-  /* static scanlines */
   .cli-frame::after {
     content: "";
     position: absolute;
@@ -203,7 +251,6 @@
     background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.26) 0 1px, transparent 1px 3px);
     mix-blend-mode: multiply;
   }
-  /* curved-glass top sheen */
   .cli-frame::before {
     content: "";
     position: absolute;
@@ -228,7 +275,6 @@
       0 0 9px rgba(49, 124, 255, 0.45),
       0 0 22px rgba(49, 124, 255, 0.18);
   }
-  /* chromatic aberration + phosphor on streamed lines */
   .cli-stream :global(p) {
     text-shadow:
       -0.6px 0 0 rgba(255, 70, 90, 0.28),
@@ -261,7 +307,6 @@
     caret-color: var(--color-blue);
   }
 
-  /* rolling scanline band sweeping down the screen */
   .cli-roll {
     position: absolute;
     inset-inline: 0;
@@ -272,13 +317,39 @@
     background: linear-gradient(180deg, transparent, rgba(120, 165, 255, 0.05) 60%, transparent);
     animation: cli-roll 7s linear infinite;
   }
-  /* diagonal glass glare */
   .cli-glare {
     position: absolute;
     inset: 0;
     pointer-events: none;
     z-index: 6;
     background: linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0%, transparent 22%, transparent 78%, rgba(255, 255, 255, 0.03) 100%);
+  }
+
+  /* ---- WebGL CRT canvas (enhanced tier) ---- */
+  #crt-gl {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+  }
+  .cli-frame.gl-active #crt-gl {
+    display: block;
+  }
+  /* When the shader runs, the DOM terminal stays for input + a11y but goes
+     visually transparent, and the CSS effects defer to the shader. */
+  .cli-frame.gl-active .cli-scroll {
+    opacity: 0;
+  }
+  .cli-frame.gl-active {
+    animation: none;
+  }
+  .cli-frame.gl-active::after,
+  .cli-frame.gl-active::before,
+  .cli-frame.gl-active .cli-roll,
+  .cli-frame.gl-active .cli-glare {
+    display: none;
   }
 
   .cli-fallback {
