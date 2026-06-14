@@ -41,7 +41,7 @@ export const PILLARS = [
     title: "I make hard things shippable.",
     body:
       "TA'd Berkeley's CS 61B (1,800 students, 90 staff) and ran weekly MTC leadership " +
-      "lectures. 6M+ Quora views as a teen. I turn complex tools into things people actually use.",
+      "lectures. 7M+ Quora views as a teen. I turn complex tools into things people actually use.",
   },
   {
     verb: "Connect",

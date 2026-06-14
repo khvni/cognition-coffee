@@ -107,7 +107,7 @@ export const INITIATIVES: Initiative[] = [
     proofPoints: [
       "TA'd Berkeley CS 61B \u2014 1,800 students, 90 course staff, one of the largest CS courses in the country",
       "Ran weekly MTC Uni leadership lectures that trained chapter leads across 30+ campuses",
-      "6M+ views on Quora as a teen \u2014 teaching complex concepts to broad audiences is a native skill",
+      "7M+ views on Quora as a teen \u2014 teaching complex concepts to broad audiences is a native skill",
       "Power user of Devin (Max plan, top-200 globally) \u2014 the curriculum would be built by someone who actually uses the product daily",
     ],
   },
