@@ -1,0 +1,20 @@
+---
+/**
+ * PostHog — product analytics + session replay, loaded site-wide via Base.
+ * Active only in production builds where PUBLIC_POSTHOG_KEY is set (see
+ * .env.example). Autocapture, pageviews, and replay are configured in the
+ * PostHog project settings; the public key is safe to ship to the client.
+ */
+---
+
+<script>
+  import posthog from "posthog-js";
+
+  const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+  if (import.meta.env.PROD && key) {
+    posthog.init(key, {
+      api_host: import.meta.env.PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+      person_profiles: "identified_only",
+    });
+  }
+</script>
