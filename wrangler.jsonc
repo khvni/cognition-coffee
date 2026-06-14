@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cognition-coffee",
+  "compatibility_date": "2026-06-01",
+  // Static Astro build output. `wrangler pages deploy` uploads this directory.
+  "pages_build_output_dir": "./dist"
+}

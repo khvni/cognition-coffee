@@ -10,6 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "og": "node scripts/gen-og.mjs",
+    "deploy": "astro build && wrangler pages deploy dist --project-name=cognition-coffee",
     "slop": "deslop -b main",
     "slop:score": "deslop score"
   },
@@ -25,6 +27,7 @@
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
-    "deslop": "github:dabit3/deslop"
+    "deslop": "github:dabit3/deslop",
+    "wrangler": "^4.100.0"
   }
 }

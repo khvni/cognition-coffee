@@ -16,7 +16,12 @@ const dateStr = post.date.toLocaleDateString("en-US", {
 });
 ---
 
-<Base title={post.title} description={post.description}>
+<Base
+  title={post.title}
+  description={post.description}
+  ogType="article"
+  publishedTime={post.date.toISOString()}
+>
   <article class="mx-auto w-full max-w-2xl px-5 py-20 sm:px-8 sm:py-28">
     <header class="mb-12">
       <div class="eyebrow mb-5 flex items-center gap-3">
