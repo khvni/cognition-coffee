@@ -69,8 +69,8 @@ export function readSession(): Session {
     const parsed = JSON.parse(raw) as Partial<Session>;
     return {
       email: typeof parsed.email === "string" ? parsed.email : undefined,
-      loggedIn: parsed.loggedIn === true,
-      firstVisit: parsed.firstVisit !== false,
+      loggedIn: parsed.loggedIn ?? false,
+      firstVisit: parsed.firstVisit ?? true,
     };
   } catch {
     return { ...DEFAULT_SESSION };
