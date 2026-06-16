@@ -1,0 +1,228 @@
+---
+/**
+ * Blog app body — field notes as an in-OS reader. The list is built from the
+ * blog content collection (one source of truth with /blog), and each row is a
+ * real link to the canonical post for no-JS. With JS, opening a post fetches
+ * that same canonical page and renders its prose inside the window, so the
+ * reader and the route never drift. Back returns to the list.
+ */
+import { getCollection } from "astro:content";
+import { getReadingTime } from "../../lib/reading-time";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order || +b.data.date - +a.data.date,
+);
+
+const index = posts.map((post) => ({
+  slug: post.id,
+  href: `/blog/${post.id}/`,
+  title: post.data.title,
+  description: post.data.description,
+  category: post.data.category,
+  date: post.data.date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
+  minutes: getReadingTime(post.body),
+}));
+---
+
+<div class="app app-blog" data-blog>
+  <ol class="blog-list" data-blog-list>
+    {
+      index.map((p) => (
+        <li>
+          <a
+            class="blog-row"
+            href={p.href}
+            data-blog-open
+            data-title={p.title}
+            data-meta={`${p.category} · ${p.date} · ${p.minutes} min`}
+          >
+            <span class="blog-meta">{p.category} &middot; {p.date} &middot; {p.minutes} min</span>
+            <span class="blog-title">{p.title}</span>
+            <span class="blog-desc">{p.description}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  <article class="blog-reader" data-blog-reader hidden>
+    <button type="button" class="blog-back" data-blog-back>&larr; all field notes</button>
+    <span class="blog-meta" data-reader-meta></span>
+    <h3 class="blog-reader-title" data-reader-title></h3>
+    <div class="reader-prose" data-reader-body aria-live="polite"></div>
+  </article>
+</div>
+
+<script>
+  function initBlog(root: HTMLElement) {
+    const list = root.querySelector<HTMLElement>("[data-blog-list]");
+    const reader = root.querySelector<HTMLElement>("[data-blog-reader]");
+    const metaEl = root.querySelector<HTMLElement>("[data-reader-meta]");
+    const titleEl = root.querySelector<HTMLElement>("[data-reader-title]");
+    const bodyEl = root.querySelector<HTMLElement>("[data-reader-body]");
+    const back = root.querySelector<HTMLElement>("[data-blog-back]");
+    if (!list || !reader || !metaEl || !titleEl || !bodyEl || !back) return;
+
+    const showList = () => {
+      reader.hidden = true;
+      list.hidden = false;
+    };
+
+    async function openPost(link: HTMLAnchorElement) {
+      metaEl.textContent = link.dataset.meta ?? "";
+      titleEl.textContent = link.dataset.title ?? "";
+      bodyEl.textContent = "loading…";
+      list.hidden = true;
+      reader.hidden = false;
+      reader.scrollTop = 0;
+      try {
+        const res = await fetch(link.href);
+        const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+        const prose = doc.querySelector(".prose-coffee");
+        bodyEl.innerHTML = prose ? prose.innerHTML : "";
+        if (!prose) location.href = link.href;
+      } catch {
+        location.href = link.href;
+      }
+    }
+
+    list.querySelectorAll<HTMLAnchorElement>("[data-blog-open]").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        openPost(link);
+      });
+    });
+    back.addEventListener("click", showList);
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-blog]").forEach(initBlog);
+</script>
+
+<style>
+  .app {
+    padding: 1.4rem 1.5rem 2rem;
+    font-family: var(--font-sans);
+  }
+  .blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .blog-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-card);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+  }
+  .blog-row:hover {
+    border-color: color-mix(in srgb, var(--color-blue) 45%, var(--color-line));
+  }
+  .blog-meta {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+  .blog-title {
+    font-family: var(--font-serif);
+    font-size: 1.12rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .blog-desc {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--color-slate);
+  }
+
+  .blog-back {
+    margin-bottom: 0.9rem;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-blue);
+    cursor: pointer;
+  }
+  .blog-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .blog-reader-title {
+    margin: 0.4rem 0 1rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+</style>
+
+<style is:global>
+  .app-blog .reader-prose {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+  .app-blog .reader-prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    margin: 1.8rem 0 0.6rem;
+  }
+  .app-blog .reader-prose h3 {
+    font-family: var(--font-serif);
+    font-size: 1.12rem;
+    margin: 1.4rem 0 0.5rem;
+  }
+  .app-blog .reader-prose p {
+    margin: 0 0 1rem;
+  }
+  .app-blog .reader-prose a {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .app-blog .reader-prose blockquote {
+    border-left: 2px solid var(--color-blue);
+    padding-left: 1rem;
+    margin: 1.4rem 0;
+    color: var(--color-slate);
+    font-style: italic;
+  }
+  .app-blog .reader-prose ul,
+  .app-blog .reader-prose ol {
+    margin: 0 0 1rem 1.2rem;
+    list-style: disc;
+  }
+  .app-blog .reader-prose ol {
+    list-style: decimal;
+  }
+  .app-blog .reader-prose li {
+    margin: 0.3rem 0;
+  }
+  .app-blog .reader-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--color-blue-soft);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+  .app-blog .reader-prose hr {
+    border: none;
+    border-top: 1px solid var(--color-line);
+    margin: 2rem 0;
+  }
+</style>

@@ -1,13 +1,18 @@
 ---
 /**
- * Desktop — the post-login cloud-VM shell. Renders the icon grid, a window per
- * app (bodies are filled in Phase 4; placeholders for now), and the dock with a
- * running-app indicator plus the logged-in identity and a log-out control. All
- * window behaviour is delegated to wm.ts; this component only lays out the
- * surfaces and wires the dock + session chrome. Aesthetic polish is Phase 6.
+ * Desktop — the post-login cloud-VM shell. Renders the icon grid, one window per
+ * app (each body is a component that reuses the canonical page's data), and the
+ * dock with a running-app indicator plus the logged-in identity and a log-out
+ * control. All window behaviour is delegated to wm.ts; this component lays out
+ * the surfaces and wires the dock + session chrome. Aesthetic polish is Phase 6.
  */
-import { APPS } from "../lib/os";
+import { APPS, getApp } from "../lib/os";
 import Window from "./Window.astro";
+import MenuApp from "./apps/MenuApp.astro";
+import BlogApp from "./apps/BlogApp.astro";
+import CommunityApp from "./apps/CommunityApp.astro";
+import AboutApp from "./apps/AboutApp.astro";
+import BootTerminal from "./BootTerminal.astro";
 ---
 
 <div class="desk" data-desktop>
@@ -23,15 +28,13 @@ import Window from "./Window.astro";
   </div>
 
   <div class="win-layer" data-win-layer>
-    {
-      APPS.map((app) => (
-        <Window app={app}>
-          <div class="win-placeholder">
-            <p>{app.title} is coming online&hellip;</p>
-          </div>
-        </Window>
-      ))
-    }
+    <Window app={getApp("menu")}><MenuApp /></Window>
+    <Window app={getApp("blog")}><BlogApp /></Window>
+    <Window app={getApp("community")}><CommunityApp /></Window>
+    <Window app={getApp("about")}><AboutApp /></Window>
+    <Window app={getApp("terminal")}>
+      <div class="win-terminal"><BootTerminal variant="app" /></div>
+    </Window>
   </div>
 
   <footer class="dock" aria-label="Dock">
@@ -144,14 +147,8 @@ import Window from "./Window.astro";
     pointer-events: auto;
   }
 
-  .win-placeholder {
-    display: grid;
-    place-items: center;
-    height: 100%;
-    padding: 2rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-ink-soft);
+  .win-terminal {
+    padding: 0.8rem;
   }
 
   .dock {

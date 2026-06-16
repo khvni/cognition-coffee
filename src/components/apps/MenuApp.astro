@@ -1,0 +1,95 @@
+---
+/**
+ * Menu app body — the three community initiatives as a scannable program list.
+ * Source of truth is src/data/initiatives.ts; each card deep-links to the
+ * canonical /menu/<slug> page so the window and the full route never diverge.
+ */
+import { INITIATIVES } from "../../data/initiatives";
+---
+
+<div class="app app-menu">
+  <p class="app-lead">
+    Three programs that turn Devin's engineer into a developer community. Pick a roast.
+  </p>
+  <ul class="menu-list">
+    {
+      INITIATIVES.map((it) => (
+        <li class="menu-card">
+          <span class="menu-index">{it.index}</span>
+          <div class="menu-body">
+            <span class="eyebrow">{it.roast}</span>
+            <h3 class="menu-title">{it.title}</h3>
+            <p class="menu-tagline">{it.tagline}</p>
+            <a class="menu-open" href={`/menu/${it.slug}`}>open program &rarr;</a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .app {
+    padding: 1.4rem 1.5rem 2rem;
+    font-family: var(--font-sans);
+  }
+  .app-lead {
+    margin: 0 0 1.2rem;
+    max-width: 46ch;
+    font-family: var(--font-serif);
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: var(--color-slate);
+  }
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .menu-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-card);
+    transition: border-color 0.15s ease;
+  }
+  .menu-card:hover {
+    border-color: color-mix(in srgb, var(--color-blue) 45%, var(--color-line));
+  }
+  .menu-index {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-blue);
+    padding-top: 0.15rem;
+  }
+  .menu-title {
+    margin: 0.2rem 0 0.3rem;
+    font-family: var(--font-serif);
+    font-size: 1.18rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .menu-tagline {
+    margin: 0 0 0.7rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--color-slate);
+  }
+  .menu-open {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+  .menu-open:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

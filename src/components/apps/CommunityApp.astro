@@ -1,0 +1,85 @@
+---
+/**
+ * Community app body — the live event network as "local nodes in the Cognition
+ * cloud". Reuses Globe + EventList and the same getEvents() / COMMUNITY_STATS
+ * data as the canonical /community page, so there is one source of truth.
+ */
+import { getEvents, COMMUNITY_STATS } from "../../lib/events";
+import Globe from "../Globe.astro";
+import EventList from "../EventList.astro";
+
+const events = await getEvents();
+---
+
+<div class="app app-community">
+  <ul class="comm-stats">
+    {
+      COMMUNITY_STATS.map((s) => (
+        <li>
+          <b>{s.value}</b>
+          <span>{s.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="comm-globe">
+    <Globe events={events} />
+  </div>
+
+  <EventList events={events} />
+
+  <a class="comm-discord" href="https://discord.gg/GjCYNGChrw" target="_blank" rel="noopener">
+    join the discord &rarr;
+  </a>
+</div>
+
+<style>
+  .app {
+    padding: 1.4rem 1.5rem 2rem;
+    font-family: var(--font-sans);
+  }
+  .comm-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.6rem;
+    margin: 0 0 1.4rem;
+    padding: 0;
+    list-style: none;
+  }
+  .comm-stats li {
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-card);
+  }
+  .comm-stats b {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--color-blue);
+  }
+  .comm-stats span {
+    font-size: 0.74rem;
+    line-height: 1.3;
+    color: var(--color-slate);
+  }
+  .comm-globe {
+    max-width: 300px;
+    margin: 0 auto 1.4rem;
+  }
+  .comm-discord {
+    display: inline-block;
+    margin-top: 1.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+  .comm-discord:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
