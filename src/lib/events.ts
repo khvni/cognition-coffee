@@ -1,12 +1,12 @@
 /**
- * COMMUNITY EVENTS — mock data + a Luma-ready adapter.
+ * COMMUNITY EVENTS — placeholder data + a Luma-ready adapter.
  *
- * Decision: ship with simulated data to demonstrate the vision (Cursor-style
- * globe + chronological RSVP list), but keep the data behind an adapter so it
- * can later be swapped to pull from the real Devin Luma calendar
- * (https://luma.com/devin) with zero UI changes.
+ * Ships with simulated events to demonstrate the layout (globe + chronological
+ * RSVP list), kept behind an adapter so it can later swap to the real Luma
+ * calendar with zero UI changes. To go live: implement `lumaProvider` and
+ * switch `getEvents`.
  *
- * To go live later: implement `lumaProvider` and switch `getEvents`.
+ * TODO: copy — owner replaces placeholder events/stats/quotes with final data.
  */
 
 export type CommunityEvent = {
