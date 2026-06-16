@@ -5,10 +5,11 @@ Read this fully before touching code.
 ## The one-paragraph brief
 
 **The Cognition Coffee Company** is a concept site presenting a developer-community
-strategy for Cognition's Devin. The brand is a **balanced hybrid** of an artisan coffee
-roaster and an applied AI lab, executed in Cognition/Devin's visual language (Devin blue
-`#317CFF`, wax-paper cream `#EDECEB`, editorial serif headlines, mono accents, the Devin
-otter, a VT100 terminal motif).
+strategy for Cognition's Devin. It's built as a **PostHog-style mock OS**: a desktop
+with draggable windows plus a normal arranged-pages "site" view, toggled at runtime.
+The look is **subdued** — a warm off-white canvas, near-black ink, and **Devin blue
+`#317CFF` as the single accent** — with the Devin otter as an ASCII wallpaper. Stack is
+**Gatsby (React + GraphQL + MDX)**; all page content is authored in `.md`/`.mdx`.
 
 ## Required skills & modes
 
@@ -40,16 +41,18 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 
 ## Golden rules
 
-1. **The design system is law.** All colors, fonts, radii, and motifs come from
-   `src/styles/global.css` (`@theme` tokens) and the components in `src/components/`.
-   Never hardcode a hex that already exists as a token. Use `var(--color-blue)`, etc.
-2. **Reuse the brand primitives.** `WaxPaper`, `Section`, `Terminal`, `OtterAscii`,
-   `Hexagon`, `Nav`, `Footer` already exist. Compose them; don't reinvent.
+1. **The design system is law.** Colors, fonts, radii, and shadows are Tailwind tokens
+   in `tailwind.config.js` (`theme.extend`); base/prose styles live in
+   `src/styles/global.css`. Never hardcode a hex that exists as a token — use the
+   classes (`text-accent-ink`, `border-accent`, `bg-canvas`) or `theme("colors.x")`.
+2. **Reuse the primitives.** The OS/site shell is built from `Wrapper`, `Desktop`,
+   `AppWindow`, `TaskBar`, `ModeToggle`, `Otter`, `AppIcon`, and the MDX shortcodes
+   (`ProsePullQuote`, `ProseWaxFigure`). Compose them; don't reinvent.
 3. **Verified copy only.** Every metric about Ali is real and lives in `src/data/`.
    Do **not** invent stats, dates, or achievements. If unsure, leave a `TODO` and ask.
-4. **Keep it editorial.** Headlines + blog body use the **serif** (`font-serif`).
-   UI/labels use **sans** (`font-sans`). Eyebrows/terminal/code use **mono** (`font-mono`).
-   Highlighting text must reveal Devin blue (already set via `::selection`).
+4. **Keep it subdued.** Headlines + UI use the **sans** (`font-sans`, Inter).
+   Eyebrows/labels/code use **mono** (`font-mono`, IBM Plex Mono). The accent is Devin
+   blue, applied sparingly; highlighting text must reveal it (set via `::selection`).
 5. **Scope your changes.** Touch only the files your task needs, so parallel work
    doesn't collide.
 6. **It must build.** Run `npm run build` before you finish. Zero errors. Fix warnings
@@ -59,15 +62,17 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 
 ## Conventions
 
-- **`\u` escapes**: Astro only interprets `\u....` inside JS expressions, **not** in
-  template text or attributes. In templates use the literal character (`·`, `—`, `☕`)
-  or an HTML entity (`&middot;`, `&mdash;`).
-- **Astro content**: blog posts are MDX in `src/content/blog/`; schema in
-  `src/content.config.ts`. Route is `src/pages/blog/[...slug].astro` (slug = file id).
+- **Content**: page bodies are MDX in `content/pages/` (`/about`, `/community`, `/menu`)
+  and blog posts are MDX in `content/blog/`. Routes are generated in `gatsby-node.ts`
+  (slug = source filename via `fields.fileSlug`); `src/pages/index.tsx` and `blog.tsx`
+  are React pages. Plain markdown text takes literal characters (`·`, `—`, `☕`).
 - **Data lives in `src/data/` and `src/lib/`**, not inline in pages, so multiple pages
   share one source of truth.
-- **Images**: put static assets in `public/`. Optimize before committing. Prefer SVG
-  for marks/textures. Do not commit anything > ~500 KB without compressing.
+- **Images**: put static assets in `static/` (served at the site root). `public/` is
+  Gatsby **build output** — gitignored, wiped by `gatsby clean`; never put sources there.
+  Prefer SVG for marks/textures; compress anything > ~500 KB before committing.
+- **`@` alias**: `@/*` → `src/*`. It's configured in `tsconfig.json` **and** mirrored
+  into webpack via `onCreateWebpackConfig` in `gatsby-node.ts` — update both if it moves.
 - **Accessibility**: real `alt` text, semantic headings (one `<h1>` per page),
   visible focus states (already styled), color contrast AA.
 - **Responsive**: design mobile-first; test at 375px, 768px, 1280px.
@@ -89,4 +94,5 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 - [ ] Real, verified copy (or clearly-marked `TODO`)
 - [ ] Responsive at 375 / 768 / 1280
 - [ ] Accessible (headings, alt text, focus, contrast)
-- [ ] Selection highlight is Devin blue; serif/sans/mono used per role
+- [ ] Selection highlight is Devin blue; sans/mono used per role
+- [ ] `npm run build` (`gatsby build`) generates every route; both OS and site modes work

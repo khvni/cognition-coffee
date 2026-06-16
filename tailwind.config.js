@@ -7,15 +7,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Subdued, PostHog-inspired palette: warm off-white canvas, near-black ink,
-        // one restrained warm accent. Tweak from here.
+        // Subdued, PostHog-style canvas with Devin blue as the single accent.
+        // accent = brand blue for fills/selection/UI; accent-ink = darker blue
+        // for text/links so it clears AA contrast on the light canvas.
         canvas: "#eeefe9",
         panel: "#ffffff",
         ink: "#15171a",
         muted: "#5c6066",
         line: "#dadbd2",
-        accent: "#e3622a",
-        "accent-ink": "#b84a18",
+        accent: "#317cff",
+        "accent-ink": "#1f5ed8",
         wallpaper: "#d7d9cf",
       },
       fontFamily: {
