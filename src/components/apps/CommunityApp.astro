@@ -1,17 +1,21 @@
 ---
 /**
  * Community app body — the live event network as "local nodes in the Cognition
- * cloud". Reuses Globe + EventList and the same getEvents() / COMMUNITY_STATS
- * data as the canonical /community page, so there is one source of truth.
+ * cloud". Reuses EventList and the same getEvents() / COMMUNITY_STATS data as
+ * the canonical /community page, so there is one source of truth. The globe
+ * lives on the full page (deep-linked from the header) where it can size to a
+ * visible container; a hidden window has no width for it to paint into.
  */
 import { getEvents, COMMUNITY_STATS } from "../../lib/events";
-import Globe from "../Globe.astro";
 import EventList from "../EventList.astro";
 
 const events = await getEvents();
 ---
 
 <div class="app app-community">
+  <p class="app-lead">
+    Every meetup is a local node in the Cognition cloud. Find one near you.
+  </p>
   <ul class="comm-stats">
     {
       COMMUNITY_STATS.map((s) => (
@@ -22,10 +26,6 @@ const events = await getEvents();
       ))
     }
   </ul>
-
-  <div class="comm-globe">
-    <Globe events={events} />
-  </div>
 
   <EventList events={events} />
 
@@ -38,6 +38,14 @@ const events = await getEvents();
   .app {
     padding: 1.4rem 1.5rem 2rem;
     font-family: var(--font-sans);
+  }
+  .app-lead {
+    margin: 0 0 1.2rem;
+    max-width: 46ch;
+    font-family: var(--font-serif);
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: var(--color-slate);
   }
   .comm-stats {
     display: grid;
@@ -63,10 +71,6 @@ const events = await getEvents();
     font-size: 0.74rem;
     line-height: 1.3;
     color: var(--color-slate);
-  }
-  .comm-globe {
-    max-width: 300px;
-    margin: 0 auto 1.4rem;
   }
   .comm-discord {
     display: inline-block;
