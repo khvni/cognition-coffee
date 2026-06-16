@@ -1,13 +1,36 @@
 ---
 import Base from "../layouts/Base.astro";
 import BootTerminal from "../components/BootTerminal.astro";
+import Desktop from "../components/Desktop.astro";
 ---
 
 <Base bare>
-  <div class="vm-stage">
-    <BootTerminal class="vm-terminal" />
+  <div class="vm-boot" data-vm-boot>
+    <div class="vm-stage">
+      <BootTerminal class="vm-terminal" />
+    </div>
+  </div>
+  <div class="vm-desktop" data-vm-desktop hidden>
+    <Desktop />
   </div>
 </Base>
+
+<script>
+  import { readSession } from "../lib/os";
+
+  const boot = document.querySelector<HTMLElement>("[data-vm-boot]");
+  const desk = document.querySelector<HTMLElement>("[data-vm-desktop]");
+
+  const show = (loggedIn: boolean) => {
+    if (!boot || !desk) return;
+    boot.hidden = loggedIn;
+    desk.hidden = !loggedIn;
+  };
+
+  show(readSession().loggedIn);
+  document.addEventListener("ccvm:login", () => show(true));
+  document.addEventListener("ccvm:logout", () => show(false));
+</script>
 
 <style>
   .vm-stage {

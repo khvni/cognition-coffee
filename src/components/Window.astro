@@ -1,0 +1,138 @@
+---
+/**
+ * Window — one draggable OS window frame. Server-rendered once per app inside
+ * Desktop; wm.ts (via [data-window] / [data-drag] / [data-win-action]) owns all
+ * runtime behaviour, so this file is pure chrome + a body <slot>. Traffic-light
+ * controls are tokenised (coffee/blue) rather than the stock macOS colours to
+ * stay inside the design system. Hidden until the wm opens it.
+ */
+import type { AppDef } from "../lib/os";
+
+interface Props {
+  app: AppDef;
+}
+const { app } = Astro.props;
+---
+
+<section class="win" data-window={app.id} role="dialog" aria-label={`${app.title} window`} hidden>
+  <header class="win-bar" data-drag>
+    <div class="win-lights">
+      <button type="button" class="win-light is-close" data-win-action="close" aria-label={`Close ${app.title}`}></button>
+      <button type="button" class="win-light is-min" data-win-action="minimize" aria-label={`Minimize ${app.title}`}></button>
+      <button type="button" class="win-light is-max" data-win-action="maximize" aria-label={`Maximize ${app.title}`}></button>
+    </div>
+    <span class="win-title">
+      <svg class="win-glyph" viewBox="0 0 24 24" aria-hidden="true"><Fragment set:html={app.icon} /></svg>
+      {app.title}
+    </span>
+    {app.href && <a class="win-open" href={app.href}>open full page &nearr;</a>}
+  </header>
+  <div class="win-body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .win {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--os-window-radius);
+    background: var(--os-window-bg);
+    border: 1px solid var(--color-line-strong);
+    box-shadow: var(--os-glow);
+    backdrop-filter: blur(9px) saturate(118%);
+  }
+  .win.is-max {
+    inset: 0;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0;
+  }
+
+  .win-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: var(--os-titlebar-h);
+    padding-inline: 0.6rem;
+    background: var(--os-titlebar-bg);
+    border-bottom: 1px solid var(--color-line-strong);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  .win-bar:active {
+    cursor: grabbing;
+  }
+
+  .win-lights {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .win-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: color-mix(in srgb, var(--color-foam) 30%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-foam) 22%, transparent);
+    transition: background var(--ease-out-soft, ease) 0.15s;
+  }
+  .win-lights:hover .win-light {
+    background: color-mix(in srgb, var(--color-foam) 55%, transparent);
+  }
+  .win-light.is-close:hover {
+    background: var(--color-coffee);
+  }
+  .win-light.is-min:hover,
+  .win-light.is-max:hover {
+    background: var(--color-blue);
+  }
+
+  .win-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-foam);
+  }
+  .win-glyph {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.85;
+  }
+
+  .win-open {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-foam) 70%, transparent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .win-open:hover {
+    color: var(--color-blue);
+  }
+
+  .win-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+</style>

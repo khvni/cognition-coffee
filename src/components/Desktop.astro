@@ -1,0 +1,255 @@
+---
+/**
+ * Desktop — the post-login cloud-VM shell. Renders the icon grid, a window per
+ * app (bodies are filled in Phase 4; placeholders for now), and the dock with a
+ * running-app indicator plus the logged-in identity and a log-out control. All
+ * window behaviour is delegated to wm.ts; this component only lays out the
+ * surfaces and wires the dock + session chrome. Aesthetic polish is Phase 6.
+ */
+import { APPS } from "../lib/os";
+import Window from "./Window.astro";
+---
+
+<div class="desk" data-desktop>
+  <div class="desk-icons" aria-label="Applications">
+    {
+      APPS.map((app) => (
+        <button type="button" class="desk-icon" data-open={app.id}>
+          <svg class="desk-icon-glyph" viewBox="0 0 24 24" aria-hidden="true" set:html={app.icon} />
+          <span>{app.title}</span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="win-layer" data-win-layer>
+    {
+      APPS.map((app) => (
+        <Window app={app}>
+          <div class="win-placeholder">
+            <p>{app.title} is coming online&hellip;</p>
+          </div>
+        </Window>
+      ))
+    }
+  </div>
+
+  <footer class="dock" aria-label="Dock">
+    <div class="dock-apps">
+      {
+        APPS.map((app) => (
+          <button type="button" class="dock-item" data-open={app.id} data-dock-for={app.id} aria-label={`Open ${app.title}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" set:html={app.icon} />
+          </button>
+        ))
+      }
+    </div>
+    <div class="dock-session">
+      <span class="dock-user">vm session &middot; <b data-session-email>guest</b></span>
+      <button type="button" class="dock-logout" data-logout>log out</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+  import { initWm } from "../lib/wm";
+  import { readSession, endSession } from "../lib/os";
+
+  const root = document.querySelector<HTMLElement>("[data-desktop]");
+  if (root) {
+    const wm = initWm(root);
+
+    wm.onChange((id) => {
+      root
+        .querySelector(`[data-dock-for="${id}"]`)
+        ?.classList.toggle("is-running", wm.isOpen(id));
+    });
+
+    const slot = root.querySelector("[data-session-email]");
+    const syncEmail = () => {
+      const email = readSession().email;
+      if (slot && email) slot.textContent = email;
+    };
+    syncEmail();
+    document.addEventListener("ccvm:login", syncEmail);
+
+    root.querySelector("[data-logout]")?.addEventListener("click", () => {
+      endSession();
+      document.dispatchEvent(new CustomEvent("ccvm:logout"));
+    });
+  }
+</script>
+
+<style>
+  .desk {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 80% at 80% -10%, color-mix(in srgb, var(--color-blue) 12%, transparent) 0%, transparent 55%),
+      radial-gradient(90% 70% at 10% 110%, color-mix(in srgb, var(--color-coffee) 10%, transparent) 0%, transparent 50%),
+      var(--os-desktop-bg);
+  }
+
+  .desk-icons {
+    position: absolute;
+    inset-block: 1.5rem auto;
+    inset-inline-start: 1.5rem;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .desk-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    width: 84px;
+    padding: 0.7rem 0.4rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-card);
+    background: transparent;
+    color: color-mix(in srgb, var(--color-foam) 82%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .desk-icon:hover,
+  .desk-icon:focus-visible {
+    background: color-mix(in srgb, var(--color-foam) 8%, transparent);
+    border-color: color-mix(in srgb, var(--color-blue) 35%, transparent);
+  }
+  .desk-icon-glyph {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .win-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .win-layer :global(.win) {
+    pointer-events: auto;
+  }
+
+  .win-placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+  }
+
+  .dock {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: var(--os-dock-h);
+    padding-inline: clamp(0.8rem, 3vw, 1.6rem);
+    background: var(--os-titlebar-bg);
+    border-top: 1px solid var(--color-line-strong);
+    backdrop-filter: blur(10px) saturate(120%);
+  }
+  .dock-apps {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .dock-item {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid color-mix(in srgb, var(--color-foam) 14%, transparent);
+    border-radius: var(--radius-card);
+    background: color-mix(in srgb, var(--color-foam) 6%, transparent);
+    color: color-mix(in srgb, var(--color-foam) 85%, transparent);
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  }
+  .dock-item svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dock-item:hover,
+  .dock-item:focus-visible {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-blue) 45%, transparent);
+    color: var(--color-foam);
+  }
+  .dock-item.is-running::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-blue);
+    box-shadow: 0 0 6px 1px color-mix(in srgb, var(--color-blue) 70%, transparent);
+  }
+
+  .dock-session {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-foam) 60%, transparent);
+  }
+  .dock-session b {
+    color: color-mix(in srgb, var(--color-foam) 88%, transparent);
+    font-weight: 500;
+  }
+  .dock-logout {
+    padding: 0.4rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--color-foam) 18%, transparent);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .dock-logout:hover {
+    border-color: var(--color-blue);
+    color: var(--color-foam);
+  }
+
+  @media (max-width: 760px) {
+    .desk-icons {
+      flex-direction: row;
+      flex-wrap: wrap;
+      inset-inline: 1rem;
+    }
+    .dock-session {
+      display: none;
+    }
+  }
+</style>
