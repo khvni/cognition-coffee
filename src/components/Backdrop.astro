@@ -1,0 +1,39 @@
+---
+/**
+ * BACKDROP — the layered "blueprint" canvas behind a section.
+ * Composes: graph-paper grid + an optional giant ghosted wordmark that bleeds
+ * off-canvas + optional scattered mono code. Drop inside a `relative` section;
+ * it sits behind the content and is purely decorative.
+ *
+ * Props:
+ *   wordmark -> giant ghost text bleeding behind content (optional)
+ *   grid     -> graph-paper grid (default true)
+ *   code     -> scattered mono code fragment, top-right (default false)
+ *   class    -> extra classes on the layer
+ */
+interface Props {
+  wordmark?: string;
+  grid?: boolean;
+  code?: boolean;
+  class?: string;
+}
+const { wordmark, grid = true, code = false, class: className = "" } = Astro.props;
+
+const snippet = `$ devin run community.scale()
+→ chapters: 1 → 30+
+→ ship > wait`;
+---
+
+<div class={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
+  {grid && <div class="grid-paper absolute inset-0"></div>}
+  {
+    wordmark && (
+      <div class="absolute inset-0 flex items-center">
+        <span class="ghost -translate-x-[3%] whitespace-nowrap text-[26vw] leading-none sm:text-[20vw]">
+          {wordmark}
+        </span>
+      </div>
+    )
+  }
+  {code && <pre class="codefrag absolute right-5 top-8 hidden lg:block">{snippet}</pre>}
+</div>

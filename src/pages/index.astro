@@ -1,248 +1,72 @@
 ---
 import Base from "../layouts/Base.astro";
-import Section from "../components/Section.astro";
-import WaxPaper from "../components/WaxPaper.astro";
-import Terminal from "../components/Terminal.astro";
-import OtterAscii from "../components/OtterAscii.astro";
-import Marquee from "../components/Marquee.astro";
-import { INITIATIVES } from "../data/initiatives";
-import { BIO, PROOF_POINTS } from "../data/experience";
-import { CTA } from "../lib/site";
+import Backdrop from "../components/Backdrop.astro";
+import DevinCli from "../components/DevinCli.astro";
+import { BIO } from "../data/experience";
+import { SOCIALS, CTA } from "../lib/site";
 ---
 
 <Base>
-  <noscript><style>.reveal{opacity:1!important;transform:none!important}.tline{opacity:1!important;transform:none!important}</style></noscript>
   {/* ===================== HERO ===================== */}
-  <section class="relative overflow-hidden">
-    <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:grid-cols-[1.1fr_0.9fr]">
-      <div class="reveal">
-        <p class="eyebrow">A community proposal for Cognition</p>
-        <h1 class="mt-5 font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl">
-          {BIO.hook}
-        </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-ink-soft)]">
-          {BIO.thesis}
-        </p>
-        <p class="mt-4 max-w-xl text-[var(--color-slate)]">
-          The Cognition Coffee Company is a lovingly over-engineered community strategy
-          for <span class="link-blue">Devin</span>: three programs, a reimagined community
-          home, and field notes &mdash; all built with Devin.
-        </p>
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          <a href="#menu" class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5">
-            See the menu
-          </a>
-          <a href={CTA.href} class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:border-[var(--color-ink)]">
-            {CTA.emoji} {CTA.label}
-          </a>
+  <section class="relative overflow-hidden border-b border-[var(--color-line)]">
+    <Backdrop wordmark="COFFEE" code />
+    <div class="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.02fr_0.98fr]">
+      <div class="relative">
+        {/* stacked-wax sheet peeking behind — taped-sheet motif */}
+        <div class="wax absolute -right-5 -top-5 -z-10 hidden h-full w-full rotate-3 lg:block" aria-hidden="true"></div>
+        <div class="wax grain relative p-8 sm:p-10">
+          <p class="eyebrow">
+            Cognition Coffee Co. <span class="text-[var(--color-coffee)]">//</span> developer community
+          </p>
+          <h1 class="mt-6 font-serif text-[2.5rem] leading-[1.04] tracking-tight sm:text-[3.4rem]">
+            {BIO.hook}
+          </h1>
+          <p class="mt-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
+            {BIO.thesis}
+          </p>
+          <div class="mt-7 flex flex-wrap items-center gap-3">
+            <a
+              href={CTA.href}
+              class="rounded-full bg-[var(--color-blue)] px-5 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
+            >
+              {CTA.label}
+            </a>
+            <a
+              href="/about"
+              class="rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium transition-colors hover:border-[var(--color-ink)]"
+            >
+              Why me
+            </a>
+          </div>
+          <div class="mt-7 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--color-line)] pt-5 font-mono text-xs">
+            {
+              SOCIALS.map((s) => (
+                <a href={s.href} class="text-[var(--color-slate)] transition-colors hover:text-[var(--color-blue)]">
+                  {s.label}
+                </a>
+              ))
+            }
+          </div>
         </div>
       </div>
-
-      {/* VT100 + otter — the brand handshake */}
-      <div class="parallax-panel relative reveal" data-parallax="0.04">
-        <Terminal title="VT100 · DEVIN">
-          <div class="terminal-lines">
-            <p class="font-mono text-xs text-[var(--color-crema)]">devin@cognition-coffee:~$ run community.sh</p>
-            <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; loading community playbook...</p>
-            <p class="tline font-mono text-xs text-[#9fe89f]">&rarr; 30+ chapters &middot; 1,800 students &middot; 7M views</p>
-            <p class="tline font-mono text-xs text-[#7ad17a]">&rarr; community strategy: READY</p>
-          </div>
-          <OtterAscii class="mt-3 text-[#9fe89f]" />
-        </Terminal>
-        <div class="grain pointer-events-none absolute inset-0"></div>
-      </div>
-    </div>
-
-    {/* proof bar — animated count-up */}
-    <div class="proof-bar border-y border-[var(--color-line)] bg-[var(--color-foam)]">
-      <div class="mx-auto flex max-w-6xl flex-wrap gap-x-10 gap-y-4 px-5 py-5 sm:px-8">
-        {
-          PROOF_POINTS.map((p) => (
-            <div class="reveal flex items-baseline gap-2">
-              <span class="font-mono text-lg text-[var(--color-blue)]">{p.value}</span>
-              <span class="text-sm text-[var(--color-slate)]">{p.label}</span>
-            </div>
-          ))
-        }
-      </div>
+      <DevinCli />
     </div>
   </section>
 
-  {/* ===================== CREDIBILITY MARQUEE ===================== */}
-  <Marquee class="reveal" />
-
-  {/* ===================== THE MENU (3 initiatives) ===================== */}
-  <Section id="menu" index="01" eyebrow="The Menu · three signature programs">
-    <div class="mb-12 max-w-2xl">
-      <h2 class="font-serif text-3xl sm:text-4xl">Three roasts for a thriving Devin community.</h2>
-      <p class="mt-4 text-[var(--color-slate)]">
-        Each program borrows what works (hi, Cursor) and adds the structure Cognition
-        is missing: a credential, a chapter network, and a real ambassador flywheel.
+  {/* ===================== POSITIONING (DARK ANCHOR) ===================== */}
+  <section class="roast relative overflow-hidden border-b border-white/10">
+    <Backdrop wordmark="BUILD" code />
+    {/* frosted sheet floating on the dark — reads as a light wax sheet */}
+    <div class="wax absolute -right-10 bottom-12 hidden h-52 w-80 rotate-6 lg:block" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+      <p class="eyebrow text-[color-mix(in_srgb,var(--color-foam)_78%,transparent)]">
+        {BIO.name} <span class="text-[color-mix(in_srgb,var(--color-coffee)_72%,var(--color-foam))]">//</span> {BIO.location}
+      </p>
+      <p
+        class="mt-8 max-w-4xl border-l-2 border-[var(--color-blue)] pl-6 font-serif text-2xl leading-snug tracking-tight text-[var(--color-foam)] sm:pl-8 sm:text-3xl lg:text-[2.6rem] lg:leading-[1.15]"
+      >
+        {BIO.oneLiner}
       </p>
     </div>
-
-    <div class="grid gap-5 md:grid-cols-3">
-      {
-        INITIATIVES.map((it) => (
-          <a href={`/menu/${it.slug}`} class="reveal group">
-            <WaxPaper class="flex h-full flex-col p-6 transition-shadow duration-200 group-hover:shadow-lg">
-              <div class="flex items-baseline justify-between">
-                <span class="font-mono text-sm text-[var(--color-slate)]">{it.index}</span>
-                {it.metric && (
-                  <span class="text-right">
-                    <span class="block font-mono text-base text-[var(--color-blue)]">{it.metric.value}</span>
-                  </span>
-                )}
-              </div>
-              <p class="eyebrow mt-5 text-[var(--color-bean)]">{it.roast}</p>
-              <h3 class="mt-1 font-serif text-2xl leading-tight">{it.title}</h3>
-              <p class="mt-3 text-sm leading-relaxed text-[var(--color-ink-soft)]">{it.tagline}</p>
-              <ul class="mt-5 space-y-1.5 border-t border-[var(--color-line)] pt-4 text-sm text-[var(--color-slate)]">
-                {it.pillars.map((pillar) => (
-                  <li class="flex gap-2">
-                    <span class="text-[var(--color-blue)]">&bull;</span>
-                    <span>{pillar.name}</span>
-                  </li>
-                ))}
-              </ul>
-              <span class="mt-auto pt-4 font-mono text-xs text-[var(--color-blue)] opacity-0 transition-opacity group-hover:opacity-100">
-                Deep dive &rarr;
-              </span>
-            </WaxPaper>
-          </a>
-        ))
-      }
-    </div>
-    <p class="mt-6 font-mono text-xs text-[var(--color-slate)]">
-      Click any card above for the full program deep-dive.
-    </p>
-  </Section>
-
-  {/* ===================== BUILT WITH DEVIN (meta) ===================== */}
-  <Section index="02" eyebrow="The meta-demo" tone="roast">
-    <div class="grid items-center gap-10 lg:grid-cols-2">
-      <div class="reveal">
-        <h2 class="font-serif text-3xl sm:text-4xl">This whole thing was brewed with Devin.</h2>
-        <p class="mt-4 max-w-lg text-[color-mix(in_srgb,var(--color-foam)_78%,transparent)]">
-          The site, the design system, the content — orchestrated across multiple
-          Devin sessions. The best way to talk about developer community is to build like
-          the developers you're building it for.
-        </p>
-        <a href="/about" class="mt-6 inline-block font-mono text-sm text-[var(--color-crema)] underline underline-offset-4">
-          Read how it was built &rarr;
-        </a>
-      </div>
-      <div class="reveal font-mono text-sm text-[color-mix(in_srgb,var(--color-foam)_75%,transparent)]">
-        <p>$ devin orchestrate cognition-coffee</p>
-        <p class="text-[#7ad17a]">&rarr; spinning up a team of Devins...</p>
-        <p class="text-[#7ad17a]">&rarr; design-system · home · community · blog · about</p>
-        <p class="text-[var(--color-crema)]">&rarr; brewed in parallel. ☕</p>
-      </div>
-    </div>
-  </Section>
-
-  {/* ===================== CLOSING CTA ===================== */}
-  <Section index="03" eyebrow="Let's talk">
-    <WaxPaper tone="kraft" class="reveal p-10 text-center sm:p-16">
-      <h2 class="mx-auto max-w-2xl font-serif text-3xl sm:text-4xl">
-        If this resonates, let's build it.
-      </h2>
-      <p class="mx-auto mt-4 max-w-xl text-[var(--color-ink-soft)]">
-        If any of this aligns with where you want Cognition's community to go,
-        I'd love to compare notes.
-      </p>
-      <a href={CTA.href} class="mt-8 inline-block rounded-full bg-[var(--color-blue)] px-6 py-3 font-medium text-white transition-transform hover:-translate-y-0.5">
-        {CTA.emoji} Start a conversation
-      </a>
-    </WaxPaper>
-  </Section>
+  </section>
 </Base>
-
-<style>
-  /* Scroll-reveal base state */
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.7s var(--ease-out-soft), transform 0.7s var(--ease-out-soft);
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Terminal typing lines */
-  .tline {
-    opacity: 0;
-    transform: translateX(-6px);
-  }
-  .tline.typed {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  /* Reduced motion: skip all animation, show everything */
-  @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-    .tline {
-      opacity: 1;
-      transform: none;
-    }
-    .parallax-panel {
-      transform: none !important;
-    }
-  }
-</style>
-
-<script>
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Scroll-reveal via IntersectionObserver
-  if (!prefersReduced) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("visible");
-            observer.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-  } else {
-    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("visible"));
-  }
-
-  // Subtle parallax on the terminal panel
-  if (!prefersReduced) {
-    const panel = document.querySelector<HTMLElement>(".parallax-panel");
-    if (panel) {
-      const rate = parseFloat(panel.dataset.parallax || "0.04");
-      let ticking = false;
-      window.addEventListener("scroll", () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(() => {
-            const y = window.scrollY * rate;
-            panel.style.transform = `translateY(${y}px)`;
-            ticking = false;
-          });
-        }
-      });
-    }
-  }
-
-  // Terminal typing sequence
-  if (!prefersReduced) {
-    const lines = document.querySelectorAll(".tline");
-    lines.forEach((line, i) => {
-      setTimeout(() => line.classList.add("typed"), 600 + i * 420);
-    });
-  }
-</script>

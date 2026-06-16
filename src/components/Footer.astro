@@ -1,5 +1,5 @@
 ---
-import { SITE } from "../lib/site";
+import { SITE, SOCIALS } from "../lib/site";
 import Hexagon from "./Hexagon.astro";
 const year = new Date().getFullYear();
 ---
@@ -29,8 +29,9 @@ const year = new Date().getFullYear();
         <div>
           <p class="eyebrow mb-3 text-[var(--color-crema)]">Ali</p>
           <ul class="space-y-2 text-[color-mix(in_srgb,var(--color-foam)_80%,transparent)]">
-            <li><a href={SITE.authorX} class="hover:text-white">X / Twitter</a></li>
-            <li><a href={SITE.authorGithub} class="hover:text-white">GitHub</a></li>
+            {SOCIALS.map((s) => (
+              <li><a href={s.href} class="hover:text-white">{s.label}</a></li>
+            ))}
             <li><a href={`mailto:${SITE.authorEmail}`} class="hover:text-white">Email</a></li>
           </ul>
         </div>

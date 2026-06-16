@@ -1,0 +1,410 @@
+---
+/**
+ * DevinCli — a skeuomorphic CRT "Devin CLI" hero centerpiece. Walks a visitor
+ * through a short discovery prompt (name -> curiosity -> feedback), typing each
+ * question and showing a fake "working" loader between steps. Every answer is
+ * sent to PostHog (events + person properties).
+ *
+ * Two presentation tiers:
+ *  - Base: an accessible DOM terminal with CSS skeuomorphism (scanlines, glow,
+ *    vignette, glare). This is the source of truth, the no-JS <form> fallback,
+ *    and the reduced-motion / no-WebGL experience.
+ *  - Enhanced: a WebGL2 CRT shader (src/lib/crt.ts) renders the live terminal
+ *    onto curved glass with barrel distortion, bloom, chromatic aberration,
+ *    scanline roll, vignette and flicker. The DOM stays underneath for input +
+ *    accessibility; the canvas is decorative and gated behind feature/motion
+ *    detection so it never breaks the form.
+ */
+---
+
+<div class="cli-bezel">
+  <div class="cli-bar">
+    <span class="cli-led" aria-hidden="true"></span>
+    <span class="cli-title">devin &middot; vt-220</span>
+    <span class="cli-meta" aria-hidden="true">online</span>
+  </div>
+  <div class="cli-frame">
+    <div class="cli-scroll" id="cli-scroll">
+      <div id="cli-output" class="cli-stream" role="log" aria-live="polite"></div>
+      <form id="cli-form" class="cli-line" hidden>
+        <label class="cli-sigil" for="cli-input" aria-hidden="true">&rsaquo;</label>
+        <input
+          id="cli-input"
+          class="cli-input"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-label="Type your answer and press enter"
+        />
+      </form>
+      <noscript>
+        <form class="cli-fallback" aria-label="Say hello">
+          <p>Say hello to Devin:</p>
+          <label>Your name<input name="name" required /></label>
+          <label>What are you curious about?<textarea name="curiosity" required></textarea></label>
+          <label>Any feedback on this site?<textarea name="feedback"></textarea></label>
+        </form>
+      </noscript>
+    </div>
+    <div class="cli-roll" aria-hidden="true"></div>
+    <div class="cli-glare" aria-hidden="true"></div>
+    <canvas id="crt-gl" aria-hidden="true"></canvas>
+  </div>
+</div>
+
+<script>
+  import posthog from "posthog-js";
+  import { startCrt } from "../lib/crt";
+
+  const STEPS = [
+    { id: "name", q: "what should I call you?" },
+    { id: "curiosity", q: "what are you curious about?" },
+    { id: "feedback", q: "any feedback on this site? (enter to skip)" },
+  ];
+
+  const out = document.getElementById("cli-output");
+  const form = document.getElementById("cli-form") as HTMLFormElement | null;
+  const input = document.getElementById("cli-input") as HTMLInputElement | null;
+  const box = document.getElementById("cli-scroll");
+
+  if (out && form && input && box) {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const answers: Record<string, string> = {};
+    let step = 0;
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const toBottom = () => (box.scrollTop = box.scrollHeight);
+
+    const line = (cls: string, text = "") => {
+      const p = document.createElement("p");
+      p.className = cls;
+      p.textContent = text;
+      out.appendChild(p);
+      toBottom();
+      return p;
+    };
+
+    async function type(text: string) {
+      const p = line("cli-say");
+      if (reduce) return void (p.textContent = text);
+      for (const ch of text) {
+        p.textContent += ch;
+        toBottom();
+        await sleep(16);
+      }
+    }
+
+    async function working() {
+      const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧"];
+      const p = line("cli-work");
+      const until = Date.now() + 1000;
+      for (let i = 0; Date.now() < until; i++) {
+        p.textContent = `${frames[i % frames.length]} thinking…`;
+        await sleep(90);
+      }
+      p.remove();
+    }
+
+    async function ask() {
+      await type(`devin · ${STEPS[step].q}`);
+      form.hidden = false;
+      input.focus();
+      toBottom();
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const s = STEPS[step];
+      const val = input.value.trim();
+      if (!val && s.id !== "feedback") return;
+      line("cli-you", `› ${val || "(skipped)"}`);
+      answers[s.id] = val;
+      input.value = "";
+      form.hidden = true;
+      if (import.meta.env.PROD) posthog.capture("cli_answer", { step: s.id, value: val });
+      step++;
+      await working();
+      if (step < STEPS.length) {
+        await ask();
+      } else {
+        await type("devin · got it. brewing something good — talk soon.");
+        if (import.meta.env.PROD) {
+          if (answers.name) posthog.identify(answers.name);
+          posthog.setPersonProperties(answers);
+          posthog.capture("cli_completed", answers);
+        }
+      }
+    });
+
+    (async () => {
+      await type("booting devin cli…");
+      await sleep(220);
+      await ask();
+    })();
+
+    // Enhanced tier: render the live DOM terminal onto a WebGL CRT screen.
+    const glCanvas = document.getElementById("crt-gl") as HTMLCanvasElement | null;
+    const frameEl = box.parentElement;
+    if (glCanvas && frameEl && !reduce) {
+      const colorFor = (cls: string) =>
+        cls.includes("cli-you") ? "#eaf1ff" : cls.includes("cli-work") ? "#7fa8ff" : "#bcd2ff";
+
+      const paint = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
+        ctx.fillStyle = "#070a10";
+        ctx.fillRect(0, 0, w, h);
+        ctx.textBaseline = "top";
+        ctx.font = "14px 'Geist Mono Variable', ui-monospace, monospace";
+        const lh = 22;
+        const padX = 18;
+        const padY = 16;
+        const rows: { text: string; color: string }[] = [];
+        for (const el of Array.from(out.children)) {
+          rows.push({ text: el.textContent || "", color: colorFor(el.className) });
+        }
+        if (!form.hidden) rows.push({ text: `› ${input.value}`, color: "#eaf1ff" });
+        const maxRows = Math.max(1, Math.floor((h - padY * 2) / lh));
+        const shown = rows.slice(Math.max(0, rows.length - maxRows));
+        ctx.shadowColor = "rgba(49,124,255,0.55)";
+        ctx.shadowBlur = 8;
+        let y = padY;
+        for (const r of shown) {
+          ctx.fillStyle = r.color;
+          ctx.fillText(r.text, padX, y);
+          y += lh;
+        }
+        ctx.shadowBlur = 0;
+        if (!form.hidden && Math.floor(performance.now() / 500) % 2 === 0) {
+          const cw = ctx.measureText(`› ${input.value}`).width;
+          ctx.fillStyle = "#317cff";
+          ctx.fillRect(padX + cw + 2, y - lh, 9, 16);
+        }
+      };
+
+      const handle = startCrt(glCanvas, paint);
+      if (handle) {
+        frameEl.classList.add("gl-active");
+        frameEl.addEventListener("click", () => input.focus());
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ---- Physical bezel: chunky dark plastic with beveled edges ---- */
+  .cli-bezel {
+    position: relative;
+    border-radius: 18px;
+    padding: 16px 16px 18px;
+    background: linear-gradient(155deg, #23262e 0%, #14161c 38%, #0a0b0f 100%);
+    box-shadow:
+      0 38px 80px -40px rgba(0, 0, 0, 0.85),
+      inset 0 2px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -3px 8px rgba(0, 0, 0, 0.7),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+  }
+  .cli-bar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 1px 4px 11px;
+  }
+  .cli-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-blue);
+    box-shadow: 0 0 8px 1px rgba(49, 124, 255, 0.8);
+  }
+  .cli-title {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #767d8c;
+  }
+  .cli-meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #4f94ff;
+  }
+
+  /* ---- Screen: deep glass with vignette + inset curvature ---- */
+  .cli-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: radial-gradient(125% 120% at 50% 22%, #121722 0%, #070a10 70%, #04050a 100%);
+    box-shadow:
+      inset 0 0 70px 8px rgba(0, 0, 0, 0.85),
+      inset 0 0 0 1px rgba(120, 160, 255, 0.05);
+    animation: cli-flicker 5.5s infinite steps(60);
+  }
+  .cli-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.26) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+  }
+  .cli-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(140% 90% at 50% -25%, rgba(150, 185, 255, 0.1) 0%, transparent 45%);
+  }
+
+  .cli-scroll {
+    position: relative;
+    z-index: 1;
+    height: clamp(280px, 38vh, 360px);
+    overflow-y: auto;
+    padding: 18px 20px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: #bcd2ff;
+    text-shadow:
+      0 0 1px rgba(150, 185, 255, 0.9),
+      0 0 9px rgba(49, 124, 255, 0.45),
+      0 0 22px rgba(49, 124, 255, 0.18);
+  }
+  .cli-stream :global(p) {
+    text-shadow:
+      -0.6px 0 0 rgba(255, 70, 90, 0.28),
+      0.6px 0 0 rgba(60, 220, 255, 0.28),
+      0 0 9px rgba(49, 124, 255, 0.4);
+  }
+  .cli-stream :global(.cli-you) {
+    color: #eaf1ff;
+  }
+  .cli-stream :global(.cli-work) {
+    color: #7fa8ff;
+  }
+
+  .cli-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cli-sigil {
+    color: var(--color-blue);
+  }
+  .cli-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #eaf1ff;
+    font: inherit;
+    caret-color: var(--color-blue);
+  }
+
+  .cli-roll {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 38%;
+    pointer-events: none;
+    z-index: 3;
+    background: linear-gradient(180deg, transparent, rgba(120, 165, 255, 0.05) 60%, transparent);
+    animation: cli-roll 7s linear infinite;
+  }
+  .cli-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0%, transparent 22%, transparent 78%, rgba(255, 255, 255, 0.03) 100%);
+  }
+
+  /* ---- WebGL CRT canvas (enhanced tier) ---- */
+  #crt-gl {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+  }
+  .cli-frame.gl-active #crt-gl {
+    display: block;
+  }
+  /* When the shader runs, the DOM terminal stays for input + a11y but goes
+     visually transparent, and the CSS effects defer to the shader. */
+  .cli-frame.gl-active .cli-scroll {
+    opacity: 0;
+  }
+  .cli-frame.gl-active {
+    animation: none;
+  }
+  .cli-frame.gl-active::after,
+  .cli-frame.gl-active::before,
+  .cli-frame.gl-active .cli-roll,
+  .cli-frame.gl-active .cli-glare {
+    display: none;
+  }
+
+  .cli-fallback {
+    color: #bcd2ff;
+  }
+  .cli-fallback label {
+    display: block;
+    margin: 0.55rem 0;
+  }
+  .cli-fallback input,
+  .cli-fallback textarea {
+    width: 100%;
+    margin-top: 0.25rem;
+    background: #0b0d12;
+    color: #eaf1ff;
+    border: 1px solid #2a3344;
+    font: inherit;
+    padding: 0.4rem;
+  }
+
+  @keyframes cli-roll {
+    0% {
+      transform: translateY(-110%);
+    }
+    100% {
+      transform: translateY(320%);
+    }
+  }
+  @keyframes cli-flicker {
+    0%, 96%, 100% {
+      opacity: 1;
+    }
+    97% {
+      opacity: 0.96;
+    }
+    98% {
+      opacity: 0.99;
+    }
+    99% {
+      opacity: 0.94;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cli-frame {
+      animation: none;
+    }
+    .cli-roll {
+      display: none;
+    }
+    .cli-scroll {
+      text-shadow: 0 0 6px rgba(49, 124, 255, 0.3);
+    }
+    .cli-stream :global(p) {
+      text-shadow: none;
+    }
+  }
+</style>

@@ -17,7 +17,19 @@ export const SITE = {
   authorX: "https://x.com/alikhvni",
   authorGithub: "https://github.com/khvni",
   authorEmail: "byalikhani@gmail.com",
+  authorLinkedin: "https://linkedin.com/in/khni",
+  authorSubstack: "https://substack.com/@khvni",
+  authorInstagram: "https://instagram.com/alikha.ni",
 } as const;
+
+/** Social links, in the canonical order they appear everywhere. */
+export const SOCIALS = [
+  { label: "X", href: SITE.authorX },
+  { label: "GitHub", href: SITE.authorGithub },
+  { label: "LinkedIn", href: SITE.authorLinkedin },
+  { label: "Substack", href: SITE.authorSubstack },
+  { label: "Instagram", href: SITE.authorInstagram },
+] as const;
 
 /**
  * Primary navigation. "Resources" is a hover dropdown (Blog / Community / About),

@@ -20,7 +20,7 @@ const markers = events
 <div class={`globe-wrap relative flex items-center justify-center ${className}`} data-markers={JSON.stringify(markers)}>
   <canvas class="globe-canvas" width="600" height="600" aria-label="Interactive globe showing community event locations"></canvas>
   <noscript>
-    <p class="font-mono text-sm text-[var(--color-crema)]">Enable JavaScript to view the interactive globe.</p>
+    <p class="font-mono text-sm text-[var(--color-foam)]">Enable JavaScript to view the interactive globe.</p>
   </noscript>
 </div>
 
@@ -59,9 +59,9 @@ const markers = events
       diffuse: 1.2,
       mapSamples: 16000,
       mapBrightness: 6,
-      baseColor: [0.13, 0.09, 0.06],
+      baseColor: [0.14, 0.15, 0.18],
       markerColor: [0.19, 0.49, 1],
-      glowColor: [0.13, 0.09, 0.06],
+      glowColor: [0.12, 0.13, 0.16],
       markers,
       onRender: (state) => {
         if (!pointerDown) phi += 0.003;

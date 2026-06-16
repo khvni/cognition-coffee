@@ -4,61 +4,63 @@
   ============================================================================
   THE COGNITION COFFEE COMPANY — DESIGN TOKENS
   ----------------------------------------------------------------------------
-  A balanced hybrid of:
-    1. Cognition / Devin's editorial "applied AI lab" language
-       (wax-paper cream, Devin blue, serif headlines, mono accents)
-    2. An artisan coffee roaster (warm espresso + crema tones, kraft paper)
+  Industrial-editorial system in Cognition / Devin's visual language:
+    - near-monochrome paper + ink (neutrals tinted toward the Devin-blue hue)
+    - Devin blue (#317CFF) = the single interactive accent (~10% of a page)
+    - deep espresso (#6f4827) = a rare "Coffee Co" brand signature (~2-3%),
+      chosen as the complement of Devin blue (hue ~218 vs ~38)
+  Canvas motifs: graph-paper grid, giant ghosted wordmarks, B&W halftone,
+  scattered mono code, frosted wax-paper panels.
 
-  Brand parity sources (extracted from live CSS, June 2026):
-    - Devin blue          #317CFF   (links, selection highlight, primary CTA)
-    - Wax-paper cream      #EDECEB   (primary background)
-    - Ink                  #202020   (body text)
-    - Slate                #626870   (muted text)
-    - Coral / Amber        #FA5050 / #FCBB00  (sparing accents)
-    - Fonts: STKBureauSerif (serif), NBInternationalPro (sans), GeistMono (mono)
-      -> self-hostable stand-ins below: Fraunces / Geist / Geist Mono.
-         If Ali licenses the real faces, swap the --font-* vars only.
+  Type (free stand-ins matched to the real faces):
+    - serif  Source Serif 4   (~ Cognition's STK Bureau Serif)  — headlines
+    - sans   Geist            (= Devin; ~ NB International Pro)  — body / UI
+    - mono   Geist Mono       (= Devin)                         — labels / code
+  Colors in OKLCH; chroma reduced near the light/dark extremes.
   ============================================================================
 */
 
 @theme {
-  /* --- Cognition core palette --- */
-  --color-paper: #edeceb; /* wax-paper cream — primary bg            */
-  --color-foam: #f5f1e8; /* lighter milk-foam surface              */
-  --color-card: #f7f6f5; /* card surface                           */
-  --color-ink: #202020; /* primary text                           */
-  --color-ink-soft: #3a3a3a;
-  --color-slate: #626870; /* muted text                             */
-  --color-line: #20202014; /* hairline borders (8% ink)              */
-  --color-line-strong: #20202029;
+  /* --- neutrals (tinted toward the Devin-blue hue ~262) --- */
+  --color-paper: oklch(0.971 0.004 262); /* primary background (paper)    */
+  --color-foam: oklch(0.984 0.003 262); /* lighter surface               */
+  --color-card: oklch(0.995 0.002 262); /* panel surface                 */
+  --color-ink: oklch(0.23 0.013 264); /* primary text (near-black)     */
+  --color-ink-soft: oklch(0.35 0.013 264);
+  --color-slate: oklch(0.53 0.016 264); /* muted text                    */
+  --color-line: oklch(0.23 0.013 264 / 0.12); /* hairline borders        */
+  --color-line-strong: oklch(0.23 0.013 264 / 0.24);
 
-  /* --- Devin blue (the signature accent) --- */
+  /* --- Devin blue: THE accent (links, CTAs, selection, interactive) --- */
   --color-blue: #317cff;
   --color-blue-ink: #ffffff;
-  --color-blue-soft: #f2f5fa;
+  --color-blue-soft: oklch(0.95 0.03 258);
 
-  /* --- Coffee warmth (the hybrid half) --- */
-  --color-espresso: #221912; /* dark-roast surface (inverted sections) */
-  --color-roast: #4a3526; /* medium roast                           */
-  --color-crema: #c8a06b; /* crema / latte highlight                */
-  --color-kraft: #d9c5a0; /* cardboard / kraft paper                */
-  --color-bean: #6f4e37; /* coffee bean brown                      */
+  /* --- Espresso: the rare brand signature (complements Devin blue) --- */
+  --color-coffee: #6f4827;
+  --color-coffee-soft: oklch(0.42 0.055 55 / 0.14);
 
-  /* --- Editorial accents (use sparingly, like Cognition blog stamps) --- */
-  --color-coral: #fa5050;
-  --color-amber: #fcbb00;
-  --color-leaf: #16a34a;
+  /* --- Graphite: dark "industrial" surface (inverted bands) --- */
+  --color-graphite: oklch(0.205 0.008 264);
 
-  /* --- Typography ---
-     serif = editorial headlines + long-form blog body (Cognition blog feel)
-     sans  = UI / marketing body (Swiss grotesque)
-     mono  = terminal, labels, eyebrows, code                            */
-  --font-serif: "Fraunces Variable", "STK Bureau Serif", Georgia, "Times New Roman", serif;
+  /* --- legacy aliases: kept so existing components still build.
+         These are retired as each page is reskinned in P1. --- */
+  --color-espresso: var(--color-graphite);
+  --color-roast: var(--color-graphite);
+  --color-crema: var(--color-foam);
+  --color-kraft: var(--color-card);
+  --color-bean: var(--color-slate);
+  --color-coral: var(--color-blue);
+  --color-amber: var(--color-coffee);
+  --color-leaf: var(--color-slate);
+
+  /* --- Typography --- */
+  --font-serif: "Source Serif 4 Variable", "STK Bureau Serif", Georgia, "Times New Roman", serif;
   --font-sans: "Geist Variable", "NB International Pro", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "Geist Mono Variable", "GeistMono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* --- Radii / motion --- */
-  --radius-card: 6px;
+  --radius-card: 4px;
   --radius-pill: 999px;
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -77,20 +79,19 @@
     min-height: 100dvh;
   }
 
-  /* Highlighting text reveals Devin blue — a signature detail from
-     cognition.ai/blog. Keep this everywhere. */
+  /* Highlighting text reveals Devin blue — a signature from cognition.ai/blog. */
   ::selection {
     background-color: var(--color-blue);
     color: #fff;
   }
 
-  /* Editorial serif headings by default (Cognition blog parity) */
+  /* Editorial serif headings (Cognition headline parity). */
   h1,
   h2,
   h3 {
     font-family: var(--font-serif);
-    font-weight: 380;
-    letter-spacing: -0.01em;
+    font-weight: 440;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
@@ -107,12 +108,11 @@
 
 /*
   ----------------------------------------------------------------------------
-  SIGNATURE UTILITIES
-  Reusable brand primitives so every page (and every Devin) stays consistent.
+  SIGNATURE UTILITIES — the canvas + panel motifs.
   ----------------------------------------------------------------------------
 */
 @layer components {
-  /* Mono eyebrow label — used like Cognition's "01 / 02 / 03" section marks */
+  /* Mono eyebrow label — Cognition's "01 / 02" section marks. */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -121,22 +121,40 @@
     color: var(--color-slate);
   }
 
-  /* WAX PAPER — the central translucent motif.
-     A frosted, grainy cream panel that floats over textured backdrops.
-     Layer real grain via the <WaxPaper> component's ::before noise. */
+  /* GRAPH-PAPER GRID — faint blueprint backdrop. */
+  .grid-paper {
+    background-image:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* GHOST WORDMARK — giant grotesque type bleeding behind content. */
+  .ghost {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.78;
+    color: var(--color-ink);
+    opacity: 0.05;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* WAX PAPER — frosted translucent panel that floats over the canvas. */
   .wax {
     position: relative;
-    background: color-mix(in srgb, var(--color-foam) 78%, transparent);
-    backdrop-filter: blur(6px) saturate(120%);
-    -webkit-backdrop-filter: blur(6px) saturate(120%);
+    background: color-mix(in srgb, var(--color-card) 80%, transparent);
+    backdrop-filter: blur(7px) saturate(115%);
+    -webkit-backdrop-filter: blur(7px) saturate(115%);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.6) inset,
-      0 10px 40px -24px rgba(32, 32, 32, 0.45);
+      0 1px 0 rgba(255, 255, 255, 0.55) inset,
+      0 12px 44px -28px rgba(20, 22, 30, 0.5);
   }
 
-  /* Paper grain texture overlay (apply to a positioned element). */
+  /* Paper / print grain overlay (apply to a positioned element). */
   .grain::after {
     content: "";
     position: absolute;
@@ -147,17 +165,50 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
   }
 
-  /* Espresso (dark-roast) inverted surface. */
+  /* HALFTONE PHOTO — desaturated B&W industrial imagery, multiply-blended. */
+  .halftone {
+    filter: grayscale(1) contrast(1.05);
+    mix-blend-mode: multiply;
+  }
+
+  /* CODE FRAGMENT — faint mono text scattered on the canvas. */
+  .codefrag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+    opacity: 0.07;
+    white-space: pre;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* GRAPHITE (dark industrial) inverted surface. */
   .roast {
-    background-color: var(--color-espresso);
+    background-color: var(--color-graphite);
     color: var(--color-foam);
   }
   .roast ::selection {
-    background-color: var(--color-crema);
-    color: var(--color-espresso);
+    background-color: var(--color-blue);
+    color: #fff;
   }
 
-  /* Link styled like prose links on the Cognition blog. */
+  /* Canvas motifs invert on the dark surface (light grid / ghost / code). */
+  .roast .grid-paper {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-foam) 9%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-foam) 9%, transparent) 1px, transparent 1px);
+  }
+  .roast .ghost {
+    color: var(--color-foam);
+    opacity: 0.06;
+  }
+  .roast .codefrag {
+    color: var(--color-foam);
+    opacity: 0.09;
+  }
+
+  /* Prose-style blue link. */
   .link-blue {
     color: var(--color-blue);
     text-decoration: underline;
