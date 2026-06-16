@@ -63,6 +63,17 @@
   --radius-card: 4px;
   --radius-pill: 999px;
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- Cloud-VM OS chrome: metrics + surfaces composed from the tokens above,
+         so the "internet cafe" skin never introduces a rogue color. --- */
+  --os-titlebar-h: 34px;
+  --os-dock-h: 66px;
+  --os-window-radius: 9px;
+  --os-scanline-opacity: 0.05;
+  --os-glow: 0 0 0 1px color-mix(in srgb, var(--color-blue) 30%, transparent), 0 22px 60px -28px rgba(10, 13, 22, 0.7);
+  --os-window-bg: color-mix(in srgb, var(--color-card) 86%, transparent);
+  --os-titlebar-bg: color-mix(in srgb, var(--color-graphite) 92%, transparent);
+  --os-desktop-bg: var(--color-graphite);
 }
 
 @layer base {
