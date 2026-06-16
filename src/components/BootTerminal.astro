@@ -1,0 +1,432 @@
+---
+/**
+ * BootTerminal — the cloud VM's power-on screen and login gate. Carries over the
+ * skeuomorphic CRT chrome and WebGL shader (src/lib/crt.ts) from the original CLI
+ * hero, but the flow is boot -> Cognition banner -> welcome -> email -> authed.
+ * "Logging in" writes the client-side VM session (src/lib/os.ts) and dispatches
+ * `ccvm:login` so the page can swap to the desktop; no real auth.
+ *
+ * Two tiers, same as before: the DOM terminal is the source of truth (input,
+ * a11y, no-JS form, reduced-motion); the WebGL CRT canvas is a decorative
+ * enhancement gated behind feature + motion detection. Scoped to each root via
+ * data-attributes so it can mount more than once (boot screen + Terminal app).
+ */
+import CognitionAscii from "./CognitionAscii.astro";
+
+interface Props {
+  /** "boot" gates on email; "app" assumes an active session (Terminal window). */
+  variant?: "boot" | "app";
+  class?: string;
+}
+const { variant = "boot", class: className = "" } = Astro.props;
+---
+
+<div class={`bt-bezel ${className}`} data-bt data-variant={variant}>
+  <div class="bt-bar">
+    <span class="bt-led" aria-hidden="true"></span>
+    <span class="bt-title">cognition cloud &middot; vt-220</span>
+    <span class="bt-meta" aria-hidden="true">online</span>
+  </div>
+  <div class="bt-frame">
+    <div class="bt-scroll" data-bt-scroll>
+      <div class="bt-output" data-bt-output role="log" aria-live="polite">
+        <CognitionAscii class="bt-banner" />
+      </div>
+      <form class="bt-line" data-bt-form hidden>
+        <label class="bt-sigil" data-bt-sigil aria-hidden="true">&rsaquo;</label>
+        <input
+          class="bt-input"
+          data-bt-input
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-label="Enter your email to log in to the cloud VM"
+        />
+      </form>
+      <noscript>
+        <div class="bt-fallback">
+          <p>Cognition Coffee Co. &middot; a developer-community proposal for Devin.</p>
+          <p>Explore without the VM:</p>
+          <ul>
+            <li><a href="/about">About</a></li>
+            <li><a href="/community">Community</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/menu/house-roast">The Menu</a></li>
+          </ul>
+        </div>
+      </noscript>
+    </div>
+    <div class="bt-roll" aria-hidden="true"></div>
+    <div class="bt-glare" aria-hidden="true"></div>
+    <canvas class="bt-gl" data-bt-gl aria-hidden="true"></canvas>
+  </div>
+</div>
+
+<script>
+  import posthog from "posthog-js";
+  import { startCrt } from "../lib/crt";
+  import { isValidEmail, startSession, readSession } from "../lib/os";
+  import { BIO } from "../data/experience";
+
+  function initTerminal(root: HTMLElement) {
+    const out = root.querySelector<HTMLElement>("[data-bt-output]");
+    const form = root.querySelector<HTMLFormElement>("[data-bt-form]");
+    const input = root.querySelector<HTMLInputElement>("[data-bt-input]");
+    const box = root.querySelector<HTMLElement>("[data-bt-scroll]");
+    if (!out || !form || !input || !box) return;
+
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const variant = root.dataset.variant === "app" ? "app" : "boot";
+    const session = readSession();
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const toBottom = () => (box.scrollTop = box.scrollHeight);
+
+    const line = (cls: string, text = "") => {
+      const p = document.createElement("p");
+      p.className = cls;
+      p.textContent = text;
+      out.appendChild(p);
+      toBottom();
+      return p;
+    };
+
+    async function type(text: string, cls = "bt-say") {
+      const p = line(cls);
+      if (reduce) return void (p.textContent = text);
+      for (const ch of text) {
+        p.textContent += ch;
+        toBottom();
+        await sleep(14);
+      }
+    }
+
+    async function working(label: string, ms = 900) {
+      const frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧"];
+      const p = line("bt-work");
+      const until = Date.now() + (reduce ? 0 : ms);
+      for (let i = 0; Date.now() < until; i++) {
+        p.textContent = `${frames[i % frames.length]} ${label}`;
+        await sleep(90);
+      }
+      p.remove();
+    }
+
+    function promptEmail() {
+      form.hidden = false;
+      input.focus();
+      toBottom();
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const value = input.value.trim();
+      if (!isValidEmail(value)) {
+        line("bt-err", "✗ that doesn't look like an email — try again");
+        input.focus();
+        return;
+      }
+      line("bt-you", `› ${value}`);
+      input.value = "";
+      form.hidden = true;
+      startSession(value);
+      if (import.meta.env.PROD) {
+        posthog.identify(value, { email: value });
+        posthog.capture("vm_login", { email: value });
+      }
+      await working("provisioning your VM…", 1100);
+      await type("✓ authenticated — welcome aboard.", "bt-ok");
+      document.dispatchEvent(new CustomEvent("ccvm:login", { detail: { email: value } }));
+    });
+
+    async function boot() {
+      if (import.meta.env.PROD && variant === "boot") posthog.capture("vm_boot");
+      await sleep(reduce ? 0 : 260);
+      await type("cognition cloud · mounting /coffee … ok");
+      await type("starting devin-os · loading session … ok");
+      if (variant === "app" && session.loggedIn) {
+        await type(`session restored as ${session.email ?? "guest"}.`, "bt-ok");
+        await type("type a command or close this window to return to the desktop.");
+        promptEmail();
+        return;
+      }
+      await type(`devin · ${BIO.hook}`);
+      await type("log in to your cloud VM session to explore the desktop.");
+      await type("enter your email below ↓");
+      promptEmail();
+    }
+
+    boot();
+
+    const glCanvas = root.querySelector<HTMLCanvasElement>("[data-bt-gl]");
+    const frameEl = box.parentElement;
+    if (glCanvas && frameEl && !reduce) {
+      const colorFor = (cls: string) =>
+        cls.includes("bt-you") ? "#eaf1ff"
+        : cls.includes("bt-err") ? "#ff8f8f"
+        : cls.includes("bt-ok") ? "#8effc0"
+        : cls.includes("bt-work") ? "#7fa8ff"
+        : cls.includes("bt-banner") ? "#9fc0ff"
+        : "#bcd2ff";
+
+      const paint = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
+        ctx.fillStyle = "#070a10";
+        ctx.fillRect(0, 0, w, h);
+        ctx.textBaseline = "top";
+        ctx.font = "14px 'Geist Mono Variable', ui-monospace, monospace";
+        const lh = 21;
+        const padX = 18;
+        const padY = 16;
+        const rows: { text: string; color: string }[] = [];
+        for (const el of Array.from(out.children)) {
+          const color = colorFor(el.className);
+          for (const sub of (el.textContent || "").split("\n")) rows.push({ text: sub, color });
+        }
+        if (!form.hidden) rows.push({ text: `› ${input.value}`, color: "#eaf1ff" });
+        const maxRows = Math.max(1, Math.floor((h - padY * 2) / lh));
+        const shown = rows.slice(Math.max(0, rows.length - maxRows));
+        ctx.shadowColor = "rgba(49,124,255,0.55)";
+        ctx.shadowBlur = 8;
+        let y = padY;
+        for (const r of shown) {
+          ctx.fillStyle = r.color;
+          ctx.fillText(r.text, padX, y);
+          y += lh;
+        }
+        ctx.shadowBlur = 0;
+        if (!form.hidden && Math.floor(performance.now() / 500) % 2 === 0) {
+          const cw = ctx.measureText(`› ${input.value}`).width;
+          ctx.fillStyle = "#317cff";
+          ctx.fillRect(padX + cw + 2, y - lh, 9, 16);
+        }
+      };
+
+      const handle = startCrt(glCanvas, paint);
+      if (handle) {
+        frameEl.classList.add("gl-active");
+        frameEl.addEventListener("click", () => input.focus());
+      }
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-bt]").forEach(initTerminal);
+</script>
+
+<style>
+  .bt-bezel {
+    position: relative;
+    border-radius: 18px;
+    padding: 16px 16px 18px;
+    background: linear-gradient(155deg, #23262e 0%, #14161c 38%, #0a0b0f 100%);
+    box-shadow:
+      0 38px 80px -40px rgba(0, 0, 0, 0.85),
+      inset 0 2px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -3px 8px rgba(0, 0, 0, 0.7),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+  }
+  .bt-bar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 1px 4px 11px;
+  }
+  .bt-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-blue);
+    box-shadow: 0 0 8px 1px rgba(49, 124, 255, 0.8);
+  }
+  .bt-title {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #767d8c;
+  }
+  .bt-meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #4f94ff;
+  }
+
+  .bt-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: radial-gradient(125% 120% at 50% 22%, #121722 0%, #070a10 70%, #04050a 100%);
+    box-shadow:
+      inset 0 0 70px 8px rgba(0, 0, 0, 0.85),
+      inset 0 0 0 1px rgba(120, 160, 255, 0.05);
+    animation: bt-flicker 5.5s infinite steps(60);
+  }
+  .bt-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.26) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+  }
+  .bt-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(140% 90% at 50% -25%, rgba(150, 185, 255, 0.1) 0%, transparent 45%);
+  }
+
+  .bt-scroll {
+    position: relative;
+    z-index: 1;
+    height: clamp(300px, 52vh, 460px);
+    overflow-y: auto;
+    padding: 18px 20px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #bcd2ff;
+    text-shadow:
+      0 0 1px rgba(150, 185, 255, 0.9),
+      0 0 9px rgba(49, 124, 255, 0.45),
+      0 0 22px rgba(49, 124, 255, 0.18);
+  }
+  .bt-output :global(p) {
+    text-shadow:
+      -0.6px 0 0 rgba(255, 70, 90, 0.28),
+      0.6px 0 0 rgba(60, 220, 255, 0.28),
+      0 0 9px rgba(49, 124, 255, 0.4);
+  }
+  .bt-banner {
+    font-size: 0.7rem;
+    line-height: 1.2;
+    color: #9fc0ff;
+    margin-bottom: 0.4rem;
+  }
+  .bt-output :global(.bt-you) {
+    color: #eaf1ff;
+  }
+  .bt-output :global(.bt-work) {
+    color: #7fa8ff;
+  }
+  .bt-output :global(.bt-ok) {
+    color: #8effc0;
+  }
+  .bt-output :global(.bt-err) {
+    color: #ff8f8f;
+  }
+
+  .bt-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bt-sigil {
+    color: var(--color-blue);
+  }
+  .bt-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #eaf1ff;
+    font: inherit;
+    caret-color: var(--color-blue);
+  }
+
+  .bt-roll {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 38%;
+    pointer-events: none;
+    z-index: 3;
+    background: linear-gradient(180deg, transparent, rgba(120, 165, 255, 0.05) 60%, transparent);
+    animation: bt-roll 7s linear infinite;
+  }
+  .bt-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0%, transparent 22%, transparent 78%, rgba(255, 255, 255, 0.03) 100%);
+  }
+
+  .bt-gl {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+  }
+  .bt-frame.gl-active .bt-gl {
+    display: block;
+  }
+  .bt-frame.gl-active .bt-scroll {
+    opacity: 0;
+  }
+  .bt-frame.gl-active {
+    animation: none;
+  }
+  .bt-frame.gl-active::after,
+  .bt-frame.gl-active::before,
+  .bt-frame.gl-active .bt-roll,
+  .bt-frame.gl-active .bt-glare {
+    display: none;
+  }
+
+  .bt-fallback {
+    color: #bcd2ff;
+  }
+  .bt-fallback a {
+    color: #9fc0ff;
+    text-decoration: underline;
+  }
+
+  @keyframes bt-roll {
+    0% {
+      transform: translateY(-110%);
+    }
+    100% {
+      transform: translateY(320%);
+    }
+  }
+  @keyframes bt-flicker {
+    0%, 96%, 100% {
+      opacity: 1;
+    }
+    97% {
+      opacity: 0.96;
+    }
+    98% {
+      opacity: 0.99;
+    }
+    99% {
+      opacity: 0.94;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bt-frame {
+      animation: none;
+    }
+    .bt-roll {
+      display: none;
+    }
+    .bt-scroll {
+      text-shadow: 0 0 6px rgba(49, 124, 255, 0.3);
+    }
+    .bt-output :global(p) {
+      text-shadow: none;
+    }
+  }
+</style>

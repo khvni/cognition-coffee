@@ -1,0 +1,28 @@
+---
+/**
+ * Cognition Coffee boot banner in VT100 ASCII — the splash the cloud VM paints
+ * on power-on, a nod to the Devin CLI launch screen. Plain ASCII (no box-drawing
+ * glyphs) so it aligns identically in the DOM and on the WebGL CRT canvas, which
+ * reads this same text. Sibling to OtterAscii (the mascot); this is the wordmark.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const banner = String.raw`+--------------------------------------------+
+|  COGNITION COFFEE CO.                      |
+|  cloud vm // developer community           |
++--------------------------------------------+
+        ) )
+       ( (        fresh pour, fresh PRs
+      ........
+      |      |]
+      \      /
+       '----'`;
+---
+
+<pre
+  class={`font-mono whitespace-pre select-none ${className}`}
+  aria-label="Cognition Coffee Company cloud VM boot banner"
+>{banner}</pre>
