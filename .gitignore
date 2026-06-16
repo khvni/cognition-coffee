@@ -1,9 +1,8 @@
-# build output
-dist/
-# generated types
-.astro/
-# wrangler / cloudflare local state
-.wrangler/
+# gatsby build output + cache
+public/
+.cache/
+# generated graphql types
+src/gatsby-types.d.ts
 
 # dependencies
 node_modules/
