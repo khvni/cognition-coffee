@@ -19,21 +19,21 @@ const {
 } = Astro.props;
 ---
 
-<div class={`rounded-md border border-[#3a2f28] bg-[#1a120c] shadow-[0_30px_80px_-40px_rgba(0,0,0,0.7)] ${className}`}>
+<div class={`rounded-md border border-[var(--color-line-strong)] bg-[var(--color-graphite)] shadow-[0_30px_80px_-40px_rgba(0,0,0,0.7)] ${className}`}>
   <!-- bezel -->
-  <div class="flex items-center justify-between border-b border-[#3a2f28] px-4 py-2">
+  <div class="flex items-center justify-between border-b border-[var(--color-line-strong)] px-4 py-2">
     <div class="flex gap-1.5">
       <span class="h-2.5 w-2.5 rounded-full bg-[#fa5050]"></span>
       <span class="h-2.5 w-2.5 rounded-full bg-[#fcbb00]"></span>
       <span class="h-2.5 w-2.5 rounded-full bg-[#16a34a]"></span>
     </div>
-    <span class="font-mono text-[0.6rem] tracking-[0.25em] text-[#c8a06b]">{title}</span>
+    <span class="font-mono text-[0.6rem] tracking-[0.25em] text-[var(--color-slate)]">{title}</span>
   </div>
   <!-- screen -->
   <div class="px-5 py-6 text-[#7ad17a]">
     <slot />
     <p class="mt-4 font-mono text-xs text-[#9fe89f]">
-      <span class="text-[#c8a06b]">{prompt}</span>
+      <span class="text-[var(--color-slate)]">{prompt}</span>
       <span class="ml-1 inline-block h-3.5 w-2 translate-y-0.5 animate-pulse bg-[#9fe89f]"></span>
     </p>
   </div>
