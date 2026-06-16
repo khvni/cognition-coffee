@@ -79,7 +79,6 @@ const { variant = "boot", class: className = "" } = Astro.props;
 
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const variant = root.dataset.variant === "app" ? "app" : "boot";
-    const session = readSession();
 
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     const toBottom = () => (box.scrollTop = box.scrollHeight);
@@ -120,6 +119,11 @@ const { variant = "boot", class: className = "" } = Astro.props;
       toBottom();
     }
 
+    async function restored() {
+      await type(`session restored as ${readSession().email ?? "guest"}.`, "bt-ok");
+      await type("read-only shell · close this window to return to the desktop.");
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const value = input.value.trim();
@@ -146,10 +150,9 @@ const { variant = "boot", class: className = "" } = Astro.props;
       await sleep(reduce ? 0 : 260);
       await type("cognition cloud · mounting /coffee … ok");
       await type("starting devin-os · loading session … ok");
-      if (variant === "app" && session.loggedIn) {
-        await type(`session restored as ${session.email ?? "guest"}.`, "bt-ok");
-        await type("type a command or close this window to return to the desktop.");
-        promptEmail();
+      if (variant === "app") {
+        if (readSession().loggedIn) await restored();
+        else document.addEventListener("ccvm:login", () => void restored(), { once: true });
         return;
       }
       await type(`devin · ${BIO.hook}`);

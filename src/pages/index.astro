@@ -2,9 +2,11 @@
 import Base from "../layouts/Base.astro";
 import BootTerminal from "../components/BootTerminal.astro";
 import Desktop from "../components/Desktop.astro";
+import { BIO } from "../data/experience";
 ---
 
 <Base bare>
+  <h1 class="sr-only">Cognition Coffee Co. &mdash; {BIO.hook}</h1>
   <div class="vm-boot" data-vm-boot>
     <div class="vm-stage">
       <BootTerminal class="vm-terminal" />
