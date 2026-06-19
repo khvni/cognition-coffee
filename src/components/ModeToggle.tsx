@@ -1,9 +1,13 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useApp } from "@/context/App"
+import { isMobile } from "@/lib/mobile"
 
 /** Switches between the desktop OS experience and the plain arranged-page site. */
 export const ModeToggle: React.FC = () => {
   const { experience, setExperience } = useApp()
+  const [mobile, setMobile] = useState(false)
+  useEffect(() => { setMobile(isMobile()) }, [])
+  if (mobile) return null
   return (
     <div className="inline-flex items-center rounded-full border border-line bg-panel p-0.5 text-[12px]">
       <button

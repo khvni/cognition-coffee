@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { navigate } from "gatsby"
 import { appForPath, type AppDef } from "@/lib/apps"
+import { isMobile } from "@/lib/mobile"
 
 export type Experience = "os" | "site"
 
@@ -76,12 +77,16 @@ export const AppProvider: React.FC<ProviderProps> = ({ element, location, childr
   const constraintsRef = useRef<HTMLDivElement | null>(null)
   const topZ = useRef(10)
 
+  const mobile = useRef(isBrowser && isMobile())
+
   const setExperience = useCallback((e: Experience) => {
+    if (mobile.current) return
     setExperienceState(e)
     if (isBrowser) window.localStorage.setItem(STORE_KEY, e)
   }, [])
 
   const toggleExperience = useCallback(() => {
+    if (mobile.current) return
     setExperienceState((prev) => {
       const next = prev === "os" ? "site" : "os"
       if (isBrowser) window.localStorage.setItem(STORE_KEY, next)
@@ -89,9 +94,10 @@ export const AppProvider: React.FC<ProviderProps> = ({ element, location, childr
     })
   }, [])
 
-  // Restore saved mode; default to "site" on narrow screens.
   useEffect(() => {
     if (!isBrowser) return
+    mobile.current = isMobile()
+    if (mobile.current) { setExperienceState("site"); return }
     const saved = window.localStorage.getItem(STORE_KEY) as Experience | null
     if (saved === "os" || saved === "site") {
       setExperienceState(saved)
