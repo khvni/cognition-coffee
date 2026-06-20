@@ -9,6 +9,58 @@ const MIN_W = 360
 const MIN_H = 260
 const TASKBAR_H = 40
 
+// macOS-semantic control hues (kept subdued); glyphs use a dark tint for AA.
+const TRAFFIC = { close: "#e0655a", minimize: "#e3b341", zoom: "#8bbf6b" } as const
+const GLYPH = "rgba(0,0,0,0.6)"
+
+const glyphProps = { viewBox: "0 0 12 12", className: "size-2.5", "aria-hidden": true } as const
+
+const CloseGlyph: React.FC = () => (
+  <svg {...glyphProps} fill="none" stroke={GLYPH} strokeWidth={1.5} strokeLinecap="round">
+    <path d="M3.4 3.4L8.6 8.6M8.6 3.4L3.4 8.6" />
+  </svg>
+)
+
+const MinimizeGlyph: React.FC = () => (
+  <svg {...glyphProps} fill="none" stroke={GLYPH} strokeWidth={1.5} strokeLinecap="round">
+    <path d="M3 6H9" />
+  </svg>
+)
+
+const ZoomGlyph: React.FC<{ maximized: boolean }> = ({ maximized }) => (
+  <svg {...glyphProps} fill={GLYPH}>
+    {maximized ? (
+      <>
+        <path d="M6.4 6.4V3L3 6.4Z" />
+        <path d="M5.6 5.6V9L9 5.6Z" />
+      </>
+    ) : (
+      <>
+        <path d="M2.8 2.8H6.3L2.8 6.3Z" />
+        <path d="M9.2 9.2H5.7L9.2 5.7Z" />
+      </>
+    )}
+  </svg>
+)
+
+type LightProps = { color: string; label: string; onClick: () => void; children: React.ReactNode }
+
+const Light: React.FC<LightProps> = ({ color, label, onClick, children }) => (
+  <button
+    type="button"
+    aria-label={label}
+    title={label}
+    onPointerDown={(e) => e.stopPropagation()}
+    onClick={onClick}
+    style={{ backgroundColor: color }}
+    className="grid size-3.5 cursor-pointer place-items-center rounded-full shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.22)] transition-transform active:scale-90 motion-reduce:transition-none"
+  >
+    <span className="pointer-events-none scale-75 opacity-0 transition duration-150 group-hover/lights:scale-100 group-hover/lights:opacity-100 group-focus-within/lights:scale-100 group-focus-within/lights:opacity-100 motion-reduce:transition-none">
+      {children}
+    </span>
+  </button>
+)
+
 /** A single draggable, resizable OS window rendered on the desktop. */
 export const AppWindow: React.FC<Props> = ({ item }) => {
   const { focusWindow, closeWindow, minimizeWindow, toggleMaximize, updateWindow, focusedKey, constraintsRef } = useApp()
@@ -87,28 +139,20 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         onDoubleClick={() => toggleMaximize(item.key)}
         style={{ cursor: maximized ? "default" : "grab" }}
       >
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            aria-label={`Close ${item.title}`}
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => closeWindow(item.key)}
-            className="size-3 rounded-full bg-[#e0655a] transition-transform hover:scale-110"
-          />
-          <button
-            type="button"
-            aria-label={`Minimize ${item.title}`}
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => minimizeWindow(item.key, true)}
-            className="size-3 rounded-full bg-[#e3b341] transition-transform hover:scale-110"
-          />
-          <button
-            type="button"
-            aria-label={`Maximize ${item.title}`}
-            onPointerDown={(e) => e.stopPropagation()}
+        <div className="group/lights flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-150 motion-safe:hover:-translate-y-px">
+          <Light color={TRAFFIC.close} label={`Close ${item.title}`} onClick={() => closeWindow(item.key)}>
+            <CloseGlyph />
+          </Light>
+          <Light color={TRAFFIC.minimize} label={`Minimize ${item.title}`} onClick={() => minimizeWindow(item.key, true)}>
+            <MinimizeGlyph />
+          </Light>
+          <Light
+            color={TRAFFIC.zoom}
+            label={`${maximized ? "Restore" : "Maximize"} ${item.title}`}
             onClick={() => toggleMaximize(item.key)}
-            className="size-3 rounded-full bg-[#8bbf6b] transition-transform hover:scale-110"
-          />
+          >
+            <ZoomGlyph maximized={maximized} />
+          </Light>
         </div>
         <div className="ml-1 flex min-w-0 items-center gap-1.5 text-ink/70">
           <AppIcon id={item.app.icon} size={14} />
