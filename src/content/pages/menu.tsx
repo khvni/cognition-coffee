@@ -1,76 +1,107 @@
 import React, { type FC } from "react"
-import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
-import { MenuHeading, MenuList, MenuItem } from "@/components/prose/MenuList"
 
 export const frontmatter = {
   title: "Programs",
-  description:
-    "Three community programs for Devin: curriculum, meetups, and ambassadors.",
+  description: "Three community programs for Devin: curriculum, meetups, and ambassadors.",
   eyebrow: "Programs",
 }
 
+const curriculum = [
+  { name: "Devin 101", desc: "The first agent workflow, the orchestrator mindset, PR review basics." },
+  { name: "Advanced Workflows", desc: "Multi-repo orchestration, fleets of Devins, MCP, automations, playbooks." },
+  { name: "Devin for Teams", desc: "Rollout patterns, knowledge onboarding, enterprise governance." },
+  { name: "Certification", desc: "Earnable, verifiable badges. Developers love credentials." },
+]
+
+const meetups = [
+  { name: "Cafe Cognition", desc: "Take over a cafe for a day. Coffee, credits, and builders." },
+  { name: "Devin Days", desc: "Quarterly flagship hack days in tech hubs." },
+  { name: "Meetup-in-a-box", desc: "Decks, demo scripts, swag templates, and a run-of-show in one kit." },
+  { name: "Host leaderboard", desc: "Recognition and perks that turn hosts into a flywheel." },
+]
+
+const ambassadors = [
+  { name: "Contributor", desc: "Entry tier: share builds, host first events, early access." },
+  { name: "Advocate", desc: "Consistent organizers and creators: co-branded workshops and swag." },
+  { name: "Champion", desc: "Regional leaders: a product-feedback seat and flagship event budget." },
+  { name: "Feedback loop", desc: "Weekly Devin Office Hours feeding community playbooks and the product team." },
+]
+
+const experience = [
+  { name: "Keysight Technologies", date: "Dec 2025 – present", desc: "Growth Insights / GTM Engineer. AI-native GTM driving partnerships and lead-gen across 6+ verticals; a main operator for internal AI tooling." },
+  { name: "Bloom", date: "Feb – Apr 2025", desc: "Co-founder & CEO. AI conference matchmaking; idea to live product in 6 days, first paying customer in 4, ran live for 550+ attendees." },
+  { name: "Muslim Tech Collaborative", date: "2023 – present", desc: "Founder & National Lead. One Berkeley club to 30+ chapters and 4 city hubs on a three-tier model." },
+  { name: "UC Berkeley", date: "Grad. Dec 2024", desc: "B.S. Computer Science, CS 61B TA. Taught Data Structures to 1,800 students alongside 90 staff." },
+  { name: "Five9", date: "2023", desc: "Product Security Intern. Product security on contact-center infrastructure." },
+]
+
 const Content: FC = () => (
   <>
-    <p>
-      Three programs that build on each other: a curriculum that creates competence, a meetup network that creates belonging, and an ambassador program that creates reach.
-    </p>
+    <div className="intro-copy">
+      <p>Three programs that build on each other: a curriculum that creates competence, a meetup network that creates belonging, and an ambassador program that creates reach.</p>
+    </div>
 
-    <MenuHeading index="01">Devin Mastery Curriculum</MenuHeading>
+    <section className="section-block mt-14" aria-labelledby="curriculum-heading">
+      <h2 className="section-heading" id="curriculum-heading">01 — Devin Mastery Curriculum</h2>
+      <p>Turn curious developers into certified Devin orchestrators. A three-track curriculum with hands-on labs, community playbooks, and earnable certification badges.</p>
+      <ul className="entry-list">
+        {curriculum.map((c) => (
+          <li key={c.name} className="entry-row">
+            <span className="entry-link">
+              <strong>{c.name}</strong>
+              <span>{c.desc}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-    <p>
-      <strong>Turn curious developers into certified Devin orchestrators.</strong> A three-track curriculum with hands-on labs, community playbooks, and earnable certification badges.
-    </p>
+    <section className="section-block" aria-labelledby="meetups-heading">
+      <h2 className="section-heading" id="meetups-heading">02 — Cafe Cognition Meetups</h2>
+      <p>A global meetup network, not one-off pop-ups. A repeatable local-chapter engine with a meetup-in-a-box kit.</p>
+      <ul className="entry-list">
+        {meetups.map((m) => (
+          <li key={m.name} className="entry-row">
+            <span className="entry-link">
+              <strong>{m.name}</strong>
+              <span>{m.desc}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-    <MenuList>
-      <MenuItem name="Devin 101">the first agent workflow, the orchestrator mindset, PR review basics.</MenuItem>
-      <MenuItem name="Advanced Workflows">multi-repo orchestration, fleets of Devins, MCP, automations, playbooks.</MenuItem>
-      <MenuItem name="Devin for Teams">rollout patterns, knowledge onboarding, enterprise governance.</MenuItem>
-      <MenuItem name="Certification">earnable, verifiable badges. Developers love credentials.</MenuItem>
-    </MenuList>
+    <section className="section-block" aria-labelledby="ambassadors-heading">
+      <h2 className="section-heading" id="ambassadors-heading">03 — Devin Ambassadors</h2>
+      <p>Turn top power users into an evangelist flywheel. A three-tier program with a portal, recognition, and a weekly feedback loop to the product team.</p>
+      <ul className="entry-list">
+        {ambassadors.map((a) => (
+          <li key={a.name} className="entry-row">
+            <span className="entry-link">
+              <strong>{a.name}</strong>
+              <span>{a.desc}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
 
-    <ProseWaxFigure caption="Proof">
-      TA'd Berkeley CS 61B (1,800 students, 90 staff) and ran weekly MTC leadership lectures across 30+ campuses.
-    </ProseWaxFigure>
-
-    <MenuHeading index="02">Cafe Cognition Meetups</MenuHeading>
-
-    <p>
-      <strong>A global meetup network, not one-off pop-ups.</strong> A repeatable local-chapter engine with a meetup-in-a-box kit.
-    </p>
-
-    <MenuList>
-      <MenuItem name="Cafe Cognition">take over a cafe for a day. Coffee, credits, and builders.</MenuItem>
-      <MenuItem name="Devin Days">quarterly flagship hack days in tech hubs.</MenuItem>
-      <MenuItem name="Meetup-in-a-box">decks, demo scripts, swag templates, and a run-of-show in one kit.</MenuItem>
-      <MenuItem name="Host leaderboard">recognition and perks that turn hosts into a flywheel.</MenuItem>
-    </MenuList>
-
-    <ProseWaxFigure caption="Proof">
-      Scaled MTC from one Berkeley club to 30+ chapters and 4 city hubs in 18 months.
-    </ProseWaxFigure>
-
-    <MenuHeading index="03">Devin Ambassadors</MenuHeading>
-
-    <p>
-      <strong>Turn top power users into an evangelist flywheel.</strong> A three-tier program with a portal, recognition, and a weekly feedback loop to the product team.
-    </p>
-
-    <MenuList>
-      <MenuItem name="Contributor">entry tier: share builds, host first events, early access.</MenuItem>
-      <MenuItem name="Advocate">consistent organizers and creators: co-branded workshops and swag.</MenuItem>
-      <MenuItem name="Champion">regional leaders: a product-feedback seat and flagship event budget.</MenuItem>
-      <MenuItem name="Feedback loop">weekly Devin Office Hours feeding community playbooks and the product team.</MenuItem>
-    </MenuList>
-
-    <MenuHeading>Experience</MenuHeading>
-
-    <MenuList>
-      <MenuItem name="Keysight Technologies">Growth Insights / GTM Engineer (Dec 2025 – present). AI-native GTM driving partnerships and lead-gen across 6+ verticals; a main operator for internal AI tooling.</MenuItem>
-      <MenuItem name="Bloom">Co-founder &amp; CEO (Feb – Apr 2025). AI conference matchmaking; idea to live product in 6 days, first paying customer in 4, ran live for 550+ attendees.</MenuItem>
-      <MenuItem name="Muslim Tech Collaborative">Founder &amp; National Lead (2023 – present). One Berkeley club to 30+ chapters and 4 city hubs on a three-tier model.</MenuItem>
-      <MenuItem name="UC Berkeley">B.S. Computer Science, CS 61B TA (Grad. Dec 2024). Taught Data Structures to 1,800 students alongside 90 staff.</MenuItem>
-      <MenuItem name="Five9">Product Security Intern (2023). Product security on contact-center infrastructure.</MenuItem>
-    </MenuList>
+    <section className="section-block" aria-labelledby="experience-heading">
+      <h2 className="section-heading" id="experience-heading">Experience</h2>
+      <ul className="entry-list dated-list">
+        {experience.map((e) => (
+          <li key={e.name} className="entry-row">
+            <span className="entry-link">
+              <span>
+                <strong>{e.name}</strong>
+                <span className="block">{e.desc}</span>
+              </span>
+              <time>{e.date}</time>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
   </>
 )
 

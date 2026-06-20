@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import { Link, type HeadProps, type PageProps } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
-import { Container, Text } from "@/components/ui"
 
 type PageContext = { slug: string }
 
@@ -39,24 +38,21 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const date = apiPost?.date ?? fm.date
 
   return (
-    <Container as="article" className="py-8">
-      <Link to="/blog" className="font-mono text-[12px] text-muted hover:text-ink">
-        ← Devin Daily
+    <div className="page-column">
+      <Link to="/blog" className="font-mono text-[12px] text-muted transition-colors hover:text-ink">
+        ← Blog
       </Link>
-      <header className="mt-4 border-b border-line pb-6">
-        {fm.category && <Text as="p" preset="eyebrow">{fm.category}</Text>}
-        <h1 className="mt-2 text-4xl font-medium text-ink">{title}</h1>
-        {description && <Text as="p" preset="subtitle" className="mt-3">{description}</Text>}
-        {date && <Text as="p" preset="label" className="mt-3">{fmtDate(date)}</Text>}
-      </header>
-      <div className="prose mt-8">
+      <h1 className="mt-6 text-[1.75rem] font-medium leading-tight tracking-tight text-ink">{title}</h1>
+      {description && <p className="mt-3 text-[1.125rem] leading-relaxed text-muted">{description}</p>}
+      {date && <p className="mt-2 font-mono text-[12px] text-muted">{fmtDate(date)}</p>}
+      <div className="prose mt-10">
         {apiPost ? (
           <div className="prose-content" dangerouslySetInnerHTML={{ __html: apiPost.content }} />
         ) : (
           <Content />
         )}
       </div>
-    </Container>
+    </div>
   )
 }
 

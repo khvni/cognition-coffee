@@ -28,7 +28,9 @@ module.exports = {
         win: "10px",
       },
       maxWidth: {
-        reader: "44rem",
+        reader: "40rem",
+        page: "40rem",
+        narrow: "35rem",
       },
     },
   },

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import { Link, type HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
-import { Container, Text, Badge } from "@/components/ui"
 
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
@@ -35,7 +34,6 @@ const BlogIndex: React.FC = () => {
     const api = apiMap.get(p.slug)
     return {
       slug: p.slug,
-      category: p.frontmatter.category,
       title: api?.title ?? p.frontmatter.title,
       description: api?.excerpt ?? p.frontmatter.description,
       date: api?.date ?? p.frontmatter.date,
@@ -43,35 +41,30 @@ const BlogIndex: React.FC = () => {
   })
 
   return (
-    <Container as="section" className="py-8">
-      <Text as="p" preset="eyebrow">Devin Daily</Text>
-      <h1 className="mt-3 text-4xl font-medium text-ink">Field notes on community and agents</h1>
-      <Text as="p" preset="subtitle" className="mt-3">
-        Working notes on building a developer community for the first AI software engineer.
-      </Text>
+    <div className="page-column">
+      <h1 className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink">Blog</h1>
+      <p className="lead">Field notes on building a developer community for the first AI software engineer.</p>
 
-      <ul className="mt-8 divide-y divide-line border-y border-line">
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <Link to={`/blog/${post.slug}`} className="group block py-5">
-              {post.category && <Badge>{post.category}</Badge>}
-              <h2 className="mt-1 text-2xl font-medium text-ink group-hover:text-accent-ink">
-                {post.title}
-              </h2>
-              {post.description && (
-                <Text as="p" preset="small" className="mt-1 text-[14px]">{post.description}</Text>
-              )}
-              {post.date && (
-                <Text as="p" preset="label" className="mt-2">{fmtDate(post.date)}</Text>
-              )}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </Container>
+      <section className="section-block mt-14" aria-labelledby="posts-heading">
+        <h2 className="section-heading" id="posts-heading">Posts</h2>
+        <ul className="entry-list dated-list">
+          {posts.map((post) => (
+            <li key={post.slug} className="entry-row">
+              <Link className="entry-link" to={`/blog/${post.slug}`}>
+                <span>
+                  <strong>{post.title}</strong>
+                  {post.description && <span className="block">{post.description}</span>}
+                </span>
+                {post.date && <time>{fmtDate(post.date)}</time>}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
   )
 }
 
 export default BlogIndex
 
-export const Head: HeadFC = () => <SEO title="Devin Daily" description="Field notes on community and agents." />
+export const Head: HeadFC = () => <SEO title="Blog" description="Field notes on community and agents." />

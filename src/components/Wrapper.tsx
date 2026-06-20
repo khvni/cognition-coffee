@@ -75,17 +75,10 @@ const SiteNav: React.FC = () => {
   )
 }
 
-const FooterColumn: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
-  <div>
-    <p className="font-mono text-[11px] uppercase tracking-wide text-muted">{label}</p>
-    <ul className="mt-3 space-y-1">{children}</ul>
-  </div>
-)
-
 const footerLink = "inline-flex min-h-[32px] items-center text-[13px] text-muted transition-colors hover:text-ink"
 
 const SiteFooter: React.FC = () => (
-  <footer className="border-t border-line">
+  <footer className="mt-24 border-t border-line">
     <div className={`${SITE_CONTAINER} py-12`}>
       <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
         <div className="max-w-xs">
@@ -96,25 +89,31 @@ const SiteFooter: React.FC = () => (
             Built with Devin. Fueled by coffee.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-x-12 gap-y-6">
-          <FooterColumn label="Pages">
-            {NAV.map((a) => (
-              <li key={a.id}>
-                <Link to={a.path} className={footerLink} activeClassName="text-ink">
-                  {a.title}
-                </Link>
-              </li>
-            ))}
-          </FooterColumn>
-          <FooterColumn label="Elsewhere">
-            {SOCIALS.map((s) => (
-              <li key={s.label}>
-                <a href={s.href} target="_blank" rel="noreferrer" className={footerLink}>
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </FooterColumn>
+        <div className="flex gap-12">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-wide text-muted">Pages</p>
+            <ul className="mt-3 space-y-1">
+              {NAV.map((a) => (
+                <li key={a.id}>
+                  <Link to={a.path} className={footerLink} activeClassName="text-ink">
+                    {a.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-wide text-muted">Elsewhere</p>
+            <ul className="mt-3 space-y-1">
+              {SOCIALS.map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noreferrer" className={footerLink}>
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
       <p className="mt-10 border-t border-line pt-6 font-mono text-[12px] text-muted">cognitioncoffee.co</p>
