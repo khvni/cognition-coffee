@@ -15,7 +15,7 @@ export const MenuList: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
 export const MenuItem: React.FC<{ name: React.ReactNode; children: React.ReactNode }> = ({ name, children }) => (
   <div className="grid gap-x-6 gap-y-1 border-t border-line px-5 py-3.5 first:border-t-0 sm:grid-cols-[10rem_1fr]">
-    <dt className="font-sans text-[0.95rem] font-semibold leading-snug text-ink">{name}</dt>
+    <dt className="font-sans text-[0.95rem] font-medium leading-snug text-ink">{name}</dt>
     <dd className="font-sans text-[0.9rem] leading-relaxed text-muted">{children}</dd>
   </div>
 )

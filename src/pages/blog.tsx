@@ -14,7 +14,7 @@ const posts = [...blogPosts]
 const BlogIndex: React.FC = () => (
   <section className={`${SITE_CONTAINER} py-8`}>
     <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">Devin Daily</p>
-    <h1 className="mt-3 font-serif text-4xl font-semibold text-ink">Field notes on community and agents</h1>
+    <h1 className="mt-3 text-4xl font-medium text-ink">Field notes on community and agents</h1>
     <p className="mt-3 text-[1.05rem] text-muted">
       Working notes on building a developer community for the first AI software engineer.
     </p>
@@ -28,7 +28,7 @@ const BlogIndex: React.FC = () => (
                 {post.frontmatter.category}
               </span>
             )}
-            <h2 className="mt-1 font-serif text-2xl font-semibold text-ink group-hover:text-accent-ink">
+            <h2 className="mt-1 text-2xl font-medium text-ink group-hover:text-accent-ink">
               {post.frontmatter.title}
             </h2>
             {post.frontmatter.description && (

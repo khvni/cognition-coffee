@@ -21,7 +21,7 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
       </Link>
       <header className="mt-4 border-b border-line pb-6">
         {fm.category && <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">{fm.category}</p>}
-        <h1 className="mt-2 font-serif text-4xl font-semibold text-ink">{fm.title}</h1>
+        <h1 className="mt-2 text-4xl font-medium text-ink">{fm.title}</h1>
         {fm.description && <p className="mt-3 text-[1.05rem] text-muted">{fm.description}</p>}
         {fm.date && <p className="mt-3 font-mono text-[12px] text-muted">{fmtDate(fm.date)}</p>}
       </header>
