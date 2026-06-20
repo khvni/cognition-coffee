@@ -21,7 +21,7 @@ const SiteNav: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
       <nav className={`${SITE_CONTAINER} flex items-center gap-2 py-2.5`}>
-        <Link to="/" className="inline-flex min-h-[40px] items-center pr-2 text-[15px] font-semibold tracking-tight text-ink">
+        <Link to="/" className="inline-flex min-h-[40px] items-center pr-2 text-[15px] font-medium tracking-tight text-ink">
           <Wordmark />
         </Link>
         <ul className="ml-1 hidden items-center gap-0.5 sm:flex">
@@ -88,7 +88,7 @@ const SiteFooter: React.FC = () => (
     <div className={`${SITE_CONTAINER} py-12`}>
       <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
         <div className="max-w-xs">
-          <Link to="/" className="inline-flex min-h-[36px] items-center text-[15px] font-semibold tracking-tight text-ink">
+          <Link to="/" className="inline-flex min-h-[36px] items-center text-[15px] font-medium tracking-tight text-ink">
             <Wordmark />
           </Link>
           <p className="mt-2 text-[13px] leading-relaxed text-muted">
