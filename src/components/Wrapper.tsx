@@ -13,7 +13,7 @@ import { SOCIALS } from "@/data/experience"
 const NAV = APPS.filter((a) => a.id !== "home")
 
 const Wordmark: React.FC = () => (
-  <>cognition<span className="text-accent-ink">.coffee</span></>
+  <>The Cognition <span className="text-accent-ink">Coffee</span> Company</>
 )
 
 const SiteNav: React.FC = () => {
@@ -92,7 +92,7 @@ const SiteFooter: React.FC = () => (
             <Wordmark />
           </Link>
           <p className="mt-2 text-[13px] leading-relaxed text-muted">
-            The Cognition Coffee Company — a Devin community concept by Ali Khani.
+            Built with Devin. Fueled by coffee.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-x-12 gap-y-6">
