@@ -1,41 +1,32 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
+/**
+ * App provider — wires the {@link osMachine} to React and mirrors its state into
+ * type-safe URL query params (`?mode=os&open=menu,about&focus=about`) via nuqs, so
+ * any desktop arrangement is shareable and restorable by URL. The machine is the
+ * single source of truth; this layer is the React + URL boundary.
+ */
+import React, { createContext, useContext, useEffect, useRef } from "react"
 import { navigate } from "gatsby"
-import { appForPath, type AppDef } from "@/lib/apps"
+import { useMachine } from "@xstate/react"
+import { NuqsAdapter } from "nuqs/adapters/react"
+import { parseAsArrayOf, parseAsStringEnum, parseAsStringLiteral, useQueryState } from "nuqs"
+import { appForPath, APPS, type AppId } from "@/lib/apps"
 import { isMobile } from "@/lib/mobile"
+import { osMachine, type Experience, type WindowItem } from "@/os/osMachine"
 
-export type Experience = "os" | "site"
-
-export type WindowItem = {
-  key: string
-  app: AppDef
-  /** The exact pathname this window represents (a blog post differs from /blog). */
-  path: string
-  title: string
-  element: React.ReactNode
-  x: number
-  y: number
-  w: number
-  h: number
-  z: number
-  minimized: boolean
-  maximized: boolean
-}
-
-type WindowPatch = Partial<Pick<WindowItem, "x" | "y" | "w" | "h" | "minimized" | "maximized">>
+export type { Experience, WindowItem } from "@/os/osMachine"
 
 type AppContextValue = {
   experience: Experience
   setExperience: (e: Experience) => void
-  toggleExperience: () => void
   windows: WindowItem[]
   focusedKey: string | null
-  open: (path: string, opts?: { newWindow?: boolean }) => void
+  open: (path: string) => void
   closeWindow: (key: string) => void
-  closeAll: () => void
   focusWindow: (key: string) => void
   minimizeWindow: (key: string, value?: boolean) => void
   toggleMaximize: (key: string) => void
-  updateWindow: (key: string, patch: WindowPatch) => void
+  moveWindow: (key: string, x: number, y: number) => void
+  resizeWindow: (key: string, w: number, h: number) => void
   constraintsRef: React.RefObject<HTMLDivElement | null>
 }
 
@@ -47,22 +38,15 @@ export const useApp = (): AppContextValue => {
   return ctx
 }
 
-const STORE_KEY = "ccvm.experience"
-let keySeq = 0
-const nextKey = () => `win-${++keySeq}`
-
 const isBrowser = typeof window !== "undefined"
+const APP_IDS = APPS.map((a) => a.id)
+const pathForId = (id: AppId) => APPS.find((a) => a.id === id)?.path
+/** Strip Gatsby's trailing slash so `location.pathname` matches the `APPS` paths. */
+const normPath = (p: string) => p.replace(/\/+$/, "") || "/"
 
-/** Stagger new windows so they don't stack perfectly. */
-function defaultPosition(app: AppDef, count: number, vw: number, vh: number) {
-  const w = Math.min(app.size.w, vw - 32)
-  const h = Math.min(app.size.h, vh - 96)
-  if (app.center) {
-    return { x: Math.max(16, (vw - w) / 2), y: Math.max(40, (vh - h) / 2 - 10), w, h }
-  }
-  const offset = (count % 6) * 28
-  return { x: 80 + offset, y: 64 + offset, w, h }
-}
+const modeParser = parseAsStringEnum<Experience>(["os", "site"])
+const openParser = parseAsArrayOf(parseAsStringLiteral(APP_IDS)).withDefault([])
+const focusParser = parseAsStringLiteral(APP_IDS)
 
 type ProviderProps = {
   element: React.ReactNode
@@ -70,131 +54,121 @@ type ProviderProps = {
   children: React.ReactNode
 }
 
-export const AppProvider: React.FC<ProviderProps> = ({ element, location, children }) => {
-  const [experience, setExperienceState] = useState<Experience>("os")
-  const [windows, setWindows] = useState<WindowItem[]>([])
-  const [focusedKey, setFocusedKey] = useState<string | null>(null)
-  const constraintsRef = useRef<HTMLDivElement | null>(null)
-  const topZ = useRef(10)
+export const AppProvider: React.FC<ProviderProps> = (props) => (
+  <NuqsAdapter>
+    <AppProviderInner {...props} />
+  </NuqsAdapter>
+)
 
+const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children }) => {
+  const [state, send] = useMachine(osMachine)
+  const experience = state.value as Experience
+  const { windows, focusedKey } = state.context
+  const constraintsRef = useRef<HTMLDivElement | null>(null)
   const mobile = useRef(isBrowser && isMobile())
 
-  const setExperience = useCallback((e: Experience) => {
-    if (mobile.current) return
-    setExperienceState(e)
-    if (isBrowser) window.localStorage.setItem(STORE_KEY, e)
-  }, [])
+  const [urlMode, setUrlMode] = useQueryState("mode", modeParser)
+  const [urlOpen, setUrlOpen] = useQueryState("open", openParser)
+  const [urlFocus, setUrlFocus] = useQueryState("focus", focusParser)
 
-  const toggleExperience = useCallback(() => {
-    if (mobile.current) return
-    setExperienceState((prev) => {
-      const next = prev === "os" ? "site" : "os"
-      if (isBrowser) window.localStorage.setItem(STORE_KEY, next)
-      return next
-    })
-  }, [])
+  const booted = useRef(false)
+  const restoring = useRef(false)
+  const restoreQueue = useRef<string[]>([])
+  const focusTarget = useRef<AppId | null>(null)
+  const modeMounted = useRef(false)
 
+  /** Navigate within the OS, preserving query state so a window-open doesn't drop the URL. */
+  const go = (path: string) => {
+    void navigate(isBrowser ? path + window.location.search : path)
+  }
+
+  // Reconcile the current Gatsby page into a window on route change, and pump the
+  // deep-link restore queue (one navigation opens one queued window at a time).
   useEffect(() => {
-    if (!isBrowser) return
-    mobile.current = isMobile()
-    if (mobile.current) { setExperienceState("site"); return }
-    const saved = window.localStorage.getItem(STORE_KEY) as Experience | null
-    if (saved === "os" || saved === "site") {
-      setExperienceState(saved)
-    } else if (window.innerWidth < 880) {
-      setExperienceState("site")
-    }
-  }, [])
-
-  const focusWindow = useCallback((key: string) => {
-    topZ.current += 1
-    const z = topZ.current
-    setWindows((prev) => prev.map((wn) => (wn.key === key ? { ...wn, z, minimized: false } : wn)))
-    setFocusedKey(key)
-  }, [])
-
-  const closeWindow = useCallback((key: string) => {
-    setWindows((prev) => prev.filter((wn) => wn.key !== key))
-    setFocusedKey((prev) => (prev === key ? null : prev))
-  }, [])
-
-  const closeAll = useCallback(() => {
-    setWindows([])
-    setFocusedKey(null)
-  }, [])
-
-  const minimizeWindow = useCallback((key: string, value?: boolean) => {
-    setWindows((prev) => prev.map((wn) => (wn.key === key ? { ...wn, minimized: value ?? !wn.minimized } : wn)))
-  }, [])
-
-  const toggleMaximize = useCallback((key: string) => {
-    setWindows((prev) => prev.map((wn) => (wn.key === key ? { ...wn, maximized: !wn.maximized } : wn)))
-  }, [])
-
-  const updateWindow = useCallback((key: string, patch: WindowPatch) => {
-    setWindows((prev) => prev.map((wn) => (wn.key === key ? { ...wn, ...patch } : wn)))
-  }, [])
-
-  const open = useCallback((path: string, opts?: { newWindow?: boolean }) => {
-    void navigate(path, { state: { newWindow: opts?.newWindow ?? false } })
-  }, [])
-
-  // Reconcile the current Gatsby page into a window whenever the route changes.
-  useEffect(() => {
-    const pathname = location.pathname
+    const pathname = normPath(location.pathname)
     const app = appForPath(pathname)
-    const state = (location.state ?? {}) as { newWindow?: boolean }
     const vw = isBrowser ? window.innerWidth : 1280
     const vh = isBrowser ? window.innerHeight : 800
+    send({ type: "OPEN", app, path: pathname, title: app.title, element, vw, vh })
 
-    setWindows((prev) => {
-      const existing = prev.find((wn) => wn.path === pathname)
-      topZ.current += 1
-      const z = topZ.current
-
-      if (existing && !state.newWindow) {
-        setFocusedKey(existing.key)
-        return prev.map((wn) => (wn.key === existing.key ? { ...wn, element, title: app.title, z, minimized: false } : wn))
+    if (restoring.current) {
+      const rest = restoreQueue.current.filter((p) => p !== pathname)
+      restoreQueue.current = rest
+      if (rest.length) {
+        go(rest[0])
+      } else {
+        restoring.current = false
+        const target = focusTarget.current
+        const p = target && pathForId(target)
+        if (p) send({ type: "FOCUS_PATH", path: p })
       }
-
-      const key = nextKey()
-      const pos = defaultPosition(app, prev.length, vw, vh)
-      const win: WindowItem = {
-        key,
-        app,
-        path: pathname,
-        title: app.title,
-        element,
-        ...pos,
-        z,
-        minimized: false,
-        maximized: false,
-      }
-      setFocusedKey(key)
-      return [...prev, win]
-    })
+    }
     // location.key changes on every navigation; element is captured per-route.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.key])
 
-  const value = useMemo<AppContextValue>(
-    () => ({
-      experience,
-      setExperience,
-      toggleExperience,
-      windows,
-      focusedKey,
-      open,
-      closeWindow,
-      closeAll,
-      focusWindow,
-      minimizeWindow,
-      toggleMaximize,
-      updateWindow,
-      constraintsRef,
-    }),
-    [experience, setExperience, toggleExperience, windows, focusedKey, open, closeWindow, closeAll, focusWindow, minimizeWindow, toggleMaximize, updateWindow]
-  )
+  // Boot: restore mode + window arrangement from the URL once, on the client.
+  useEffect(() => {
+    if (booted.current || !isBrowser) return
+    booted.current = true
+    if (mobile.current) {
+      send({ type: "SET_MODE", mode: "site" })
+      return
+    }
+    if (urlMode) send({ type: "SET_MODE", mode: urlMode })
+    else if (window.innerWidth < 880) send({ type: "SET_MODE", mode: "site" })
+
+    const curAppPath = appForPath(location.pathname).path
+    const queue = Array.from(
+      new Set(urlOpen.map(pathForId).filter((p): p is string => !!p && p !== curAppPath))
+    )
+    focusTarget.current = urlFocus
+    if (queue.length) {
+      restoring.current = true
+      restoreQueue.current = queue
+      go(queue[0])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Mirror machine → URL once booted (skipped while restoring and on mobile).
+  useEffect(() => {
+    if (!booted.current || restoring.current || mobile.current) return
+    const ids = Array.from(new Set(windows.map((w) => w.app.id)))
+    const focusId = windows.find((w) => w.key === focusedKey)?.app.id ?? null
+    void setUrlOpen(ids.length ? ids : null)
+    void setUrlFocus(focusId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [windows, focusedKey])
+
+  useEffect(() => {
+    if (!modeMounted.current) {
+      modeMounted.current = true
+      return
+    }
+    void setUrlMode(experience)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experience])
+
+  const value: AppContextValue = {
+    experience,
+    setExperience: (e) => {
+      if (!mobile.current) send({ type: "SET_MODE", mode: e })
+    },
+    windows,
+    focusedKey,
+    open: (path) => go(path),
+    closeWindow: (key) => send({ type: "CLOSE", key }),
+    focusWindow: (key) => send({ type: "FOCUS", key }),
+    minimizeWindow: (key, val) => send({ type: "MINIMIZE", key, value: val }),
+    toggleMaximize: (key) => {
+      const wn = windows.find((w) => w.key === key)
+      send(wn?.maximized ? { type: "RESTORE", key } : { type: "MAXIMIZE", key })
+    },
+    moveWindow: (key, x, y) => send({ type: "MOVE", key, x, y }),
+    resizeWindow: (key, w, h) => send({ type: "RESIZE", key, w, h }),
+    constraintsRef,
+  }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

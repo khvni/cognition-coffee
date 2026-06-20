@@ -63,7 +63,7 @@ const Light: React.FC<LightProps> = ({ color, label, onClick, children }) => (
 
 /** A single draggable, resizable OS window rendered on the desktop. */
 export const AppWindow: React.FC<Props> = ({ item }) => {
-  const { focusWindow, closeWindow, minimizeWindow, toggleMaximize, updateWindow, focusedKey, constraintsRef } = useApp()
+  const { focusWindow, closeWindow, minimizeWindow, toggleMaximize, moveWindow, resizeWindow, focusedKey, constraintsRef } = useApp()
   const dragControls = useDragControls()
   const x = useMotionValue(item.x)
   const y = useMotionValue(item.y)
@@ -83,7 +83,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
     if (!r) return
     const w = Math.max(MIN_W, r.w + (e.clientX - r.startX))
     const h = Math.max(MIN_H, r.h + (e.clientY - r.startY))
-    updateWindow(item.key, { w, h })
+    resizeWindow(item.key, w, h)
   }
 
   const setBodySelect = (on: boolean) => {
@@ -141,7 +141,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
       dragConstraints={constraintsRef}
       dragElastic={0}
       onMouseDownCapture={() => focusWindow(item.key)}
-      onDragEnd={() => updateWindow(item.key, { x: x.get(), y: y.get() })}
+      onDragEnd={() => moveWindow(item.key, x.get(), y.get())}
       initial={{ opacity: 0, scale: 0.97 }}
       animate={
         item.minimized

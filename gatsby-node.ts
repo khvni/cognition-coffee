@@ -2,6 +2,14 @@ import type { GatsbyNode } from "gatsby"
 import fs from "fs"
 import path from "path"
 
+/** Run the React Compiler (target 18) ahead of Gatsby's Babel transforms. */
+export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({ actions }) => {
+  actions.setBabelPlugin({
+    name: "babel-plugin-react-compiler",
+    options: { target: "18" },
+  })
+}
+
 /** Mirror the tsconfig "@/*" -> "src/*" alias for webpack so imports resolve. */
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ actions }) => {
   actions.setWebpackConfig({

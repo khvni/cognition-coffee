@@ -7,6 +7,7 @@ import { Desktop } from "./Desktop"
 import { AppWindow } from "./AppWindow"
 import { TaskBar } from "./TaskBar"
 import { ModeToggle } from "./ModeToggle"
+import { ErrorBoundary } from "./ErrorBoundary"
 import { SITE_CONTAINER } from "@/lib/layout"
 import { SOCIALS } from "@/data/experience"
 
@@ -127,23 +128,27 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
   if (experience === "site") {
     return (
-      <div className="flex min-h-screen flex-col bg-canvas text-ink">
-        <SiteNav />
-        <main className="w-full flex-1">{children}</main>
-        <SiteFooter />
-      </div>
+      <ErrorBoundary>
+        <div className="flex min-h-screen flex-col bg-canvas text-ink">
+          <SiteNav />
+          <main className="w-full flex-1">{children}</main>
+          <SiteFooter />
+        </div>
+      </ErrorBoundary>
     )
   }
 
   return (
-    <div ref={constraintsRef} className="relative h-screen w-screen overflow-hidden bg-canvas text-ink">
-      <Desktop />
-      <AnimatePresence>
-        {windows.map((w) => (
-          <AppWindow key={w.key} item={w} />
-        ))}
-      </AnimatePresence>
-      <TaskBar />
-    </div>
+    <ErrorBoundary>
+      <div ref={constraintsRef} className="relative h-screen w-screen overflow-hidden bg-canvas text-ink">
+        <Desktop />
+        <AnimatePresence>
+          {windows.map((w) => (
+            <AppWindow key={w.key} item={w} />
+          ))}
+        </AnimatePresence>
+        <TaskBar />
+      </div>
+    </ErrorBoundary>
   )
 }

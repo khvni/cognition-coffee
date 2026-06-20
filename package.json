@@ -19,12 +19,17 @@
     "@fontsource-variable/geist": "^5.2.9",
     "@fontsource-variable/geist-mono": "^5.2.8",
     "@fontsource/stix-two-text": "^5.2.8",
+    "@xstate/react": "^6.1.0",
+    "babel-plugin-react-compiler": "1.0.0",
     "framer-motion": "^11.11.0",
     "gatsby": "^5.13.7",
     "gatsby-plugin-postcss": "^6.13.1",
+    "nuqs": "^2.8.9",
     "posthog-js": "^1.386.6",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-compiler-runtime": "1.0.0",
+    "react-dom": "^18.3.1",
+    "xstate": "^5.32.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
