@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import { ProseWaxFigure } from "@/components/mdx/ProseWaxFigure"
+import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 
 export const frontmatter = {
   title: "Community",

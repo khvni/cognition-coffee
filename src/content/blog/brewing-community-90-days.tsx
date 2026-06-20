@@ -1,6 +1,6 @@
 import type { FC } from "react"
-import { ProsePullQuote } from "@/components/mdx/ProsePullQuote"
-import { ProseWaxFigure } from "@/components/mdx/ProseWaxFigure"
+import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
+import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 
 export const frontmatter = {
   title: "Brewing Community: What I'd Build for Cognition in 90 Days",

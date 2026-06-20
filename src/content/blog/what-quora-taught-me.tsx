@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import { ProsePullQuote } from "@/components/mdx/ProsePullQuote"
+import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 
 export const frontmatter = {
   title: "The View Counter",
