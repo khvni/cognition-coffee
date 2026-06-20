@@ -14,7 +14,7 @@ export const ModeToggle: React.FC = () => {
         type="button"
         onClick={() => setExperience("os")}
         aria-pressed={experience === "os"}
-        className={`rounded-full px-2.5 py-1 transition-colors ${
+        className={`flex min-h-[34px] items-center rounded-full px-3.5 transition-colors ${
           experience === "os" ? "bg-ink text-panel" : "text-muted hover:text-ink"
         }`}
       >
@@ -24,7 +24,7 @@ export const ModeToggle: React.FC = () => {
         type="button"
         onClick={() => setExperience("site")}
         aria-pressed={experience === "site"}
-        className={`rounded-full px-2.5 py-1 transition-colors ${
+        className={`flex min-h-[34px] items-center rounded-full px-3.5 transition-colors ${
           experience === "site" ? "bg-ink text-panel" : "text-muted hover:text-ink"
         }`}
       >

@@ -1,5 +1,7 @@
 import React, { type FC } from "react"
 import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
+import { StatGrid, Stat } from "@/components/prose/StatGrid"
+import { EventList, EventItem } from "@/components/prose/EventList"
 
 export const frontmatter = {
   title: "Community",
@@ -16,20 +18,12 @@ const Content: FC = () => (
 
     <h2>What this could look like</h2>
 
-    <ul>
-      <li>
-        <strong>30+</strong> Cafe Cognition cities (target Year 1)
-      </li>
-      <li>
-        <strong>4</strong> Devin Days flagship hubs
-      </li>
-      <li>
-        <strong>3</strong> ambassador tiers
-      </li>
-      <li>
-        <strong>1</strong> weekly Devin office Hours
-      </li>
-    </ul>
+    <StatGrid>
+      <Stat value="30+">Cafe Cognition cities (target Year 1)</Stat>
+      <Stat value="4">Devin Days flagship hubs</Stat>
+      <Stat value="3">ambassador tiers</Stat>
+      <Stat value="1">weekly Devin office Hours</Stat>
+    </StatGrid>
 
     <h2>Upcoming events</h2>
 
@@ -37,32 +31,16 @@ const Content: FC = () => (
       A sample of a plausible global Cafe Cognition calendar. Events centralize on Luma the way Cursor centralizes theirs.
     </p>
 
-    <ul>
-      <li>
-        <strong>Devin Day SF</strong> — San Francisco, USA · Jul 12
-      </li>
-      <li>
-        <strong>Cafe Cognition NYC</strong> — New York, USA · Jul 15
-      </li>
-      <li>
-        <strong>Devin Builders Meetup</strong> — Austin, USA · Jul 18
-      </li>
-      <li>
-        <strong>Orchestrating Fleets of Devins</strong> — London, UK · Jul 22
-      </li>
-      <li>
-        <strong>Devin Hack Night</strong> — Bangalore, India · Jul 26
-      </li>
-      <li>
-        <strong>Cafe Cognition Berlin</strong> — Berlin, Germany · Jul 29
-      </li>
-      <li>
-        <strong>Devin office Hours (virtual)</strong> — Remote · Aug 1
-      </li>
-      <li>
-        <strong>Non-coding Devin: Research &amp; Docs</strong> — Toronto, Canada · Aug 5
-      </li>
-    </ul>
+    <EventList>
+      <EventItem name="Devin Day SF" place="San Francisco, USA" date="Jul 12" />
+      <EventItem name="Cafe Cognition NYC" place="New York, USA" date="Jul 15" />
+      <EventItem name="Devin Builders Meetup" place="Austin, USA" date="Jul 18" />
+      <EventItem name="Orchestrating Fleets of Devins" place="London, UK" date="Jul 22" />
+      <EventItem name="Devin Hack Night" place="Bangalore, India" date="Jul 26" />
+      <EventItem name="Cafe Cognition Berlin" place="Berlin, Germany" date="Jul 29" />
+      <EventItem name="Devin office Hours (virtual)" place="Remote" date="Aug 1" />
+      <EventItem name="Non-coding Devin: Research &amp; Docs" place="Toronto, Canada" date="Aug 5" />
+    </EventList>
 
     <h2>Voices from the community</h2>
 
