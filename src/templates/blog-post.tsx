@@ -1,15 +1,18 @@
 import React from "react"
-import { graphql, Link, type HeadProps, type PageProps } from "gatsby"
+import { Link, type HeadProps, type PageProps } from "gatsby"
 import { SEO } from "@/components/SEO"
+import { blogPosts } from "@/content/blog"
 
-type Data = {
-  mdx: {
-    frontmatter: { title: string; description?: string; date?: string; category?: string }
-  }
-}
+type PageContext = { slug: string }
 
-const BlogPost: React.FC<PageProps<Data>> = ({ data, children }) => {
-  const fm = data.mdx.frontmatter
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+
+const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
+  const { slug } = pageContext as PageContext
+  const post = blogPosts.find((p) => p.slug === slug)
+  if (!post) return null
+  const { Content, frontmatter: fm } = post
   return (
     <article className="mx-auto w-full max-w-reader px-6 py-8">
       <Link to="/blog" className="font-mono text-[12px] text-muted hover:text-ink">
@@ -19,28 +22,20 @@ const BlogPost: React.FC<PageProps<Data>> = ({ data, children }) => {
         {fm.category && <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">{fm.category}</p>}
         <h1 className="mt-2 font-serif text-4xl font-semibold text-ink">{fm.title}</h1>
         {fm.description && <p className="mt-3 text-[1.05rem] text-muted">{fm.description}</p>}
-        {fm.date && <p className="mt-3 font-mono text-[12px] text-muted">{fm.date}</p>}
+        {fm.date && <p className="mt-3 font-mono text-[12px] text-muted">{fmtDate(fm.date)}</p>}
       </header>
-      <div className="prose mt-8">{children}</div>
+      <div className="prose mt-8">
+        <Content />
+      </div>
     </article>
   )
 }
 
 export default BlogPost
 
-export const Head: React.FC<HeadProps<Data>> = ({ data }) => (
-  <SEO title={data.mdx.frontmatter.title} description={data.mdx.frontmatter.description} />
-)
-
-export const query = graphql`
-  query BlogPost($id: String!) {
-    mdx(id: { eq: $id }) {
-      frontmatter {
-        title
-        description
-        date(formatString: "MMMM D, YYYY")
-        category
-      }
-    }
-  }
-`
+export const Head: React.FC<HeadProps> = ({ pageContext }) => {
+  const { slug } = pageContext as PageContext
+  const post = blogPosts.find((p) => p.slug === slug)
+  if (!post) return null
+  return <SEO title={post.frontmatter.title} description={post.frontmatter.description} />
+}

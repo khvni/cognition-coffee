@@ -43,7 +43,7 @@ Self-hosted via Fontsource, imported in `gatsby-browser.tsx`.
 | Mono | `font-mono` | **Geist Mono Variable** | Eyebrows, labels, dates, code, terminal, stats |
 
 - **Prose** (`.prose`): STIX serif body + headings, `1.125rem` / line-height `1.7`,
-  measure ~`33rem` (~69 chars/line); `code`/`pre` stay Geist Mono, GFM tables use
+  measure ~`33rem` (~69 chars/line); `code`/`pre` stay Geist Mono, prose tables use
   sans cells + mono uppercase headers. Headings weight 600 (STIX ships static
   400/500/600/700), `text-wrap: balance`.
 - **Titles**: blog index/post and content-page `<h1>`/list `<h2>` use `font-serif`.
@@ -61,7 +61,7 @@ Self-hosted via Fontsource, imported in `gatsby-browser.tsx`.
 | `ModeToggle` | OS ⇄ Site switch |
 | `AppIcon` | Per-app icon, `<AppIcon id size />` |
 | `Otter` | The Devin otter mascot |
-| `ProsePullQuote` / `ProseWaxFigure` | MDX shortcodes for long-form content |
+| `ProsePullQuote` / `ProseWaxFigure` | prose components for long-form content |
 
 ### Utility classes (`global.css`)
 - `.prose` — long-form serif content

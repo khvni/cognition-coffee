@@ -9,8 +9,8 @@ strategy for Cognition's Devin. It's built as a **PostHog-style mock OS**: a des
 with draggable windows plus a normal arranged-pages "site" view, toggled at runtime.
 The look is **subdued** — a warm beige canvas, near-black ink, and **Devin blue
 `#317CFF` as the single accent** — with the Devin otter as the OS wallpaper (a photo
-under a subtle CRT overlay). Stack is **Gatsby (React + GraphQL + MDX)**; all page
-content is authored in `.md`/`.mdx`.
+under a subtle CRT overlay). Stack is **Gatsby 5 (React 18 + TypeScript)**; all page
+content is authored in `.tsx` content components.
 
 ## Required skills & modes
 
@@ -47,8 +47,7 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
    `src/styles/global.css`. Never hardcode a hex that exists as a token — use the
    classes (`text-accent-ink`, `border-accent`, `bg-canvas`) or `theme("colors.x")`.
 2. **Reuse the primitives.** The OS/site shell is built from `Wrapper`, `Desktop`,
-   `AppWindow`, `TaskBar`, `ModeToggle`, `Otter`, `AppIcon`, and the MDX shortcodes
-   (`ProsePullQuote`, `ProseWaxFigure`). Compose them; don't reinvent.
+   `AppWindow`, `TaskBar`, `ModeToggle`, `Otter`, and `AppIcon`. Compose them; don't reinvent.
 3. **Verified copy only.** Every metric about Ali is real and lives in `src/data/`.
    Do **not** invent stats, dates, or achievements. If unsure, leave a `TODO` and ask.
 4. **Keep it subdued.** UI chrome + headlines use the **sans** (`font-sans`, Geist
@@ -65,10 +64,13 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 
 ## Conventions
 
-- **Content**: page bodies are MDX in `content/pages/` (`/about`, `/community`, `/menu`)
-  and blog posts are MDX in `content/blog/`. Routes are generated in `gatsby-node.ts`
-  (slug = source filename via `fields.fileSlug`); `src/pages/index.tsx` and `blog.tsx`
-  are React pages. Plain markdown text takes literal characters (`·`, `—`, `☕`).
+- **Content**: page bodies are `.tsx` components in `src/content/pages/` (`/about`,
+  `/community`, `/menu`) and blog posts are `.tsx` components in `src/content/blog/`.
+  Each file exports a `frontmatter` object and a default React component. Registries at
+  `src/content/blog/index.ts` and `src/content/pages/index.ts` export arrays consumed by
+  `gatsby-node.ts` and the page templates. Routes are generated in `gatsby-node.ts`
+  (blog → `/blog/<slug>`, pages → `/<slug>`); `src/pages/index.tsx` and `blog.tsx` are
+  React pages. No MDX, no `gatsby-plugin-mdx`, no `gatsby-source-filesystem`.
 - **Data lives in `src/data/` and `src/lib/`**, not inline in pages, so multiple pages
   share one source of truth.
 - **Images**: put static assets in `static/` (served at the site root). `public/` is
@@ -87,6 +89,7 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 - One PR per logical change. In the description, list files touched and any new deps.
 - Don't reformat files you didn't change.
 - Don't push to `main` directly if a branch workflow is set up.
+- **NEVER add "Co-authored by Devin" or any Devin attribution to commits.** All commits should be from the user only.
 
 ## What "done" looks like for any page
 

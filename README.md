@@ -23,19 +23,21 @@ Plus a reimagined community home and a set of field notes on community and agent
 
 ## Tech stack
 
-- **[Astro 6](https://astro.build)** (static output)
-- **[Tailwind CSS v4](https://tailwindcss.com)** via `@tailwindcss/vite`
-- **MDX** content collections for the blog
-- **Self-hosted fonts** (Fontsource): Fraunces (serif), Geist (sans), Geist Mono
-- Hosted on **Cloudflare Pages**
+- **[Gatsby 5](https://www.gatsbyjs.com)** (static site generator) + **React 18** + **TypeScript**
+- **[Tailwind CSS v3](https://tailwindcss.com)** + PostCSS via `gatsby-plugin-postcss`
+- **`.tsx` content** — each post/page exports `frontmatter` + a default React component (no MDX)
+- **PostHog-style desktop-OS UI** with a plain-site mode toggle (`framer-motion` for window dragging)
+- **PostHog** analytics (`posthog-js`)
+- Self-hosted fonts (Fontsource): Inter (sans), IBM Plex Mono (mono)
+- Hosted on **Cloudflare Pages** (via GitHub Actions)
 
 ## Quickstart
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # static output to ./dist
-npm run preview
+npm run dev      # http://localhost:8000
+npm run build    # static output to ./public
+npm run serve    # preview the production build
 npm run deploy   # build + publish to Cloudflare Pages
 ```
 
@@ -43,13 +45,17 @@ npm run deploy   # build + publish to Cloudflare Pages
 
 ```
 src/
-  components/   Brand primitives (Nav, Footer, WaxPaper, Terminal, OtterAscii, Hexagon, Section)
-  layouts/      Base.astro (shell) · BlogPost.astro (editorial serif)
-  pages/        index · community · about · blog/[...slug] · menu/[slug]
-  content/blog/ Field notes (MDX)
-  data/         initiatives.ts · experience.ts (content + data)
-  lib/          site.ts (nav/meta) · events.ts (events + Luma adapter)
+  components/   OS shell primitives (Wrapper, Desktop, AppWindow, TaskBar, ModeToggle, AppIcon, Otter)
+  context/      App.tsx (OS/site mode state)
+  pages/        index.tsx · blog.tsx (React pages)
+  templates/    blog-post.tsx · content-page.tsx (look up content by slug from registries)
+  content/blog/ Field notes (.tsx) + index.ts registry
+  content/pages/ Site pages (.tsx) + index.ts registry
+  data/         initiatives.ts · experience.ts (verified content + data)
+  lib/          site.ts (nav/meta) · events.ts · apps.ts · os-session.ts
   styles/       global.css (design-token source of truth)
+gatsby-node.ts  Creates routes from content registries; mirrors @/ webpack alias
+gatsby-browser.tsx / gatsby-ssr.tsx  Wrap pages in AppProvider + Wrapper
 docs/
   BRAND.md          Brand concept, voice, motifs
   DESIGN_SYSTEM.md  Colors, type, components, do/don't

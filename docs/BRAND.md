@@ -40,12 +40,13 @@ terminal, the Devin otter, real metrics.
 
 1. **Wax paper** — warm, translucent cream surfaces floating over the beige canvas.
    The central motif (from Cognition's blog graphics). Realized as `panel` surfaces
-   and the `ProseWaxFigure` MDX shortcode.
+   and the `ProseWaxFigure` prose component.
 2. **Devin blue selection** — highlighting any text reveals `#317CFF`. Always on
    (`::selection` in `global.css`).
 3. **Numbered sections** — `01 / 02 / 03` with mono eyebrows, like cognition.ai.
-4. **The Devin otter** — the mascot (plushies, Slackbot, @devinai). Rendered by the
-   `Otter` component, and used as the OS-mode desktop wallpaper photo.
+4. **The Devin otter** — the mascot (plushies, Slackbot, @devinai). The OS desktop
+   uses the otter photo as wallpaper (under a subtle CRT overlay); the `Otter`
+   component renders the ASCII mark for inline use.
 5. **VT100 terminal** — the Devin CLI launch aesthetic (`devin@...:~$`), good for
    heroes and the "built with Devin" beat. Geist Mono carries the terminal type.
 6. **Espresso (dark roast) sections** — inverted dark-brown bands for rhythm/contrast.

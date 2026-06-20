@@ -4,6 +4,10 @@ public/
 # generated graphql types
 src/gatsby-types.d.ts
 
+# legacy next.js artifacts (migrated to gatsby)
+.next/
+out/
+
 # dependencies
 node_modules/
 

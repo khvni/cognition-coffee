@@ -29,8 +29,6 @@ export const APPS: AppDef[] = [
   { id: "about", title: "About", path: "/about", blurb: "Who is Ali Khani?", icon: "about", size: { w: 640, h: 560 }, desktop: true },
 ]
 
-export const HOME_APP = APPS[0]
-
 /** Resolve the app definition that owns a given pathname. */
 export function appForPath(pathname: string): AppDef {
   const clean = pathname.replace(/\/+$/, "") || "/"

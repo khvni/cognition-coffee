@@ -1,6 +1,6 @@
 # Deploying cognitioncoffee.co
 
-Static Astro site hosted free on **Cloudflare Pages**. Deploys are automated via GitHub
+Static Gatsby site hosted free on **Cloudflare Pages**. Deploys are automated via GitHub
 Actions (`.github/workflows/deploy.yml`) on every push to `main`.
 
 ## One-time setup
@@ -34,8 +34,8 @@ npx wrangler pages project create cognition-coffee --production-branch=main
 
 ## How it deploys
 
-- **Push to `main`** → `deploy.yml` builds (`npm run build`) and runs
-  `wrangler pages deploy dist --project-name=cognition-coffee --branch=main`.
+- **Push to `main`** → `deploy.yml` builds (`npm run build`, i.e. `gatsby build`) and runs
+  `wrangler pages deploy public --project-name=cognition-coffee --branch=main`.
 - **Pull requests** → `ci.yml` builds and runs the `deslop` gate (no deploy).
 - Cloudflare gives every deploy a `*.cognition-coffee.pages.dev` URL. Pull-request
   branches that you deploy manually get preview URLs.
@@ -44,18 +44,20 @@ npx wrangler pages project create cognition-coffee --production-branch=main
 
 ```bash
 wrangler login          # once
-npm run deploy          # build + push dist/ to Cloudflare Pages
+npm run deploy          # build + push public/ to Cloudflare Pages
 ```
 
 ## Custom domain
 
 In the Cloudflare dashboard: **Workers & Pages → cognition-coffee → Custom domains →
 Set up a domain** → `cognitioncoffee.co`. If the domain's DNS is already on Cloudflare,
-this is one click. The site's `astro.config.mjs` `site` is already set to the apex.
+this is one click. The site's `siteUrl` is already set to the apex in `gatsby-config.ts`
+(`siteMetadata.siteUrl`).
 
 ## Regenerating the social card
 
-`public/og.png` is generated from `scripts/gen-og.mjs` (uses `sharp`, bundled with Astro):
+`static/og.png` is the Open Graph image (copied to `public/` at build time by Gatsby).
+Regenerate it with:
 
 ```bash
 npm run og
