@@ -1,7 +1,8 @@
 # DESIGN_SYSTEM.md
 
-The source of truth is **`src/styles/global.css`** (`@theme` tokens). This doc explains
-intent. Never hardcode a value that exists as a token.
+The source of truth is **`src/styles/global.css`** (Tailwind tokens in
+`tailwind.config.js` `theme.extend`). This doc explains intent. Never hardcode a value
+that exists as a token.
 
 ## Colors
 
@@ -35,30 +36,28 @@ warmth; coral/amber are for rare "stamp" moments only.
 
 ## Typography
 
-Self-hosted via Fontsource. Swap the three `--font-*` vars if Ali licenses the real
-Cognition faces (STKBureauSerif / NBInternationalPro / GeistMono).
+Self-hosted via Fontsource. Inter for sans, IBM Plex Mono for mono.
 
 | Role | Token | Face | Used for |
 |------|-------|------|----------|
-| Serif | `--font-serif` | **Fraunces Variable** | Headlines (h1–h3) + **blog body** |
-| Sans | `--font-sans` | **Geist Variable** | UI, marketing body, nav |
-| Mono | `--font-mono` | **Geist Mono Variable** | Eyebrows, terminal, code, labels, stats |
+| Sans | `--font-sans` | **Inter Variable** | Headlines (h1–h3) + UI, marketing body, nav |
+| Mono | `--font-mono` | **IBM Plex Mono** | Eyebrows, terminal, code, labels, stats |
 
 - Headlines: weight ~380, letter-spacing −0.01em, `text-wrap: balance`.
-- Blog: title + subheaders + body all serif (the cognition.ai/blog look). Measure ~68ch.
 - `::selection` is Devin blue everywhere (and crema on `.roast`).
 
 ## Components (brand primitives)
 
 | Component | Purpose |
 |-----------|---------|
-| `Section.astro` | Numbered section wrapper (`index`, `eyebrow`, `tone="roast"`) |
-| `WaxPaper.astro` | Translucent grainy panel (`tone="cream" \| "kraft" \| "roast"`) |
-| `Terminal.astro` | VT100 terminal frame (`prompt`, `title`) |
-| `OtterAscii.astro` | The Devin otter in ASCII |
-| `Hexagon.astro` | Cognition-style hexagon + coffee-bean mark |
-| `Nav.astro` | Sticky nav; **Resources** hover dropdown (Blog/Community/About) |
-| `Footer.astro` | Dark-roast footer |
+| `Section` | Numbered section wrapper (`index`, `eyebrow`, `tone="roast"`) |
+| `WaxPaper` | Translucent grainy panel (`tone="cream" \| "kraft" \| "roast"`) |
+| `Terminal` | VT100 terminal frame (`prompt`, `title`) |
+| `Otter` | The Devin otter in ASCII |
+| `Hexagon` | Cognition-style hexagon + coffee-bean mark |
+| `Nav` | Sticky nav; **Resources** hover dropdown (Blog/Community/About) |
+| `Footer` | Dark-roast footer |
+| `Wrapper` / `Desktop` / `AppWindow` / `TaskBar` / `ModeToggle` / `AppIcon` | OS shell primitives |
 
 ### Utility classes (in `global.css`)
 - `.eyebrow` — mono uppercase label
@@ -74,5 +73,5 @@ Cognition faces (STKBureauSerif / NBInternationalPro / GeistMono).
   `prefers-reduced-motion` for anything larger.
 
 ## Do / Don't
-- ✅ Compose `WaxPaper` + `Section`; use tokens; serif headlines; blue selection.
+- ✅ Compose `WaxPaper` + `Section`; use tokens; sans headlines; blue selection.
 - ❌ Rogue hexes, second sans/serif, heavy shadows, generic SaaS gradients, emoji spam.

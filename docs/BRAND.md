@@ -38,14 +38,14 @@ terminal, the Devin otter, real metrics.
 ## Motifs (the visual vocabulary)
 
 1. **Wax paper** — translucent, grainy cream panels floating over textured backdrops.
-   The central motif (from Cognition's blog graphics). Component: `WaxPaper.astro`.
+   The central motif (from Cognition's blog graphics). Component: `WaxPaper`.
 2. **Devin blue selection** — highlighting any text reveals `#317CFF`. Always on.
 3. **Numbered sections** — `01 / 02 / 03` with mono eyebrows, like cognition.ai.
 4. **The Devin otter** — the mascot (plushies, Slackbot, @devinai). Appears as VT100
-   ASCII holding a coffee. Component: `OtterAscii.astro`. Higher-fidelity illustration
+   ASCII holding a coffee. Component: `Otter`. Higher-fidelity illustration
    welcome later.
-5. **VT100 terminal** — the Devin CLI launch aesthetic (`devin@...:~$`). Component:
-   `Terminal.astro`. Good for heroes and the "built with Devin" beat.
+5. **VT100 terminal** — the Devin CLI launch aesthetic (`devin@...:~$`). Good for
+   heroes and the "built with Devin" beat.
 6. **Espresso (dark roast) sections** — inverted dark-brown bands for rhythm/contrast.
 7. **Editorial serif** — Cognition-blog-style serif for headlines *and* long-form body.
 8. **Texture** — paper grain (built in via `.grain`); halftone/dither and isometric
