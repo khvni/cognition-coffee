@@ -86,6 +86,7 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 - One PR per logical change. In the description, list files touched and any new deps.
 - Don't reformat files you didn't change.
 - Don't push to `main` directly if a branch workflow is set up.
+- **NEVER add "Co-authored by Devin" or any Devin attribution to commits.** All commits should be from the user only.
 
 ## What "done" looks like for any page
 
