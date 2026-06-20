@@ -92,9 +92,18 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
     else props.forEach((p) => document.body.style.removeProperty(p))
   }
 
+  // Suppress page text selection for the lifetime of a drag (resize or title-bar); self-clears on pointerup.
+  const guardSelection = () => {
+    setBodySelect(true)
+    const clear = () => {
+      setBodySelect(false)
+      window.removeEventListener("pointerup", clear)
+    }
+    window.addEventListener("pointerup", clear)
+  }
+
   const onResizePointerUp = () => {
     resizing.current = null
-    setBodySelect(false)
     window.removeEventListener("pointermove", onResizePointerMove)
     window.removeEventListener("pointerup", onResizePointerUp)
   }
@@ -103,7 +112,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
     e.stopPropagation()
     focusWindow(item.key)
     resizing.current = { startX: e.clientX, startY: e.clientY, w: item.w, h: item.h }
-    setBodySelect(true)
+    guardSelection()
     window.addEventListener("pointermove", onResizePointerMove)
     window.addEventListener("pointerup", onResizePointerUp)
   }
@@ -155,12 +164,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         className={`flex h-9 shrink-0 items-center gap-2 border-b border-line px-3 ${focused ? "bg-canvas" : "bg-panel"}`}
         onPointerDown={(e) => {
           if (maximized) return
-          setBodySelect(true)
-          const clear = () => {
-            setBodySelect(false)
-            window.removeEventListener("pointerup", clear)
-          }
-          window.addEventListener("pointerup", clear)
+          guardSelection()
           dragControls.start(e)
         }}
         onDoubleClick={() => toggleMaximize(item.key)}
