@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react"
-import { motion, useDragControls, useMotionValue } from "framer-motion"
+import { motion, useDragControls, useMotionValue, useReducedMotion } from "framer-motion"
 import { useApp, type WindowItem } from "@/context/App"
 import { AppIcon } from "./AppIcon"
 
@@ -68,6 +68,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
   const x = useMotionValue(item.x)
   const y = useMotionValue(item.y)
   const focused = focusedKey === item.key
+  const reduce = useReducedMotion()
 
   // Keep motion values in sync when position is changed elsewhere (e.g. unmaximize).
   useEffect(() => {
@@ -85,8 +86,15 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
     updateWindow(item.key, { w, h })
   }
 
+  const setBodySelect = (on: boolean) => {
+    const props = ["user-select", "-webkit-user-select"]
+    if (on) props.forEach((p) => document.body.style.setProperty(p, "none"))
+    else props.forEach((p) => document.body.style.removeProperty(p))
+  }
+
   const onResizePointerUp = () => {
     resizing.current = null
+    setBodySelect(false)
     window.removeEventListener("pointermove", onResizePointerMove)
     window.removeEventListener("pointerup", onResizePointerUp)
   }
@@ -95,19 +103,19 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
     e.stopPropagation()
     focusWindow(item.key)
     resizing.current = { startX: e.clientX, startY: e.clientY, w: item.w, h: item.h }
+    setBodySelect(true)
     window.addEventListener("pointermove", onResizePointerMove)
     window.addEventListener("pointerup", onResizePointerUp)
   }
 
   useEffect(() => {
     return () => {
+      setBodySelect(false)
       window.removeEventListener("pointermove", onResizePointerMove)
       window.removeEventListener("pointerup", onResizePointerUp)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  if (item.minimized) return null
 
   const maximized = item.maximized
   const positionStyle: React.CSSProperties = maximized
@@ -117,8 +125,16 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
   return (
     <motion.div
       className="absolute flex flex-col overflow-hidden rounded-win border border-line bg-panel shadow-window"
-      style={{ ...positionStyle, x: maximized ? 0 : x, y: maximized ? 0 : y, zIndex: item.z }}
-      drag={!maximized}
+      style={{
+        ...positionStyle,
+        x: maximized ? 0 : x,
+        y: maximized ? 0 : y,
+        zIndex: item.z,
+        transformOrigin: "50% 100%",
+        pointerEvents: item.minimized ? "none" : undefined,
+      }}
+      aria-hidden={item.minimized ? true : undefined}
+      drag={!maximized && !item.minimized}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
@@ -127,9 +143,13 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
       onMouseDownCapture={() => focusWindow(item.key)}
       onDragEnd={() => updateWindow(item.key, { x: x.get(), y: y.get() })}
       initial={{ opacity: 0, scale: 0.97 }}
-      animate={{ opacity: 1, scale: 1 }}
+      animate={
+        item.minimized
+          ? { opacity: 0, scale: 0.9, transitionEnd: { visibility: "hidden" } }
+          : { opacity: 1, scale: 1, visibility: "visible" }
+      }
       exit={{ opacity: 0, scale: 0.97 }}
-      transition={{ duration: 0.14, ease: "easeOut" }}
+      transition={reduce ? { duration: 0 } : { duration: 0.18, ease: "easeOut" }}
     >
       <div
         className={`flex h-9 shrink-0 items-center gap-2 border-b border-line px-3 ${focused ? "bg-canvas" : "bg-panel"}`}
@@ -139,7 +159,11 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         onDoubleClick={() => toggleMaximize(item.key)}
         style={{ cursor: maximized ? "default" : "grab" }}
       >
-        <div className="group/lights flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-150 motion-safe:hover:-translate-y-px">
+        <div
+          className={`group/lights flex items-center gap-2 motion-safe:transition motion-safe:duration-150 motion-safe:hover:-translate-y-px ${
+            focused ? "" : "grayscale group-hover/lights:grayscale-0 group-focus-within/lights:grayscale-0"
+          }`}
+        >
           <Light color={TRAFFIC.close} label={`Close ${item.title}`} onClick={() => closeWindow(item.key)}>
             <CloseGlyph />
           </Light>
