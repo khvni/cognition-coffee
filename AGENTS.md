@@ -7,7 +7,7 @@ Read this fully before touching code.
 **The Cognition Coffee Company** is a concept site presenting a developer-community
 strategy for Cognition's Devin. It's built as a **PostHog-style mock OS**: a desktop
 with draggable windows plus a normal arranged-pages "site" view, toggled at runtime.
-The look is **subdued** — a warm beige canvas, near-black ink, and **Devin blue
+The look is **clean and minimal** — a white canvas (`#ffffff`), near-black ink, and **Devin blue
 `#317CFF` as the single accent** — with the Devin otter as the OS wallpaper (a photo
 under a subtle CRT overlay). Stack is **Gatsby 5 (React 18 + TypeScript)**; all page
 content is authored in `.tsx` content components.
@@ -50,11 +50,10 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
    `AppWindow`, `TaskBar`, `ModeToggle`, `Otter`, and `AppIcon`. Compose them; don't reinvent.
 3. **Verified copy only.** Every metric about Ali is real and lives in `src/data/`.
    Do **not** invent stats, dates, or achievements. If unsure, leave a `TODO` and ask.
-4. **Keep it subdued.** UI chrome + headlines use the **sans** (`font-sans`, Geist
-   Sans). Long-form editorial prose + article/blog/page titles use the **serif**
-   (`font-serif`, STIX Two Text). Eyebrows/labels/code use **mono** (`font-mono`, Geist
-   Mono). The accent is Devin blue, applied sparingly; highlighting text must reveal it
-   (set via `::selection`).
+4. **Keep it clean.** Geist Sans is the universal typeface (`font-sans`); headers
+   use weight 500, body uses weight 400, **never exceed weight 500**.
+   Eyebrows/labels/code use **mono** (`font-mono`, Geist Mono). The accent is Devin
+   blue, applied sparingly; highlighting text must reveal it (set via `::selection`).
 5. **Scope your changes.** Touch only the files your task needs, so parallel work
    doesn't collide.
 6. **It must build.** Run `npm run build` before you finish. Zero errors. Fix warnings

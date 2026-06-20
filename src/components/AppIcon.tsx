@@ -8,7 +8,7 @@ type Props = {
 }
 
 const CREAM = "#F6EEDD"
-const INK = "#1B1A17"
+const INK = "#171717"
 
 /** Rounded-square app tile: brand gradient + top sheen + inset rim, with a glyph on top. */
 const Tile: React.FC<{ uid: string; from: string; to: string; children: React.ReactNode }> = ({
@@ -75,7 +75,7 @@ const glyphs: Record<AppId, (uid: string) => React.ReactNode> = {
         y="30.6"
         textAnchor="middle"
         fill={INK}
-        style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontWeight: 700, fontSize: "20px" }}
+        style={{ fontWeight: 500, fontSize: "20px" }}
       >
         D
       </text>
