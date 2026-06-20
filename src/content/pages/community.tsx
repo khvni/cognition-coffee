@@ -1,22 +1,21 @@
 import React, { type FC } from "react"
-import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 import { StatGrid, Stat } from "@/components/prose/StatGrid"
 import { EventList, EventItem } from "@/components/prose/EventList"
 
 export const frontmatter = {
   title: "Community",
   description:
-    "A redesigned home for the Devin community: chapters, events, and a weekly feedback loop.",
+    "Chapters, events, and a weekly feedback loop for Devin builders.",
   eyebrow: "Community",
 }
 
 const Content: FC = () => (
   <>
     <p>
-      A developer community isn't an audience. It's an operating system: curriculum, local chapters, and a feedback loop that makes the product better. Here's what that could look like for Devin.
+      Curriculum, local chapters, and a feedback loop that makes the product better.
     </p>
 
-    <h2>What this could look like</h2>
+    <h2>Targets</h2>
 
     <StatGrid>
       <Stat value="30+">Cafe Cognition cities (target Year 1)</Stat>
@@ -28,7 +27,7 @@ const Content: FC = () => (
     <h2>Upcoming events</h2>
 
     <p>
-      A sample of a plausible global Cafe Cognition calendar. Events centralize on Luma the way Cursor centralizes theirs.
+      A sample global Cafe Cognition calendar, centralized on Luma.
     </p>
 
     <EventList>
@@ -42,25 +41,11 @@ const Content: FC = () => (
       <EventItem name="Non-coding Devin: Research &amp; Docs" place="Toronto, Canada" date="Aug 5" />
     </EventList>
 
-    <h2>Voices from the community</h2>
-
-    <ProseWaxFigure caption="Representative community voices">
-      <p>
-        "Cafe Cognition was the first time I met other Devin users IRL. Shipped a PR during the event." — Priya S., Bangalore
-      </p>
-      <p>
-        "Running 5 Devins in parallel changed how I think about delegation." — Marcus T., Berlin
-      </p>
-      <p>
-        "Office Hours every Thursday is my anchor. The community unblocks me faster than any docs." — Yuki M., Tokyo
-      </p>
-    </ProseWaxFigure>
-
     <h2>Get involved</h2>
 
     <p>
       Join the conversation on{" "}
-      <a href="https://discord.gg/GjCYNGChrw">Discord</a>, and watch this space for the first Cafe Cognition near you.
+      <a href="https://discord.gg/GjCYNGChrw">Discord</a>.
     </p>
   </>
 )

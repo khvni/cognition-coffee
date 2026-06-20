@@ -103,6 +103,14 @@ const glyphs: Record<AppId, (uid: string) => React.ReactNode> = {
       </g>
     </Tile>
   ),
+  scott: (uid) => (
+    <Tile uid={uid} from="#E8E0D0" to="#D4CBBA">
+      <rect x="13" y="11" width="22" height="26" rx="1.5" fill={CREAM} stroke={INK} strokeOpacity="0.2" strokeWidth="0.8" />
+      <rect x="15" y="13" width="18" height="14" rx="1" fill="#C8D8E8" />
+      <path d="M15 27l5-4 4 3 5-6 4 7H15z" fill="#8AAA6A" />
+      <circle cx="28" cy="17" r="2.2" fill="#F5D76E" />
+    </Tile>
+  ),
 }
 
 /** Bespoke, real-OS-style app icons. Each app gets its own gradient tile + glyph. */

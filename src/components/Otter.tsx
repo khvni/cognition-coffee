@@ -1,10 +1,6 @@
 import React from "react"
 
-/**
- * Desktop mascot — an otter floating on its back, coding on a laptop resting on
- * its chest (a nod to the Devin otter). Rendered as faint monospace ASCII so it
- * reads as wallpaper texture, never competing with the app icons.
- */
+/** Desktop mascot — faint ASCII otter wallpaper texture. */
 const OTTER = String.raw`
                .-"""-.
              .'  ^   ^ '.             ~  ~  ~  ~
