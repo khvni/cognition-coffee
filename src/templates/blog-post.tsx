@@ -23,10 +23,12 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const [apiPost, setApiPost] = useState<ApiPost | null>(null)
 
   useEffect(() => {
-    fetch(`/api/posts/${slug}`)
+    const controller = new AbortController()
+    fetch(`/api/posts/${slug}`, { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : null))
       .then(setApiPost)
       .catch(() => setApiPost(null))
+    return () => controller.abort()
   }, [slug])
 
   if (!post) return null

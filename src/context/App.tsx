@@ -105,7 +105,8 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     const focusApp = windows.find((wn) => wn.key === focusedKey)
     const focusId = focusApp ? APPS.find((a) => normPath(a.path) === normPath(focusApp.path))?.id : undefined
     void setUrlFocus(focusId ?? null)
-  }, [experience, windows, focusedKey, setUrlMode, setUrlOpen, setUrlFocus])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experience, windows, focusedKey])
 
   const restoreQueue = useRef<string[] | null>(null)
 
