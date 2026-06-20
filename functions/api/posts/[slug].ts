@@ -65,6 +65,14 @@ async function writePostsFile(env: Env, posts: Post[], sha: string, message: str
   }
 }
 
+export const onRequestGet: PagesFunction<Env> = async (context) => {
+  const slug = context.params.slug as string
+  const { content: posts } = await getPostsFile(context.env)
+  const post = posts.find((p) => p.slug === slug)
+  if (!post) return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
+  return new Response(JSON.stringify(post), { headers: { "Content-Type": "application/json" } })
+}
+
 export const onRequestPut: PagesFunction<Env> = async (context) => {
   if (!isAuthed(context.request, context.env)) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
