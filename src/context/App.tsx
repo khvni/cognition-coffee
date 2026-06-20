@@ -105,7 +105,6 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
 
   useEffect(() => {
     if (!isBrowser || !booted.current || restoreQueue.current !== null) return
-    if (!urlMode) return
     const qOpen = new URLSearchParams(window.location.search).get("open")
     const qFocus = new URLSearchParams(window.location.search).get("focus")
     if (!qOpen) return
@@ -137,7 +136,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
       const next = idx >= 0 && idx < queue.length - 1 ? queue[idx + 1] : null
       if (next) {
         void navigate(next)
-      } else {
+      } else if (idx >= 0) {
         restoreQueue.current = null
       }
     }
