@@ -18,9 +18,9 @@ const IndexPage: React.FC = () => (
         <li key={a.id}>
           <Link
             to={a.path}
-            className="flex items-start gap-3 rounded-win border border-line bg-canvas p-4 transition-colors hover:bg-panel"
+            className="flex items-start gap-3 rounded-win border border-line bg-panel p-4 shadow-card transition-colors hover:border-accent-ink"
           >
-            <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-line bg-panel text-ink">
+            <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-line bg-canvas text-ink">
               <AppIcon id={a.icon} size={18} />
             </span>
             <span>
