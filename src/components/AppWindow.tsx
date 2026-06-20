@@ -154,7 +154,14 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
       <div
         className={`flex h-9 shrink-0 items-center gap-2 border-b border-line px-3 ${focused ? "bg-canvas" : "bg-panel"}`}
         onPointerDown={(e) => {
-          if (!maximized) dragControls.start(e)
+          if (maximized) return
+          setBodySelect(true)
+          const clear = () => {
+            setBodySelect(false)
+            window.removeEventListener("pointerup", clear)
+          }
+          window.addEventListener("pointerup", clear)
+          dragControls.start(e)
         }}
         onDoubleClick={() => toggleMaximize(item.key)}
         style={{ cursor: maximized ? "default" : "grab" }}
