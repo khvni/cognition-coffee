@@ -10,7 +10,7 @@ import { ModeToggle } from "./ModeToggle"
 import { SITE_CONTAINER } from "@/lib/layout"
 import { SOCIALS } from "@/data/experience"
 
-const NAV = APPS.filter((a) => a.id !== "home")
+const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
 const Wordmark: React.FC = () => (
   <>The Cognition <span className="text-accent-ink">Coffee</span> Company</>

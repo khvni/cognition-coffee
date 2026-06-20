@@ -1,5 +1,5 @@
 /** App registry — single source for OS apps and routes. */
-export type AppId = "home" | "menu" | "blog" | "community" | "about"
+export type AppId = "home" | "menu" | "blog" | "community" | "about" | "scott"
 
 export type AppDef = {
   id: AppId
@@ -15,6 +15,8 @@ export type AppDef = {
   center?: boolean
   /** Show on the desktop as a launchable icon. */
   desktop?: boolean
+  /** Show in site-mode nav, footer, and index grid. Defaults to true. */
+  nav?: boolean
 }
 
 export const APPS: AppDef[] = [
@@ -23,6 +25,7 @@ export const APPS: AppDef[] = [
   { id: "blog", title: "Blog", path: "/blog", blurb: "Articles and updates.", icon: "blog", size: { w: 760, h: 600 }, desktop: true },
   { id: "community", title: "Community", path: "/community", blurb: "Events, chapters, and feedback loops.", icon: "community", size: { w: 680, h: 560 }, desktop: true },
   { id: "about", title: "About", path: "/about", blurb: "Who is Ali Khani?", icon: "about", size: { w: 640, h: 560 }, desktop: true },
+  { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 480, h: 400 }, desktop: true, nav: false },
 ]
 
 export function appForPath(pathname: string): AppDef {

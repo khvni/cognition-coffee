@@ -6,7 +6,7 @@ import { AppIcon } from "@/components/AppIcon"
 import { SEO } from "@/components/SEO"
 import { Container, Card, Text } from "@/components/ui"
 
-const launchers = APPS.filter((a) => a.id !== "home")
+const launchers = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
 const IndexPage: React.FC = () => (
   <Container as="section" className="py-8">
