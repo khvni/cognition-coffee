@@ -90,7 +90,13 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
 
   useEffect(() => {
     if (!isBrowser || !booted.current) return
-    void setUrlMode(experience === "os" ? null : experience)
+    if (experience !== "os") {
+      void setUrlMode(null)
+      void setUrlOpen(null)
+      void setUrlFocus(null)
+      return
+    }
+    void setUrlMode(null)
     const ids = windows.map((wn) => {
       const app = APPS.find((a) => normPath(a.path) === normPath(wn.path))
       return app?.id
@@ -105,6 +111,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
 
   useEffect(() => {
     if (!isBrowser || !booted.current || restoreQueue.current !== null) return
+    if (experience !== "os") return
     const qOpen = new URLSearchParams(window.location.search).get("open")
     const qFocus = new URLSearchParams(window.location.search).get("focus")
     if (!qOpen) return
