@@ -1,8 +1,4 @@
-/**
- * Design tokens — reusable className fragments for typography and layout.
- * Weight rule: 400 body, 500 headings, never exceed 500 (prose headings
- * in global.css use 600 for STIX serif — that's intentional and separate).
- */
+/** Design tokens — reusable className fragments. Weight: 400 body, 500 headings, never >500. */
 
 export const text = {
   eyebrow: "font-mono text-[12px] uppercase tracking-wide text-accent-ink",
