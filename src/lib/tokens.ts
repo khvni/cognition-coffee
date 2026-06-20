@@ -6,7 +6,7 @@
 
 export const text = {
   eyebrow: "font-mono text-[12px] uppercase tracking-wide text-accent-ink",
-  pageTitle: "font-serif text-4xl font-medium text-ink",
+  pageTitle: "text-4xl font-medium text-ink",
   subtitle: "text-[1.05rem] leading-relaxed text-muted",
   body: "text-[15px] text-ink",
   small: "text-[13px] text-muted",
