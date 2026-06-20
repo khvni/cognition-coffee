@@ -6,6 +6,12 @@ import type { GatsbyConfig } from "gatsby"
  * via gatsby-source-filesystem, then transformed by gatsby-plugin-mdx. Pages are
  * statically generated, so the desktop-OS UI keeps full SEO/crawlability.
  */
+
+// remark-gfm / rehype-slug are ESM-only; the root gatsby-config must stay a CJS
+// object, so pull their default export through require (Node >=20.19 / 22.12).
+const remarkGfm = require("remark-gfm").default
+const rehypeSlug = require("rehype-slug").default
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: "The Cognition Coffee Company",
@@ -21,6 +27,10 @@ const config: GatsbyConfig = {
       resolve: "gatsby-plugin-mdx",
       options: {
         extensions: [".mdx", ".md"],
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+          rehypePlugins: [rehypeSlug],
+        },
       },
     },
     {
