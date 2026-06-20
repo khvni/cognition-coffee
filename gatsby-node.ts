@@ -1,7 +1,6 @@
 import type { GatsbyNode } from "gatsby"
+import fs from "fs"
 import path from "path"
-import { blogPosts } from "./src/content/blog"
-import { contentPages } from "./src/content/pages"
 
 /** Mirror the tsconfig "@/*" -> "src/*" alias for webpack so imports resolve. */
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ actions }) => {
@@ -12,17 +11,24 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ act
   })
 }
 
-/** Create routes from the .tsx content registries. */
+/** Discover content slugs from the filesystem (avoid importing .tsx into Node). */
+const slugsFrom = (dir: string): string[] =>
+  fs
+    .readdirSync(path.resolve(__dirname, dir))
+    .filter((f) => f.endsWith(".tsx") && f !== "index.tsx")
+    .map((f) => f.replace(/\.tsx$/, ""))
+
+/** Create routes from the .tsx content files. Templates look up content by slug. */
 export const createPages: GatsbyNode["createPages"] = async ({ actions }) => {
   const { createPage } = actions
   const blogTemplate = path.resolve("./src/templates/blog-post.tsx")
   const pageTemplate = path.resolve("./src/templates/content-page.tsx")
 
-  blogPosts.forEach(({ slug }) => {
+  slugsFrom("src/content/blog").forEach((slug) => {
     createPage({ path: `/blog/${slug}`, component: blogTemplate, context: { slug } })
   })
 
-  contentPages.forEach(({ slug }) => {
+  slugsFrom("src/content/pages").forEach((slug) => {
     createPage({ path: `/${slug}`, component: pageTemplate, context: { slug } })
   })
 }
