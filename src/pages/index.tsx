@@ -4,11 +4,12 @@ import { BIO } from "@/data/experience"
 import { APPS } from "@/lib/apps"
 import { AppIcon } from "@/components/AppIcon"
 import { SEO } from "@/components/SEO"
+import { SITE_CONTAINER } from "@/lib/layout"
 
 const launchers = APPS.filter((a) => a.id !== "home")
 
 const IndexPage: React.FC = () => (
-  <section className="mx-auto w-full max-w-reader px-6 py-8">
+  <section className={`${SITE_CONTAINER} py-8`}>
     <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">The Cognition Coffee Company</p>
     <h1 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">{BIO.hook}</h1>
     <p className="mt-4 text-[1.05rem] leading-relaxed text-muted">{BIO.oneLiner}</p>

@@ -2,6 +2,7 @@ import React from "react"
 import { Link, type HeadProps, type PageProps } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
+import { SITE_CONTAINER } from "@/lib/layout"
 
 type PageContext = { slug: string }
 
@@ -14,7 +15,7 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   if (!post) return null
   const { Content, frontmatter: fm } = post
   return (
-    <article className="mx-auto w-full max-w-reader px-6 py-8">
+    <article className={`${SITE_CONTAINER} py-8`}>
       <Link to="/blog" className="font-mono text-[12px] text-muted hover:text-ink">
         ← Devin Daily
       </Link>
