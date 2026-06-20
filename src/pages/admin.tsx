@@ -105,7 +105,7 @@ const AdminPage: React.FC = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-canvas">
         <form onSubmit={handleLogin} className="w-full max-w-xs space-y-4">
-          <h1 className="font-serif text-2xl font-semibold text-ink">Admin</h1>
+          <h1 className="text-2xl font-medium text-ink">Admin</h1>
           <input
             type="password"
             value={password}
@@ -131,7 +131,7 @@ const AdminPage: React.FC = () => {
         <button onClick={() => setView("list")} className="font-mono text-xs text-muted hover:text-ink">
           &larr; Back
         </button>
-        <h1 className="mt-4 font-serif text-2xl font-semibold text-ink">
+        <h1 className="mt-4 text-2xl font-medium text-ink">
           {editing ? "Edit post" : "New post"}
         </h1>
 
@@ -169,7 +169,7 @@ const AdminPage: React.FC = () => {
   return (
     <div className="mx-auto max-w-reader px-6 py-8">
       <div className="flex items-center justify-between">
-        <h1 className="font-serif text-2xl font-semibold text-ink">Posts</h1>
+        <h1 className="text-2xl font-medium text-ink">Posts</h1>
         <button
           onClick={openNew}
           className="rounded bg-ink px-3 py-1.5 font-mono text-xs text-canvas hover:bg-accent-ink"
@@ -185,7 +185,7 @@ const AdminPage: React.FC = () => {
           {posts.map((post) => (
             <li key={post.slug} className="flex items-center justify-between py-4">
               <div>
-                <p className="font-serif text-lg text-ink">{post.title}</p>
+                <p className="text-lg font-medium text-ink">{post.title}</p>
                 <p className="font-mono text-xs text-muted">{post.date}</p>
               </div>
               <div className="flex gap-2">

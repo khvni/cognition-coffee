@@ -75,7 +75,7 @@ const glyphs: Record<AppId, (uid: string) => React.ReactNode> = {
         y="30.6"
         textAnchor="middle"
         fill={INK}
-        style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontWeight: 700, fontSize: "20px" }}
+        style={{ fontWeight: 500, fontSize: "20px" }}
       >
         D
       </text>
