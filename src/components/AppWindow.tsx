@@ -70,7 +70,6 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
   const focused = focusedKey === item.key
   const reduce = useReducedMotion()
 
-  // Keep motion values in sync when position is changed elsewhere (e.g. unmaximize).
   useEffect(() => {
     x.set(item.x)
     y.set(item.y)
