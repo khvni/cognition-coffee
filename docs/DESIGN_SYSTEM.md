@@ -1,78 +1,77 @@
 # DESIGN_SYSTEM.md
 
-The source of truth is **`src/styles/global.css`** (`@theme` tokens). This doc explains
-intent. Never hardcode a value that exists as a token.
+The source of truth is **`tailwind.config.js`** (`theme.extend`) for tokens and
+**`src/styles/global.css`** for base + prose styles. This doc explains intent.
+Never hardcode a value that exists as a token; use the classes (`text-accent-ink`,
+`border-line`, `bg-canvas`) or `theme("colors.x")`.
 
 ## Colors
 
-Extracted from live cognition.ai CSS (June 2026) + a coffee-warm extension.
+Warm wax-paper beige canvas, warm near-black ink, **Devin blue `#317CFF` as the
+single saturated accent**. The beige sits in the same warm family as
+cursor.com/community (`#ebeae5`) and cognition.ai (`#edeceb`), pushed a touch
+warmer for the coffee identity.
 
-### Cognition core
 | Token | Hex | Use |
 |-------|-----|-----|
-| `--color-paper` | `#EDECEB` | Primary background (wax-paper cream) |
-| `--color-foam` | `#F5F1E8` | Lighter surface / banded sections |
-| `--color-card` | `#F7F6F5` | Card surface |
-| `--color-ink` | `#202020` | Primary text |
-| `--color-ink-soft` | `#3A3A3A` | Secondary text |
-| `--color-slate` | `#626870` | Muted text |
-| `--color-line` | `#20202014` | Hairline borders (8% ink) |
-| `--color-blue` | **`#317CFF`** | **Devin blue** — links, CTAs, selection, accents |
-| `--color-blue-soft` | `#F2F5FA` | Blue tint backgrounds |
-| `--color-coral` / `--color-amber` | `#FA5050` / `#FCBB00` | Sparing editorial accents (stamps) |
+| `canvas` | `#EBE4D8` | Page / desktop base background |
+| `panel` | `#F6F1E7` | Cards, windows, taskbar (warm off-white, never pure `#fff`) |
+| `ink` | `#1B1A17` | Primary text (warm near-black) |
+| `muted` | `#6E6557` | Secondary text (warm taupe-gray) |
+| `line` | `#D8CFBE` | Hairline borders |
+| `accent` | **`#317CFF`** | Devin blue — fills, selection, focus, UI accents |
+| `accent-ink` | `#2A5FD0` | Link / UI-text blue (clears AA on `canvas` + `panel`) |
+| `wallpaper` | `#C9BFA9` | Warm fallback behind the OS wallpaper image |
 
-### Coffee warmth (the hybrid half)
-| Token | Hex | Use |
-|-------|-----|-----|
-| `--color-espresso` | `#221912` | Dark-roast inverted sections (`.roast`) |
-| `--color-roast` | `#4A3526` | Medium brown |
-| `--color-crema` | `#C8A06B` | Crema/latte highlight (accents on dark) |
-| `--color-kraft` | `#D9C5A0` | Cardboard/kraft panels (`WaxPaper tone="kraft"`) |
-| `--color-bean` | `#6F4E37` | Coffee-bean brown (roast labels) |
+**Measured AA contrast** (WCAG 2.1): `ink` on `canvas` 13.8:1, on `panel` 15.5:1;
+`muted` on `canvas` 4.54:1, on `panel` 5.09:1; `accent-ink` on `canvas` 4.56:1, on
+`panel` 5.12:1 — all pass AA for normal text. White on `accent` is 3.85:1 (passes
+AA-large / UI 3:1; inherent to the brand-locked blue, so keep white-on-blue text
+bold or ≥18px).
 
-**Rule:** blue is the only saturated accent in light sections. Coffee tones carry the
-warmth; coral/amber are for rare "stamp" moments only.
+**Rule:** blue is the only saturated accent. Highlighting any text reveals it
+(`::selection` in `global.css`).
 
 ## Typography
 
-Self-hosted via Fontsource. Swap the three `--font-*` vars if Ali licenses the real
-Cognition faces (STKBureauSerif / NBInternationalPro / GeistMono).
+Self-hosted via Fontsource, imported in `gatsby-browser.tsx`.
 
 | Role | Token | Face | Used for |
 |------|-------|------|----------|
-| Serif | `--font-serif` | **Fraunces Variable** | Headlines (h1–h3) + **blog body** |
-| Sans | `--font-sans` | **Geist Variable** | UI, marketing body, nav |
-| Mono | `--font-mono` | **Geist Mono Variable** | Eyebrows, terminal, code, labels, stats |
+| Serif | `font-serif` | **STIX Two Text** | Article body + blog/content-page titles (the editorial reading look) |
+| Sans | `font-sans` | **Geist Variable** | UI, nav, buttons, launcher, non-article headings |
+| Mono | `font-mono` | **Geist Mono Variable** | Eyebrows, labels, dates, code, terminal, stats |
 
-- Headlines: weight ~380, letter-spacing −0.01em, `text-wrap: balance`.
-- Blog: title + subheaders + body all serif (the cognition.ai/blog look). Measure ~68ch.
-- `::selection` is Devin blue everywhere (and crema on `.roast`).
+- **Prose** (`.prose`): STIX serif body + headings, `1.125rem` / line-height `1.7`,
+  measure `70ch`; `code`/`pre` stay Geist Mono. Headings weight 600, `text-wrap: balance`.
+- **Titles**: blog index/post and content-page `<h1>`/list `<h2>` use `font-serif`.
+  Global chrome (TaskBar, ModeToggle, launcher) stays Geist Sans. Eyebrows/dates stay mono.
+- `::selection` is Devin blue everywhere.
 
 ## Components (brand primitives)
 
 | Component | Purpose |
 |-----------|---------|
-| `Section.astro` | Numbered section wrapper (`index`, `eyebrow`, `tone="roast"`) |
-| `WaxPaper.astro` | Translucent grainy panel (`tone="cream" \| "kraft" \| "roast"`) |
-| `Terminal.astro` | VT100 terminal frame (`prompt`, `title`) |
-| `OtterAscii.astro` | The Devin otter in ASCII |
-| `Hexagon.astro` | Cognition-style hexagon + coffee-bean mark |
-| `Nav.astro` | Sticky nav; **Resources** hover dropdown (Blog/Community/About) |
-| `Footer.astro` | Dark-roast footer |
+| `Wrapper` | OS/site shell; toggles desktop vs arranged-pages view |
+| `Desktop` | Draggable-window desktop, wallpaper + CRT |
+| `AppWindow` | Window chrome (titlebar, macOS traffic-light controls) |
+| `TaskBar` | Bottom taskbar / app launcher |
+| `ModeToggle` | OS ⇄ Site switch |
+| `AppIcon` | Per-app icon, `<AppIcon id size />` |
+| `Otter` | The Devin otter mascot |
+| `ProsePullQuote` / `ProseWaxFigure` | MDX shortcodes for long-form content |
 
-### Utility classes (in `global.css`)
-- `.eyebrow` — mono uppercase label
-- `.wax` / `.grain` — frosted panel + paper-grain overlay
-- `.roast` — espresso inverted surface
-- `.link-blue` — blue underlined prose link
+### Utility classes (`global.css`)
+- `.prose` — long-form serif content
+- `.os-wallpaper` — desktop wallpaper fallback layer
+- `.win-scroll` — thin scrollbars inside window bodies
 
-## Spacing & layout
-- Container: `max-w-6xl` (content), `max-w-2xl` (blog reading).
-- Section vertical rhythm: `py-20` mobile / `py-28` desktop.
-- Radii: `--radius-card` 6px, pills 999px.
-- Motion: subtle. `--ease-out-soft`; hover lifts of `-translate-y-0.5`. Respect
-  `prefers-reduced-motion` for anything larger.
+## Tokens (other)
+- Shadows: `shadow-window`, `shadow-card`. Radius: `rounded-win` (10px).
+- Reading measure: `max-w-reader` (44rem).
+- Motion: subtle (`framer-motion`); respect `prefers-reduced-motion`.
 
 ## Do / Don't
-- ✅ Compose `WaxPaper` + `Section`; use tokens; serif headlines; blue selection.
-- ❌ Rogue hexes, second sans/serif, heavy shadows, generic SaaS gradients, emoji spam.
+- Do: use tokens; serif for article reading; Geist for UI; mono for labels; blue selection.
+- Don't: rogue hexes that duplicate a token, pure `#ffffff` panels, a second sans/serif,
+  heavy shadows, generic SaaS gradients, emoji spam.
