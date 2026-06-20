@@ -1,4 +1,4 @@
-import type { FC } from "react"
+import React, { type FC } from "react"
 import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 
 export const frontmatter = {

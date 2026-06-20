@@ -1,4 +1,4 @@
-import type { FC } from "react"
+import React, { type FC } from "react"
 import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 
