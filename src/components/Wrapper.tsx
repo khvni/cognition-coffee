@@ -8,14 +8,9 @@ import { AppWindow } from "./AppWindow"
 import { TaskBar } from "./TaskBar"
 import { ModeToggle } from "./ModeToggle"
 import { SITE_CONTAINER } from "@/lib/layout"
+import { SOCIALS } from "@/data/experience"
 
 const NAV = APPS.filter((a) => a.id !== "home")
-
-const SOCIALS = [
-  { label: "X", href: "https://x.com/alikhvni" },
-  { label: "GitHub", href: "https://github.com/khvni" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/khni" },
-]
 
 const Wordmark: React.FC = () => (
   <>cognition<span className="text-accent-ink">.coffee</span></>

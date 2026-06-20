@@ -1,5 +1,6 @@
 import React, { type FC } from "react"
 import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
+import { SOCIALS } from "@/data/experience"
 
 export const frontmatter = {
   title: "Ali Khani",
@@ -56,9 +57,12 @@ const Content: FC = () => (
     <p>
       The fastest way to reach me is email:{" "}
       <a href="mailto:byalikhani@gmail.com">byalikhani@gmail.com</a>. I'm also on{" "}
-      <a href="https://x.com/alikhvni">X</a>,{" "}
-      <a href="https://github.com/khvni">GitHub</a>, and{" "}
-      <a href="https://linkedin.com/in/khni">LinkedIn</a>.
+      {SOCIALS.map((s, i) => (
+        <React.Fragment key={s.href}>
+          {i > 0 && (i === SOCIALS.length - 1 ? ", and " : ", ")}
+          <a href={s.href}>{s.label}</a>
+        </React.Fragment>
+      ))}.
     </p>
   </>
 )
