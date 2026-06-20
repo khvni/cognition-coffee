@@ -1,18 +1,16 @@
 import React from "react"
-import { graphql, Link, type HeadFC, type PageProps } from "gatsby"
+import { Link, type HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
+import { blogPosts } from "@/content/blog"
 
-type Data = {
-  allMdx: {
-    nodes: Array<{
-      id: string
-      fields: { fileSlug: string }
-      frontmatter: { title: string; description?: string; date?: string; category?: string }
-    }>
-  }
-}
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
 
-const BlogIndex: React.FC<PageProps<Data>> = ({ data }) => (
+const posts = [...blogPosts]
+  .filter((p) => !p.frontmatter.draft)
+  .sort((a, b) => a.frontmatter.order - b.frontmatter.order)
+
+const BlogIndex: React.FC = () => (
   <section className="mx-auto w-full max-w-reader px-6 py-8">
     <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">Devin Daily</p>
     <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink">Field notes on community and agents</h1>
@@ -21,9 +19,9 @@ const BlogIndex: React.FC<PageProps<Data>> = ({ data }) => (
     </p>
 
     <ul className="mt-8 divide-y divide-line border-y border-line">
-      {data.allMdx.nodes.map((post) => (
-        <li key={post.id}>
-          <Link to={`/blog/${post.fields.fileSlug}`} className="group block py-5">
+      {posts.map((post) => (
+        <li key={post.slug}>
+          <Link to={`/blog/${post.slug}`} className="group block py-5">
             {post.frontmatter.category && (
               <span className="font-mono text-[11px] uppercase tracking-wide text-accent-ink">
                 {post.frontmatter.category}
@@ -32,8 +30,12 @@ const BlogIndex: React.FC<PageProps<Data>> = ({ data }) => (
             <h2 className="mt-1 text-xl font-semibold tracking-tight text-ink group-hover:text-accent-ink">
               {post.frontmatter.title}
             </h2>
-            {post.frontmatter.description && <p className="mt-1 text-[14px] text-muted">{post.frontmatter.description}</p>}
-            {post.frontmatter.date && <p className="mt-2 font-mono text-[12px] text-muted">{post.frontmatter.date}</p>}
+            {post.frontmatter.description && (
+              <p className="mt-1 text-[14px] text-muted">{post.frontmatter.description}</p>
+            )}
+            {post.frontmatter.date && (
+              <p className="mt-2 font-mono text-[12px] text-muted">{fmtDate(post.frontmatter.date)}</p>
+            )}
           </Link>
         </li>
       ))}
@@ -44,25 +46,3 @@ const BlogIndex: React.FC<PageProps<Data>> = ({ data }) => (
 export default BlogIndex
 
 export const Head: HeadFC = () => <SEO title="Devin Daily" description="Field notes on community and agents." />
-
-export const query = graphql`
-  query BlogIndex {
-    allMdx(
-      filter: { internal: { contentFilePath: { regex: "/content/blog/" } }, frontmatter: { draft: { ne: true } } }
-      sort: { frontmatter: { order: ASC } }
-    ) {
-      nodes {
-        id
-        fields {
-          fileSlug
-        }
-        frontmatter {
-          title
-          description
-          date(formatString: "MMMM D, YYYY")
-          category
-        }
-      }
-    }
-  }
-`
