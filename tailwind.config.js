@@ -7,22 +7,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Warm wax-paper beige, near-black ink, Devin blue as the single accent.
-        // accent = brand blue for fills/selection/UI; accent-ink = darker blue
-        // for text/links so it clears AA contrast on canvas and panel.
-        canvas: "#EBE4D8",
-        panel: "#F6F1E7",
-        ink: "#1B1A17",
-        muted: "#635A4C",
-        line: "#D8CFBE",
+        canvas: "#ffffff",
+        panel: "#f5f5f5",
+        ink: "#171717",
+        muted: "#6b7280",
+        line: "#e5e5e5",
         accent: "#317CFF",
         "accent-ink": "#285AC8",
-        wallpaper: "#C9BFA9",
+        wallpaper: "#e0e0e0",
       },
       fontFamily: {
         sans: ["'Geist Variable'", "Geist", "system-ui", "sans-serif"],
         mono: ["'Geist Mono Variable'", "ui-monospace", "monospace"],
-        serif: ["'STIX Two Text'", "Georgia", "serif"],
       },
       boxShadow: {
         window: "0 10px 30px -10px rgba(21, 23, 26, 0.35)",

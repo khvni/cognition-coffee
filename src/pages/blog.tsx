@@ -2,7 +2,7 @@ import React from "react"
 import { Link, type HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
-import { SITE_CONTAINER } from "@/lib/layout"
+import { Container, Text, Badge } from "@/components/ui"
 
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
@@ -12,36 +12,32 @@ const posts = [...blogPosts]
   .sort((a, b) => a.frontmatter.order - b.frontmatter.order)
 
 const BlogIndex: React.FC = () => (
-  <section className={`${SITE_CONTAINER} py-8`}>
-    <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">Devin Daily</p>
-    <h1 className="mt-3 font-serif text-4xl font-semibold text-ink">Field notes on community and agents</h1>
-    <p className="mt-3 text-[1.05rem] text-muted">
+  <Container as="section" className="py-8">
+    <Text as="p" preset="eyebrow">Devin Daily</Text>
+    <h1 className="mt-3 text-4xl font-medium text-ink">Field notes on community and agents</h1>
+    <Text as="p" preset="subtitle" className="mt-3">
       Working notes on building a developer community for the first AI software engineer.
-    </p>
+    </Text>
 
     <ul className="mt-8 divide-y divide-line border-y border-line">
       {posts.map((post) => (
         <li key={post.slug}>
           <Link to={`/blog/${post.slug}`} className="group block py-5">
-            {post.frontmatter.category && (
-              <span className="font-mono text-[11px] uppercase tracking-wide text-accent-ink">
-                {post.frontmatter.category}
-              </span>
-            )}
-            <h2 className="mt-1 font-serif text-2xl font-semibold text-ink group-hover:text-accent-ink">
+            {post.frontmatter.category && <Badge>{post.frontmatter.category}</Badge>}
+            <h2 className="mt-1 text-2xl font-medium text-ink group-hover:text-accent-ink">
               {post.frontmatter.title}
             </h2>
             {post.frontmatter.description && (
-              <p className="mt-1 text-[14px] text-muted">{post.frontmatter.description}</p>
+              <Text as="p" preset="small" className="mt-1 text-[14px]">{post.frontmatter.description}</Text>
             )}
             {post.frontmatter.date && (
-              <p className="mt-2 font-mono text-[12px] text-muted">{fmtDate(post.frontmatter.date)}</p>
+              <Text as="p" preset="label" className="mt-2">{fmtDate(post.frontmatter.date)}</Text>
             )}
           </Link>
         </li>
       ))}
     </ul>
-  </section>
+  </Container>
 )
 
 export default BlogIndex

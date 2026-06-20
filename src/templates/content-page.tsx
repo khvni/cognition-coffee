@@ -2,7 +2,7 @@ import React from "react"
 import { type HeadProps, type PageProps } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { contentPages } from "@/content/pages"
-import { SITE_CONTAINER } from "@/lib/layout"
+import { Container, Text } from "@/components/ui"
 
 type PageContext = { slug: string }
 
@@ -12,16 +12,16 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   if (!page) return null
   const { Content, frontmatter: fm } = page
   return (
-    <article className={`${SITE_CONTAINER} py-8`}>
+    <Container as="article" className="py-8">
       <header className="border-b border-line pb-6">
-        {fm.eyebrow && <p className="font-mono text-[12px] uppercase tracking-wide text-accent-ink">{fm.eyebrow}</p>}
-        <h1 className="mt-2 font-serif text-4xl font-semibold text-ink">{fm.title}</h1>
-        {fm.description && <p className="mt-3 text-[1.05rem] text-muted">{fm.description}</p>}
+        {fm.eyebrow && <Text as="p" preset="eyebrow">{fm.eyebrow}</Text>}
+        <h1 className="mt-2 text-4xl font-medium text-ink">{fm.title}</h1>
+        {fm.description && <Text as="p" preset="subtitle" className="mt-3">{fm.description}</Text>}
       </header>
       <div className="prose mt-8">
         <Content />
       </div>
-    </article>
+    </Container>
   )
 }
 
