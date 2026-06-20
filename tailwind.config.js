@@ -7,21 +7,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Subdued, PostHog-style canvas with Devin blue as the single accent.
+        // Warm wax-paper beige, near-black ink, Devin blue as the single accent.
         // accent = brand blue for fills/selection/UI; accent-ink = darker blue
-        // for text/links so it clears AA contrast on the light canvas.
-        canvas: "#eeefe9",
-        panel: "#ffffff",
-        ink: "#15171a",
-        muted: "#5c6066",
-        line: "#dadbd2",
-        accent: "#317cff",
-        "accent-ink": "#1f5ed8",
-        wallpaper: "#d7d9cf",
+        // for text/links so it clears AA contrast on canvas and panel.
+        canvas: "#EBE4D8",
+        panel: "#F6F1E7",
+        ink: "#1B1A17",
+        muted: "#635A4C",
+        line: "#D8CFBE",
+        accent: "#317CFF",
+        "accent-ink": "#285AC8",
+        wallpaper: "#C9BFA9",
       },
       fontFamily: {
-        sans: ["'Inter Variable'", "Inter", "system-ui", "sans-serif"],
-        mono: ["'IBM Plex Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["'Geist Variable'", "Geist", "system-ui", "sans-serif"],
+        mono: ["'Geist Mono Variable'", "ui-monospace", "monospace"],
+        serif: ["'STIX Two Text'", "Georgia", "serif"],
       },
       boxShadow: {
         window: "0 10px 30px -10px rgba(21, 23, 26, 0.35)",
