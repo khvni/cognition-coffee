@@ -17,17 +17,17 @@ warmer for the coffee identity.
 | `canvas` | `#EBE4D8` | Page / desktop base background |
 | `panel` | `#F6F1E7` | Cards, windows, taskbar (warm off-white, never pure `#fff`) |
 | `ink` | `#1B1A17` | Primary text (warm near-black) |
-| `muted` | `#6E6557` | Secondary text (warm taupe-gray) |
+| `muted` | `#635A4C` | Secondary text (warm taupe-gray) |
 | `line` | `#D8CFBE` | Hairline borders |
 | `accent` | **`#317CFF`** | Devin blue — fills, selection, focus, UI accents |
-| `accent-ink` | `#2A5FD0` | Link / UI-text blue (clears AA on `canvas` + `panel`) |
+| `accent-ink` | `#285AC8` | Link / UI-text blue (clears AA on `canvas` + `panel`) |
 | `wallpaper` | `#C9BFA9` | Warm fallback behind the OS wallpaper image |
 
 **Measured AA contrast** (WCAG 2.1): `ink` on `canvas` 13.8:1, on `panel` 15.5:1;
-`muted` on `canvas` 4.54:1, on `panel` 5.09:1; `accent-ink` on `canvas` 4.56:1, on
-`panel` 5.12:1 — all pass AA for normal text. White on `accent` is 3.85:1 (passes
-AA-large / UI 3:1; inherent to the brand-locked blue, so keep white-on-blue text
-bold or ≥18px).
+`muted` on `canvas` 5.37:1, on `panel` 6.02:1; `accent-ink` on `canvas` 4.91:1, on
+`panel` 5.51:1 — all clear AA for normal text with headroom. White on `accent` is
+3.85:1 (passes AA-large / UI 3:1; inherent to the brand-locked blue, so reserve it for
+`::selection`, never body text).
 
 **Rule:** blue is the only saturated accent. Highlighting any text reveals it
 (`::selection` in `global.css`).
@@ -43,7 +43,9 @@ Self-hosted via Fontsource, imported in `gatsby-browser.tsx`.
 | Mono | `font-mono` | **Geist Mono Variable** | Eyebrows, labels, dates, code, terminal, stats |
 
 - **Prose** (`.prose`): STIX serif body + headings, `1.125rem` / line-height `1.7`,
-  measure `70ch`; `code`/`pre` stay Geist Mono. Headings weight 600, `text-wrap: balance`.
+  measure ~`33rem` (~69 chars/line); `code`/`pre` stay Geist Mono, GFM tables use
+  sans cells + mono uppercase headers. Headings weight 600 (STIX ships static
+  400/500/600/700), `text-wrap: balance`.
 - **Titles**: blog index/post and content-page `<h1>`/list `<h2>` use `font-serif`.
   Global chrome (TaskBar, ModeToggle, launcher) stays Geist Sans. Eyebrows/dates stay mono.
 - `::selection` is Devin blue everywhere.

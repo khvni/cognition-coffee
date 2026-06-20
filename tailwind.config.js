@@ -13,10 +13,10 @@ module.exports = {
         canvas: "#EBE4D8",
         panel: "#F6F1E7",
         ink: "#1B1A17",
-        muted: "#6E6557",
+        muted: "#635A4C",
         line: "#D8CFBE",
         accent: "#317CFF",
-        "accent-ink": "#2A5FD0",
+        "accent-ink": "#285AC8",
         wallpaper: "#C9BFA9",
       },
       fontFamily: {
