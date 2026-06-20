@@ -15,4 +15,12 @@ export const BIO = {
     "Devin gives engineers superpowers. I build the community that teaches the world how to use them.",
 };
 
+export type Social = { label: string; href: string };
+
+export const SOCIALS: Social[] = [
+  { label: "X", href: "https://x.com/alikhvni" },
+  { label: "GitHub", href: "https://github.com/khvni" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/khni" },
+];
+
 

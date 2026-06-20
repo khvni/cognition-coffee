@@ -3,8 +3,9 @@
 ## The idea
 
 A concept site that reads as **a natural extension of cognition.ai and
-devin.ai** — same Devin blue, same editorial wax-paper aesthetic — but with the warmth
-of an **artisan coffee roaster**. "The Cognition Coffee Company" is the conceit: a place
+devin.ai**, same Devin blue, same editorial wax-paper aesthetic, but with the warmth
+of an **artisan coffee roaster**. Built as a Gatsby mock-OS on a warm beige canvas
+with near-black ink and Devin blue as the single accent. "The Cognition Coffee Company" is the conceit: a place
 that serves community to the people who build with the first AI software engineer.
 
 **Brand intensity: balanced hybrid.** Equal parts coffee co. and AI lab. Coffee shows up
@@ -37,18 +38,22 @@ terminal, the Devin otter, real metrics.
 
 ## Motifs (the visual vocabulary)
 
-1. **Wax paper** — translucent, grainy cream panels floating over textured backdrops.
-   The central motif (from Cognition's blog graphics). Component: `WaxPaper`.
-2. **Devin blue selection** — highlighting any text reveals `#317CFF`. Always on.
+1. **Wax paper** — warm, translucent cream surfaces floating over the beige canvas.
+   The central motif (from Cognition's blog graphics). Realized as `panel` surfaces
+   and the `ProseWaxFigure` prose component.
+2. **Devin blue selection** — highlighting any text reveals `#317CFF`. Always on
+   (`::selection` in `global.css`).
 3. **Numbered sections** — `01 / 02 / 03` with mono eyebrows, like cognition.ai.
-4. **The Devin otter** — the mascot (plushies, Slackbot, @devinai). Appears as VT100
-   ASCII holding a coffee. Component: `Otter`. Higher-fidelity illustration
-   welcome later.
-5. **VT100 terminal** — the Devin CLI launch aesthetic (`devin@...:~$`). Good for
-   heroes and the "built with Devin" beat.
+4. **The Devin otter** — the mascot (plushies, Slackbot, @devinai). The OS desktop
+   uses the otter photo as wallpaper (under a subtle CRT overlay); the `Otter`
+   component renders the ASCII mark for inline use.
+5. **VT100 terminal** — the Devin CLI launch aesthetic (`devin@...:~$`), good for
+   heroes and the "built with Devin" beat. Geist Mono carries the terminal type.
 6. **Espresso (dark roast) sections** — inverted dark-brown bands for rhythm/contrast.
-7. **Editorial serif** — Cognition-blog-style serif for headlines *and* long-form body.
-8. **Texture** — paper grain (built in via `.grain`); halftone/dither and isometric
+7. **Editorial serif** — **STIX Two Text** for blog/article titles and long-form body
+   (the cognition.ai/blog reading look). UI, nav, and non-article headings use **Geist
+   Sans**; eyebrows, labels, and code use **Geist Mono**.
+8. **Texture** — subtle paper grain and dot-grid; halftone/dither and isometric
    wireframe accents are welcome (see Cognition blog thumbnails) but keep them subtle.
 
 ## Don't
