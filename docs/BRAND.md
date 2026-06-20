@@ -2,11 +2,11 @@
 
 ## The idea
 
-A concept site that reads as **a natural extension of cognition.ai and
-devin.ai**, same Devin blue, same editorial wax-paper aesthetic, but with the warmth
+**The Cognition Coffee Company** reads as a natural extension of cognition.ai and
+devin.ai — same Devin blue, same editorial wax-paper aesthetic — but with the warmth
 of an **artisan coffee roaster**. Built as a Gatsby mock-OS on a warm beige canvas
-with near-black ink and Devin blue as the single accent. "The Cognition Coffee Company" is the conceit: a place
-that serves community to the people who build with the first AI software engineer.
+with near-black ink and Devin blue as the single accent. A place that serves
+community to the people who build with the first AI software engineer.
 
 **Brand intensity: balanced hybrid.** Equal parts coffee co. and AI lab. Coffee shows up
 as language and motif (roasts, the menu, Cafe Cognition, "freshly brewed"), never as
@@ -61,5 +61,5 @@ terminal, the Devin otter, real metrics.
 - Don't drift into a literal cartoon coffee-shop. Keep the AI-lab credibility.
 - Don't use stock-y gradients, drop shadows, or generic SaaS hero blobs.
 - Don't overuse the otter or emoji. One otter, used well.
-- Don't claim affiliation with Cognition. The framing is an independent concept.
+- Don't claim affiliation with Cognition.
 - Don't invent metrics. Verified data only (`src/data/`).

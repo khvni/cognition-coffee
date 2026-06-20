@@ -9,7 +9,7 @@ const config: GatsbyConfig = {
   siteMetadata: {
     title: "The Cognition Coffee Company",
     description:
-      "A community strategy for the people who build with Devin, designed and built with Devin. Runs as a desktop OS, with a plain-website mode too.",
+      "Freshly brewed community for the first AI software engineer.",
     siteUrl: "https://cognitioncoffee.co",
     author: "Ali Khani",
   },
