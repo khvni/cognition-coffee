@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useEditor, EditorContent, type AnyExtension } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Link from "@tiptap/extension-link"
@@ -39,6 +39,12 @@ export const TiptapEditor: React.FC<Props> = ({ content, onChange }) => {
   })
 
   if (!editor) return null
+
+  useEffect(() => {
+    if (content && content !== editor.getHTML()) {
+      editor.commands.setContent(content, { emitUpdate: false })
+    }
+  }, [content, editor])
 
   const cmd = (fn: (c: Chain) => Chain) => () => fn(editor.chain().focus()).run()
 

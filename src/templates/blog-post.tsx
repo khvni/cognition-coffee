@@ -51,7 +51,7 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
       </header>
       <div className="prose mt-8">
         {apiPost ? (
-          <div dangerouslySetInnerHTML={{ __html: apiPost.content }} />
+          <div className="prose-content" dangerouslySetInnerHTML={{ __html: apiPost.content }} />
         ) : (
           <Content />
         )}

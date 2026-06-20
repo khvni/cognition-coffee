@@ -43,7 +43,8 @@ body {
   max-width: 33rem;
   color: theme("colors.ink");
 }
-.prose > * + * {
+.prose > * + *,
+.prose .prose-content > * + * {
   margin-top: 1.1em;
 }
 /* Reach paragraphs nested in shortcodes (ProseWaxFigure / ProsePullQuote). */
