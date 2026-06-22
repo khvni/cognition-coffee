@@ -53,9 +53,9 @@ const Light: React.FC<LightProps> = ({ color, label, onClick, children }) => (
     onPointerDown={(e) => e.stopPropagation()}
     onClick={onClick}
     style={{ backgroundColor: color }}
-    className="grid size-3.5 cursor-pointer place-items-center rounded-full shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.22)] transition-transform active:scale-90 motion-reduce:transition-none"
+    className="relative grid size-3.5 cursor-pointer place-items-center rounded-full shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.22)] transition-transform duration-150 ease-out active:scale-90 before:absolute before:inset-[-13px] before:content-[''] motion-reduce:transition-none"
   >
-    <span className="pointer-events-none scale-75 opacity-0 transition duration-150 group-hover/lights:scale-100 group-hover/lights:opacity-100 group-focus-within/lights:scale-100 group-focus-within/lights:opacity-100 motion-reduce:transition-none">
+    <span className="pointer-events-none scale-75 opacity-0 transition-[transform,opacity] duration-150 group-hover/lights:scale-100 group-hover/lights:opacity-100 group-focus-within/lights:scale-100 group-focus-within/lights:opacity-100 motion-reduce:transition-none">
       {children}
     </span>
   </button>
@@ -131,7 +131,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
 
   return (
     <motion.div
-      className="absolute flex flex-col overflow-hidden rounded-win border border-line bg-panel shadow-window"
+      className="absolute flex flex-col overflow-hidden rounded-win bg-panel shadow-window"
       style={{
         ...positionStyle,
         x: maximized ? 0 : x,
@@ -159,7 +159,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
       transition={reduce ? { duration: 0 } : { duration: 0.18, ease: "easeOut" }}
     >
       <div
-        className={`flex h-9 shrink-0 items-center gap-2 border-b border-line px-3 ${focused ? "bg-canvas" : "bg-panel"}`}
+        className={`flex h-9 shrink-0 items-center gap-2 border-b border-line px-3 rounded-t-[9px] ${focused ? "bg-canvas" : "bg-panel"}`}
         onPointerDown={(e) => {
           if (maximized) return
           guardSelection()
@@ -169,7 +169,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         style={{ cursor: maximized ? "default" : "grab" }}
       >
         <div
-          className={`group/lights flex items-center gap-2 motion-safe:transition motion-safe:duration-150 motion-safe:hover:-translate-y-px ${
+          className={`group/lights flex items-center gap-2 motion-safe:transition-transform motion-safe:duration-150 motion-safe:hover:-translate-y-px ${
             focused ? "" : "grayscale group-hover/lights:grayscale-0 group-focus-within/lights:grayscale-0"
           }`}
         >
@@ -193,7 +193,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         </div>
       </div>
 
-      <div className="win-scroll min-h-0 flex-1 overflow-auto bg-panel">{item.element}</div>
+      <div className="win-scroll min-h-0 flex-1 overflow-auto rounded-b-[7px] bg-panel">{item.element}</div>
 
       {!maximized && (
         <div

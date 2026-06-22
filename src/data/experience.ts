@@ -23,4 +23,21 @@ export const SOCIALS: Social[] = [
   { label: "LinkedIn", href: "https://linkedin.com/in/khni" },
 ];
 
+export type WorkEntry = { mark: string; markClass: string; company: string; role: string; date: string };
+
+export const WORK: WorkEntry[] = [
+  { mark: "K", markClass: "bg-[#5f7f62]", company: "Keysight", role: "Growth Insights & AI", date: "Current" },
+  { mark: "M", markClass: "bg-[#527899]", company: "MTC", role: "Founder", date: "2023–current" },
+  { mark: "B", markClass: "bg-[#151515]", company: "Bloom AI", role: "Co-Founder & CEO", date: "2025" },
+  { mark: "F", markClass: "bg-[#777]", company: "Five9", role: "Security SWE Intern", date: "2022" },
+];
+
+export type Project = { title: string; href: string; desc: string };
+
+export const PROJECTS: Project[] = [
+  { title: "Cognition Coffee", href: "https://cognitioncoffee.co", desc: "A collection of ideas for building Cognition's developer community" },
+  { title: "Tinker", href: "https://tinker.so", desc: "Open-source Ramp Glass for GTM teams" },
+  { title: "Monkeybot", href: "https://monkeybot-demo.pages.dev", desc: "Voice-driven computer-use agent for SaaS workflows" },
+];
+
 
