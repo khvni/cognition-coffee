@@ -580,7 +580,7 @@ a.section-heading:hover svg {
   transform: scale(0.96);
 }
 .about-social-link:focus-visible {
-  outline: none;
+  outline: 2px solid transparent;
   box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
 }
 
@@ -651,7 +651,7 @@ a.section-heading:hover svg {
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  color: #fff;
+  color: theme("colors.canvas");
   font-size: 0.6875rem;
   font-weight: 500;
   line-height: 1;
@@ -728,7 +728,7 @@ a.section-heading:hover svg {
   transform: scale(0.98);
 }
 .about-project-link:focus-visible {
-  outline: none;
+  outline: 2px solid transparent;
   box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
   border-radius: 10px;
 }
