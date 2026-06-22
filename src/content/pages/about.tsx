@@ -20,44 +20,57 @@ const work = [
   { mark: "F", markClass: "bg-[#777]", company: "Five9", role: "Security SWE Intern", date: "2022" },
 ]
 
+const projects = [
+  { title: "Cognition Coffee", href: "https://cognitioncoffee.co", desc: "A collection of ideas for building Cognition's developer community" },
+  { title: "Tinker", href: "https://tinker.so", desc: "Open-source Ramp Glass for GTM teams" },
+  { title: "Monkeybot", href: "https://monkeybot-demo.pages.dev", desc: "Voice-driven computer-use agent for SaaS workflows" },
+]
+
 const Content: FC = () => (
   <>
-    <div className="intro-copy">
-      <p>I'm a community builder and AI-native GTM engineer in the Bay Area, currently automating GTM across Keysight.</p>
-      <p>I founded MTC — a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My experience spans SWE, cybersecurity, data, AI, and GTM engineering across startups and public companies.</p>
-      <p>I built this site with Devin to show, not tell, what a community for the first AI software engineer could be.</p>
+    <div className="about-intro">
+      <p className="about-intro__lead">I'm a community builder and AI-native GTM engineer in the Bay Area, currently automating GTM across Keysight.</p>
+      <p className="about-intro__body">I founded MTC — a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My experience spans SWE, cybersecurity, data, AI, and GTM engineering across startups and public companies.</p>
+      <p className="about-intro__body">I built this site with Devin to show, not tell, what a community for the first AI software engineer could be.</p>
     </div>
 
-    <div className="social-row" aria-label="Social links">
-      {SOCIALS.map((s) => (
-        <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank">
+    <div className="about-socials" aria-label="Social links">
+      {SOCIALS.map((s, i) => (
+        <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank" className="about-social-link" style={{ animationDelay: `${i * 60}ms` }}>
           {socialIcons[s.label] ?? null}
         </a>
       ))}
     </div>
 
-    <section className="section-block" aria-labelledby="work-heading">
-      <h2 className="section-heading" id="work-heading">Work</h2>
-      <ul className="entry-list">
-        {work.map((w) => (
-          <li key={w.company} className="work-row">
-            <span className="company">
-              <span className={`mark ${w.markClass}`}>{w.mark}</span>
-              <strong>{w.company}</strong>
-              <span className="role">{w.role}</span>
+    <section className="about-section" aria-labelledby="work-heading" style={{ animationDelay: "180ms" }}>
+      <h2 className="about-section__heading" id="work-heading">Work</h2>
+      <ul className="about-work-list">
+        {work.map((w, i) => (
+          <li key={w.company} className="about-work-item" style={{ animationDelay: `${240 + i * 80}ms` }}>
+            <span className="about-work-item__left">
+              <span className={`about-work-mark ${w.markClass}`}>{w.mark}</span>
+              <span className="about-work-item__info">
+                <strong>{w.company}</strong>
+                <span className="about-work-item__role">{w.role}</span>
+              </span>
             </span>
-            <span>{w.date}</span>
+            <span className="about-work-item__date">{w.date}</span>
           </li>
         ))}
       </ul>
     </section>
 
-    <section className="section-block" aria-labelledby="about-projects-heading">
-      <h2 className="section-heading" id="about-projects-heading">Projects</h2>
-      <ul className="entry-list">
-        <li className="entry-row"><a className="entry-link" href="https://cognitioncoffee.co" target="_blank" rel="noopener"><strong>Cognition Coffee</strong><span>A collection of ideas for building Cognition's developer community</span></a></li>
-        <li className="entry-row"><a className="entry-link" href="https://tinker.so" target="_blank" rel="noopener"><strong>Tinker</strong><span>Open-source Ramp Glass for GTM teams</span></a></li>
-        <li className="entry-row"><a className="entry-link" href="https://monkeybot-demo.pages.dev" target="_blank" rel="noopener"><strong>Monkeybot</strong><span>Voice-driven computer-use agent for SaaS workflows</span></a></li>
+    <section className="about-section" aria-labelledby="about-projects-heading" style={{ animationDelay: "500ms" }}>
+      <h2 className="about-section__heading" id="about-projects-heading">Projects</h2>
+      <ul className="about-project-list">
+        {projects.map((p, i) => (
+          <li key={p.title} className="about-project-item" style={{ animationDelay: `${560 + i * 80}ms` }}>
+            <a className="about-project-link" href={p.href} target="_blank" rel="noopener">
+              <strong>{p.title}</strong>
+              <span>{p.desc}</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </section>
   </>
