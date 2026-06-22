@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, type HeadFC } from "gatsby"
-import { motion, useReducedMotion } from "framer-motion"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
-import { stagger } from "@/lib/motion"
 
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
@@ -22,7 +20,6 @@ const staticPosts = [...blogPosts]
 
 const BlogIndex: React.FC = () => {
   const [apiPosts, setApiPosts] = useState<ApiPost[]>([])
-  const prefersReduced = useReducedMotion()
 
   useEffect(() => {
     fetch("/api/posts")
@@ -40,47 +37,68 @@ const BlogIndex: React.FC = () => {
       title: api?.title ?? p.frontmatter.title,
       description: api?.excerpt ?? p.frontmatter.description,
       date: api?.date ?? p.frontmatter.date,
+      category: p.frontmatter.category,
     }
   })
 
   return (
-    <motion.div
-      className="page-column"
-      variants={prefersReduced ? undefined : stagger.container}
-      initial="hidden"
-      animate="show"
-    >
-      <motion.h1
-        variants={prefersReduced ? undefined : stagger.item}
-        className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
-      >
-        Blog
-      </motion.h1>
-      <motion.p variants={prefersReduced ? undefined : stagger.item} className="lead text-pretty">
-        Field notes on building a developer community for the first AI software engineer.
-      </motion.p>
+    <div className="page-column">
+      <div className="post-stagger" style={{ "--stagger": 0 } as React.CSSProperties}>
+        <h1 className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink" style={{ textWrap: "balance" }}>
+          Field Notes
+        </h1>
+      </div>
+      <div className="post-stagger" style={{ "--stagger": 1 } as React.CSSProperties}>
+        <p className="lead" style={{ textWrap: "pretty" }}>
+          Notes on building a developer community for the first AI software engineer.
+        </p>
+      </div>
 
-      <motion.section
-        variants={prefersReduced ? undefined : stagger.item}
-        className="section-block mt-14"
-        aria-labelledby="posts-heading"
-      >
+      <section className="mt-14 post-stagger" style={{ "--stagger": 2 } as React.CSSProperties} aria-labelledby="posts-heading">
         <h2 className="section-heading" id="posts-heading">Posts</h2>
-        <ul className="entry-list dated-list">
-          {posts.map((post) => (
-            <li key={post.slug} className="entry-row">
-              <Link className="entry-link" to={`/blog/${post.slug}`}>
-                <span>
-                  <strong>{post.title}</strong>
-                  {post.description && <span className="block text-pretty">{post.description}</span>}
-                </span>
-                {post.date && <time className="tabular-nums">{fmtDate(post.date)}</time>}
+        <ul className="flex flex-col gap-3 m-0 p-0 list-none">
+          {posts.map((post, i) => (
+            <li
+              key={post.slug}
+              className="blog-stagger"
+              style={{ "--stagger": i } as React.CSSProperties}
+            >
+              <Link className="blog-card block no-underline" to={`/blog/${post.slug}`}>
+                <div className="flex items-baseline justify-between gap-4 mb-1">
+                  {post.category && (
+                    <span className="font-mono text-[0.6875rem] uppercase tracking-[0.04em] text-muted">
+                      {post.category}
+                    </span>
+                  )}
+                  {post.date && (
+                    <time
+                      className="font-mono text-[0.75rem] text-muted shrink-0 ml-auto"
+                      style={{ fontVariantNumeric: "tabular-nums" }}
+                    >
+                      {fmtDate(post.date)}
+                    </time>
+                  )}
+                </div>
+                <h3
+                  className="m-0 text-[1.0625rem] font-medium leading-snug text-ink"
+                  style={{ textWrap: "balance" }}
+                >
+                  {post.title}
+                </h3>
+                {post.description && (
+                  <p
+                    className="m-0 mt-1.5 text-[0.9375rem] leading-relaxed text-muted"
+                    style={{ textWrap: "pretty" }}
+                  >
+                    {post.description}
+                  </p>
+                )}
               </Link>
             </li>
           ))}
         </ul>
-      </motion.section>
-    </motion.div>
+      </section>
+    </div>
   )
 }
 

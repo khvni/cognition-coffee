@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, type HeadProps, type PageProps } from "gatsby"
-import { motion, useReducedMotion } from "framer-motion"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
-import { stagger } from "@/lib/motion"
 
 type PageContext = { slug: string }
 
@@ -21,7 +19,6 @@ const fmtDate = (iso: string) =>
 const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const { slug } = pageContext as PageContext
   const post = blogPosts.find((p) => p.slug === slug)
-  const prefersReduced = useReducedMotion()
   const [apiPost, setApiPost] = useState<ApiPost | null>(null)
 
   useEffect(() => {
@@ -40,51 +37,59 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const description = apiPost?.excerpt ?? fm.description
   const date = apiPost?.date ?? fm.date
 
+  let s = 0
+
   return (
-    <motion.div
-      className="page-column"
-      variants={prefersReduced ? undefined : stagger.container}
-      initial="hidden"
-      animate="show"
-    >
-      <motion.div variants={prefersReduced ? undefined : stagger.item}>
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-1 font-mono text-[12px] text-muted transition-colors hover:text-ink min-h-[40px] min-w-[40px]"
-        >
-          &larr; Blog
+    <div className="page-column">
+      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+        <Link to="/blog" className="back-link">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Blog
         </Link>
-      </motion.div>
-      <motion.h1
-        variants={prefersReduced ? undefined : stagger.item}
-        className="mt-6 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
-      >
-        {title}
-      </motion.h1>
-      {description && (
-        <motion.p
-          variants={prefersReduced ? undefined : stagger.item}
-          className="mt-3 text-[1.125rem] leading-relaxed text-muted text-pretty"
-        >
-          {description}
-        </motion.p>
-      )}
-      {date && (
-        <motion.p
-          variants={prefersReduced ? undefined : stagger.item}
-          className="mt-2 font-mono text-[12px] text-muted tabular-nums"
-        >
-          {fmtDate(date)}
-        </motion.p>
-      )}
-      <motion.div variants={prefersReduced ? undefined : stagger.item} className="prose mt-10">
-        {apiPost ? (
-          <div className="prose-content" dangerouslySetInnerHTML={{ __html: apiPost.content }} />
-        ) : (
-          <Content />
+      </div>
+
+      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+        {fm.category && (
+          <span className="inline-block mt-6 font-mono text-[0.6875rem] uppercase tracking-[0.04em] text-muted">
+            {fm.category}
+          </span>
         )}
-      </motion.div>
-    </motion.div>
+        <h1
+          className="mt-3 text-[1.75rem] font-medium leading-tight tracking-tight text-ink"
+          style={{ textWrap: "balance" }}
+        >
+          {title}
+        </h1>
+      </div>
+
+      {description && (
+        <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+          <p className="mt-3 text-[1.125rem] leading-relaxed text-muted" style={{ textWrap: "pretty" }}>
+            {description}
+          </p>
+        </div>
+      )}
+
+      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+        {date && (
+          <p className="mt-2 font-mono text-[0.75rem] text-muted" style={{ fontVariantNumeric: "tabular-nums" }}>
+            {fmtDate(date)}
+          </p>
+        )}
+      </div>
+
+      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+        <div className="prose mt-10" style={{ textWrap: "pretty" }}>
+          {apiPost ? (
+            <div className="prose-content" dangerouslySetInnerHTML={{ __html: apiPost.content }} />
+          ) : (
+            <Content />
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 
