@@ -27,8 +27,8 @@ const events = [
 
 const channels = [
   { label: "Discord", href: "https://discord.gg/GjCYNGChrw", desc: "Daily conversation, project showcases, help threads" },
-  { label: "Office Hours", href: "#", desc: "Weekly live sessions with the Devin team" },
-  { label: "GitHub Discussions", href: "#", desc: "Long-form questions, RFCs, community playbooks" },
+  { label: "Office Hours", href: "#", desc: "Weekly live sessions with the Devin team" }, // TODO: real URL
+  { label: "GitHub Discussions", href: "#", desc: "Long-form questions, RFCs, community playbooks" }, // TODO: real URL
 ]
 
 const stagger = {
@@ -142,11 +142,10 @@ const Content: FC = () => (
           <motion.a
             key={c.label}
             href={c.href}
-            target="_blank"
-            rel="noopener"
+            {...(c.href !== "#" ? { target: "_blank", rel: "noopener" } : {})}
             variants={fadeUp}
             whileTap={{ scale: 0.96 }}
-            className="group flex items-baseline justify-between gap-4 rounded-lg bg-panel px-4 py-3 no-underline transition-shadow focus-visible:outline-none focus-visible:ring-0"
+            className="group flex items-baseline justify-between gap-4 rounded-lg bg-panel px-4 py-3 no-underline transition-shadow"
             style={{
               boxShadow:
                 "0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)",
@@ -154,9 +153,6 @@ const Content: FC = () => (
             whileHover={{
               boxShadow:
                 "0px 0px 0px 1px rgba(0,0,0,0.08), 0px 1px 2px -1px rgba(0,0,0,0.08), 0px 2px 4px 0px rgba(0,0,0,0.06)",
-            }}
-            whileFocus={{
-              boxShadow: "0 0 0 2px #317CFF",
             }}
           >
             <span className="min-w-0">
