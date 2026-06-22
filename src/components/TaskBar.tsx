@@ -25,7 +25,7 @@ export const TaskBar: React.FC = () => {
 
       <div className="mx-1 h-5 w-px bg-line" />
 
-      <div className="win-scroll flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto">
+      <div className="win-scroll scroll-mask-x flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto">
         {windows.map((w) => {
           const active = w.key === focusedKey && !w.minimized
           return (
@@ -33,7 +33,7 @@ export const TaskBar: React.FC = () => {
               key={w.key}
               type="button"
               onClick={() => (w.minimized ? minimizeWindow(w.key, false) : active ? minimizeWindow(w.key, true) : focusWindow(w.key))}
-              className={`flex max-w-[170px] shrink-0 items-center gap-1.5 rounded-md border px-2 py-1 text-[12px] transition-colors ${
+              className={`flex max-w-[170px] shrink-0 items-center gap-1.5 rounded-md border px-2 py-1 text-[12px] transition-[color,background-color,border-color,transform] duration-150 ease-out active:scale-[0.96] ${
                 active ? "border-line bg-canvas text-ink" : "border-transparent text-muted hover:bg-canvas hover:text-ink"
               } ${w.minimized ? "opacity-60" : ""}`}
               title={w.title}

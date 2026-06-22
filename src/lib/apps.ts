@@ -1,5 +1,5 @@
 /** App registry — single source for OS apps and routes. */
-export type AppId = "home" | "menu" | "blog" | "community" | "about" | "scott"
+export type AppId = "home" | "menu" | "blog" | "community" | "about" | "scott" | "terminal"
 
 export type AppDef = {
   id: AppId
@@ -26,6 +26,7 @@ export const APPS: AppDef[] = [
   { id: "community", title: "Community", path: "/community", blurb: "Events, chapters, and feedback loops.", icon: "community", size: { w: 680, h: 560 }, desktop: true },
   { id: "about", title: "About", path: "/about", blurb: "Who is Ali Khani?", icon: "about", size: { w: 640, h: 560 }, desktop: true },
   { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 480, h: 400 }, desktop: true, nav: false },
+  { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 640, h: 420 }, desktop: true, nav: false },
 ]
 
 export function appForPath(pathname: string): AppDef {
