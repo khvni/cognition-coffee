@@ -111,6 +111,15 @@ const glyphs: Record<AppId, (uid: string) => React.ReactNode> = {
       <circle cx="28" cy="17" r="2.2" fill="#F5D76E" />
     </Tile>
   ),
+  terminal: (uid) => (
+    <Tile uid={uid} from="#1a1a1a" to="#0d0d0d">
+      <text x="12" y="20" fill="#8ec07c" style={{ fontSize: "9px", fontFamily: "monospace" }}>$_</text>
+      <g stroke="#8ec07c" strokeWidth="1.2" strokeLinecap="round" fill="none">
+        <polyline points="13,26 17,30 13,34" />
+        <line x1="19" y1="34" x2="30" y2="34" />
+      </g>
+    </Tile>
+  ),
 }
 
 /** Bespoke, real-OS-style app icons. Each app gets its own gradient tile + glyph. */

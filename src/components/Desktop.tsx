@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { useApp } from "@/context/App"
-import { APPS } from "@/lib/apps"
+import { APPS, type AppDef } from "@/lib/apps"
 import { AppIcon } from "./AppIcon"
 
 const WALLPAPER = "/wallpapers/otter-desktop.jpg"
@@ -45,10 +45,138 @@ const Crt: React.FC = () => {
   )
 }
 
+const ICON_STORE_KEY = "ccvm.icon-positions"
+const ICON_GAP = 88
+
+type IconPos = { x: number; y: number }
+type IconPositions = Record<string, IconPos>
+
+function defaultPositions(icons: AppDef[]): IconPositions {
+  const pos: IconPositions = {}
+  icons.forEach((app, i) => {
+    pos[app.id] = { x: 12, y: 12 + i * ICON_GAP }
+  })
+  return pos
+}
+
+function loadPositions(icons: AppDef[]): IconPositions {
+  if (typeof window === "undefined") return defaultPositions(icons)
+  try {
+    const raw = window.localStorage.getItem(ICON_STORE_KEY)
+    if (!raw) return defaultPositions(icons)
+    const parsed = JSON.parse(raw) as IconPositions
+    const defaults = defaultPositions(icons)
+    icons.forEach((app) => {
+      if (!parsed[app.id]) parsed[app.id] = defaults[app.id]
+    })
+    return parsed
+  } catch {
+    return defaultPositions(icons)
+  }
+}
+
+function savePositions(pos: IconPositions) {
+  if (typeof window === "undefined") return
+  window.localStorage.setItem(ICON_STORE_KEY, JSON.stringify(pos))
+}
+
+type DraggableIconProps = {
+  app: AppDef
+  pos: IconPos
+  onDragEnd: (id: string, x: number, y: number) => void
+  onOpen: (path: string) => void
+}
+
+const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOpen }) => {
+  const dragging = useRef(false)
+  const startPos = useRef({ x: 0, y: 0 })
+  const startMouse = useRef({ x: 0, y: 0 })
+  const elRef = useRef<HTMLDivElement>(null)
+  const moved = useRef(false)
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    dragging.current = true
+    moved.current = false
+    startPos.current = { x: pos.x, y: pos.y }
+    startMouse.current = { x: e.clientX, y: e.clientY }
+    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+  }, [pos])
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragging.current) return
+    const dx = e.clientX - startMouse.current.x
+    const dy = e.clientY - startMouse.current.y
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) moved.current = true
+    if (!elRef.current) return
+    elRef.current.style.transform = `translate(${startPos.current.x + dx}px, ${startPos.current.y + dy}px)`
+  }, [])
+
+  const onPointerUp = useCallback((e: React.PointerEvent) => {
+    if (!dragging.current) return
+    dragging.current = false
+    const dx = e.clientX - startMouse.current.x
+    const dy = e.clientY - startMouse.current.y
+    const nx = Math.max(0, startPos.current.x + dx)
+    const ny = Math.max(0, startPos.current.y + dy)
+    if (moved.current) {
+      onDragEnd(app.id, nx, ny)
+    }
+  }, [app.id, onDragEnd])
+
+  const handleDoubleClick = useCallback(() => {
+    if (!moved.current) onOpen(app.path)
+  }, [app.path, onOpen])
+
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    if (e.detail === 0 && !moved.current) onOpen(app.path)
+  }, [app.path, onOpen])
+
+  return (
+    <div
+      ref={elRef}
+      className="absolute"
+      style={{ transform: `translate(${pos.x}px, ${pos.y}px)`, touchAction: "none" }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+    >
+      <button
+        type="button"
+        onDoubleClick={handleDoubleClick}
+        onClick={handleClick}
+        className="group flex w-20 cursor-default flex-col items-center gap-1.5 rounded-md px-1 py-2 text-center transition-colors hover:bg-panel/25 focus-visible:bg-panel/30"
+      >
+        <span
+          className="block transition-transform group-hover:-translate-y-0.5"
+          style={{ filter: "drop-shadow(0 6px 10px rgba(16,12,8,0.34))" }}
+        >
+          <AppIcon id={app.icon} size={50} />
+        </span>
+        <span className="rounded bg-panel/75 px-1.5 py-0.5 text-[12px] font-medium leading-tight text-ink backdrop-blur-sm">
+          {app.title}
+        </span>
+      </button>
+    </div>
+  )
+}
+
 /** The OS backdrop: the otter photo wallpaper under a vintage CRT overlay, plus launchable app icons. */
 export const Desktop: React.FC = () => {
   const { open } = useApp()
   const icons = APPS.filter((a) => a.desktop)
+  const [positions, setPositions] = useState<IconPositions>(() => loadPositions(icons))
+
+  useEffect(() => {
+    setPositions(loadPositions(icons))
+  }, [icons.length])
+
+  const handleDragEnd = useCallback((id: string, x: number, y: number) => {
+    setPositions((prev) => {
+      const next = { ...prev, [id]: { x, y } }
+      savePositions(next)
+      return next
+    })
+  }, [])
 
   return (
     <div className="absolute inset-0 bottom-10 overflow-hidden bg-wallpaper">
@@ -58,30 +186,17 @@ export const Desktop: React.FC = () => {
         style={{ backgroundImage: `url(${WALLPAPER})`, backgroundSize: "cover", backgroundPosition: "center" }}
       />
 
-      <ul className="relative flex flex-col flex-wrap gap-1 p-3">
+      <div className="relative h-full w-full">
         {icons.map((app) => (
-          <li key={app.id}>
-            <button
-              type="button"
-              onDoubleClick={() => open(app.path)}
-              onClick={(e) => {
-                if (e.detail === 0) open(app.path)
-              }}
-              className="group flex w-20 flex-col items-center gap-1.5 rounded-md px-1 py-2 text-center transition-colors hover:bg-panel/25 focus-visible:bg-panel/30"
-            >
-              <span
-                className="block transition-transform group-hover:-translate-y-0.5"
-                style={{ filter: "drop-shadow(0 6px 10px rgba(16,12,8,0.34))" }}
-              >
-                <AppIcon id={app.icon} size={50} />
-              </span>
-              <span className="rounded bg-panel/75 px-1.5 py-0.5 text-[12px] font-medium leading-tight text-ink backdrop-blur-sm">
-                {app.title}
-              </span>
-            </button>
-          </li>
+          <DraggableIcon
+            key={app.id}
+            app={app}
+            pos={positions[app.id] ?? { x: 12, y: 12 }}
+            onDragEnd={handleDragEnd}
+            onOpen={open}
+          />
         ))}
-      </ul>
+      </div>
 
       <Crt />
     </div>
