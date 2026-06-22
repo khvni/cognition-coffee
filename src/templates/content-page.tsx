@@ -1,24 +1,41 @@
 import React from "react"
 import { type HeadProps, type PageProps } from "gatsby"
+import { motion, useReducedMotion } from "framer-motion"
 import { SEO } from "@/components/SEO"
 import { contentPages } from "@/content/pages"
+import { stagger } from "@/lib/motion"
 
 type PageContext = { slug: string }
 
 const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   const { slug } = pageContext as PageContext
   const page = contentPages.find((p) => p.slug === slug)
+  const prefersReduced = useReducedMotion()
   if (!page) return null
   const { Content, frontmatter: fm } = page
   const isGrid = fm.layout === "grid"
   return (
-    <div className={isGrid ? "page-column-wide" : "page-column"}>
-      <h1 className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink">{fm.title}</h1>
-      {fm.description && <p className="lead">{fm.description}</p>}
-      <div className={isGrid ? "mt-12" : "prose mt-12"}>
+    <motion.div
+      className={isGrid ? "page-column-wide" : "page-column"}
+      variants={prefersReduced ? undefined : stagger.container}
+      initial="hidden"
+      animate="show"
+    >
+      <motion.h1
+        variants={prefersReduced ? undefined : stagger.item}
+        className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
+      >
+        {fm.title}
+      </motion.h1>
+      {fm.description && (
+        <motion.p variants={prefersReduced ? undefined : stagger.item} className="lead text-pretty">
+          {fm.description}
+        </motion.p>
+      )}
+      <motion.div variants={prefersReduced ? undefined : stagger.slide} className={isGrid ? "mt-12" : "prose mt-12"}>
         <Content />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 

@@ -23,7 +23,15 @@ body {
   color: theme("colors.ink");
   font-family: theme("fontFamily.sans");
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+p, li, figcaption {
+  text-wrap: pretty;
 }
 
 ::selection {
@@ -156,6 +164,16 @@ body {
 .win-scroll {
   scrollbar-width: thin;
   scrollbar-color: theme("colors.line") transparent;
+}
+
+/* Scroll-mask: fades edges of scrollable containers. */
+.scroll-mask-x {
+  mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+}
+.scroll-mask-y {
+  mask-image: linear-gradient(to bottom, transparent, black 12px, black calc(100% - 12px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 12px, black calc(100% - 12px), transparent);
 }
 
 /* ── Clean editorial layout ──────────────────────────────────────
@@ -380,8 +398,8 @@ a.section-heading:hover svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   color: theme("colors.muted");
   border-radius: 6px;
   transition: color 140ms ease, transform 140ms ease;
@@ -403,10 +421,6 @@ a.section-heading:hover svg {
   .social-row {
     gap: 12px;
     margin: 32px 0 48px;
-  }
-  .social-row a {
-    width: 40px;
-    height: 40px;
   }
 }
 
@@ -811,4 +825,20 @@ a.section-heading:hover svg {
     height: 140px;
     border-radius: 8px;
   }
+}
+
+/* Scroll mask — fade edges on scrollable containers. */
+.scroll-mask-y {
+  mask-image: linear-gradient(to bottom, transparent, black 24px, black calc(100% - 24px), transparent);
+}
+
+/* Entry row — subtle highlight on hover. */
+.entry-row {
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: -6px -8px;
+  transition: background-color 140ms ease;
+}
+.entry-row:hover {
+  background-color: rgba(21, 23, 26, 0.025);
 }
