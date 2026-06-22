@@ -72,7 +72,7 @@ const BlogIndex: React.FC = () => {
                   )}
                   {post.date && (
                     <time
-                      className="font-mono text-[0.75rem] text-muted shrink-0"
+                      className="font-mono text-[0.75rem] text-muted shrink-0 ml-auto"
                       style={{ fontVariantNumeric: "tabular-nums" }}
                     >
                       {fmtDate(post.date)}
