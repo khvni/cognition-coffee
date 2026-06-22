@@ -26,7 +26,7 @@ const IndexPage: React.FC = () => (
 
     <div className="social-row reveal" style={stagger(1)} aria-label="Social links">
       {SOCIALS.map((s) => (
-        <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank">
+        <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank" className="transition-[color,transform] duration-150 ease-out hover:text-ink">
           {socialIcons[s.label] ?? null}
         </a>
       ))}
