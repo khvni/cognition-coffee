@@ -131,7 +131,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
 
   return (
     <motion.div
-      className="absolute flex flex-col overflow-hidden rounded-win bg-panel shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0_10px_30px_-10px_rgba(21,23,26,0.35)]"
+      className="absolute flex flex-col overflow-hidden rounded-win bg-panel shadow-window"
       style={{
         ...positionStyle,
         x: maximized ? 0 : x,
@@ -193,7 +193,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         </div>
       </div>
 
-      <div className="win-scroll scroll-mask-y min-h-0 flex-1 overflow-auto rounded-b-[7px] bg-panel">{item.element}</div>
+      <div className="win-scroll min-h-0 flex-1 overflow-auto rounded-b-[7px] bg-panel">{item.element}</div>
 
       {!maximized && (
         <div
