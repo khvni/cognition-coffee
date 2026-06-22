@@ -13,9 +13,10 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   const prefersReduced = useReducedMotion()
   if (!page) return null
   const { Content, frontmatter: fm } = page
+  const isGrid = fm.layout === "grid"
   return (
     <motion.div
-      className="page-column"
+      className={isGrid ? "page-column-wide" : "page-column"}
       variants={prefersReduced ? undefined : stagger.container}
       initial="hidden"
       animate="show"
@@ -31,7 +32,7 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
           {fm.description}
         </motion.p>
       )}
-      <motion.div variants={prefersReduced ? undefined : stagger.slide} className="prose mt-12">
+      <motion.div variants={prefersReduced ? undefined : stagger.slide} className={isGrid ? "mt-12" : "prose mt-12"}>
         <Content />
       </motion.div>
     </motion.div>
