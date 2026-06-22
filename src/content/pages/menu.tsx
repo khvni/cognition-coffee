@@ -1,4 +1,6 @@
 import React, { type FC } from "react"
+import { motion, useReducedMotion } from "framer-motion"
+import { stagger } from "@/lib/motion"
 
 export const frontmatter = {
   title: "Programs",
@@ -35,74 +37,77 @@ const experience = [
   { name: "Five9", date: "2023", desc: "Product Security Intern. Product security on contact-center infrastructure." },
 ]
 
-const Content: FC = () => (
-  <>
-    <div className="intro-copy">
-      <p>Three programs that build on each other: a curriculum that creates competence, a meetup network that creates belonging, and an ambassador program that creates reach.</p>
-    </div>
+const Content: FC = () => {
+  const prefersReduced = useReducedMotion()
+  return (
+    <motion.div variants={prefersReduced ? undefined : stagger.container}>
+      <motion.div variants={prefersReduced ? undefined : stagger.item} className="intro-copy">
+        <p className="text-pretty">Three programs that build on each other: a curriculum that creates competence, a meetup network that creates belonging, and an ambassador program that creates reach.</p>
+      </motion.div>
 
-    <section className="section-block mt-14" aria-labelledby="curriculum-heading">
-      <h2 className="section-heading" id="curriculum-heading">01 — Devin Mastery Curriculum</h2>
-      <p>Turn curious developers into certified Devin orchestrators. A three-track curriculum with hands-on labs, community playbooks, and earnable certification badges.</p>
-      <ul className="entry-list">
-        {curriculum.map((c) => (
-          <li key={c.name} className="entry-row">
-            <span className="entry-link">
-              <strong>{c.name}</strong>
-              <span>{c.desc}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <section className="section-block" aria-labelledby="meetups-heading">
-      <h2 className="section-heading" id="meetups-heading">02 — Cafe Cognition Meetups</h2>
-      <p>A global meetup network, not one-off pop-ups. A repeatable local-chapter engine with a meetup-in-a-box kit.</p>
-      <ul className="entry-list">
-        {meetups.map((m) => (
-          <li key={m.name} className="entry-row">
-            <span className="entry-link">
-              <strong>{m.name}</strong>
-              <span>{m.desc}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <section className="section-block" aria-labelledby="ambassadors-heading">
-      <h2 className="section-heading" id="ambassadors-heading">03 — Devin Ambassadors</h2>
-      <p>Turn top power users into an evangelist flywheel. A three-tier program with a portal, recognition, and a weekly feedback loop to the product team.</p>
-      <ul className="entry-list">
-        {ambassadors.map((a) => (
-          <li key={a.name} className="entry-row">
-            <span className="entry-link">
-              <strong>{a.name}</strong>
-              <span>{a.desc}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <section className="section-block" aria-labelledby="experience-heading">
-      <h2 className="section-heading" id="experience-heading">Experience</h2>
-      <ul className="entry-list dated-list">
-        {experience.map((e) => (
-          <li key={e.name} className="entry-row">
-            <span className="entry-link">
-              <span>
-                <strong>{e.name}</strong>
-                <span className="block">{e.desc}</span>
+      <motion.section variants={prefersReduced ? undefined : stagger.item} className="section-block mt-14" aria-labelledby="curriculum-heading">
+        <h2 className="section-heading" id="curriculum-heading">01 — Devin Mastery Curriculum</h2>
+        <p className="text-pretty text-muted mb-4">Turn curious developers into certified Devin orchestrators. A three-track curriculum with hands-on labs, community playbooks, and earnable certification badges.</p>
+        <ul className="entry-list">
+          {curriculum.map((c) => (
+            <li key={c.name} className="entry-row">
+              <span className="entry-link">
+                <strong>{c.name}</strong>
+                <span className="text-pretty">{c.desc}</span>
               </span>
-              <time>{e.date}</time>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  </>
-)
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      <motion.section variants={prefersReduced ? undefined : stagger.item} className="section-block" aria-labelledby="meetups-heading">
+        <h2 className="section-heading" id="meetups-heading">02 — Cafe Cognition Meetups</h2>
+        <p className="text-pretty text-muted mb-4">A global meetup network, not one-off pop-ups. A repeatable local-chapter engine with a meetup-in-a-box kit.</p>
+        <ul className="entry-list">
+          {meetups.map((m) => (
+            <li key={m.name} className="entry-row">
+              <span className="entry-link">
+                <strong>{m.name}</strong>
+                <span className="text-pretty">{m.desc}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      <motion.section variants={prefersReduced ? undefined : stagger.item} className="section-block" aria-labelledby="ambassadors-heading">
+        <h2 className="section-heading" id="ambassadors-heading">03 — Devin Ambassadors</h2>
+        <p className="text-pretty text-muted mb-4">Turn top power users into an evangelist flywheel. A three-tier program with a portal, recognition, and a weekly feedback loop to the product team.</p>
+        <ul className="entry-list">
+          {ambassadors.map((a) => (
+            <li key={a.name} className="entry-row">
+              <span className="entry-link">
+                <strong>{a.name}</strong>
+                <span className="text-pretty">{a.desc}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      <motion.section variants={prefersReduced ? undefined : stagger.item} className="section-block" aria-labelledby="experience-heading">
+        <h2 className="section-heading" id="experience-heading">Experience</h2>
+        <ul className="entry-list dated-list">
+          {experience.map((e) => (
+            <li key={e.name} className="entry-row">
+              <span className="entry-link">
+                <span>
+                  <strong>{e.name}</strong>
+                  <span className="block text-pretty">{e.desc}</span>
+                </span>
+                <time className="tabular-nums">{e.date}</time>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+    </motion.div>
+  )
+}
 
 export default Content

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { Link, type HeadFC } from "gatsby"
+import { motion, useReducedMotion } from "framer-motion"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
+import { stagger } from "@/lib/motion"
 
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
@@ -20,6 +22,7 @@ const staticPosts = [...blogPosts]
 
 const BlogIndex: React.FC = () => {
   const [apiPosts, setApiPosts] = useState<ApiPost[]>([])
+  const prefersReduced = useReducedMotion()
 
   useEffect(() => {
     fetch("/api/posts")
@@ -41,11 +44,27 @@ const BlogIndex: React.FC = () => {
   })
 
   return (
-    <div className="page-column">
-      <h1 className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink">Blog</h1>
-      <p className="lead">Field notes on building a developer community for the first AI software engineer.</p>
+    <motion.div
+      className="page-column"
+      variants={prefersReduced ? undefined : stagger.container}
+      initial="hidden"
+      animate="show"
+    >
+      <motion.h1
+        variants={prefersReduced ? undefined : stagger.item}
+        className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
+      >
+        Blog
+      </motion.h1>
+      <motion.p variants={prefersReduced ? undefined : stagger.item} className="lead text-pretty">
+        Field notes on building a developer community for the first AI software engineer.
+      </motion.p>
 
-      <section className="section-block mt-14" aria-labelledby="posts-heading">
+      <motion.section
+        variants={prefersReduced ? undefined : stagger.item}
+        className="section-block mt-14"
+        aria-labelledby="posts-heading"
+      >
         <h2 className="section-heading" id="posts-heading">Posts</h2>
         <ul className="entry-list dated-list">
           {posts.map((post) => (
@@ -53,15 +72,15 @@ const BlogIndex: React.FC = () => {
               <Link className="entry-link" to={`/blog/${post.slug}`}>
                 <span>
                   <strong>{post.title}</strong>
-                  {post.description && <span className="block">{post.description}</span>}
+                  {post.description && <span className="block text-pretty">{post.description}</span>}
                 </span>
-                {post.date && <time>{fmtDate(post.date)}</time>}
+                {post.date && <time className="tabular-nums">{fmtDate(post.date)}</time>}
               </Link>
             </li>
           ))}
         </ul>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   )
 }
 

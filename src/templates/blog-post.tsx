@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { Link, type HeadProps, type PageProps } from "gatsby"
+import { motion, useReducedMotion } from "framer-motion"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
+import { stagger } from "@/lib/motion"
 
 type PageContext = { slug: string }
 
@@ -19,6 +21,7 @@ const fmtDate = (iso: string) =>
 const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const { slug } = pageContext as PageContext
   const post = blogPosts.find((p) => p.slug === slug)
+  const prefersReduced = useReducedMotion()
   const [apiPost, setApiPost] = useState<ApiPost | null>(null)
 
   useEffect(() => {
@@ -38,21 +41,50 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const date = apiPost?.date ?? fm.date
 
   return (
-    <div className="page-column">
-      <Link to="/blog" className="font-mono text-[12px] text-muted transition-colors hover:text-ink">
-        ← Blog
-      </Link>
-      <h1 className="mt-6 text-[1.75rem] font-medium leading-tight tracking-tight text-ink">{title}</h1>
-      {description && <p className="mt-3 text-[1.125rem] leading-relaxed text-muted">{description}</p>}
-      {date && <p className="mt-2 font-mono text-[12px] text-muted">{fmtDate(date)}</p>}
-      <div className="prose mt-10">
+    <motion.div
+      className="page-column"
+      variants={prefersReduced ? undefined : stagger.container}
+      initial="hidden"
+      animate="show"
+    >
+      <motion.div variants={prefersReduced ? undefined : stagger.item}>
+        <Link
+          to="/blog"
+          className="inline-flex items-center gap-1 font-mono text-[12px] text-muted transition-colors hover:text-ink min-h-[40px] min-w-[40px]"
+        >
+          &larr; Blog
+        </Link>
+      </motion.div>
+      <motion.h1
+        variants={prefersReduced ? undefined : stagger.item}
+        className="mt-6 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
+      >
+        {title}
+      </motion.h1>
+      {description && (
+        <motion.p
+          variants={prefersReduced ? undefined : stagger.item}
+          className="mt-3 text-[1.125rem] leading-relaxed text-muted text-pretty"
+        >
+          {description}
+        </motion.p>
+      )}
+      {date && (
+        <motion.p
+          variants={prefersReduced ? undefined : stagger.item}
+          className="mt-2 font-mono text-[12px] text-muted tabular-nums"
+        >
+          {fmtDate(date)}
+        </motion.p>
+      )}
+      <motion.div variants={prefersReduced ? undefined : stagger.item} className="prose mt-10">
         {apiPost ? (
           <div className="prose-content" dangerouslySetInnerHTML={{ __html: apiPost.content }} />
         ) : (
           <Content />
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
