@@ -22,7 +22,7 @@ module.exports = {
       },
       boxShadow: {
         window: "0 10px 30px -10px rgba(21, 23, 26, 0.35)",
-        card: "0 1px 0 rgba(21,23,26,0.04), 0 1px 2px rgba(21,23,26,0.06)",
+        card: "0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)",
       },
       borderRadius: {
         win: "10px",

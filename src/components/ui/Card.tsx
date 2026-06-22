@@ -8,7 +8,7 @@ type Props = {
   [key: string]: unknown
 }
 
-const base = "rounded-win border border-line bg-panel shadow-card"
+const base = "rounded-win bg-panel shadow-card"
 
 export const Card: React.FC<Props> = ({ as: Tag = "div", hover, className, children, ...rest }) => (
   <Tag
