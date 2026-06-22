@@ -10,11 +10,12 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   const page = contentPages.find((p) => p.slug === slug)
   if (!page) return null
   const { Content, frontmatter: fm } = page
+  const isGrid = fm.layout === "grid"
   return (
-    <div className="page-column">
+    <div className={isGrid ? "page-column-wide" : "page-column"}>
       <h1 className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink">{fm.title}</h1>
       {fm.description && <p className="lead">{fm.description}</p>}
-      <div className="prose mt-12">
+      <div className={isGrid ? "mt-12" : "prose mt-12"}>
         <Content />
       </div>
     </div>

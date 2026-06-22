@@ -168,12 +168,18 @@ body {
   margin: 0 auto;
   padding: 128px 24px 110px;
 }
+.page-column-wide {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 128px 24px 110px;
+}
 .page-column--narrow {
   max-width: theme("maxWidth.narrow");
 }
 
 @media (max-width: 700px) {
-  .page-column {
+  .page-column,
+  .page-column-wide {
     padding: 96px 16px 80px;
   }
 }
@@ -785,12 +791,6 @@ a.section-heading:hover svg {
   background: theme("colors.panel");
   border-radius: 6px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
-  transition-property: color, box-shadow;
-  transition-duration: 140ms;
-}
-.lightbox-chip:hover {
-  color: theme("colors.ink");
-  box-shadow: 0 0 0 1px theme("colors.accent");
 }
 
 @media (max-width: 700px) {

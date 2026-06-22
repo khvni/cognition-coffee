@@ -7,6 +7,7 @@ export const frontmatter = {
   title: "The Menu",
   description: "Browse the catalog. Pick a program. Customize the execution.",
   eyebrow: "Menu",
+  layout: "grid" as const,
 }
 
 const Content: FC = () => {
