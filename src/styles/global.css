@@ -32,7 +32,7 @@ body {
 }
 
 :focus-visible {
-  outline: none;
+  outline: 2px solid transparent;
   box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
 }
 
@@ -378,7 +378,7 @@ a.section-heading:hover svg {
   height: 32px;
   color: theme("colors.muted");
   border-radius: 6px;
-  transition: color 140ms ease, transform 140ms ease;
+  transition: color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
 }
 .social-row a svg {
   width: 20px;
@@ -394,7 +394,7 @@ a.section-heading:hover svg {
 }
 .social-row a:focus-visible {
   color: theme("colors.ink");
-  outline: none;
+  outline: 2px solid transparent;
   box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
 }
 @media (max-width: 700px) {

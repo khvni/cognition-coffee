@@ -32,10 +32,11 @@ const IndexPage: React.FC = () => (
       ))}
     </div>
 
-    <section className="section-block reveal" style={stagger(2)} aria-labelledby="programs-heading">
+    <section className="section-block" aria-labelledby="programs-heading">
       <h2
-        className="section-heading font-mono uppercase tracking-[0.06em] text-[0.6875rem]"
+        className="section-heading reveal font-mono uppercase tracking-[0.06em] text-[0.6875rem]"
         id="programs-heading"
+        style={stagger(2)}
       >
         Programs
       </h2>
