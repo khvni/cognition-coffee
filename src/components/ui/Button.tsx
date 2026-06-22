@@ -13,7 +13,7 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: "sm" | "md"
 }
 
-const base = "inline-flex items-center justify-center rounded-md font-sans transition-colors"
+const base = "inline-flex items-center justify-center rounded-md font-sans transition-[color,background-color,transform] duration-150 ease-out active:scale-[0.96]"
 
 const sizes = {
   sm: "min-h-[32px] px-3 text-[13px]",

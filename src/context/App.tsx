@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef } from "react"
 import { navigate } from "gatsby"
 import { useMachine } from "@xstate/react"
-import { useQueryState, parseAsStringEnum, parseAsArrayOf, parseAsStringLiteral } from "nuqs"
-import { NuqsAdapter } from "nuqs/adapters/react"
 import { osMachine, type Experience, type WindowItem } from "@/os/osMachine"
-import { appForPath, APPS, type AppId } from "@/lib/apps"
+import { appForPath, APPS } from "@/lib/apps"
 import { isMobile } from "@/lib/mobile"
 
 type WindowPatch = Partial<Pick<WindowItem, "x" | "y" | "w" | "h" | "minimized" | "maximized">>
@@ -36,15 +34,9 @@ export const useApp = (): AppContextValue => {
 }
 
 const isBrowser = typeof window !== "undefined"
-const APP_IDS = APPS.map((a) => a.id)
-const pathForId = (id: AppId) => APPS.find((a) => a.id === id)?.path
 const normPath = (p: string) => p.replace(/\/+$/, "") || "/"
 
 const STORE_KEY = "ccvm.experience"
-
-const modeParser = parseAsStringEnum<Experience>(["os", "site"])
-const openParser = parseAsArrayOf(parseAsStringLiteral(APP_IDS)).withDefault([])
-const focusParser = parseAsStringLiteral(APP_IDS)
 
 type ProviderProps = {
   element: React.ReactNode
@@ -53,9 +45,7 @@ type ProviderProps = {
 }
 
 export const AppProvider: React.FC<ProviderProps> = (props) => (
-  <NuqsAdapter>
-    <AppProviderInner {...props} />
-  </NuqsAdapter>
+  <AppProviderInner {...props} />
 )
 
 const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children }) => {
@@ -66,10 +56,6 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
 
   const mobile = useRef(isBrowser && isMobile())
 
-  const [urlMode, setUrlMode] = useQueryState("mode", modeParser)
-  const [, setUrlOpen] = useQueryState("open", openParser)
-  const [, setUrlFocus] = useQueryState("focus", focusParser)
-
   const booted = useRef(false)
 
   useEffect(() => {
@@ -79,56 +65,14 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     if (mobile.current) { send({ type: "SET_MODE", mode: "site" }); return }
 
     const savedLocal = window.localStorage.getItem(STORE_KEY) as Experience | null
-    const initial = urlMode ?? savedLocal ?? (window.innerWidth < 880 ? "site" : "os")
+    const initial = savedLocal ?? (window.innerWidth < 880 ? "site" : "os")
     if (initial !== "os") send({ type: "SET_MODE", mode: initial })
-  }, [urlMode, send])
+  }, [send])
 
   useEffect(() => {
     if (!isBrowser) return
     window.localStorage.setItem(STORE_KEY, experience)
   }, [experience])
-
-  useEffect(() => {
-    if (!isBrowser || !booted.current) return
-    if (experience !== "os") {
-      void setUrlMode(null)
-      void setUrlOpen(null)
-      void setUrlFocus(null)
-      return
-    }
-    void setUrlMode(null)
-    const ids = windows.map((wn) => {
-      const app = APPS.find((a) => normPath(a.path) === normPath(wn.path))
-      return app?.id
-    }).filter((id): id is AppId => !!id)
-    void setUrlOpen(ids.length ? ids : null)
-    const focusApp = windows.find((wn) => wn.key === focusedKey)
-    const focusId = focusApp ? APPS.find((a) => normPath(a.path) === normPath(focusApp.path))?.id : undefined
-    void setUrlFocus(focusId ?? null)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [experience, windows, focusedKey])
-
-  const restoreQueue = useRef<string[] | null>(null)
-
-  useEffect(() => {
-    if (!isBrowser || !booted.current || restoreQueue.current !== null) return
-    if (experience !== "os") return
-    const qOpen = new URLSearchParams(window.location.search).get("open")
-    const qFocus = new URLSearchParams(window.location.search).get("focus")
-    if (!qOpen) return
-    const ids = qOpen.split(",").filter((id): id is AppId => APP_IDS.includes(id as AppId))
-    if (!ids.length) return
-    const paths = ids.map(pathForId).filter((p): p is string => !!p)
-    restoreQueue.current = paths
-    const focusPath = qFocus ? pathForId(qFocus as AppId) : undefined
-    if (paths.length && paths[0] !== normPath(location.pathname)) {
-      void navigate(paths[0])
-    }
-    if (focusPath) {
-      setTimeout(() => send({ type: "FOCUS_PATH", path: normPath(focusPath) }), 120)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     const pathname = normPath(location.pathname)
@@ -137,17 +81,6 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     const vh = isBrowser ? window.innerHeight : 800
 
     send({ type: "OPEN", app, path: pathname, title: app.title, element, vw, vh })
-
-    const queue = restoreQueue.current
-    if (queue) {
-      const idx = queue.indexOf(pathname)
-      const next = idx >= 0 && idx < queue.length - 1 ? queue[idx + 1] : null
-      if (next) {
-        void navigate(next)
-      } else if (idx >= 0) {
-        restoreQueue.current = null
-      }
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.key])
 
