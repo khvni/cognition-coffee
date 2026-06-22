@@ -130,7 +130,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
   }, [app.path, onOpen])
 
   const handleClick = useCallback((e: React.MouseEvent) => {
-    if (e.detail === 0) onOpen(app.path)
+    if (e.detail === 1) onOpen(app.path)
   }, [app.path, onOpen])
 
   return (
