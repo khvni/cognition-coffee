@@ -116,10 +116,12 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
     dragging.current = false
     const dx = e.clientX - startMouse.current.x
     const dy = e.clientY - startMouse.current.y
-    const nx = Math.max(0, startPos.current.x + dx)
-    const ny = Math.max(0, startPos.current.y + dy)
     if (moved.current) {
+      const nx = Math.max(0, startPos.current.x + dx)
+      const ny = Math.max(0, startPos.current.y + dy)
       onDragEnd(app.id, nx, ny)
+    } else if (elRef.current) {
+      elRef.current.style.transform = `translate(${startPos.current.x}px, ${startPos.current.y}px)`
     }
   }, [app.id, onDragEnd])
 
@@ -128,7 +130,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
   }, [app.path, onOpen])
 
   const handleClick = useCallback((e: React.MouseEvent) => {
-    if (e.detail === 0 && !moved.current) onOpen(app.path)
+    if (e.detail === 0) onOpen(app.path)
   }, [app.path, onOpen])
 
   return (
