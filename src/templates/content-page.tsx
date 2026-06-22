@@ -31,7 +31,7 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
           {fm.description}
         </motion.p>
       )}
-      <motion.div variants={prefersReduced ? undefined : stagger.item} className="mt-12">
+      <motion.div variants={prefersReduced ? undefined : stagger.slide} className="prose mt-12">
         <Content />
       </motion.div>
     </motion.div>
