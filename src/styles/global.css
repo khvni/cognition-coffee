@@ -500,3 +500,19 @@ a.section-heading:hover svg {
     line-height: 1.5;
   }
 }
+
+/* Scroll mask — fade edges on scrollable containers. */
+.scroll-mask-y {
+  mask-image: linear-gradient(to bottom, transparent, black 24px, black calc(100% - 24px), transparent);
+}
+
+/* Entry row — subtle highlight on hover. */
+.entry-row {
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: -6px -8px;
+  transition: background-color 140ms ease;
+}
+.entry-row:hover {
+  background-color: rgba(21, 23, 26, 0.025);
+}
