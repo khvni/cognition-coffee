@@ -5,12 +5,14 @@ import { tweets } from "@/data/tweets"
 import { PhotoCarousel } from "@/components/community/PhotoCarousel"
 import { TweetWall } from "@/components/community/TweetWall"
 import { FAQ } from "@/components/community/FAQ"
+import { Button } from "@/components/ui/Button"
 
 export const frontmatter = {
   title: "Join the global Devin community.",
   description:
     "Meet the builders, hosts, and teams shipping with Devin everywhere. Show up, ship together, and bring someone with you.",
   eyebrow: "Community",
+  layout: "community" as const,
 }
 
 function useCounter(end: number, duration = 2000) {
@@ -54,38 +56,6 @@ const Reveal: FC<{ children: React.ReactNode; delay?: number }> = ({ children, d
   </motion.div>
 )
 
-const ButtonLink: FC<
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    variant?: "primary" | "secondary"
-    size?: "sm" | "md"
-  }
-> = ({ variant = "secondary", size = "md", href, className, children, ...rest }) => {
-  const base =
-    "inline-flex items-center justify-center rounded-md font-sans transition-[color,background-color,transform] duration-150 ease-out active:scale-[0.96]"
-  const variants = {
-    primary: "bg-ink text-panel hover:bg-ink/90",
-    secondary: "border border-line bg-panel text-ink hover:bg-canvas",
-  }
-  const sizes = {
-    sm: "min-h-[32px] px-3 text-[13px]",
-    md: "min-h-[40px] px-4 text-[14px]",
-  }
-  const external = typeof href === "string" && href.startsWith("http")
-  const classes = `${base} ${sizes[size]} ${variants[variant]}${className ? ` ${className}` : ""}`
-
-  return (
-    <a
-      href={href}
-      className={classes}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener" : undefined}
-      {...rest}
-    >
-      {children}
-    </a>
-  )
-}
-
 const Content: FC = () => {
   const citiesCounter = useCounter(16)
   const eventsCounter = useCounter(58)
@@ -102,10 +72,16 @@ const Content: FC = () => {
             Meet the builders, hosts, and teams shipping with Devin everywhere. Show up, ship together, and bring someone with you.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink variant="primary" href={links.discord}>
-              Join Discord
-            </ButtonLink>
-            <ButtonLink href={links.luma}>Find an event</ButtonLink>
+            <Button asChild>
+              <a href={links.discord} target="_blank" rel="noopener">
+                Join Discord
+              </a>
+            </Button>
+            <Button asChild variant="secondary">
+              <a href={links.luma} target="_blank" rel="noopener">
+                Find an event
+              </a>
+            </Button>
           </div>
         </Reveal>
       </section>
@@ -169,10 +145,14 @@ const Content: FC = () => {
         </Reveal>
         <Reveal delay={0.2}>
           <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink variant="primary" href={links.ambassador}>
-              Apply to lead
-            </ButtonLink>
-            <ButtonLink href={links.eventSupport}>Start a chapter</ButtonLink>
+            <Button asChild>
+              <a href={links.ambassador} target="_blank" rel="noopener">
+                Apply to lead
+              </a>
+            </Button>
+            <Button asChild variant="secondary">
+              <a href={links.eventSupport}>Start a chapter</a>
+            </Button>
           </div>
         </Reveal>
       </section>
@@ -183,36 +163,36 @@ const Content: FC = () => {
             Get involved
           </h2>
         </Reveal>
-        <ul className="entry-list mt-4">
+        <ul className="mt-4 flex flex-col gap-3">
           <Reveal delay={0.05}>
-            <li className="entry-row">
-              <a href={links.discord} target="_blank" rel="noopener" className="entry-link no-underline">
-                <strong>Join Discord</strong>
-                <span>Meet builders, get help, and share what you ship.</span>
+            <li>
+              <a href={links.discord} target="_blank" rel="noopener" className="group block">
+                <span className="block text-base font-medium text-ink">Join Discord</span>
+                <span className="block text-base text-muted">Meet builders, get help, and share what you ship.</span>
               </a>
             </li>
           </Reveal>
           <Reveal delay={0.1}>
-            <li className="entry-row">
-              <a href={links.luma} target="_blank" rel="noopener" className="entry-link no-underline">
-                <strong>Find events</strong>
-                <span>Global calendar of meetups, workshops, and hackathons.</span>
+            <li>
+              <a href={links.luma} target="_blank" rel="noopener" className="group block">
+                <span className="block text-base font-medium text-ink">Find events</span>
+                <span className="block text-base text-muted">Global calendar of meetups, workshops, and hackathons.</span>
               </a>
             </li>
           </Reveal>
           <Reveal delay={0.15}>
-            <li className="entry-row">
-              <a href={links.ambassador} target="_blank" rel="noopener" className="entry-link no-underline">
-                <strong>Apply to lead</strong>
-                <span>Host local events and unlock early access and perks.</span>
+            <li>
+              <a href={links.ambassador} target="_blank" rel="noopener" className="group block">
+                <span className="block text-base font-medium text-ink">Apply to lead</span>
+                <span className="block text-base text-muted">Host local events and unlock early access and perks.</span>
               </a>
             </li>
           </Reveal>
           <Reveal delay={0.2}>
-            <li className="entry-row">
-              <a href={links.eventSupport} className="entry-link no-underline">
-                <strong>Get event support</strong>
-                <span>Need help planning? We can help with venue, funding, and swag.</span>
+            <li>
+              <a href={links.eventSupport} className="group block">
+                <span className="block text-base font-medium text-ink">Get event support</span>
+                <span className="block text-base text-muted">Need help planning? We can help with venue, funding, and swag.</span>
               </a>
             </li>
           </Reveal>

@@ -75,10 +75,22 @@ body {
   font-size: 1.1rem;
   margin-top: 1.5em;
 }
-.prose a {
+.prose a:not([class]) {
   color: theme("colors.accent-ink");
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+.prose a.no-underline {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tweet-card,
+.tweet-card p,
+.tweet-card strong {
+  color: inherit;
+  text-decoration: none;
 }
 .prose ul,
 .prose ol {

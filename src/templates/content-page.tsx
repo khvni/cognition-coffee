@@ -28,6 +28,8 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   const { Content, frontmatter: fm } = page
   const isGrid = fm.layout === "grid"
   const isAbout = fm.layout === "about"
+  const isCommunity = fm.layout === "community"
+  const hideHeader = isAbout || isCommunity
 
   if (isAbout) {
     return (
@@ -44,18 +46,22 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
       initial="hidden"
       animate="show"
     >
-      <motion.h1
-        variants={prefersReduced ? undefined : stagger.item}
-        className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
-      >
-        {fm.title}
-      </motion.h1>
-      {fm.description && (
-        <motion.p variants={prefersReduced ? undefined : stagger.item} className="lead text-pretty">
-          {fm.description}
-        </motion.p>
+      {!hideHeader && (
+        <>
+          <motion.h1
+            variants={prefersReduced ? undefined : stagger.item}
+            className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink text-balance"
+          >
+            {fm.title}
+          </motion.h1>
+          {fm.description && (
+            <motion.p variants={prefersReduced ? undefined : stagger.item} className="lead text-pretty">
+              {fm.description}
+            </motion.p>
+          )}
+        </>
       )}
-      <motion.div variants={prefersReduced ? undefined : stagger.slide} className={isGrid ? "mt-12" : "prose mt-12"}>
+      <motion.div variants={prefersReduced ? undefined : stagger.slide} className={isGrid ? "mt-12" : hideHeader ? "" : "prose mt-12"}>
         <Content />
       </motion.div>
     </motion.div>

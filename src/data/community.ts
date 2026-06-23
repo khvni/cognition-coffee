@@ -14,34 +14,37 @@ export const links = {
   discord: "https://discord.com/invite/GjCYNGChrw",
 }
 
-type FaqLink = { label: string; href: string; external?: boolean }
-
-export const faqs: { question: string; answer: string; links?: FaqLink[] }[] = [
+export const faqs: { question: string; answer: string }[] = [
   {
-    question: "What is the Devin community?",
-    answer: "A global group of builders, hosts, and teams who ship with Devin online and in person.",
-    links: [{ label: "Join Discord", href: links.discord }],
+    question: "How do I find upcoming Devin events?",
+    answer: "Check the Luma calendar for meetups, workshops, and hackathons near you.",
   },
   {
-    question: "How do I join?",
-    answer: "Jump into Discord to meet everyone, or find a local event near you.",
-    links: [
-      { label: "Join Discord", href: links.discord },
-      { label: "Find events", href: links.luma },
-    ],
+    question: "How can I host a Devin event in my city?",
+    answer: "Apply to become an ambassador and we'll help with venue, funding, and swag.",
   },
   {
-    question: "How do I host an event?",
-    answer: "We can help with venue, funding, and swag. Reach out and we will get you started.",
-    links: [{ label: "Get event support", href: links.eventSupport, external: false }],
+    question: "What happens at a Devin meetup?",
+    answer: "Builders show up, ship together, and share what they're making with Devin.",
   },
   {
-    question: "What is the ambassador program?",
-    answer: "Devin Ambassadors lead local communities, host events, and unlock Contributor, Editor, and Correspondent tiers.",
-    links: [{ label: "Apply to lead", href: links.ambassador }],
+    question: "What's the difference between Discord and the site?",
+    answer: "Discord is where the community chats live; this site is the public home for events and resources.",
+  },
+  {
+    question: "What does a Devin Ambassador do?",
+    answer: "Ambassadors host local events, create content, and move up through Contributor, Editor, and Correspondent tiers.",
   },
   {
     question: "How is Devin on Campus different?",
-    answer: "Devin on Campus is for student-run university chapters. Ambassadors lead city and regional communities.",
+    answer: "Devin on Campus is for student-run university chapters; ambassadors lead city and regional communities.",
+  },
+  {
+    question: "Can Devin support my hackathon?",
+    answer: "Yes — reach out through event support and we can help with compute, swag, and judging.",
+  },
+  {
+    question: "How do I reach the community team?",
+    answer: "Email community@cognition.ai or message us in Discord.",
   },
 ]

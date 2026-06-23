@@ -1,38 +1,42 @@
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
-type FaqLink = { label: string; href: string; external?: boolean }
+const Chevron: React.FC<{ open: boolean }> = ({ open }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-4 w-4 flex-none text-muted transition-transform duration-200"
+    style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+    aria-hidden="true"
+  >
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+)
 
 type FaqItem = {
   question: string
   answer: string
-  links?: FaqLink[]
 }
 
 export const FAQ: React.FC<{ items: FaqItem[] }> = ({ items }) => {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       {items.map((item, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.05 }}
-          className="overflow-hidden rounded-win bg-panel shadow-card"
-        >
+        <div key={i} className="border-b border-line">
           <button
             type="button"
             onClick={() => setOpen(open === i ? null : i)}
-            className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left font-sans transition-colors hover:bg-canvas active:scale-[0.99]"
+            className="flex w-full items-center justify-between gap-4 py-4 text-left transition-colors hover:text-ink"
             aria-expanded={open === i}
           >
             <span className="text-[0.9375rem] font-medium text-ink [text-wrap:balance]">{item.question}</span>
-            <span className="flex-none text-[0.9375rem] text-muted" aria-hidden="true">
-              {open === i ? "−" : "+"}
-            </span>
+            <Chevron open={open === i} />
           </button>
           <AnimatePresence initial={false}>
             {open === i && (
@@ -43,31 +47,11 @@ export const FAQ: React.FC<{ items: FaqItem[] }> = ({ items }) => {
                 transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                 className="overflow-hidden"
               >
-                <p className="px-4 pb-4 text-[0.9375rem] leading-relaxed text-muted [text-wrap:pretty]">
-                  {item.answer}
-                  {item.links && item.links.length > 0 && (
-                    <span className="ml-1">
-                      {item.links.map((link, idx, links) => (
-                        <React.Fragment key={link.href}>
-                          <a
-                            href={link.href}
-                            target={link.external !== false ? "_blank" : undefined}
-                            rel={link.external !== false ? "noopener" : undefined}
-                            className="text-accent-ink no-underline transition-colors hover:underline"
-                          >
-                            {link.label}
-                          </a>
-                          {idx < links.length - 1 ? " and " : ""}
-                        </React.Fragment>
-                      ))}
-                      .
-                    </span>
-                  )}
-                </p>
+                <p className="pb-4 text-[0.9375rem] leading-relaxed text-muted [text-wrap:pretty]">{item.answer}</p>
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
       ))}
     </div>
   )

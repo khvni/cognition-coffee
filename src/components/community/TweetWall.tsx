@@ -33,7 +33,7 @@ export const TweetWall: FC<{ tweets?: Tweet[] }> = ({ tweets = defaultTweets }) 
   return (
     <motion.div
       ref={ref}
-      className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      className="grid grid-cols-1 gap-4 md:grid-cols-2"
       variants={prefersReduced ? undefined : container}
       initial="hidden"
       animate={isInView ? "show" : "hidden"}
@@ -44,15 +44,27 @@ export const TweetWall: FC<{ tweets?: Tweet[] }> = ({ tweets = defaultTweets }) 
           href={tweet.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group block bg-canvas rounded-win border border-line shadow-card p-5 transition-shadow duration-200 hover:shadow-card-lift"
+          className="tweet-card group block rounded-win border border-line bg-canvas p-5 shadow-card transition-shadow duration-200 hover:shadow-card-lift"
           variants={prefersReduced ? undefined : item}
         >
           <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <p className="text-sm font-medium text-ink truncate">{tweet.author}</p>
-              <p className="text-sm text-muted truncate">{tweet.handle}</p>
+            <div className="flex min-w-0 items-center gap-3">
+              <img
+                src={tweet.avatar}
+                alt={tweet.author}
+                className="size-10 rounded-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.currentTarget
+                  target.style.display = "none"
+                }}
+              />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-ink">{tweet.author}</p>
+                <p className="truncate text-sm text-muted">{tweet.handle}</p>
+              </div>
             </div>
-            <XLogo className="w-4 h-4 flex-shrink-0 text-muted group-hover:text-ink transition-colors" />
+            <XLogo className="h-4 w-4 flex-shrink-0 text-muted transition-colors group-hover:text-ink" />
           </div>
           <p className="mt-3 text-base leading-relaxed text-ink line-clamp-4">{tweet.text}</p>
           {tweet.date && <p className="mt-3 text-xs text-muted">{tweet.date}</p>}
