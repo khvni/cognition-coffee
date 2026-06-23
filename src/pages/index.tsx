@@ -34,11 +34,17 @@ const IndexPage: React.FC = () => (
       </h1>
       <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
       <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
-        Note: this site is best viewed on desktop. :) Cognition Coffee is my take on showing what the Devin community
-        could feel like: a place where builders gather around coffee-shop energy, share what they ship, and help the
-        product get better. The &quot;OS&quot; is a nod to the early-2000s internet cafe, when going online felt like going
-        somewhere. Take a look around and spot all our Easter eggs. Order something off the Menu. If you like what you
-        see, let&apos;s chat about{" "}
+        Note: this site is best viewed on desktop.
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+        Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
+        around the energy of a coffee shop.
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+        The &quot;OS&quot; is a nod to the early-2000s internet cafe, when going online felt like going somewhere.
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+        Look around for Easter eggs. Order something off the Menu. If you like what you see, let&apos;s chat about{" "}
         <a
           href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090"
           target="_blank"
