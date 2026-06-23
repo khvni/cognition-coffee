@@ -75,7 +75,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
 
     if (initial === "os" && !window.localStorage.getItem(BOOT_KEY)) {
       window.localStorage.setItem(BOOT_KEY, "1")
-      setTimeout(() => navigate("/terminal"), 80)
+      setTimeout(() => navigate("/terminal"), 3000)
     }
   }, [send])
 
