@@ -21,7 +21,7 @@ const IndexPage: React.FC = () => (
       <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
         Cognition Coffee
       </h1>
-      <p className="lead [text-wrap:pretty]">{BIO.hook}</p>
+      <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
     </div>
 
     <div className="social-row reveal" style={stagger(1)} aria-label="Social links">

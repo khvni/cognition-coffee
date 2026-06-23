@@ -898,6 +898,40 @@ a.section-heading:hover svg {
   margin-top: 8px;
 }
 
+/* ── Collapsible "What's Included" ─────────────────── */
+
+.lightbox-details {
+  margin: 0;
+}
+.lightbox-details__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.lightbox-details__summary::-webkit-details-marker {
+  display: none;
+}
+.lightbox-details__summary .lightbox-section-heading {
+  margin: 0;
+}
+.lightbox-details__chevron {
+  flex-shrink: 0;
+  color: theme("colors.muted");
+  transition: transform 200ms ease;
+}
+.lightbox-details[open] .lightbox-details__chevron {
+  transform: rotate(180deg);
+}
+.lightbox-details[open] .lightbox-details__summary {
+  margin-bottom: 12px;
+}
+
 .lightbox-options {
   display: flex;
   flex-direction: column;
@@ -1060,7 +1094,7 @@ a.section-heading:hover svg {
   padding: 13px 20px;
   border-radius: 10px;
   border: none;
-  background: theme("colors.ink");
+  background: theme("colors.accent");
   color: theme("colors.canvas");
   font-family: theme("fontFamily.sans");
   font-size: 0.9375rem;
@@ -1072,7 +1106,7 @@ a.section-heading:hover svg {
   transition-timing-function: ease;
 }
 .lightbox-add:hover {
-  background: theme("colors.accent");
+  background: theme("colors.accent-ink");
 }
 .lightbox-add:active {
   transform: scale(0.98);
@@ -1091,7 +1125,7 @@ a.section-heading:hover svg {
   padding: 12px 18px 12px 14px;
   border-radius: 999px;
   border: none;
-  background: theme("colors.ink");
+  background: theme("colors.accent");
   color: theme("colors.canvas");
   font-family: theme("fontFamily.sans");
   font-size: 0.875rem;
@@ -1104,7 +1138,7 @@ a.section-heading:hover svg {
   transition-timing-function: ease;
 }
 .cart-fab:hover {
-  background: theme("colors.accent");
+  background: theme("colors.accent-ink");
   transform: translateY(-1px);
 }
 .cart-fab:active {
@@ -1117,7 +1151,7 @@ a.section-heading:hover svg {
   height: 20px;
   padding: 0 6px;
   border-radius: 999px;
-  background: theme("colors.accent");
+  background: rgba(255, 255, 255, 0.22);
   color: #fff;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1257,7 +1291,7 @@ a.section-heading:hover svg {
   padding: 13px 20px;
   border-radius: 10px;
   border: none;
-  background: theme("colors.ink");
+  background: theme("colors.accent");
   color: theme("colors.canvas");
   font-family: theme("fontFamily.sans");
   font-size: 0.9375rem;
@@ -1266,7 +1300,7 @@ a.section-heading:hover svg {
   transition: background-color 150ms ease;
 }
 .cart-send:hover {
-  background: theme("colors.accent");
+  background: theme("colors.accent-ink");
 }
 .cart-send__count {
   display: grid;
@@ -1275,7 +1309,7 @@ a.section-heading:hover svg {
   height: 22px;
   padding: 0 7px;
   border-radius: 999px;
-  background: theme("colors.accent");
+  background: rgba(255, 255, 255, 0.22);
   color: #fff;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1287,8 +1321,10 @@ a.section-heading:hover svg {
 .cart-toast {
   position: fixed;
   bottom: 88px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: fit-content;
   z-index: 110;
   display: inline-flex;
   align-items: center;

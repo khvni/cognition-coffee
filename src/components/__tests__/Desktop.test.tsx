@@ -84,7 +84,20 @@ describe("Desktop", () => {
     expect(screen.queryByText("Welcome")).not.toBeInTheDocument()
   })
 
-  it("calls open on click (no drag)", () => {
+  it("calls open on double-click (no drag)", () => {
+    render(<Desktop />)
+    const btn = screen.getByRole("button", { name: /Programs/i })
+    const wrapper = btn.parentElement!
+
+    fireEvent.pointerDown(wrapper, { clientX: 100, clientY: 100 })
+    fireEvent.pointerUp(wrapper, { clientX: 100, clientY: 100 })
+    fireEvent.pointerDown(wrapper, { clientX: 100, clientY: 100 })
+    fireEvent.pointerUp(wrapper, { clientX: 100, clientY: 100 })
+
+    expect(mockOpen).toHaveBeenCalledWith("/menu")
+  })
+
+  it("does not open on single click", () => {
     render(<Desktop />)
     const btn = screen.getByRole("button", { name: /Programs/i })
     const wrapper = btn.parentElement!
@@ -92,7 +105,7 @@ describe("Desktop", () => {
     fireEvent.pointerDown(wrapper, { clientX: 100, clientY: 100 })
     fireEvent.pointerUp(wrapper, { clientX: 100, clientY: 100 })
 
-    expect(mockOpen).toHaveBeenCalledWith("/menu")
+    expect(mockOpen).not.toHaveBeenCalled()
   })
 
   it("does not fire click when dragged beyond 4px threshold", () => {

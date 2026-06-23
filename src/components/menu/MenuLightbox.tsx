@@ -107,12 +107,19 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) =>
               <p className="lightbox-desc">{item.description}</p>
 
               <section className="lightbox-section" aria-labelledby="lb-breakdown">
-                <h3 className="lightbox-section-heading" id="lb-breakdown">What's Included</h3>
-                <ol className="lightbox-breakdown">
-                  {item.breakdown.map((step, i) => (
-                    <li key={i}>{step}</li>
-                  ))}
-                </ol>
+                <details className="lightbox-details" open>
+                  <summary className="lightbox-details__summary">
+                    <span className="lightbox-section-heading" id="lb-breakdown">What's Included</span>
+                    <svg className="lightbox-details__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </summary>
+                  <ol className="lightbox-breakdown">
+                    {item.breakdown.map((step, i) => (
+                      <li key={i}>{step}</li>
+                    ))}
+                  </ol>
+                </details>
               </section>
 
               <section className="lightbox-section" aria-labelledby="lb-options">

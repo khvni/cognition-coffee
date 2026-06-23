@@ -6,7 +6,7 @@
 export const BIO = {
   name: "Ali Khani",
   location: "San Francisco Bay Area",
-  hook: "We're brewing the community for the first AI software engineer.",
+  hook: "Brewing community for the first AI software engineer.",
   oneLiner:
     "I'm a community builder. I scaled a national tech nonprofit from one Berkeley club " +
     "to 30+ chapters. I use Devin daily on the Max plan, and I built this site with " +

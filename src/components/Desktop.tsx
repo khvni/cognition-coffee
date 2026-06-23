@@ -94,6 +94,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
   const startMouse = useRef({ x: 0, y: 0 })
   const elRef = useRef<HTMLDivElement>(null)
   const moved = useRef(false)
+  const lastClickTime = useRef(0)
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     if (e.button !== 0) return
@@ -128,7 +129,13 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
       onDragEnd(app.id, nx, ny)
     } else {
       if (elRef.current) elRef.current.style.transform = `translate(${startPos.current.x}px, ${startPos.current.y}px)`
-      onOpen(app.path)
+      const now = Date.now()
+      if (now - lastClickTime.current < 300) {
+        lastClickTime.current = 0
+        onOpen(app.path)
+      } else {
+        lastClickTime.current = now
+      }
     }
   }, [app.id, app.path, onDragEnd, onOpen])
 
