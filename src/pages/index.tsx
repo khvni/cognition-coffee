@@ -44,10 +44,10 @@ const IndexPage: React.FC = () => (
         {sections.map((a, i) => (
           <li
             key={a.id}
-            className="entry-row reveal -mx-3 rounded-lg transition-[background-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-panel hover:shadow-card active:scale-[0.98]"
+            className="entry-row reveal"
             style={stagger(3 + i)}
           >
-            <Link className="entry-link px-3 py-1.5" to={a.path}>
+            <Link className="entry-link py-1.5" to={a.path}>
               <strong>{a.title}</strong>
               <span className="[text-wrap:pretty]">{a.blurb}</span>
             </Link>
