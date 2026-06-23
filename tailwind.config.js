@@ -31,6 +31,7 @@ module.exports = {
         reader: "40rem",
         page: "40rem",
         narrow: "35rem",
+        wide: "72rem",
       },
     },
   },
