@@ -3,6 +3,7 @@ import type { HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { TiptapEditor } from "@/components/editor/Editor"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
+import { MenuEditor } from "@/components/admin/MenuEditor"
 
 interface Post {
   slug: string
@@ -65,12 +66,7 @@ const AdminPage: React.FC = () => {
   const [aboutError, setAboutError] = useState("")
   const [aboutSaved, setAboutSaved] = useState(false)
 
-  const [menuJson, setMenuJson] = useState("")
-  const [menuPreview, setMenuPreview] = useState(false)
-  const [menuSaving, setMenuSaving] = useState(false)
-  const [menuError, setMenuError] = useState("")
-  const [menuSaved, setMenuSaved] = useState(false)
-  const [menuParseError, setMenuParseError] = useState("")
+  const [menuData, setMenuData] = useState<MenuSection[]>([])
 
   const fetchPosts = useCallback(async () => {
     const res = await fetch("/api/posts")
@@ -88,8 +84,7 @@ const AdminPage: React.FC = () => {
   const fetchMenu = useCallback(async () => {
     const res = await fetch("/api/menu")
     if (!res.ok) return
-    const data = await res.json() as MenuSection[]
-    setMenuJson(JSON.stringify(data, null, 2))
+    setMenuData(await res.json() as MenuSection[])
   }, [])
 
   useEffect(() => {
@@ -211,59 +206,20 @@ const AdminPage: React.FC = () => {
   const removeParagraph = (i: number) =>
     setAboutParagraphs((prev) => prev.filter((_, idx) => idx !== i))
 
-  const handleMenuSave = async () => {
-    setMenuSaving(true)
-    setMenuError("")
-    setMenuSaved(false)
-    setMenuParseError("")
-
-    let parsed: MenuSection[]
-    try {
-      parsed = JSON.parse(menuJson) as MenuSection[]
-      if (!Array.isArray(parsed)) throw new Error("Menu must be an array of sections")
-    } catch (e) {
-      setMenuSaving(false)
-      setMenuParseError(e instanceof Error ? e.message : "Invalid JSON")
-      return
-    }
-
+  const handleMenuSave = useCallback(async (data: MenuSection[]): Promise<{ ok: boolean; error?: string; data?: MenuSection[] }> => {
     const res = await fetch("/api/menu", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(parsed),
+      body: JSON.stringify(data),
     })
-
-    setMenuSaving(false)
     if (res.ok) {
-      const data = await res.json() as MenuSection[]
-      setMenuJson(JSON.stringify(data, null, 2))
-      setMenuSaved(true)
-      setTimeout(() => setMenuSaved(false), 2000)
-    } else {
-      const data = await res.json().catch(() => ({ error: "Save failed" }))
-      setMenuError(data.error || "Save failed")
+      const updated = await res.json() as MenuSection[]
+      setMenuData(updated)
+      return { ok: true, data: updated }
     }
-  }
-
-  const validateMenuJson = (value: string) => {
-    setMenuJson(value)
-    try {
-      const parsed = JSON.parse(value) as unknown
-      if (!Array.isArray(parsed)) throw new Error("Menu must be an array of sections")
-      setMenuParseError("")
-    } catch (e) {
-      setMenuParseError(e instanceof Error ? e.message : "Invalid JSON")
-    }
-  }
-
-  const parsedMenu = (() => {
-    try {
-      const parsed = JSON.parse(menuJson) as MenuSection[]
-      return Array.isArray(parsed) ? parsed : []
-    } catch {
-      return []
-    }
-  })()
+    const err = await res.json().catch(() => ({ error: "Save failed" }))
+    return { ok: false, error: err.error || "Save failed" }
+  }, [])
 
   if (!authed) {
     return (
@@ -412,97 +368,7 @@ const AdminPage: React.FC = () => {
   }
 
   if (view === "menu") {
-    return (
-      <div className="mx-auto max-w-reader px-6 py-8">
-        <button onClick={() => setView("list")} className="font-mono text-xs text-muted hover:text-ink">
-          &larr; Back
-        </button>
-        <h1 className="mt-4 text-2xl font-medium text-ink">Edit Menu</h1>
-        <p className="mt-2 text-sm text-muted">
-          Edit menu sections, items, and options as JSON. Preview validates the structure before saving.
-        </p>
-
-        <div className="mt-6 flex gap-2">
-          <button
-            onClick={() => setMenuPreview(false)}
-            className={`rounded border border-line px-3 py-1.5 font-mono text-xs ${!menuPreview ? "bg-ink text-canvas" : "text-muted hover:text-ink"}`}
-          >
-            JSON
-          </button>
-          <button
-            onClick={() => setMenuPreview(true)}
-            className={`rounded border border-line px-3 py-1.5 font-mono text-xs ${menuPreview ? "bg-ink text-canvas" : "text-muted hover:text-ink"}`}
-          >
-            Preview
-          </button>
-        </div>
-
-        {menuPreview ? (
-          <div className="mt-6 space-y-8">
-            {parsedMenu.length === 0 ? (
-              <p className="text-muted">No valid menu data to preview.</p>
-            ) : (
-              parsedMenu.map((section) => (
-                <div key={section.id}>
-                  <h2 className="text-xl font-medium text-ink">{section.title}</h2>
-                  <p className="text-sm text-muted">{section.subtitle}</p>
-                  <ul className="mt-4 space-y-4">
-                    {section.items.map((item) => (
-                      <li key={item.id} className="rounded border border-line p-4">
-                        <p className="font-medium text-ink">{item.name}</p>
-                        <p className="text-sm text-muted">{item.subcaption}</p>
-                        <p className="mt-2 text-sm text-ink">{item.description}</p>
-                        {item.breakdown.length > 0 && (
-                          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
-                            {item.breakdown.map((b, i) => (
-                              <li key={i}>{b}</li>
-                            ))}
-                          </ul>
-                        )}
-                        {item.orderingOptions.length > 0 && (
-                          <div className="mt-3 space-y-2">
-                            {item.orderingOptions.map((opt, i) => (
-                              <div key={i}>
-                                <p className="text-xs font-mono text-muted">
-                                  {opt.label} {opt.multi ? "(multi)" : ""}
-                                </p>
-                                <p className="text-sm text-ink">{opt.choices.join(" · ")}</p>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            )}
-          </div>
-        ) : (
-          <div className="mt-6">
-            <textarea
-              value={menuJson}
-              onChange={(e) => validateMenuJson(e.target.value)}
-              rows={24}
-              className="w-full resize-y rounded border border-line bg-surface px-3 py-2 font-mono text-sm text-ink placeholder:text-muted focus:border-accent focus:outline-none"
-            />
-            {menuParseError && <p className="mt-2 text-sm text-red-600">{menuParseError}</p>}
-          </div>
-        )}
-
-        <div className="mt-6 flex items-center gap-4">
-          <button
-            onClick={handleMenuSave}
-            disabled={menuSaving || !!menuParseError}
-            className="rounded bg-ink px-4 py-2 font-mono text-sm text-canvas hover:bg-accent-ink disabled:opacity-50"
-          >
-            {menuSaving ? "Saving…" : "Save Menu"}
-          </button>
-          {menuSaved && <p className="text-sm text-green-600">Saved.</p>}
-        </div>
-        {menuError && <p className="mt-4 text-sm text-red-600">{menuError}</p>}
-      </div>
-    )
+    return <MenuEditor data={menuData} onSave={handleMenuSave} onBack={() => setView("list")} />
   }
 
   return (
