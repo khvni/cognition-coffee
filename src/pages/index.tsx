@@ -16,14 +16,14 @@ const stagger = (i: number): React.CSSProperties =>
   ({ "--stagger": i } as React.CSSProperties)
 
 const IndexPage: React.FC = () => (
-  <div className="page-column">
+  <div className="page-column pt-16 sm:pt-20">
     <div className="reveal" style={stagger(0)}>
       <img
         src="/devindesktop.jpg"
         alt="Devin's desktop - the otter hard at work"
         width={800}
         height={600}
-        className="mb-6 w-full rounded-win border border-line shadow-card"
+        className="mx-auto mb-6 w-full max-w-lg rounded-win border border-line shadow-card"
         loading="eager"
       />
     </div>

@@ -52,10 +52,27 @@ const ICON_GAP = 88
 type IconPos = { x: number; y: number }
 type IconPositions = Record<string, IconPos>
 
+/** Offset so the scott icon lands in the center-right desktop area. */
+const SCOTT_OFFSET_X = 620
+const SCOTT_OFFSET_Y = 200
+
+function randomScottPos(): IconPos {
+  if (typeof window === "undefined") return { x: SCOTT_OFFSET_X, y: SCOTT_OFFSET_Y }
+  const w = window.innerWidth
+  const h = window.innerHeight
+  return {
+    x: Math.round(w * 0.55 + Math.random() * w * 0.22),
+    y: Math.round(h * 0.22 + Math.random() * h * 0.32),
+  }
+}
+
 function defaultPositions(icons: AppDef[]): IconPositions {
   const pos: IconPositions = {}
   icons.forEach((app, i) => {
-    pos[app.id] = { x: 12, y: 12 + i * ICON_GAP }
+    pos[app.id] =
+      app.id === "scott"
+        ? { x: SCOTT_OFFSET_X, y: SCOTT_OFFSET_Y }
+        : { x: 12, y: 12 + i * ICON_GAP }
   })
   return pos
 }
@@ -64,11 +81,10 @@ function loadPositions(icons: AppDef[]): IconPositions {
   if (typeof window === "undefined") return defaultPositions(icons)
   try {
     const raw = window.localStorage.getItem(ICON_STORE_KEY)
-    if (!raw) return defaultPositions(icons)
-    const parsed = JSON.parse(raw) as IconPositions
+    const parsed = raw ? (JSON.parse(raw) as IconPositions) : ({} as IconPositions)
     const defaults = defaultPositions(icons)
     icons.forEach((app) => {
-      if (!parsed[app.id]) parsed[app.id] = defaults[app.id]
+      if (!parsed[app.id]) parsed[app.id] = app.id === "scott" ? randomScottPos() : defaults[app.id]
     })
     return parsed
   } catch {
