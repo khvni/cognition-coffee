@@ -431,15 +431,32 @@ a.section-heading:hover svg {
   }
 }
 
-.reveal {
+.reveal,
+.post-stagger {
   animation: reveal-up 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: calc(var(--stagger, 0) * 100ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .post-stagger {
     animation: none;
   }
+}
+
+/* Back link — small mono link with arrow, used on sub-pages. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: theme("fontFamily.mono");
+  font-size: 0.8125rem;
+  color: theme("colors.muted");
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+.back-link:hover {
+  color: theme("colors.ink");
 }
 
 /* Empty state — muted text. */
@@ -743,6 +760,9 @@ a.section-heading:hover svg {
   position: relative;
   width: 100%;
   max-width: 560px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
   background: theme("colors.canvas");
   border-radius: 14px;
   box-shadow:
@@ -781,7 +801,8 @@ a.section-heading:hover svg {
 
 .lightbox-image {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  flex-shrink: 0;
+  height: 180px;
   overflow: hidden;
   position: relative;
 }
@@ -801,7 +822,7 @@ a.section-heading:hover svg {
 
 .lightbox-body {
   padding: 24px;
-  max-height: calc(85vh - 200px);
+  flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: theme("colors.line") transparent;
@@ -938,11 +959,15 @@ a.section-heading:hover svg {
     align-items: end;
   }
   .lightbox-panel {
-    border-radius: 14px 14px 0 0;
+    max-height: 90vh;
     max-width: 100%;
+    border-radius: 14px 14px 0 0;
+  }
+  .lightbox-image {
+    height: 140px;
   }
   .lightbox-body {
-    max-height: calc(80vh - 160px);
+    flex: 1;
     padding: 20px;
   }
 }

@@ -4,7 +4,7 @@ import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
 
 const fmtDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" })
 
 interface ApiPost {
   slug: string
@@ -16,7 +16,7 @@ interface ApiPost {
 
 const staticPosts = [...blogPosts]
   .filter((p) => !p.frontmatter.draft)
-  .sort((a, b) => a.frontmatter.order - b.frontmatter.order)
+  .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
 
 const BlogIndex: React.FC = () => {
   const [apiPosts, setApiPosts] = useState<ApiPost[]>([])
@@ -30,78 +30,72 @@ const BlogIndex: React.FC = () => {
 
   const apiMap = new Map(apiPosts.map((p) => [p.slug, p]))
 
-  const posts = staticPosts.map((p) => {
-    const api = apiMap.get(p.slug)
-    return {
-      slug: p.slug,
-      title: api?.title ?? p.frontmatter.title,
-      description: api?.excerpt ?? p.frontmatter.description,
-      date: api?.date ?? p.frontmatter.date,
-      category: p.frontmatter.category,
-    }
-  })
+  const posts = staticPosts
+    .map((p) => {
+      const api = apiMap.get(p.slug)
+      return {
+        slug: p.slug,
+        title: api?.title ?? p.frontmatter.title,
+        date: api?.date ?? p.frontmatter.date,
+      }
+    })
+    .sort((a, b) => b.date.localeCompare(a.date))
+
+  const byYear = new Map<number, typeof posts>()
+  for (const post of posts) {
+    const y = new Date(post.date).getFullYear()
+    if (!byYear.has(y)) byYear.set(y, [])
+    byYear.get(y)!.push(post)
+  }
+  const years = [...byYear.keys()].sort((a, b) => b - a)
+
+  let s = 0
 
   return (
     <div className="page-column">
-      <div className="post-stagger" style={{ "--stagger": 0 } as React.CSSProperties}>
-        <h1 className="m-0 mb-4 text-[1.75rem] font-medium leading-tight tracking-tight text-ink" style={{ textWrap: "balance" }}>
-          Field Notes
+      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+        <h1
+          className="m-0 text-[2rem] font-medium leading-tight tracking-tight text-ink"
+          style={{ textWrap: "balance" }}
+        >
+          Blog
         </h1>
       </div>
-      <div className="post-stagger" style={{ "--stagger": 1 } as React.CSSProperties}>
-        <p className="lead" style={{ textWrap: "pretty" }}>
-          Notes on building a developer community for the first AI software engineer.
+      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
+        <p className="lead mt-4" style={{ textWrap: "pretty" }}>
+          Playbooks for building Devin's community.
         </p>
       </div>
 
-      <section className="mt-14 post-stagger" style={{ "--stagger": 2 } as React.CSSProperties} aria-labelledby="posts-heading">
-        <h2 className="section-heading" id="posts-heading">Posts</h2>
-        <ul className="flex flex-col gap-3 m-0 p-0 list-none">
-          {posts.map((post, i) => (
-            <li
-              key={post.slug}
-              className="blog-stagger"
-              style={{ "--stagger": i } as React.CSSProperties}
-            >
-              <Link className="blog-card block no-underline" to={`/blog/${post.slug}`}>
-                <div className="flex items-baseline justify-between gap-4 mb-1">
-                  {post.category && (
-                    <span className="font-mono text-[0.6875rem] uppercase tracking-[0.04em] text-muted">
-                      {post.category}
-                    </span>
-                  )}
-                  {post.date && (
-                    <time
-                      className="font-mono text-[0.75rem] text-muted shrink-0 ml-auto"
-                      style={{ fontVariantNumeric: "tabular-nums" }}
-                    >
+      <div className="mt-14">
+        {years.map((year) => (
+          <section
+            key={year}
+            className="section-block post-stagger"
+            style={{ "--stagger": s++ } as React.CSSProperties}
+          >
+            <h2 className="section-heading">{year}</h2>
+            <ul className="entry-list dated-list">
+              {byYear.get(year)!.map((post) => (
+                <li key={post.slug}>
+                  <Link className="entry-link" to={`/blog/${post.slug}`}>
+                    <strong>{post.title}</strong>
+                    <time style={{ fontVariantNumeric: "tabular-nums" }}>
                       {fmtDate(post.date)}
                     </time>
-                  )}
-                </div>
-                <h3
-                  className="m-0 text-[1.0625rem] font-medium leading-snug text-ink"
-                  style={{ textWrap: "balance" }}
-                >
-                  {post.title}
-                </h3>
-                {post.description && (
-                  <p
-                    className="m-0 mt-1.5 text-[0.9375rem] leading-relaxed text-muted"
-                    style={{ textWrap: "pretty" }}
-                  >
-                    {post.description}
-                  </p>
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
     </div>
   )
 }
 
 export default BlogIndex
 
-export const Head: HeadFC = () => <SEO title="Blog" description="Field notes on community and agents." />
+export const Head: HeadFC = () => (
+  <SEO title="Blog" description="Playbooks for building Devin's community." />
+)

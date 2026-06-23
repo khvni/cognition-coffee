@@ -5,7 +5,7 @@ import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 export const frontmatter = {
   title: "Brewing Community: What I'd Build for Cognition in 90 Days",
   description:
-    "A concrete first-quarter plan for Cognition's developer community: curriculum, a global meetup network, and an ambassador flywheel.",
+    "A concrete first-quarter plan for Cognition's developer community: curriculum, a global meetup network, and an ambassador program.",
   date: "2026-06-13",
   category: "The Proposal",
   order: 1,
@@ -15,7 +15,7 @@ export const frontmatter = {
 const Content: FC = () => (
   <>
     <p>
-      Cognition built the first AI software engineer. That alone changes how people write code. But a product this important doesn't reach its potential through feature releases and documentation pages. It reaches it through a community that teaches the world how to use it.
+      Cognition built Devin. That alone changes how people write code. But a product this important doesn't reach its potential through feature releases and documentation pages. It reaches it through a community that teaches the world how to use it.
     </p>
     <p>
       Right now, Cognition is early in that work. Cursor already runs events in over 200 cities. They have ambassadors, a content machine, and a grassroots identity built around coffee shops and local builders. Cognition has Devin, a Discord, and a Luma calendar. That's a starting position, not a moat.
@@ -54,14 +54,14 @@ const Content: FC = () => (
     <h2>The 90-day plan</h2>
     <h3>Days 0–30: The House Roast, curriculum and certification</h3>
     <p>
-      The first priority is giving people a structured path from "curious about Devin" to "confident Devin orchestrator." Three tracks:
+      The first priority is giving people a structured path from "curious about Devin" to "confident Devin power user." Three tracks:
     </p>
     <ul>
       <li>
-        <strong>Devin 101</strong>: the first agent workflow, the orchestrator mindset, PR review basics. The on-ramp.
+        <strong>Devin 101</strong>: the first agent workflow, the power-user mindset, PR review basics. The on-ramp.
       </li>
       <li>
-        <strong>Advanced Workflows</strong>: multi-repo orchestration, Devin fleets, MCP integrations, playbook authoring, the non-coding use cases most tutorials skip.
+        <strong>Advanced Workflows</strong>: multi-repo workflows, Devin fleets, MCP integrations, playbook authoring, the non-coding use cases most tutorials skip.
       </li>
       <li>
         <strong>Devin for Teams</strong>: rollout patterns, knowledge onboarding, enterprise governance. The content that sells seats.
@@ -104,7 +104,7 @@ const Content: FC = () => (
           <strong>Photo checklist</strong>: the 5 shots that make great social proof
         </li>
         <li>
-          <strong>Host leaderboard</strong>: recognition and perks that turn great organizers into a flywheel
+          <strong>Host leaderboard</strong>: recognition and perks that turn great organizers into hosts who recruit the next round
         </li>
       </ul>
     </ProseWaxFigure>

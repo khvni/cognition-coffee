@@ -52,7 +52,7 @@ const Content: FC = () => (
       Quora gave me the marketing instinct. It taught me how to communicate — not just through writing, but across every medium I'd later use: in-person pitches, emails, blog posts, presentations, technical guides. The underlying skill is the same. You're always transmitting a message. The question is whether it arrives intact and leaves the receiver hungry for more.
     </p>
     <p>
-      The work I later did with MTC ran on exactly that instinct. Evangelizing a mission to a small, skeptical group of students. Building a great institution is like a good game of telephone: the message stays clear through every layer because the original signal was sharp enough to survive the journey. You hook them with something they can't forget. You cook a dish whose first bite makes them want another.
+      The work I later did with MTC ran on exactly that instinct. Selling a mission to a small, skeptical group of students. Building a great institution is like a good game of telephone: the message stays clear through every layer because the original signal was sharp enough to survive the journey. You hook them with something they can't forget. You cook a dish whose first bite makes them want another.
     </p>
     <p>
       I don't touch the account anymore. Some of what's there is as embarrassing as I warned you. But it also has seven million views from strangers who owed me nothing — and that number doesn't lie.

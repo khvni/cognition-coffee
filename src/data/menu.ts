@@ -132,7 +132,7 @@ export const MENU_SECTIONS: MenuSection[] = [
         image: "/menu/hack-with-devin.jpg",
         subcaption: "Sponsor and run hackathons where Devin is the secret weapon — from campus hacks to citywide buildathons",
         description:
-          "Hackathons where every participant gets Devin Pro access and learns to orchestrate AI-native development. From intimate campus hacks to 500+ person citywide buildathons with industry judges and real prizes.",
+          "Hackathons where every participant gets Devin Pro access and learns to direct Devin on real builds. From intimate campus hacks to 500+ person citywide buildathons with industry judges and real prizes.",
         breakdown: [
           "Partner with campus orgs or tech communities for venue + audience",
           "Provision Devin Pro for all participants (time-boxed access)",
@@ -256,11 +256,11 @@ export const MENU_SECTIONS: MenuSection[] = [
         image: "/menu/workshop-series.jpg",
         subcaption: "Virtual events with Cognition engineers + IRL sessions led by student ambassadors teaching SE fundamentals with Devin",
         description:
-          "A dual-track curriculum: virtual workshops hosted by Cognition engineers covering advanced Devin orchestration, plus an IRL track with a set curriculum that student ambassadors teach on campus — software engineering fundamentals where Devin is the teaching assistant.",
+          "A dual-track curriculum: virtual workshops hosted by Cognition engineers covering advanced Devin workflows, plus an IRL track with a set curriculum that student ambassadors teach on campus — software engineering fundamentals where Devin is the teaching assistant.",
         breakdown: [
           "Virtual track: bi-weekly 60-min sessions with Cognition engineers (recorded)",
           "IRL track: semester-long curriculum (8-10 sessions) taught by ambassadors",
-          "Curriculum covers: first agent workflow, multi-repo orchestration, testing with Devin, deployment automation",
+          "Curriculum covers: first agent workflow, multi-repo workflows, testing with Devin, deployment automation",
           "All materials built with Devin (meta: using the tool to teach the tool)",
           "Completion certificates + portfolio projects for students",
         ],
@@ -325,7 +325,7 @@ export const MENU_SECTIONS: MenuSection[] = [
         breakdown: [
           "Beginner: 'Hello Devin' → first PR, first automation, first playbook",
           "Intermediate: multi-repo projects, testing strategies, CI/CD integration",
-          "Advanced: fleet orchestration, MCP servers, enterprise governance",
+          "Advanced: fleet workflows, MCP servers, enterprise governance",
           "Each tutorial: 15-min video + written companion + playground exercise",
           "Monthly releases tied to product launches and feature drops",
         ],

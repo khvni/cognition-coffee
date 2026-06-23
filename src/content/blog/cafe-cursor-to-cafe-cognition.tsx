@@ -68,7 +68,7 @@ const Content: FC = () => (
         <strong>Chapters</strong> generate energy <em>and</em> local ownership. Growth becomes exponential: each chapter runs its own events, recruits its own members, and adapts to its own city.
       </p>
       <p>
-        <strong>The unlock:</strong> a shared playbook (meetup-in-a-box) plus tiered leadership (national, regional, local) that lets local leaders operate autonomously while staying aligned with the brand.
+        <strong>The key:</strong> a shared playbook (meetup-in-a-box) plus tiered leadership (national, regional, local) that lets local leaders operate autonomously while staying aligned with the brand.
       </p>
     </ProseWaxFigure>
     <h2>The Cafe Cognition playbook</h2>

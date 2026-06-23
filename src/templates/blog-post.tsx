@@ -16,6 +16,9 @@ interface ApiPost {
 const fmtDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
 
+const fmtDateShort = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+
 const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const { slug } = pageContext as PageContext
   const post = blogPosts.find((p) => p.slug === slug)
@@ -37,6 +40,11 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const description = apiPost?.excerpt ?? fm.description
   const date = apiPost?.date ?? fm.date
 
+  const others = blogPosts
+    .filter((p) => p.slug !== slug && !p.frontmatter.draft)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3)
+
   let s = 0
 
   return (
@@ -51,13 +59,16 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
       </div>
 
       <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
-        {fm.category && (
-          <span className="inline-block mt-6 font-mono text-[0.6875rem] uppercase tracking-[0.04em] text-muted">
-            {fm.category}
-          </span>
+        {date && (
+          <p
+            className="mt-8 m-0 font-mono text-[0.75rem] text-muted"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {fmtDate(date)}
+          </p>
         )}
         <h1
-          className="mt-3 text-[1.75rem] font-medium leading-tight tracking-tight text-ink"
+          className="mt-3 text-[2rem] font-medium leading-tight tracking-tight text-ink"
           style={{ textWrap: "balance" }}
         >
           {title}
@@ -66,19 +77,14 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
 
       {description && (
         <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
-          <p className="mt-3 text-[1.125rem] leading-relaxed text-muted" style={{ textWrap: "pretty" }}>
+          <p
+            className="mt-4 text-[1.125rem] leading-relaxed text-muted"
+            style={{ textWrap: "pretty" }}
+          >
             {description}
           </p>
         </div>
       )}
-
-      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
-        {date && (
-          <p className="mt-2 font-mono text-[0.75rem] text-muted" style={{ fontVariantNumeric: "tabular-nums" }}>
-            {fmtDate(date)}
-          </p>
-        )}
-      </div>
 
       <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
         <div className="prose mt-10" style={{ textWrap: "pretty" }}>
@@ -89,6 +95,25 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
           )}
         </div>
       </div>
+
+      {others.length > 0 && (
+        <div className="post-stagger mt-20" style={{ "--stagger": s++ } as React.CSSProperties}>
+          <div className="h-[3px] w-5 rounded bg-accent" />
+          <h2 className="section-heading mt-6">Read next</h2>
+          <ul className="entry-list dated-list">
+            {others.map((p) => (
+              <li key={p.slug}>
+                <Link className="entry-link" to={`/blog/${p.slug}`}>
+                  <strong>{p.frontmatter.title}</strong>
+                  <time style={{ fontVariantNumeric: "tabular-nums" }}>
+                    {fmtDateShort(p.frontmatter.date)}
+                  </time>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
