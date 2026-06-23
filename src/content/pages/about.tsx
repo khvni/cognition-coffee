@@ -8,6 +8,17 @@ export const frontmatter = {
   layout: "about" as const,
 }
 
+export const defaultAboutParagraphs: string[] = [
+  "I'm a community builder in the Bay Area. I work on go-to-market at Keysight, finding ways to put AI to work across the business.",
+  "Before that I founded MTC, a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My background runs through software, security, data, and AI at startups and public companies.",
+  "I built this site with Devin to prove what a community for the first AI software engineer could be.",
+]
+
+export interface AboutContent {
+  description: string
+  paragraphs: string[]
+}
+
 const socialIcons: Record<string, React.ReactNode> = {
   X: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>,
   GitHub: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.11 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .3z"/></svg>,
@@ -17,14 +28,14 @@ const socialIcons: Record<string, React.ReactNode> = {
 const stagger = (i: number): React.CSSProperties =>
   ({ "--stagger": i } as React.CSSProperties)
 
-const Content: FC = () => (
+const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
+  const paragraphs = about?.paragraphs?.length ? about.paragraphs : defaultAboutParagraphs
+  return (
   <>
     <img className="avatar reveal" src="/avatar-ali-khani.png" alt="Ali Khani" width={56} height={56} style={stagger(0)} />
 
     <div className="intro-copy reveal" style={stagger(1)}>
-      <p>I'm a community builder in the Bay Area. I work on go-to-market at Keysight, finding ways to put AI to work across the business.</p>
-      <p>Before that I founded MTC, a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My background runs through software, security, data, and AI at startups and public companies.</p>
-      <p>I built this site with Devin to prove what a community for the first AI software engineer could be.</p>
+      {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
     </div>
 
     <div className="social-row reveal" style={stagger(2)} aria-label="Social links">
@@ -65,6 +76,7 @@ const Content: FC = () => (
       </ul>
     </section>
   </>
-)
+  )
+}
 
 export default Content

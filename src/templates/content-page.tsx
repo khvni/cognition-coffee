@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { type HeadProps, type PageProps } from "gatsby"
 import { motion, useReducedMotion } from "framer-motion"
 import { SEO } from "@/components/SEO"
 import { contentPages } from "@/content/pages"
 import { stagger } from "@/lib/motion"
+import type { AboutContent } from "@/content/pages/about"
 
 type PageContext = { slug: string }
 
@@ -11,6 +12,18 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   const { slug } = pageContext as PageContext
   const page = contentPages.find((p) => p.slug === slug)
   const prefersReduced = useReducedMotion()
+  const [about, setAbout] = useState<AboutContent | null>(null)
+
+  useEffect(() => {
+    if (page?.frontmatter.layout !== "about") return
+    const controller = new AbortController()
+    fetch("/api/about", { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setAbout)
+      .catch(() => setAbout(null))
+    return () => controller.abort()
+  }, [page?.frontmatter.layout])
+
   if (!page) return null
   const { Content, frontmatter: fm } = page
   const isGrid = fm.layout === "grid"
@@ -19,7 +32,7 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   if (isAbout) {
     return (
       <div className="page-column about-page">
-        <Content />
+        <Content about={about} />
       </div>
     )
   }
