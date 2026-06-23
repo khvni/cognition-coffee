@@ -238,7 +238,7 @@ export const Terminal: React.FC = () => {
       className="flex h-full flex-col bg-[#1a1a1a] font-mono text-[13px] leading-relaxed text-[#e0e0e0]"
       onClick={() => inputRef.current?.focus()}
     >
-      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto p-3">
+      <div ref={scrollRef} className="win-scroll min-h-0 flex-1 overflow-y-auto overflow-x-auto p-3">
         {lines.map((line) => (
           <div
             key={line.id}

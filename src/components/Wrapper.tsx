@@ -89,7 +89,7 @@ const SiteFooter: React.FC = () => (
             Built with Devin. Made for builders.
           </p>
         </div>
-        <div className="flex gap-12">
+        <div className="flex gap-6 sm:gap-12">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-wide text-muted">Pages</p>
             <ul className="mt-3 space-y-1">
@@ -128,7 +128,7 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
   if (experience === "site") {
     return (
       <ErrorBoundary>
-        <div className="flex min-h-screen flex-col bg-canvas text-ink">
+        <div className="site-shell flex min-h-screen flex-col bg-canvas text-ink">
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-canvas"

@@ -10,6 +10,7 @@
 
 :root {
   color-scheme: light;
+  --site-nav-h: 0px;
 }
 
 html,
@@ -107,11 +108,24 @@ body {
   font-style: italic;
   color: theme("colors.muted");
 }
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
 .prose table {
   width: 100%;
   border-collapse: collapse;
   font-family: theme("fontFamily.sans");
   font-size: 0.92rem;
+}
+.prose-table-wrap {
+  overflow-x: auto;
+}
+@media (max-width: 700px) {
+  .prose-content table {
+    display: block;
+    overflow-x: auto;
+  }
 }
 .prose thead th {
   font-family: theme("fontFamily.mono");
@@ -164,6 +178,15 @@ body {
    Single-column, narrow measure, section blocks with small muted
    headings and hover-underline link rows. No bento, no card grids.
    Mirrors the alikhani.co personal-site layout. */
+
+.site-shell {
+  --site-nav-h: 61px;
+}
+@media (max-width: 700px) {
+  .site-shell {
+    --site-nav-h: 65px;
+  }
+}
 
 .page-column {
   max-width: theme("maxWidth.page");
@@ -415,8 +438,8 @@ a.section-heading:hover svg {
     margin: 32px 0 48px;
   }
   .social-row a {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
   }
 }
 
@@ -449,6 +472,7 @@ a.section-heading:hover svg {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 6px 0;
   font-family: theme("fontFamily.mono");
   font-size: 0.8125rem;
   color: theme("colors.muted");
@@ -574,7 +598,7 @@ a.section-heading:hover svg {
 
 .menu-nav {
   position: sticky;
-  top: 0;
+  top: var(--site-nav-h, 0px);
   z-index: 20;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
@@ -631,7 +655,7 @@ a.section-heading:hover svg {
 
 .menu-section {
   padding-top: 48px;
-  scroll-margin-top: 56px;
+  scroll-margin-top: calc(var(--site-nav-h, 0px) + 56px);
 }
 .menu-section + .menu-section {
   margin-top: 16px;
@@ -948,6 +972,9 @@ a.section-heading:hover svg {
     margin: 0 -16px;
     padding: 0 16px;
   }
+  .menu-nav__pill {
+    padding: 10px 16px;
+  }
   .menu-section {
     padding-top: 36px;
   }
@@ -963,11 +990,19 @@ a.section-heading:hover svg {
     max-width: 100%;
     border-radius: 14px 14px 0 0;
   }
+  .lightbox-close {
+    width: 44px;
+    height: 44px;
+  }
   .lightbox-image {
     height: 140px;
   }
   .lightbox-body {
     flex: 1;
     padding: 20px;
+  }
+  .lightbox-radio {
+    padding: 12px 12px;
+    min-height: 44px;
   }
 }

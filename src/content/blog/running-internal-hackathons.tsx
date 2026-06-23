@@ -49,6 +49,7 @@ const Content: FC = () => (
     <p>
       For AI hackathons, the output that lasts is not the demo deck. It is people climbing a capability curve, and the payoff shows up months later.
     </p>
+    <div className="prose-table-wrap">
     <table>
       <thead>
         <tr>
@@ -84,6 +85,7 @@ const Content: FC = () => (
         </tr>
       </tbody>
     </table>
+    </div>
     <p>
       Design for moving the broad middle from L1 to L2: one person, one repeatable workflow. Expect only 10-20% of the org to build agents themselves. Everyone else wins when they can install what builders ship.
     </p>
@@ -122,6 +124,7 @@ const Content: FC = () => (
       </strong>{" "}
       is the more copyable AI case. It started with one part-time PM, little budget, and a culture where people could lend time without a mandate.
     </p>
+    <div className="prose-table-wrap">
     <table>
       <thead>
         <tr>
@@ -144,6 +147,7 @@ const Content: FC = () => (
         </tr>
       </tbody>
     </table>
+    </div>
     <p>
       The lesson that holds at any scale: investment followed results at Ramp, not the reverse. Start before the perfect budget, make L1 frictionless, and plan to replace your tools every few months. Problems stay; vendors and models churn.
     </p>
