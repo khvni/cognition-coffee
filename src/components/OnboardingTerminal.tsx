@@ -11,13 +11,13 @@ const CHAR_MS = 28
 const LINE_PAUSE = 400
 
 const GLOW = {
-  textShadow: "0 0 8px rgba(49,124,255,0.6), 0 0 20px rgba(49,124,255,0.25)",
+  textShadow: "0 0 8px rgb(var(--accent-rgb) / 0.6), 0 0 20px rgb(var(--accent-rgb) / 0.25)",
 } as const
 
 const Crt: React.FC = () => {
   const reduce = useReducedMotion()
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[52] overflow-hidden">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[10001] overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
@@ -116,11 +116,11 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
   if (!step) return null
 
   return (
-    <div className="fixed inset-0 z-[51] flex items-center justify-center bg-[#0a0a0a]">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-[#0a0a0a]">
       <Crt />
       <div
         ref={scrollRef}
-        className="relative z-[53] h-full w-full max-w-2xl overflow-y-auto px-6 py-16 sm:px-10 sm:py-24"
+        className="relative z-[10002] h-full w-full max-w-2xl overflow-y-auto px-6 py-16 sm:px-10 sm:py-24"
       >
         <pre
           className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-accent"
@@ -175,7 +175,7 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
       <button
         type="button"
         onClick={onComplete}
-        className="fixed bottom-6 right-6 z-[54] cursor-pointer font-mono text-xs text-muted transition-colors hover:text-accent"
+        className="fixed bottom-6 right-6 z-[10003] cursor-pointer font-mono text-xs text-muted transition-colors hover:text-accent"
       >
         Skip
       </button>
