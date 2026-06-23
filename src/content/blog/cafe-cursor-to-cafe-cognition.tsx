@@ -3,7 +3,7 @@ import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 
 export const frontmatter = {
-  title: "From Cafe Cursor to Cafe Cognition: A Field Guide to a Global Meetup Network",
+  title: "From Cafe Cursor to Cafe Cognition",
   description:
     "Cursor turned coffee shops into a 200-city community engine. Here's the playbook for doing it for Devin, and where a sustained chapter network beats pop-ups.",
   date: "2026-06-11",
@@ -100,10 +100,10 @@ const Content: FC = () => (
     <h3>The host leaderboard</h3>
     <p>Good organizers are rare. When you find them, you keep them.</p>
     <p>
-      The host leaderboard tracks events run, attendees reached, and community feedback. Top hosts earn perks: swag drops, Devin credits, co-branded content, and a direct line to the DevRel team. The leaderboard isn't gamification for its own sake. It's a recognition system that turns great hosts into repeat hosts.
+      The host leaderboard tracks events run, attendees reached, and community feedback. Top hosts earn perks: swag drops, Devin credits, co-branded content, and a direct line to the DevRel team. The leaderboard is a recognition system that turns great hosts into repeat hosts.
     </p>
     <ProsePullQuote>
-      The goal isn't more events. It's more <em>hosts</em>, people with local context, local networks, and the motivation to keep showing up.
+      The goal is more <em>hosts</em>, people with local context, local networks, and the motivation to keep showing up.
     </ProsePullQuote>
     <h2>The three-tier chapter model</h2>
     <p>
@@ -111,7 +111,7 @@ const Content: FC = () => (
     </p>
     <h3>National (Cognition DevRel)</h3>
     <p>
-      Sets the brand, maintains the kit, runs the leaderboard, and coordinates Devin Days (the quarterly flagships). Small team, focused on helping others run events — not on running every event itself.
+      Sets the brand, maintains the kit, runs the leaderboard, and coordinates Devin Days (the quarterly flagships). Small team, focused on helping others run events, not on running every event itself.
     </p>
     <h3>Regional (Champions)</h3>
     <p>
@@ -172,14 +172,14 @@ const Content: FC = () => (
       </li>
     </ul>
     <ProsePullQuote>
-      The number that matters most isn't how many people came. It's how many hosts ran a second event.
+      The number that matters most is how many hosts ran a second event.
     </ProsePullQuote>
     <p>
       These numbers track something deeper: whether the community has local ownership. If hosts keep hosting and chapters keep growing without the central team pushing, the engine is working.
     </p>
     <hr />
     <p>
-      This is the playbook. It's not theoretical. It's the same architecture that scaled MTC, adapted for a product with global reach and a community that's ready to be built.
+      This is the playbook. The same architecture that scaled MTC, adapted for a product with global reach and a community that's ready to be built.
     </p>
     <p>
       The next step is{" "}

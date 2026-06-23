@@ -28,7 +28,7 @@ const Content: FC = () => (
     </ProsePullQuote>
     <h2>The case for starting now</h2>
     <p>
-      Devin is a new kind of tool. It's not a copilot that autocompletes your next line. It's an autonomous engineer you direct at problems. That takes a different way of thinking, and right now, most developers are still figuring it out by trial and error.
+      Devin is a new kind of tool. You don't autocomplete your next line with it. You direct an autonomous engineer at problems. That takes a different way of thinking, and right now, most developers are still figuring it out by trial and error.
     </p>
     <p>
       Cursor understood early that community speeds adoption. Their Cafe Cursor format (take over a coffee shop, bring credits and good energy, let people build together) created warmth at scale. But warmth without structure doesn't compound. Events end. Attendees scatter. The energy fades until the next one.
@@ -81,7 +81,7 @@ const Content: FC = () => (
       With a curriculum in place, the next step is getting people together. Cafe Cognition is the meetup format: pop-ups in coffee shops, Devin credits, live demos, and local builders sharing what they've built.
     </p>
     <p>
-      But what sets this apart from a one-off event series is the <strong>meetup-in-a-box kit</strong>—everything a host needs in one package: run-of-show, slide deck, live-demo script, swag templates, and a photo checklist. Make it easy enough that a motivated developer in Bangalore or Berlin can run a Cafe Cognition with no coordination overhead.
+      But what sets this apart from a one-off event series is the <strong>meetup-in-a-box kit</strong>: everything a host needs in one package, run-of-show, slide deck, live-demo script, swag templates, and a photo checklist. Make it easy enough that a motivated developer in Bangalore or Berlin can run a Cafe Cognition with no coordination overhead.
     </p>
     <p>
       Pilot in SF and NYC first. Measure repeat attendance, builds shipped, and host satisfaction, not just headcount.
@@ -125,7 +125,7 @@ const Content: FC = () => (
       </li>
     </ul>
     <p>
-      The key piece is the feedback loop: a weekly Devin Office Hours where ambassadors surface real problems users hit, which feeds into community playbooks and back to the product team. This isn't a megaphone. It's a two-way channel.
+      The key piece is the feedback loop: a weekly Devin Office Hours where ambassadors surface real problems users hit, which feeds into community playbooks and back to the product team. The channel runs both ways.
     </p>
     <h2>Why me</h2>
     <p>
@@ -148,7 +148,7 @@ const Content: FC = () => (
     </ProsePullQuote>
     <h2>Let's talk</h2>
     <p>
-      This isn't a manifesto. It's a working plan, and an open invitation to compare notes.
+      This is a working plan, and an open invitation to compare notes.
     </p>
     <p>
       The programs are sequenced. The proof points are real. The community playbook is battle-tested. And the first deliverable (this site, built with the product it's about) already exists.

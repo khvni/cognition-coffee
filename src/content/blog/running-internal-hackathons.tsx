@@ -4,7 +4,7 @@ import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 export const frontmatter = {
   title: "How to run an internal hackathon that actually goes somewhere",
   description:
-    "Most corporate hackathons produce a weekend of energy and a graveyard of demos. The ones that stick do boring work up front, and even more boring work after the demos. This guide is that work.",
+    "I organized a hackathon for GTM teams and wrote up what I learned. The lessons that held up are in this guide.",
   date: "2026-06-11",
   category: "Field Notes",
   order: 5,
@@ -14,7 +14,7 @@ export const frontmatter = {
 const Content: FC = () => (
   <>
     <p>
-      Most corporate hackathons produce a weekend of energy and a graveyard of demos. The ones that stick spend organizer time on two boring things: clarity before, and a funded path after. Here is that work.
+      Most corporate hackathons produce a weekend of energy and a graveyard of demos. The ones that stick spend organizer time on two boring things: clarity before, and a funded path after.
     </p>
     <h2>1. The honest baseline</h2>
     <p>
