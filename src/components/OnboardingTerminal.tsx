@@ -55,8 +55,10 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
   const [charIdx, setCharIdx] = useState(0)
   const [doneTyping, setDoneTyping] = useState(false)
   const [showChoices, setShowChoices] = useState(false)
+  const [inputVal, setInputVal] = useState("")
   const scrollRef = useRef<HTMLDivElement>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const step = steps.find((s) => s.id === stepId) ?? steps[0]
   const lines = step?.lines ?? []
@@ -111,7 +113,21 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
     setCharIdx(0)
     setDoneTyping(false)
     setShowChoices(false)
+    setInputVal("")
   }, [clearTimer])
+
+  useEffect(() => {
+    if (showChoices) inputRef.current?.focus()
+  }, [showChoices])
+
+  const handleInputSubmit = useCallback(() => {
+    const val = inputVal.trim().toLowerCase()
+    if (!val || !step?.choices) return
+    const match = step.choices.find((c) =>
+      c.label.toLowerCase().startsWith(val)
+    )
+    if (match) goTo(match.next)
+  }, [inputVal, step, goTo])
 
   if (!step) return null
 
@@ -120,7 +136,7 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
       <Crt />
       <div
         ref={scrollRef}
-        className="relative z-[10002] h-full w-full max-w-2xl overflow-y-auto px-6 py-16 sm:px-10 sm:py-24"
+        className="relative z-[10002] h-full w-full max-w-2xl overflow-y-auto px-6 py-10 sm:px-10 sm:py-24"
       >
         <pre
           className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-accent"
@@ -133,22 +149,39 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
         <AnimatePresence>
           {showChoices && !step.final && step.choices && (
             <motion.div
-              className="mt-8 flex flex-wrap gap-3"
+              className="mt-8 space-y-4"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
-              {step.choices.map((c) => (
-                <button
-                  key={c.next}
-                  type="button"
-                  onClick={() => goTo(c.next)}
-                  className="cursor-pointer rounded border border-accent/40 px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
-                  style={GLOW}
-                >
-                  {c.label}
-                </button>
-              ))}
+              <div className="flex flex-wrap gap-3">
+                {step.choices.map((c) => (
+                  <button
+                    key={c.next}
+                    type="button"
+                    onClick={() => goTo(c.next)}
+                    className="cursor-pointer rounded border border-accent/40 px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
+                    style={GLOW}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
+                <span aria-hidden="true">&gt;</span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputVal}
+                  onChange={(e) => setInputVal(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleInputSubmit() }}
+                  className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
+                  placeholder="type a choice"
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                />
+              </div>
             </motion.div>
           )}
 
