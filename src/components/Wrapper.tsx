@@ -30,7 +30,7 @@ const SiteNav: React.FC = () => {
             <li key={a.id}>
               <Link
                 to={a.path}
-                className="flex min-h-[40px] items-center rounded-md px-3 text-[14px] text-muted transition-colors hover:bg-panel hover:text-ink"
+                className="flex min-h-[40px] items-center rounded-md px-3 text-[14px] text-ink/70 transition-colors hover:bg-panel hover:text-ink"
                 activeClassName="bg-panel text-ink"
               >
                 {a.title}
@@ -45,7 +45,7 @@ const SiteNav: React.FC = () => {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
-            className="grid size-11 place-items-center rounded-md text-muted transition-colors hover:bg-panel hover:text-ink sm:hidden"
+            className="grid size-11 place-items-center rounded-md text-ink/70 transition-colors hover:bg-panel hover:text-ink sm:hidden"
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               {menuOpen
@@ -62,7 +62,7 @@ const SiteNav: React.FC = () => {
               <Link
                 to={a.path}
                 onClick={() => setMenuOpen(false)}
-                className="flex min-h-[44px] items-center rounded-md px-3 text-[15px] text-muted transition-colors hover:bg-panel hover:text-ink"
+                className="flex min-h-[44px] items-center rounded-md px-3 text-[15px] text-ink/70 transition-colors hover:bg-panel hover:text-ink"
                 activeClassName="bg-panel text-ink"
               >
                 {a.title}
@@ -75,7 +75,7 @@ const SiteNav: React.FC = () => {
   )
 }
 
-const footerLink = "inline-flex min-h-[32px] items-center text-[13px] text-muted transition-colors hover:text-ink"
+const footerLink = "inline-flex min-h-[32px] items-center text-[13px] text-ink/70 transition-colors hover:text-ink"
 
 const SiteFooter: React.FC = () => (
   <footer className="mt-24 border-t border-line bg-chrome">
@@ -85,13 +85,13 @@ const SiteFooter: React.FC = () => (
           <Link to="/" className="inline-flex min-h-[36px] items-center gap-2 text-[15px] font-medium tracking-tight text-ink">
             <Logo />
           </Link>
-          <p className="mt-2 text-[13px] leading-relaxed text-muted">
+          <p className="mt-2 text-[13px] leading-relaxed text-ink/70">
             Built with Devin. Made for builders.
           </p>
         </div>
         <div className="flex gap-6 sm:gap-12">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-muted">Pages</p>
+            <p className="font-mono text-[11px] uppercase tracking-wide text-ink/60">Pages</p>
             <ul className="mt-3 space-y-1">
               {NAV.map((a) => (
                 <li key={a.id}>
@@ -103,7 +103,7 @@ const SiteFooter: React.FC = () => (
             </ul>
           </div>
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-muted">Elsewhere</p>
+            <p className="font-mono text-[11px] uppercase tracking-wide text-ink/60">Elsewhere</p>
             <ul className="mt-3 space-y-1">
               {SOCIALS.map((s) => (
                 <li key={s.label}>
@@ -116,7 +116,7 @@ const SiteFooter: React.FC = () => (
           </div>
         </div>
       </div>
-      <p className="mt-10 border-t border-line pt-6 font-mono text-[12px] text-muted">cognitioncoffee.co</p>
+      <p className="mt-10 border-t border-line pt-6 font-mono text-[12px] text-ink/60">cognitioncoffee.co</p>
     </div>
   </footer>
 )

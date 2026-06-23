@@ -18,7 +18,7 @@ export const ModeToggle: React.FC = () => {
         <motion.span
           key={experience}
           layoutId="mode-pill"
-          className="absolute inset-y-0.5 rounded-full bg-ink"
+          className="absolute inset-y-0.5 rounded-full bg-accent"
           style={{ width: "calc(50% - 2px)", left: experience === "os" ? 2 : "calc(50%)" }}
           transition={reduce ? { duration: 0 } : spring}
         />

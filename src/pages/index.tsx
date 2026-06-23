@@ -38,7 +38,7 @@ const IndexPage: React.FC = () => (
         id="menu-heading"
         style={stagger(2)}
       >
-        Menu
+        Links
       </h2>
       <ul className="entry-list">
         {sections.map((a, i) => (
@@ -69,7 +69,7 @@ const IndexPage: React.FC = () => (
         <span>Blog</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </Link>
-      <p className="empty-state [text-wrap:pretty]">Playbooks for building Devin's community.</p>
+      <p className="empty-state [text-wrap:pretty]">Notes on community and agents.</p>
     </section>
   </div>
 )

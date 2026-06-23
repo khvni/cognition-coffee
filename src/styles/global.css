@@ -645,12 +645,12 @@ a.section-heading:hover svg {
   transform: scale(0.96);
 }
 .menu-nav__pill--active {
-  background: theme("colors.ink");
-  color: theme("colors.canvas");
+  background: theme("colors.accent");
+  color: #fff;
 }
 .menu-nav__pill--active:hover {
-  background: theme("colors.ink");
-  color: theme("colors.canvas");
+  background: theme("colors.accent");
+  color: #fff;
 }
 
 .menu-section {
