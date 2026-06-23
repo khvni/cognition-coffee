@@ -118,8 +118,11 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
     const dx = e.clientX - startMouse.current.x
     const dy = e.clientY - startMouse.current.y
     if (moved.current) {
-      const nx = Math.max(0, startPos.current.x + dx)
-      const ny = Math.max(0, startPos.current.y + dy)
+      const el = elRef.current
+      const iw = el?.offsetWidth ?? 80
+      const ih = el?.offsetHeight ?? 88
+      const nx = Math.min(window.innerWidth - iw, Math.max(0, startPos.current.x + dx))
+      const ny = Math.min(window.innerHeight - 40 - ih, Math.max(0, startPos.current.y + dy))
       onDragEnd(app.id, nx, ny)
     } else {
       onOpen(app.path)
