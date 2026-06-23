@@ -15,18 +15,15 @@ export const frontmatter = {
 const Content: FC = () => (
   <>
     <p>
-      In spring 2023, a few students at UC Berkeley built a website. It was a small project for a community service. Nothing fancy. But it was real, and it shipped. That was the start of MTC.
+      I started MTC in spring 2023 at UC Berkeley. One club, eight people, building a website for a community service. Three years later it's 30+ university chapters, city hubs in the Bay Area, Seattle, Houston, Atlanta, and New York, a community platform with 100+ organic members, and a $500K grant offer on the table.
     </p>
     <p>
-      Three years later, MTC has 30+ university chapters, regional hubs in the Bay Area, Seattle, Houston, Atlanta, and New York, a community platform with 100+ organic members, and a $500K grant offer on the table.
-    </p>
-    <p>
-      This is the operational breakdown of how we got from one club to a national organization. Not the vision. The machinery.
+      This is about what I learned building it. What we did well, how we did it, and what I'd do differently. I'll cover the three pillars that MTC runs on: projects, education, and professional development. And the operational infrastructure that makes it all repeatable across 30+ chapters.
     </p>
 
-    <h2>The first chapter: build, then organize</h2>
+    <h2>The starting point</h2>
     <p>
-      The first MTC meeting had 8 people. We didn't write a mission statement. We built a website. Then we built another one. Then we ran a coding workshop for high schoolers.
+      The first MTC meeting had 8 people. We didn't write a mission statement or plan a five-year roadmap. We built a website. Then we built another one. Then we ran a coding workshop for high schoolers.
     </p>
     <p>
       People don't join communities because of a mission. They join because there's something to do and someone to do it with. The mission comes later, after they've shown up three times.
@@ -35,18 +32,94 @@ const Content: FC = () => (
       Action first, identity second. The mission is a lagging indicator, not a leading one.
     </ProsePullQuote>
     <p>
-      The Berkeley chapter grew to 40+ active members in the first semester. We ran career fairs in Hearst Mining Building, Berkeley Engineering's largest venue. We hosted fireside chats with founders and engineers. We ran technical workshops with working engineers on React, CI pipelines, debugging. The format that worked best was always the same: short, hands-on, no slides, real questions.
-    </p>
-    <p>
-      By the end of the first year, students at other universities started asking how to start their own chapters. That's when the real work began.
+      By the end of the first year, students at other universities started asking how to start their own chapters. That's when the real work began. Not building things ourselves, but building a system so other people could build things.
     </p>
 
-    <h2>Scaling: from one club to thirty</h2>
+    <h2>Projects: the old model and where it's headed</h2>
     <p>
-      The first expansion was UC Davis, then Stanford, then SJSU, SFSU, UCSC. Within 18 months we had chapters at NYU, UNC, Duke, Michigan, Texas, Columbia, and more. The growth wasn't viral. It was operational. Every new chapter required the same set of things: a founder, a board, a venue, a kickoff event, and a connection to the national network.
+      MTC's consulting arm, Pulse Consulting, started the way most student projects start. Several engineers and a PM would take on a consulting project for a local nonprofit or small business. Before AI, that meant web dev or inventory tracking tools. Useful, but slow. Teams of five or six, semester-long timelines, a lot of hand-holding.
     </p>
     <p>
-      Here's the infrastructure we built to make that repeatable.
+      Post-AI, the math changes. We're exploring how to build more complex, bespoke solutions on compressed timelines with smaller teams equipped with agents. A student with Devin and a mentor can ship what used to take a whole team a semester.
+    </p>
+    <p>
+      Here's the new model, based on texts I sent to a friend running an MTC chapter.
+    </p>
+    <p>
+      First, formalize the role. Make it stipend-based and selective. Don't just ask people to volunteer time out of their busy work and school schedules. Application-based, for the win.
+    </p>
+    <p>
+      Second, pair each builder with a technical mentor. The mentor volunteers and provides the basis for the project. Could even be an idea they want to build out and explore but don't have time to do themselves. The mentor gives the student or new grad who's actually building it the direction they need.
+    </p>
+    <ProseWaxFigure caption="The new projects model">
+      <p>
+        <strong>Mentor</strong> brings the project, the stack, and the timeline. <strong>Builder</strong> does the work with AI agents and ships. <strong>MTC</strong> provides the structure, the match, and the network.
+      </p>
+      <p>
+        Old model: 5-6 students, one semester, one PM, lots of meetings. New model: 1 builder, 1 mentor, AI agents, six weeks, real output.
+      </p>
+    </ProseWaxFigure>
+    <p>
+      The mentor sets up a GitHub repo, picks the stack, and gives clear direction. "Use these technologies to build out the site. We need this done in six weeks. Text me updates every day and we'll check in every week to see where your progress is at."
+    </p>
+    <p>
+      Organically, this also means the builder has a direct connection with someone further along in their career. Someone who can vouch for their work ethic, technical ability, and coachability. Someone who can get them hired for internships and full-time roles afterwards.
+    </p>
+    <ProsePullQuote>
+      How better to scout talent than to cultivate it from within?
+    </ProsePullQuote>
+
+    <h2>Education: pre-AI and post-AI</h2>
+    <p>
+      MTC Youth started as coding workshops at a local community center. We taught Python to middle and high schoolers. The kids were polite about it. They learned loops and functions and made a calculator. It was fine.
+    </p>
+    <p>
+      Then in April 2025 I ran a vibe coding workshop at a local school using Replit. About 20 middle schoolers. Within 20 minutes they were building things I didn't expect. A 3D Minecraft clone. Flappy Bird but with Steve Harvey's face. Doom. A cat-themed Pomodoro timer. I had never seen a group of kids that excited about coding.
+    </p>
+    <p>
+      I <a href="https://x.com/alikhvni/status/1913328421062758720" target="_blank" rel="noopener noreferrer">posted about it on X</a> and it took off. 18,000 views, 253 likes. Karpathy and Amjad from Replit both saw it. The thing that struck me was how fast the energy shifted. These kids weren't learning syntax. They were building. The AI handled the syntax. They handled the ideas.
+    </p>
+    <ProsePullQuote>
+      Never seen an entire group of kids become so excited about coding.
+    </ProsePullQuote>
+    <p>
+      That workshop changed how I think about education. Before AI, we taught tools. Now we can teach taste. The bottleneck isn't "can you write a for loop." It's "can you describe what you want to build." That's a much better problem to have, and a much more fun one to teach.
+    </p>
+    <p>
+      MTC Youth is now formalizing into region-based chapters, paired with university MTC chapters that provide mentorship. Berkeley pairs with local high schools. Stanford pairs with others. The university students teach the workshops. The high schoolers build.
+    </p>
+
+    <h2>Professional development: events that actually work</h2>
+    <p>
+      The best event MTC Berkeley ever ran was a career fair in Hearst Mining Building. That's Berkeley Engineering's largest venue. The lobby is massive. We filled it with companies and students and it felt like a real conference, not a student club event.
+    </p>
+    <p>
+      The lesson: venue matters. A big, legit venue signals that this is a real thing. Companies take you more seriously when you book the engineering school's flagship building. Students show up dressed. The energy is different.
+    </p>
+    <p>
+      We also ran fireside chats with founders and engineers. The format that worked best was short. 30 minutes of conversation, 15 minutes of Q&A, then food and mingling. No slides. No pitch. Just a person who's done something interesting talking about how they did it.
+    </p>
+    <p>
+      Technical workshops were the third leg. We'd bring in an experienced engineer, usually someone a few years out of school, to teach something hands-on. React basics. How to set up a CI pipeline. How to read a stack trace. The bar was low but the value was high because students got to ask questions they couldn't ask in a lecture hall of 300.
+    </p>
+    <ProseWaxFigure caption="What worked for events">
+      <p>
+        <strong>Career fair</strong> in a flagship venue. Companies pay to access students. Students get real recruiter face time.
+      </p>
+      <p>
+        <strong>Fireside chats</strong> with founders and engineers. 30 min talk, 15 min Q&A, food after. No slides.
+      </p>
+      <p>
+        <strong>Technical workshops</strong> led by working engineers. Hands-on, small room, lots of questions.
+      </p>
+    </ProseWaxFigure>
+    <p>
+      This year we also helped advise and organize mtchacks.com at UIUC. A large-scale hackathon with embroidered hoodies, stickers, sponsor t-shirts, the full production. It's coming back next year bigger. The hackathon is the highest-stakes event format we run. It tests the national infrastructure the hardest. Sponsors, judges, venue, food, swag, website, registration, a weekend of logistics. The fact that a chapter at UIUC could pull this off with remote support from the national team is proof the system works.
+    </p>
+
+    <h2>The operational infrastructure</h2>
+    <p>
+      Running 30+ chapters is not about giving a great speech once a year. It's about building the machinery so that a chapter president at NYU can run an event without calling me. Here's what we built.
     </p>
 
     <h3>Centralized Slack</h3>
@@ -54,7 +127,7 @@ const Content: FC = () => (
       Every chapter lead gets invited to a centralized Slack workspace on the nonprofit plan. This is the spine of the whole organization. Chapter presidents can DM me directly. Regional leads have their own channels. There's a #chapter-presidents channel for cross-chapter questions, a #events channel for sharing what's working, and per-chapter channels for local coordination.
     </p>
     <p>
-      The Slack isn't just a chat tool. It's the closest thing we have to an organizational memory. When a new chapter president takes over, they inherit the channel history and can scroll back to see how previous leaders handled the same problems.
+      The Slack isn't just a chat tool. It's the closest thing we have to organizational memory. When a new chapter president takes over, they inherit the channel history and can scroll back to see how previous leaders handled the same problems.
     </p>
 
     <h3>Canva templates and branding kit</h3>
@@ -64,17 +137,6 @@ const Content: FC = () => (
     <p>
       We paired that with an internal branding kit. Logo files, color palette, typography, usage guidelines. The goal is that any chapter anywhere can produce materials that look like MTC, not like a student club guessing at a brand. Chapters self-generate their logo from the template, I approve it, and they're live.
     </p>
-    <ProseWaxFigure caption="The chapter self-serve stack">
-      <p>
-        <strong>Canva templates</strong> for IG posts, flyers, stories. Duplicate, swap text, post.
-      </p>
-      <p>
-        <strong>Branding kit</strong> with logo files, colors, typography, usage rules.
-      </p>
-      <p>
-        <strong>Chapter logo template</strong> so each chapter gets a variant that fits the system.
-      </p>
-    </ProseWaxFigure>
 
     <h3>NotebookLM for chapter operations</h3>
     <p>
@@ -103,7 +165,7 @@ const Content: FC = () => (
       Every quarter, I run a regional sync for each region. Bay Area. SoCal. Chicago. Atlanta. Texas. East Coast. Every chapter president in the region gets on a call. We go around the room. Each president shares what's working, what's broken, and what they're planning next.
     </p>
     <p>
-      The syncs serve three purposes. First, troubleshooting. If Berkeley's board is having a motivation problem, chances are SJSU is too, and hearing how Stanford handled it last semester saves everyone time. Second, idea exchange. A event format that worked at Davis can be copied at UCSC the next week. Third, accountability. If a president knows they're presenting at the sync, they ship things.
+      The syncs serve three purposes. First, troubleshooting. If Berkeley's board is having a motivation problem, chances are SJSU is too, and hearing how Stanford handled it last semester saves everyone time. Second, idea exchange. An event format that worked at Davis can be copied at UCSC the next week. Third, accountability. If a president knows they're presenting at the sync, they ship things.
     </p>
     <p>
       I also hop on one-on-one calls with chapter presidents whenever they ask. Direct access to me is not gated. If a president texts me at 10pm with a board crisis, I call them back. The organization is small enough that this still works, and it's the highest-leverage thing I do.
@@ -119,76 +181,6 @@ const Content: FC = () => (
         <strong>On-demand:</strong> 1:1 calls with chapter presidents. Anytime they ask.
       </p>
     </ProseWaxFigure>
-
-    <h2>Projects: the old model and where it's going</h2>
-    <p>
-      MTC's consulting arm, Pulse Consulting, started the way most student projects start. A few engineers and a PM would take on a project for a local nonprofit or small business. Before AI, that meant web dev or inventory tracking tools. Useful, but slow. Teams of five or six, semester-long timelines, and a lot of hand-holding.
-    </p>
-    <p>
-      Post-AI, the math changes. Smaller teams can build more complex things on shorter timelines. A student with Devin and a mentor can ship what used to take a whole team a semester.
-    </p>
-    <p>
-      The new model I'm pushing for looks like this. A technical mentor volunteers and brings the project. Could be something they want to build but don't have time for. They set up a GitHub repo, pick the stack, and give the builder direction. "Use these technologies. We need this done in six weeks. Text me updates every day. We check in weekly."
-    </p>
-    <p>
-      The builder gets real experience, a real shipped project, and a direct connection to someone further along in their career who can vouch for them and help them get hired. The mentor gets something built that they didn't have time to build themselves.
-    </p>
-    <ProseWaxFigure caption="The new projects model">
-      <p>
-        <strong>Mentor</strong> brings the project, the stack, and the timeline. <strong>Builder</strong> does the work with AI agents and ships. <strong>MTC</strong> provides the structure, the match, and the network.
-      </p>
-      <p>
-        Old model: 5-6 students, one semester, one PM, lots of meetings. New model: 1 builder, 1 mentor, AI agents, six weeks, real output.
-      </p>
-    </ProseWaxFigure>
-    <p>
-      The role should be stipend-based and application-based, not volunteer. People are busy. If you want someone to own something, pay them and be selective about who takes it on.
-    </p>
-    <ProsePullQuote>
-      How better to scout talent than to cultivate it from within?
-    </ProsePullQuote>
-
-    <h2>Education: from Python syntax to vibe coding</h2>
-    <p>
-      MTC Youth started as coding workshops at a local community center. We taught Python to middle and high schoolers. The kids were polite about it. They learned loops and functions and made a calculator. It was fine.
-    </p>
-    <p>
-      Then in April 2025 I ran a vibe coding workshop at a local school using Replit. About 20 middle schoolers. Within 20 minutes they were building things I didn't expect. A 3D Minecraft clone. Flappy Bird but with Steve Harvey's face. Doom. A cat-themed Pomodoro timer. I had never seen a group of kids that excited about coding.
-    </p>
-    <p>
-      I <a href="https://x.com/alikhvni/status/1913328421062758720" target="_blank" rel="noopener noreferrer">posted about it on X</a> and it took off. 18,000 views, 253 likes. Karpathy and Amjad from Replit both saw it. The thing that struck me was how fast the energy shifted. These kids weren't learning syntax. They were building. The AI handled the syntax. They handled the ideas.
-    </p>
-    <ProsePullQuote>
-      Never seen an entire group of kids become so excited about coding.
-    </ProsePullQuote>
-    <p>
-      That workshop changed how I think about education. Before AI, we taught tools. Now we can teach taste. The bottleneck isn't "can you write a for loop." It's "can you describe what you want to build." That's a much better problem to have, and a much more fun one to teach.
-    </p>
-    <p>
-      MTC Youth is now formalizing into region-based chapters, paired with university MTC chapters that provide mentorship. Berkeley pairs with local high schools. Stanford pairs with others. The university students teach the workshops. The high schoolers build.
-    </p>
-
-    <h2>Events that actually work</h2>
-    <p>
-      The best event MTC Berkeley ever ran was a career fair in Hearst Mining Building. That's Berkeley Engineering's largest venue. The lobby is massive. We filled it with companies and students and it felt like a real conference, not a student club event.
-    </p>
-    <p>
-      The lesson: venue matters. A big, legit venue signals that this is a real thing. Companies take you more seriously when you book the engineering school's flagship building. Students show up dressed. The energy is different.
-    </p>
-    <p>
-      We also ran fireside chats with founders and engineers. The format that worked best was short. 30 minutes of conversation, 15 minutes of Q&A, then food and mingling. No slides. No pitch. Just a person who's done something interesting talking about how they did it.
-    </p>
-    <p>
-      Technical workshops were the third leg. We'd bring in an experienced engineer, usually someone a few years out of school, to teach something hands-on. React basics. How to set up a CI pipeline. How to read a stack trace. The bar was low but the value was high because the students got to ask questions they couldn't ask in a lecture hall of 300.
-    </p>
-
-    <h2>The hackathon: mtchacks.com</h2>
-    <p>
-      This year we helped advise and organize mtchacks.com at UIUC. A large-scale hackathon with embroidered hoodies, stickers, sponsor t-shirts, the full production. It's coming back next year bigger.
-    </p>
-    <p>
-      The hackathon is the highest-stakes event format we run. It's also the one that tests the national infrastructure the hardest. You need sponsors, judges, venue, food, swag, a website, a registration flow, and a weekend of logistics. The fact that a chapter at UIUC could pull this off with remote support from the national team is proof the system works.
-    </p>
 
     <h2>What I'd do differently</h2>
     <p>
