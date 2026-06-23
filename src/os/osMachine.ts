@@ -137,14 +137,20 @@ export const osMachine = setup({
     MINIMIZE: {
       actions: assign(({ context, event }) => {
         const willMinimize = event.value ?? !context.windows.find((wn) => wn.key === event.key)?.minimized
-        const windows = patch(context.windows, event.key, (wn) => ({ ...wn, minimized: willMinimize })
-        )
-        const losesFocus = willMinimize && context.focusedKey === event.key
+        const z = willMinimize ? context.topZ : context.topZ + 1
+        const windows = patch(context.windows, event.key, (wn) => ({
+          ...wn,
+          minimized: willMinimize,
+          ...(!willMinimize && { z }),
+        }))
         return {
+          topZ: z,
           windows,
-          focusedKey: losesFocus
-            ? windows.filter((wn) => !wn.minimized).sort((a, b) => b.z - a.z)[0]?.key ?? null
-            : context.focusedKey,
+          focusedKey: willMinimize
+            ? (context.focusedKey === event.key
+                ? windows.filter((wn) => !wn.minimized).sort((a, b) => b.z - a.z)[0]?.key ?? null
+                : context.focusedKey)
+            : event.key,
         }
       }),
     },
