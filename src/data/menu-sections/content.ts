@@ -21,19 +21,34 @@ export const contentSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Format",
+          label: "Format Mix",
           multi: true,
-          choices: ["Video walkthrough (15-20 min)", "Written guide with code snippets", "Interactive playground", "Full multi-format bundle"],
+          choices: [
+            "15-20 min video walkthrough",
+            "Written guide with code snippets",
+            "Interactive playground",
+            "Full multi-format bundle",
+          ],
         },
         {
           label: "Skill Level",
-          multi: true,
-          choices: ["Beginner", "Intermediate", "Advanced", "Mixed (progressive)"],
+          choices: [
+            "Beginner",
+            "Intermediate",
+            "Advanced",
+            "Mixed (progressive)",
+          ],
         },
         {
-          label: "Topic Areas",
-          multi: true,
-          choices: ["First workflows + setup", "Testing + code review", "Multi-repo projects", "CI/CD + deployment", "MCP + integrations", "Enterprise governance"],
+          label: "Topic Mix",
+          choices: [
+            "First workflows + setup",
+            "Testing + code review",
+            "Multi-repo projects",
+            "CI/CD + deployment",
+            "MCP + integrations",
+            "Enterprise governance",
+          ],
         },
       ],
     },
@@ -53,16 +68,30 @@ export const contentSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Audience",
-          choices: ["Developers (technical deep-dive)", "Executives (ROI + velocity)", "Students (learning + building)", "Mixed (keynote style)"],
+          label: "Audience Lens",
+          choices: [
+            "Developers (technical deep-dive)",
+            "Executives (ROI + velocity)",
+            "Students (learning + building)",
+            "Mixed (keynote style)",
+          ],
         },
         {
-          label: "Duration",
-          choices: ["5-min lightning", "15-min standard", "30-min deep-dive", "60-min hands-on"],
+          label: "Runtime",
+          choices: [
+            "5-min lightning",
+            "15-min standard",
+            "30-min deep-dive",
+            "60-min hands-on",
+          ],
         },
         {
           label: "Complexity",
-          choices: ["Simple (single task, guaranteed success)", "Medium (multi-step, some interaction)", "Advanced (live coding, real repo)"],
+          choices: [
+            "Simple (single task, guaranteed success)",
+            "Medium (multi-step, some interaction)",
+            "Advanced (live coding, real repo)",
+          ],
         },
       ],
     },
@@ -83,17 +112,31 @@ export const contentSection: MenuSection = {
       orderingOptions: [
         {
           label: "Audience Level",
-          multi: true,
-          choices: ["Beginner", "Intermediate", "Advanced", "Mixed (progressive exercises)"],
+          choices: [
+            "Beginner",
+            "Intermediate",
+            "Advanced",
+            "Mixed (progressive exercises)",
+          ],
         },
         {
           label: "Session Duration",
-          choices: ["45 min (lunch-and-learn)", "90 min (standard)", "Half-day (3 hours)", "Full-day (6 hours)"],
+          choices: [
+            "45 min (lunch-and-learn)",
+            "90 min (standard)",
+            "Half-day (3 hours)",
+            "Full-day (6 hours)",
+          ],
         },
         {
           label: "Delivery Mode",
           multi: true,
-          choices: ["In-person (facilitator-led)", "Virtual (screen-share + breakouts)", "Self-paced (async + video guides)", "Train-the-trainer"],
+          choices: [
+            "In-person (facilitator-led)",
+            "Virtual (screen-share + breakouts)",
+            "Self-paced (async + video guides)",
+            "Train-the-trainer",
+          ],
         },
       ],
     },

@@ -21,17 +21,33 @@ export const devEventsSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Format",
-          choices: ["12-hour campus sprint", "24-hour classic", "48-hour weekend buildathon", "Virtual async (1 week)"],
+          label: "Sprint Shape",
+          choices: [
+            "12-hour campus sprint",
+            "24-hour classic",
+            "48-hour weekend buildathon",
+            "Virtual async (1 week)",
+          ],
         },
         {
-          label: "Prizes",
+          label: "Winner's Bounty",
           multi: true,
-          choices: ["6 months Devin Max", "$5K cash grand prize", "MacBook Pro for winners", "Cognition internship fast-track", "Conference tickets + travel"],
+          choices: [
+            "6 months Devin Max",
+            "$5K cash grand prize",
+            "MacBook Pro for winners",
+            "Cognition internship fast-track",
+            "Conference tickets + travel",
+          ],
         },
         {
-          label: "Devin Credits Allocation",
-          choices: ["1 month Devin Pro per participant", "$50 credits per team", "Unlimited during event window", "Tiered: more credits for advancing teams"],
+          label: "Devin Fuel Plan",
+          choices: [
+            "1 month Devin Pro per participant",
+            "$50 credits per team",
+            "Unlimited during event window",
+            "Tiered: more credits for advancing teams",
+          ],
         },
       ],
     },
@@ -53,17 +69,31 @@ export const devEventsSection: MenuSection = {
       orderingOptions: [
         {
           label: "Venue Vibe",
-          choices: ["Third-wave specialty cafe", "Co-working space lounge", "University campus cafe", "Rooftop bar (evening format)"],
+          choices: [
+            "Third-wave specialty cafe",
+            "Co-working rooftop lounge",
+            "University campus cafe",
+            "Rooftop bar (evening format)",
+          ],
         },
         {
-          label: "Programming",
-          multi: true,
-          choices: ["Open coworking (no talks)", "2-3 lightning talks (10 min each)", "Live coding demo + open hack", "Panel discussion + networking"],
+          label: "Format Energy",
+          choices: [
+            "Open coworking (no talks)",
+            "Lightning talks + mingle",
+            "Live demo + open hack",
+            "Panel discussion + networking",
+          ],
         },
         {
-          label: "Swag Items",
+          label: "Swag Drop",
           multi: true,
-          choices: ["Sticker pack + pin", "Custom drip bag coffee + mug", "T-shirt + tote bag", "Full welcome kit (all items)"],
+          choices: [
+            "Sticker pack + pin",
+            "Custom drip bag coffee + mug",
+            "T-shirt + tote bag",
+            "Full welcome kit",
+          ],
         },
       ],
     },
@@ -83,18 +113,35 @@ export const devEventsSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Activation Type",
+          label: "Activation Mix",
           multi: true,
-          choices: ["Side event (own venue, 50-150 ppl)", "Sponsored booth on conference floor", "After-party / happy hour", "Workshop session (submitted to CFP)", "Guerrilla activation (pop-up outside venue)"],
+          choices: [
+            "Side event (own venue, 50-150 ppl)",
+            "Sponsored booth on conference floor",
+            "After-party / happy hour",
+            "Workshop session (submitted to CFP)",
+            "Guerrilla activation (pop-up outside venue)",
+          ],
         },
         {
-          label: "Target Conferences",
-          multi: true,
-          choices: ["SF Tech Week", "Figma Config", "Web Summit Vancouver", "AWS re:Invent", "AIE World's Fair", "GitHub Universe", "Google I/O"],
+          label: "Target Circuit",
+          choices: [
+            "SF Tech Week",
+            "Figma Config",
+            "Web Summit Vancouver",
+            "AWS re:Invent",
+            "AIE World's Fair",
+            "GitHub Universe",
+            "Google I/O",
+          ],
         },
         {
           label: "Budget Tier",
-          choices: ["Lean ($5K: side event + swag)", "Standard ($15K: booth + event + content)", "Premium ($40K+: title sponsor + full activation)"],
+          choices: [
+            "Lean ($5K: side event + swag)",
+            "Standard ($15K: booth + event + content)",
+            "Premium ($40K+: title sponsor + full activation)",
+          ],
         },
       ],
     },

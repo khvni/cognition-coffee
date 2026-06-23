@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, type FC } from "react"
-import { MENU_SECTIONS, type MenuItem } from "@/data/menu"
+import { MENU_SECTIONS, fetchMenu, type MenuItem, type MenuSection } from "@/data/menu"
 import { MenuCard } from "@/components/menu/MenuCard"
 import { MenuLightbox } from "@/components/menu/MenuLightbox"
 import { Cart, type CartEntry } from "@/components/menu/Cart"
@@ -14,8 +14,24 @@ export const frontmatter = {
 const Content: FC = () => {
   const [active, setActive] = useState<MenuItem | null>(null)
   const [cart, setCart] = useState<CartEntry[]>([])
+  const [sections, setSections] = useState<MenuSection[]>(MENU_SECTIONS)
+  const [loading, setLoading] = useState(true)
   const [currentSection, setCurrentSection] = useState(MENU_SECTIONS[0].id)
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map())
+
+  useEffect(() => {
+    let cancelled = false
+    fetchMenu()
+      .then((data) => {
+        if (!cancelled && data.length) {
+          setSections(data)
+          setCurrentSection(data[0].id)
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+    return () => { cancelled = true }
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -31,7 +47,7 @@ const Content: FC = () => {
     )
     sectionRefs.current.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
-  }, [])
+  }, [sections])
 
   const scrollTo = useCallback((id: string) => {
     const el = sectionRefs.current.get(id)
@@ -52,7 +68,7 @@ const Content: FC = () => {
     <>
       <nav className="menu-nav" aria-label="Menu categories">
         <div className="menu-nav__track">
-          {MENU_SECTIONS.map((s) => (
+          {sections.map((s) => (
             <button
               key={s.id}
               type="button"
@@ -66,7 +82,13 @@ const Content: FC = () => {
         </div>
       </nav>
 
-      {MENU_SECTIONS.map((section) => (
+      {loading && (
+        <div className="py-12 text-center">
+          <p className="font-mono text-sm text-muted">Loading menu…</p>
+        </div>
+      )}
+
+      {sections.map((section) => (
         <section
           key={section.id}
           data-section={section.id}

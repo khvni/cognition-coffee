@@ -7,6 +7,7 @@ export type CartEntry = {
   itemName: string
   itemImage: string
   selections: Record<string, string | string[]>
+  instructions?: string
 }
 
 type Props = {
@@ -85,6 +86,9 @@ export const Cart: React.FC<Props> = ({ items, onRemove, onClear }) => {
                       <div className="cart-item__body">
                         <h3 className="cart-item__name">{entry.itemName}</h3>
                         <p className="cart-item__selections">{formatSelections(entry.selections)}</p>
+                        {entry.instructions && (
+                          <p className="cart-item__instructions">Note: {entry.instructions}</p>
+                        )}
                       </div>
                       <button
                         type="button"

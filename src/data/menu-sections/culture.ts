@@ -24,7 +24,7 @@ export const cultureSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Subscription Duration",
+          label: "Prize Duration",
           choices: [
             "3 months Devin Max",
             "6 months Devin Max",
@@ -33,7 +33,7 @@ export const cultureSection: MenuSection = {
           ],
         },
         {
-          label: "Number of Drops",
+          label: "Drop Density",
           choices: [
             "10 cards (1 per day, 2 weeks)",
             "20 cards (2 per day, 10 days)",
@@ -42,12 +42,12 @@ export const cultureSection: MenuSection = {
           ],
         },
         {
-          label: "Clue Format",
+          label: "Clue Style",
           multi: true,
           choices: [
             "Photo of surroundings (vague)",
             "15-sec video with ambient audio",
-            "Cryptic riddle plus neighborhood hint",
+            "Cryptic riddle + neighborhood hint",
             "Geocache-style GPS coordinates",
           ],
         },
@@ -71,8 +71,7 @@ export const cultureSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Nonprofit Selection",
-          multi: true,
+          label: "Nonprofit Partner",
           choices: [
             "Monterey Bay Aquarium (sea otters)",
             "Sea Otter Foundation & Trust",
@@ -82,7 +81,6 @@ export const cultureSection: MenuSection = {
         },
         {
           label: "Project Scope",
-          multi: true,
           choices: [
             "Data dashboard (population tracking)",
             "Volunteer management platform",
@@ -92,13 +90,13 @@ export const cultureSection: MenuSection = {
           ],
         },
         {
-          label: "Documentation Format",
+          label: "Story Format",
           multi: true,
           choices: [
             "Blog series (5 to 7 posts)",
             "Mini-documentary (10 to 15 min video)",
             "Live-stream build sessions",
-            "Technical case study plus press kit",
+            "Technical case study + press kit",
           ],
         },
       ],
@@ -120,7 +118,7 @@ export const cultureSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Item Type",
+          label: "Item Lineup",
           multi: true,
           choices: [
             "Otter plushie (collector series)",
@@ -136,7 +134,6 @@ export const cultureSection: MenuSection = {
         },
         {
           label: "Distribution Method",
-          multi: true,
           choices: [
             "Event giveaways",
             "Ambassador milestone rewards",
@@ -220,7 +217,7 @@ export const cultureSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Format",
+          label: "Format Mix",
           multi: true,
           choices: [
             "Long-form blog profile",
@@ -236,7 +233,6 @@ export const cultureSection: MenuSection = {
         },
         {
           label: "Featured Roles",
-          multi: true,
           choices: [
             "Engineers",
             "Research scientists",

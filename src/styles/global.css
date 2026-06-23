@@ -734,9 +734,18 @@ a.section-heading:hover svg {
 }
 
 .menu-card__image {
+  display: block;
+  width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   position: relative;
+  border: none;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 .menu-card__image img {
   width: 100%;
@@ -752,28 +761,49 @@ a.section-heading:hover svg {
   pointer-events: none;
 }
 
+.menu-card__add {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  background: theme("colors.canvas");
+  color: theme("colors.ink");
+  box-shadow: 0 2px 8px rgba(21, 23, 26, 0.12);
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.menu-card__add:hover {
+  transform: scale(1.05);
+  background: theme("colors.panel");
+}
+.menu-card__add:active {
+  transform: scale(0.95);
+}
+
 .menu-card__body {
   padding: 14px 16px 16px;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
 }
 
 .menu-card__name {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.375;
   color: theme("colors.ink");
-}
-
-.menu-card__caption {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: theme("colors.muted");
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-wrap: pretty;
 }
 
 /* ── Lightbox / Item detail modal ──────────────────────── */
@@ -1008,6 +1038,28 @@ a.section-heading:hover svg {
   font-size: 0.875rem;
   line-height: 1.5;
   color: theme("colors.ink");
+}
+
+.lightbox-instructions {
+  width: 100%;
+  min-height: 88px;
+  padding: 12px;
+  border: 1px solid theme("colors.line");
+  border-radius: 8px;
+  background: theme("colors.canvas");
+  color: theme("colors.ink");
+  font-family: theme("fontFamily.sans");
+  font-size: 0.875rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.lightbox-instructions::placeholder {
+  color: theme("colors.muted");
+}
+.lightbox-instructions:focus {
+  border-color: theme("colors.accent");
+  box-shadow: 0 0 0 3px rgba(49, 124, 255, 0.12);
 }
 
 @media (max-width: 700px) {
@@ -1270,6 +1322,13 @@ a.section-heading:hover svg {
   font-size: 0.8125rem;
   line-height: 1.5;
   color: theme("colors.muted");
+  word-break: break-word;
+}
+.cart-item__instructions {
+  margin: 6px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: theme("colors.ink");
   word-break: break-word;
 }
 .cart-item__remove {

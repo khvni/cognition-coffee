@@ -3,7 +3,8 @@
  * Each section is a "menu category"; items are "menu options" with
  * ordering variations (like customizing a DoorDash catering order).
  *
- * Sections are authored in src/data/menu-sections/*.ts and composed here.
+ * The canonical data lives in content/menu.json and is loaded at runtime.
+ * MENU_SECTIONS is a fallback for initial render / SSR.
  */
 
 export type OrderingOption = {
@@ -29,6 +30,8 @@ export type MenuSection = {
   items: MenuItem[]
 }
 
+export type MenuData = MenuSection[]
+
 import { ambassadorsSection } from "./menu-sections/ambassadors"
 import { devEventsSection } from "./menu-sections/dev-events"
 import { universitySection } from "./menu-sections/university"
@@ -42,3 +45,9 @@ export const MENU_SECTIONS: MenuSection[] = [
   contentSection,
   cultureSection,
 ]
+
+export async function fetchMenu(): Promise<MenuSection[]> {
+  const res = await fetch("/api/menu")
+  if (!res.ok) throw new Error(`Failed to fetch menu: ${res.status}`)
+  return (await res.json()) as MenuSection[]
+}

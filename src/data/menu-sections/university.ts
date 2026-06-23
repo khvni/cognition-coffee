@@ -29,8 +29,7 @@ export const universitySection: MenuSection = {
           ],
         },
         {
-          label: "Pilot Campuses",
-          multi: true,
+          label: "Launch Campuses",
           choices: [
             "UC Berkeley",
             "Stanford",
@@ -42,7 +41,7 @@ export const universitySection: MenuSection = {
           ],
         },
         {
-          label: "Student Incentives",
+          label: "Incentive Stack",
           multi: true,
           choices: [
             "Free Devin Pro for semester",
@@ -70,7 +69,7 @@ export const universitySection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Format",
+          label: "Delivery Format",
           choices: [
             "Virtual only (bi-weekly, 60 min)",
             "IRL only (weekly campus sessions)",
@@ -79,7 +78,6 @@ export const universitySection: MenuSection = {
         },
         {
           label: "Curriculum Track",
-          multi: true,
           choices: [
             "Fundamentals (intro to AI-native dev)",
             "Intermediate (multi-repo, testing, CI/CD)",
@@ -88,7 +86,7 @@ export const universitySection: MenuSection = {
           ],
         },
         {
-          label: "Teaching Resources",
+          label: "Teaching Kit",
           multi: true,
           choices: [
             "Slide decks + speaker notes",
@@ -116,7 +114,6 @@ export const universitySection: MenuSection = {
       orderingOptions: [
         {
           label: "Partner Type",
-          multi: true,
           choices: [
             "CS Department (curriculum integration)",
             "Student Organization (event + tool sponsorship)",

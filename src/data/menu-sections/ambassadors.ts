@@ -21,18 +21,30 @@ export const ambassadorsSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Recruitment Channels",
+          label: "Recruitment Radar",
           multi: true,
-          choices: ["Discord community", "X / Twitter outreach", "GitHub contributor pipeline", "Campus ambassador referrals", "Devin usage leaderboard"],
+          choices: [
+            "GitHub star-contributor feed",
+            "Discord power-user leaderboards",
+            "Campus referral network",
+            "Devin usage signal pipeline",
+          ],
         },
         {
-          label: "Incentive Package",
-          multi: true,
-          choices: ["Extended Devin Pro access", "Co-branded swag drops", "Conference travel stipends", "Product feedback seat", "Revenue share on referrals"],
+          label: "Advancement Path",
+          choices: [
+            "3-tier ladder (Contributor → Advocate → Champion)",
+            "2-tier guild (Member → Lead)",
+            "Points-based unlock system",
+          ],
         },
         {
-          label: "Tier Structure",
-          choices: ["3-tier (Contributor → Advocate → Champion)", "2-tier (Member → Lead)", "Points-based with unlockable perks"],
+          label: "Perk Signature",
+          choices: [
+            "Founder AMA + product feedback seat",
+            "Revenue share on referrals",
+            "Conference travel + Devin Max credits",
+          ],
         },
       ],
     },
@@ -52,17 +64,30 @@ export const ambassadorsSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Onboarding Format",
-          choices: ["Fully async (self-paced modules)", "Cohort-based (bi-weekly live calls)", "Hybrid (async + 2 live sessions)"],
+          label: "Onboarding Cadence",
+          choices: [
+            "Fully async (self-paced modules)",
+            "Cohort-based (bi-weekly live calls)",
+            "Hybrid (async + 2 live sessions)",
+          ],
         },
         {
-          label: "Welcome Kit Contents",
-          multi: true,
-          choices: ["Otter plushie + stickers + pin", "T-shirt + notebook + pen", "Water bottle + coasters + keycaps", "Full premium box (all items)"],
+          label: "Welcome Kit",
+          choices: [
+            "Otter plushie + pin + sticker pack",
+            "Heavyweight tee + notebook + pen",
+            "Insulated bottle + keycap + tote",
+            "Full premium box",
+          ],
         },
         {
-          label: "First Event Type",
-          choices: ["Coffee chat (3-5 people)", "Demo night (10-15 people)", "Study group (5-8 people)", "Online Twitter Space"],
+          label: "First Event Shape",
+          choices: [
+            "Coffee chat (3-5 people)",
+            "Demo night (10-15 people)",
+            "Study group (5-8 people)",
+            "Twitter Space / Discord stage",
+          ],
         },
       ],
     },
@@ -82,18 +107,32 @@ export const ambassadorsSection: MenuSection = {
       ],
       orderingOptions: [
         {
-          label: "Support Channels",
+          label: "Ambassador HQ",
           multi: true,
-          choices: ["Dedicated Slack workspace", "Discord server with role-gated channels", "Monthly 1:1 with community lead", "Async Loom check-ins"],
+          choices: [
+            "Private Slack with Cognition engineers",
+            "Monthly AMA with product team",
+            "Quarterly strategy sync",
+            "Async Loom office hours",
+          ],
         },
         {
-          label: "Recognition Program",
-          multi: true,
-          choices: ["Public leaderboard + badges", "Quarterly spotlight blog posts", "Annual awards ceremony", "LinkedIn endorsements from Cognition team"],
+          label: "Recognition Rhythm",
+          choices: [
+            "Public leaderboard + badges",
+            "Quarterly spotlight blog",
+            "Annual awards ceremony",
+            "LinkedIn endorsements from Cognition team",
+          ],
         },
         {
           label: "Office Hours Format",
-          choices: ["Monthly group AMA (30 min)", "Bi-weekly topic deep-dives (45 min)", "Quarterly fireside with founders", "On-demand async Q&A thread"],
+          choices: [
+            "Monthly group AMA (30 min)",
+            "Bi-weekly deep-dive (45 min)",
+            "Quarterly fireside with founders",
+            "On-demand async Q&A thread",
+          ],
         },
       ],
     },

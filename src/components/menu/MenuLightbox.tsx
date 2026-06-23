@@ -13,9 +13,13 @@ type Selections = Record<string, string | string[]>
 
 export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) => {
   const [selected, setSelected] = useState<Selections>({})
+  const [instructions, setInstructions] = useState("")
 
   useEffect(() => {
-    if (item) setSelected({})
+    if (item) {
+      setSelected({})
+      setInstructions("")
+    }
   }, [item])
 
   const handleKeyDown = useCallback(
@@ -61,6 +65,7 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) =>
       itemName: item.name,
       itemImage: item.image,
       selections: selected,
+      instructions: instructions.trim(),
     })
     onClose()
   }
@@ -157,6 +162,17 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) =>
                     </fieldset>
                   ))}
                 </div>
+              </section>
+
+              <section className="lightbox-section" aria-labelledby="lb-instructions">
+                <h3 className="lightbox-section-heading" id="lb-instructions">Special Instructions</h3>
+                <textarea
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
+                  placeholder="Add any notes about timing, audience, or special requests..."
+                  className="lightbox-instructions"
+                  rows={3}
+                />
               </section>
             </div>
 

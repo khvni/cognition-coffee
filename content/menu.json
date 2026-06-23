@@ -1,0 +1,818 @@
+[
+  {
+    "id": "ambassadors",
+    "title": "Ambassadors",
+    "subtitle": "Turn Devin's most active users into community leaders.",
+    "items": [
+      {
+        "id": "roasters-guild",
+        "name": "The Roasters' Guild",
+        "image": "/menu/roasters-guild.jpg",
+        "subcaption": "Three tiers. One pipeline from power user to community leader.",
+        "description": "Find the people already doing the work, then give them a title and a seat at the table. Three tiers, each with more access and more to lose. Promotions are earned, not handed out.",
+        "breakdown": [
+          "Source from usage data, GitHub, and community activity",
+          "Open applications with tier-specific criteria",
+          "Cohort onboarding with a 30-day activation sprint",
+          "Quarterly tier reviews and public promotions",
+          "Champions get a direct line to the product team"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Recruitment Channels",
+            "multi": true,
+            "choices": [
+              "Discord community",
+              "X / Twitter outreach",
+              "GitHub contributor pipeline",
+              "Campus ambassador referrals",
+              "Devin usage leaderboard"
+            ]
+          },
+          {
+            "label": "Incentive Package",
+            "multi": true,
+            "choices": [
+              "Extended Devin Pro access",
+              "Co-branded swag drops",
+              "Conference travel stipends",
+              "Product feedback seat",
+              "Revenue share on referrals"
+            ]
+          },
+          {
+            "label": "Tier Structure",
+            "choices": [
+              "3-tier (Contributor → Advocate → Champion)",
+              "2-tier (Member → Lead)",
+              "Points-based with unlockable perks"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "first-brew",
+        "name": "First Brew",
+        "image": "/menu/first-brew.jpg",
+        "subcaption": "30 days from 'interested' to 'hosted their first event.'",
+        "description": "New ambassadors don't know what to do first. This gives them a calendar. Four weeks of async modules, two live calls, a welcome kit on their doorstep, and one concrete event to run by day 30.",
+        "breakdown": [
+          "Week 1: welcome kit ships, async product deep-dive",
+          "Week 2: live cohort call with current Champions",
+          "Week 3: shadow an existing ambassador event",
+          "Week 4: host your first micro-event",
+          "Graduation: badge, public shoutout, tier placement"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Onboarding Format",
+            "choices": [
+              "Fully async (self-paced modules)",
+              "Cohort-based (bi-weekly live calls)",
+              "Hybrid (async + 2 live sessions)"
+            ]
+          },
+          {
+            "label": "Welcome Kit Contents",
+            "multi": true,
+            "choices": [
+              "Otter plushie + stickers + pin",
+              "T-shirt + notebook + pen",
+              "Water bottle + coasters + keycaps",
+              "Full premium box (all items)"
+            ]
+          },
+          {
+            "label": "First Event Type",
+            "choices": [
+              "Coffee chat (3-5 people)",
+              "Demo night (10-15 people)",
+              "Study group (5-8 people)",
+              "Online Twitter Space"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "support-hub",
+        "name": "Support Hub",
+        "image": "/menu/support-hub.jpg",
+        "subcaption": "What keeps ambassadors around after the honeymoon.",
+        "description": "Onboarding gets them in. This keeps them in. A private space to talk, monthly time with the people building Devin, fresh swag each season, and a real pipeline for their feedback to reach the product team.",
+        "breakdown": [
+          "Private Slack, channels split by region and topic",
+          "Monthly office hours with Cognition engineers",
+          "Quarterly swag refresh with new exclusive items",
+          "Annual Ambassador Summit, expenses paid for Champions",
+          "Weekly digest of ambassador insights routed to PMs"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Support Channels",
+            "multi": true,
+            "choices": [
+              "Dedicated Slack workspace",
+              "Discord server with role-gated channels",
+              "Monthly 1:1 with community lead",
+              "Async Loom check-ins"
+            ]
+          },
+          {
+            "label": "Recognition Program",
+            "multi": true,
+            "choices": [
+              "Public leaderboard + badges",
+              "Quarterly spotlight blog posts",
+              "Annual awards ceremony",
+              "LinkedIn endorsements from Cognition team"
+            ]
+          },
+          {
+            "label": "Office Hours Format",
+            "choices": [
+              "Monthly group AMA (30 min)",
+              "Bi-weekly topic deep-dives (45 min)",
+              "Quarterly fireside with founders",
+              "On-demand async Q&A thread"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dev-events",
+    "title": "Dev Events",
+    "subtitle": "Hackathons, meetups, and conference activations that put Devin in developers' hands.",
+    "items": [
+      {
+        "id": "hack-with-devin",
+        "name": "Hack with Devin",
+        "image": "/menu/hack-with-devin.jpg",
+        "subcaption": "Devin Pro for every participant. Real builds, real prizes.",
+        "description": "Every participant gets Devin Pro and a 30-minute kickoff workshop to direct Devin on real builds. Judged on creativity, Devin usage depth, and shipping velocity. From 12-hour campus sprints to 500-person citywide buildathons.",
+        "breakdown": [
+          "Partner with campus orgs or tech communities for venue and audience",
+          "Provision time-boxed Devin Pro for all participants",
+          "Run a 30-min Devin 101 workshop at kickoff",
+          "Judge on creativity, Devin usage depth, and shipping velocity",
+          "Ship a highlight reel, winner interviews, and usage metrics"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Format",
+            "choices": [
+              "12-hour campus sprint",
+              "24-hour classic",
+              "48-hour weekend buildathon",
+              "Virtual async (1 week)"
+            ]
+          },
+          {
+            "label": "Prizes",
+            "multi": true,
+            "choices": [
+              "6 months Devin Max",
+              "$5K cash grand prize",
+              "MacBook Pro for winners",
+              "Cognition internship fast-track",
+              "Conference tickets + travel"
+            ]
+          },
+          {
+            "label": "Devin Credits Allocation",
+            "choices": [
+              "1 month Devin Pro per participant",
+              "$50 credits per team",
+              "Unlimited during event window",
+              "Tiered: more credits for advancing teams"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cognition-coffee",
+        "name": "Cognition Coffee",
+        "image": "/menu/cafe-cognition.jpg",
+        "subcaption": "Take over a coffee shop. Pick up the tab. Hand out Devin credits.",
+        "description": "The signature Cognition Coffee meetup. Take over a third-wave coffee shop, pick up the tab, and hand out Devin credits while builders work side by side. 15 to 30 people, repeatable, community-run.",
+        "breakdown": [
+          "Book a cafe with good wifi and 20-30 person capacity",
+          "Open a $300-500 tab for coffee and pastries",
+          "Hand each attendee a Devin Pro trial card and sticker pack",
+          "Optional 10-min lightning talks from 2-3 community members",
+          "Capture authentic photo and video for socials",
+          "Close with a thank-you thread, survey, and next event date"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Venue Vibe",
+            "choices": [
+              "Third-wave specialty cafe",
+              "Co-working space lounge",
+              "University campus cafe",
+              "Rooftop bar (evening format)"
+            ]
+          },
+          {
+            "label": "Programming",
+            "multi": true,
+            "choices": [
+              "Open coworking (no talks)",
+              "2-3 lightning talks (10 min each)",
+              "Live coding demo + open hack",
+              "Panel discussion + networking"
+            ]
+          },
+          {
+            "label": "Swag Items",
+            "multi": true,
+            "choices": [
+              "Sticker pack + pin",
+              "Custom drip bag coffee + mug",
+              "T-shirt + tote bag",
+              "Full welcome kit (all items)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "conference-takeover",
+        "name": "Conference Takeover",
+        "image": "/menu/conference-takeover.jpg",
+        "subcaption": "A repeatable playbook for SF Tech Week, Figma Config, and beyond.",
+        "description": "A field-tested playbook for activating at major tech conferences. Pick your format, lock logistics eight weeks out, and make Devin the thing everyone talks about. From a lean side event to a title sponsorship.",
+        "breakdown": [
+          "T-8 weeks: confirm conference, book side-event venue, open RSVP",
+          "T-4 weeks: speaker outreach, content prep, swag production",
+          "T-2 weeks: social campaign, influencer seeding, logistics lock",
+          "Day-of: branded space, live demos, attendee Devin access, content capture",
+          "Post-event: publish content in 48hr, follow-up emails, pipeline to sales"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Activation Type",
+            "multi": true,
+            "choices": [
+              "Side event (own venue, 50-150 ppl)",
+              "Sponsored booth on conference floor",
+              "After-party / happy hour",
+              "Workshop session (submitted to CFP)",
+              "Guerrilla activation (pop-up outside venue)"
+            ]
+          },
+          {
+            "label": "Target Conferences",
+            "multi": true,
+            "choices": [
+              "SF Tech Week",
+              "Figma Config",
+              "Web Summit Vancouver",
+              "AWS re:Invent",
+              "AIE World's Fair",
+              "GitHub Universe",
+              "Google I/O"
+            ]
+          },
+          {
+            "label": "Budget Tier",
+            "choices": [
+              "Lean ($5K: side event + swag)",
+              "Standard ($15K: booth + event + content)",
+              "Premium ($40K+: title sponsor + full activation)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "university",
+    "title": "University",
+    "subtitle": "Campus networks, workshop curricula, and CS department partnerships.",
+    "items": [
+      {
+        "id": "campus-network",
+        "name": "Campus Network",
+        "image": "/menu/campus-network.jpg",
+        "subcaption": "Student ambassadors or a full Devin Developers Club on campus.",
+        "description": "Two ways to plant Devin on campus. Run a lightweight ambassador who becomes the Devin person in the CS lounge, or charter a registered Devin Developers Club with officers and a semester calendar. Pilot a handful of schools, then expand where engagement holds.",
+        "breakdown": [
+          "Ambassador model: 1-2 reps per campus, low overhead",
+          "Club model: registered student org with officers and weekly meetings",
+          "Quarterly campus event: hackathon, workshop, or demo night",
+          "Pilot 5-10 campuses, expand on engagement",
+          "Cross-campus Slack for peer learning and resource sharing"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Campus Model",
+            "choices": [
+              "Ambassador rep (1-2 students, low overhead)",
+              "Devin Developers Club (registered student org)",
+              "Hybrid (ambassador starts, upgrades to club if traction)"
+            ]
+          },
+          {
+            "label": "Pilot Campuses",
+            "multi": true,
+            "choices": [
+              "UC Berkeley",
+              "Stanford",
+              "MIT",
+              "Georgia Tech",
+              "UT Austin",
+              "University of Waterloo",
+              "Carnegie Mellon"
+            ]
+          },
+          {
+            "label": "Student Incentives",
+            "multi": true,
+            "choices": [
+              "Free Devin Pro for semester",
+              "Resume line + LinkedIn badge",
+              "Internship pipeline access",
+              "Conference travel grant",
+              "Monthly stipend ($200-500)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "workshop-series",
+        "name": "Workshop Series",
+        "image": "/menu/workshop-series.jpg",
+        "subcaption": "Virtual sessions with Cognition engineers, plus IRL labs taught by ambassadors.",
+        "description": "Two tracks that teach software engineering with Devin as the teaching assistant. Virtual sessions are hosted by Cognition engineers; IRL labs run on campus with a set curriculum ambassadors teach. Students leave with portfolio projects and a completion certificate.",
+        "breakdown": [
+          "Virtual: bi-weekly 60-min sessions with Cognition engineers, recorded",
+          "IRL: 8-10 session semester curriculum taught by ambassadors",
+          "Topics: first agent workflow, multi-repo, testing, deployment",
+          "Materials built with Devin (teaching the tool with the tool)",
+          "Completion certificates and portfolio projects"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Format",
+            "choices": [
+              "Virtual only (bi-weekly, 60 min)",
+              "IRL only (weekly campus sessions)",
+              "Hybrid (virtual lectures + IRL labs)"
+            ]
+          },
+          {
+            "label": "Curriculum Track",
+            "multi": true,
+            "choices": [
+              "Fundamentals (intro to AI-native dev)",
+              "Intermediate (multi-repo, testing, CI/CD)",
+              "Advanced (fleets, MCP, enterprise patterns)",
+              "Full stack (all three tracks, one semester)"
+            ]
+          },
+          {
+            "label": "Teaching Resources",
+            "multi": true,
+            "choices": [
+              "Slide decks + speaker notes",
+              "Interactive Devin playground exercises",
+              "Video walkthroughs (pre-recorded)",
+              "Live-coding templates + starter repos"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dept-partnerships",
+        "name": "Dept. Partnerships",
+        "image": "/menu/dept-partnerships.jpg",
+        "subcaption": "CS department and student org partnerships for curriculum and events.",
+        "description": "Two partnership tracks. CS departments get guest lectures, coursework licenses, and research collaborations. Student orgs get event sponsorship and tool access. The long game: graduates enter the workforce already Devin-native.",
+        "breakdown": [
+          "CS dept track: guest lecture series plus Devin licenses for coursework",
+          "Student org track: sponsor existing CS clubs with Devin access and event budget",
+          "Co-branded case studies showing student outcomes",
+          "Research angle: Devin API access for HCI and SE papers",
+          "Long game: graduates ship as Devin-native developers"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Partner Type",
+            "multi": true,
+            "choices": [
+              "CS Department (curriculum integration)",
+              "Student Organization (event + tool sponsorship)",
+              "Research Lab (API access + collaboration)",
+              "Career Services (job prep workshops)"
+            ]
+          },
+          {
+            "label": "Integration Level",
+            "choices": [
+              "Light (guest lecture + trial access)",
+              "Medium (semester-long tool integration in 1 course)",
+              "Deep (co-designed curriculum module + research partnership)"
+            ]
+          },
+          {
+            "label": "Resource Allocation",
+            "multi": true,
+            "choices": [
+              "Devin Pro licenses (class-wide)",
+              "Event budget ($1K-5K per semester)",
+              "Dedicated Cognition engineer office hours",
+              "Custom teaching materials + exercises"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "content",
+    "title": "Content",
+    "subtitle": "Tutorials, demo scripts, and workshop materials that help developers adopt Devin.",
+    "items": [
+      {
+        "id": "tutorial-library",
+        "name": "Tutorial Library",
+        "image": "/menu/tutorial-library.jpg",
+        "subcaption": "Step-by-step guides from first PR to fleet workflows. Video, written, and interactive.",
+        "description": "Step-by-step guides that take developers from their first Devin PR to running fleet workflows. Each one ships in video, written, and interactive playground formats with the same shape: context, walkthrough, exercises, next steps.",
+        "breakdown": [
+          "Beginner: first PR, first automation, first playbook",
+          "Intermediate: multi-repo projects, testing, CI/CD",
+          "Advanced: fleet workflows, MCP servers, governance",
+          "Every tutorial: 15-min video + written guide + playground",
+          "Monthly releases tied to product launches"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Format",
+            "multi": true,
+            "choices": [
+              "Video walkthrough (15-20 min)",
+              "Written guide with code snippets",
+              "Interactive playground",
+              "Full multi-format bundle"
+            ]
+          },
+          {
+            "label": "Skill Level",
+            "multi": true,
+            "choices": [
+              "Beginner",
+              "Intermediate",
+              "Advanced",
+              "Mixed (progressive)"
+            ]
+          },
+          {
+            "label": "Topic Areas",
+            "multi": true,
+            "choices": [
+              "First workflows + setup",
+              "Testing + code review",
+              "Multi-repo projects",
+              "CI/CD + deployment",
+              "MCP + integrations",
+              "Enterprise governance"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "demo-scripts",
+        "name": "Demo Scripts",
+        "image": "/menu/demo-scripts.jpg",
+        "subcaption": "Ready-to-run scripts that make Devin shine in live demos and sales calls.",
+        "description": "Pre-built scripts for live demos across audiences and contexts. Each one ships with a fork-ready repo, speaker notes, expected Devin behavior, and a recovery plan for when things go sideways.",
+        "breakdown": [
+          "Developer demo: full-stack app from scratch in 10 minutes",
+          "Executive demo: before/after velocity and cost numbers",
+          "Student demo: Devin as study buddy (debug, explain, refactor)",
+          "Each script: fork-ready repo + speaker notes + timing + FAQ",
+          "Quarterly refresh as the product evolves"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Audience",
+            "choices": [
+              "Developers (technical deep-dive)",
+              "Executives (ROI + velocity)",
+              "Students (learning + building)",
+              "Mixed (keynote style)"
+            ]
+          },
+          {
+            "label": "Duration",
+            "choices": [
+              "5-min lightning",
+              "15-min standard",
+              "30-min deep-dive",
+              "60-min hands-on"
+            ]
+          },
+          {
+            "label": "Complexity",
+            "choices": [
+              "Simple (single task, guaranteed success)",
+              "Medium (multi-step, some interaction)",
+              "Advanced (live coding, real repo)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "workshop-kits",
+        "name": "Workshop Kits",
+        "image": "/menu/workshop-kits.jpg",
+        "subcaption": "Complete session packs anyone can pick up and run.",
+        "description": "Complete workshop packages anyone can pick up and run. Each kit comes with slides, a facilitator script, handouts, exercises with solutions, and follow-up templates. Built so ambassadors and partners can teach without Cognition staff in the room.",
+        "breakdown": [
+          "Slide deck in Figma, Google Slides, and PDF with speaker notes",
+          "Facilitator guide: minute-by-minute run-of-show + troubleshooting",
+          "Participant handout: concepts, exercise prompts, resource links",
+          "3-5 hands-on exercises with solution repos and expected outputs",
+          "Post-workshop: feedback survey + follow-up email sequence"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Audience Level",
+            "multi": true,
+            "choices": [
+              "Beginner",
+              "Intermediate",
+              "Advanced",
+              "Mixed (progressive exercises)"
+            ]
+          },
+          {
+            "label": "Session Duration",
+            "choices": [
+              "45 min (lunch-and-learn)",
+              "90 min (standard)",
+              "Half-day (3 hours)",
+              "Full-day (6 hours)"
+            ]
+          },
+          {
+            "label": "Delivery Mode",
+            "multi": true,
+            "choices": [
+              "In-person (facilitator-led)",
+              "Virtual (screen-share + breakouts)",
+              "Self-paced (async + video guides)",
+              "Train-the-trainer"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "culture",
+    "title": "Culture",
+    "subtitle": "Community engagement that builds goodwill, FOMO, and authentic connection.",
+    "items": [
+      {
+        "id": "sf-scavenger-hunt",
+        "name": "SF Scavenger Hunt",
+        "image": "/menu/sf-scavenger-hunt.jpg",
+        "subcaption": "Hide free Devin Max codes around SF. Post cryptic clues. Let the city run.",
+        "description": "We hide physical cards with Devin Max activation codes in spots across SF. Post a vague photo or short video of each location. First to find it posts a photo, we flip on their subscription. Pure chaos, pure engagement.",
+        "breakdown": [
+          "Scout 10 to 20 spots: cafes, parks, murals, bookstores",
+          "Design collectible cards with unique activation codes",
+          "Drip 1 to 2 clues a day on X and Instagram Stories",
+          "Finder posts a photo with the card, we activate their sub",
+          "Recap video plus engagement metrics after the run",
+          "Repeat in other cities once the format works"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Subscription Duration",
+            "choices": [
+              "3 months Devin Max",
+              "6 months Devin Max",
+              "1 year Devin Max",
+              "Mix (varying durations per drop)"
+            ]
+          },
+          {
+            "label": "Number of Drops",
+            "choices": [
+              "10 cards (1 per day, 2 weeks)",
+              "20 cards (2 per day, 10 days)",
+              "50 cards (city-wide blitz, 1 week)",
+              "Ongoing (5 per week for a month)"
+            ]
+          },
+          {
+            "label": "Clue Format",
+            "multi": true,
+            "choices": [
+              "Photo of surroundings (vague)",
+              "15-sec video with ambient audio",
+              "Cryptic riddle plus neighborhood hint",
+              "Geocache-style GPS coordinates"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "otter-conservation",
+        "name": "Otter Conservation",
+        "image": "/menu/otter-conservation.jpg",
+        "subcaption": "Build free software for otter nonprofits with Devin. Document everything.",
+        "description": "Partner with an otter conservation nonprofit and build real tools for them using Devin, free of charge. Scope what they actually need, build it in the open, and turn the whole thing into a content series. Goodwill plus a PR moment that fits the otter mascot.",
+        "breakdown": [
+          "Reach out to otter nonprofits in Monterey and beyond",
+          "Scope 2 to 3 projects they actually need",
+          "Build with Devin, document every session publicly",
+          "Mini-doc or blog series showing the build",
+          "Press push: AI company ships free tools for otter conservation",
+          "Maintain the tools, reuse as a sales case study"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Nonprofit Selection",
+            "multi": true,
+            "choices": [
+              "Monterey Bay Aquarium (sea otters)",
+              "Sea Otter Foundation & Trust",
+              "Friends of the Sea Otter",
+              "Multiple orgs (one project each)"
+            ]
+          },
+          {
+            "label": "Project Scope",
+            "multi": true,
+            "choices": [
+              "Data dashboard (population tracking)",
+              "Volunteer management platform",
+              "Donation and fundraising site rebuild",
+              "Educational content portal",
+              "Full suite (2 to 3 projects)"
+            ]
+          },
+          {
+            "label": "Documentation Format",
+            "multi": true,
+            "choices": [
+              "Blog series (5 to 7 posts)",
+              "Mini-documentary (10 to 15 min video)",
+              "Live-stream build sessions",
+              "Technical case study plus press kit"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "swag-lab",
+        "name": "Swag Lab",
+        "image": "/menu/swag-lab.jpg",
+        "subcaption": "Merch people actually want. Limited runs, real quality, no junk.",
+        "description": "A rotating catalog of merch that clears the 'would I buy this?' bar. Designed with independent artists, produced in limited runs, and handed out through events, milestones, and community achievements. No landfill swag.",
+        "breakdown": [
+          "Design partnerships with independent artists",
+          "Seasonal drops, 4 per year, new items each quarter",
+          "Tiered rarity: common at events, rare for milestones, legendary for champs",
+          "Quality gate: every item must pass the 'would I buy this?' test",
+          "Eco-friendly materials, minimal packaging, local production where possible"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Item Type",
+            "multi": true,
+            "choices": [
+              "Otter plushie (collector series)",
+              "Mechanical keycaps (artisan)",
+              "Water bottles (insulated, branded)",
+              "T-shirts (heavyweight, minimal)",
+              "Sticker packs (die-cut, holographic)",
+              "Enamel pins (limited edition)",
+              "Coasters (cork, illustrated)",
+              "Tote bags (canvas, screenprinted)",
+              "Pens (machined aluminum)"
+            ]
+          },
+          {
+            "label": "Distribution Method",
+            "multi": true,
+            "choices": [
+              "Event giveaways",
+              "Ambassador milestone rewards",
+              "Community achievement unlocks",
+              "Online store (limited drops)",
+              "Scavenger hunt prizes",
+              "Conference booth handouts"
+            ]
+          },
+          {
+            "label": "Production Run",
+            "choices": [
+              "Limited (50 to 100 units)",
+              "Standard (250 to 500 units)",
+              "Large (1000+ units)",
+              "Made-to-order (on-demand)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cognition-coffee-co",
+        "name": "Cognition Coffee Co.",
+        "image": "/cognitioncoffee.png",
+        "subcaption": "We send coffee, brewing gear, and Devin credits to your meetup. You fuel the builders.",
+        "description": "Cognition sponsors coffee for community events. Send a care package of beans, brewing gear, and Devin credits to any meetup host who needs fuel for their builders. We cover the caffeine, you cover the energy.",
+        "breakdown": [
+          "Coffee beans from a SF roaster",
+          "Branded brewing kit",
+          "Devin credit cards to hand out",
+          "Sticker pack",
+          "Photo checklist for socials"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Coffee Origin",
+            "choices": [
+              "SF Bay roaster",
+              "Local roaster in your city",
+              "Subscription (monthly restock)"
+            ]
+          },
+          {
+            "label": "Kit Size",
+            "choices": [
+              "Solo (5 cups)",
+              "Meetup (15 to 20 cups)",
+              "Hackathon (50+ cups)",
+              "Conference (200+ cups)"
+            ]
+          },
+          {
+            "label": "Add-ons",
+            "multi": true,
+            "choices": [
+              "Branded mugs",
+              "Otter plushie",
+              "Sticker pack",
+              "Devin credit cards",
+              "Tasting notes card"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cogs-in-the-machine",
+        "name": "Cogs in the Machine",
+        "image": "/menu/cogs-in-the-machine.jpg",
+        "subcaption": "A series profiling the people behind Devin. Hobbies, quirks, side projects, pets.",
+        "description": "A content series that profiles the people behind Devin. Engineers, researchers, designers, their side projects, weird hobbies, and the things that make them human. Builds FOMO for working at Cognition and shows the company has a pulse.",
+        "breakdown": [
+          "Monthly profile on the blog",
+          "Behind-the-scenes video tour",
+          "Day-in-the-life threads on X",
+          "Office dog and pet spotlight",
+          "What they are building with Devin"
+        ],
+        "orderingOptions": [
+          {
+            "label": "Format",
+            "multi": true,
+            "choices": [
+              "Long-form blog profile",
+              "5-min video",
+              "Twitter thread",
+              "Instagram carousel",
+              "LinkedIn post"
+            ]
+          },
+          {
+            "label": "Cadence",
+            "choices": [
+              "Weekly",
+              "Bi-weekly",
+              "Monthly",
+              "Quarterly"
+            ]
+          },
+          {
+            "label": "Featured Roles",
+            "multi": true,
+            "choices": [
+              "Engineers",
+              "Research scientists",
+              "Product designers",
+              "GTMs and ops",
+              "Founders",
+              "Interns"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
