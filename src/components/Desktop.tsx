@@ -95,6 +95,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
   const moved = useRef(false)
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.button !== 0) return
     dragging.current = true
     moved.current = false
     startPos.current = { x: pos.x, y: pos.y }
@@ -114,23 +115,24 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
   const onPointerUp = useCallback((e: React.PointerEvent) => {
     if (!dragging.current) return
     dragging.current = false
+    ;(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId)
     const dx = e.clientX - startMouse.current.x
     const dy = e.clientY - startMouse.current.y
     if (moved.current) {
-      const nx = Math.max(0, startPos.current.x + dx)
-      const ny = Math.max(0, startPos.current.y + dy)
+      const el = elRef.current
+      const iw = el?.offsetWidth ?? 80
+      const ih = el?.offsetHeight ?? 88
+      const nx = Math.min(window.innerWidth - iw, Math.max(0, startPos.current.x + dx))
+      const ny = Math.min(window.innerHeight - 40 - ih, Math.max(0, startPos.current.y + dy))
       onDragEnd(app.id, nx, ny)
-    } else if (elRef.current) {
-      elRef.current.style.transform = `translate(${startPos.current.x}px, ${startPos.current.y}px)`
+    } else {
+      if (elRef.current) elRef.current.style.transform = `translate(${startPos.current.x}px, ${startPos.current.y}px)`
+      onOpen(app.path)
     }
-  }, [app.id, onDragEnd])
+  }, [app.id, app.path, onDragEnd, onOpen])
 
-  const handleDoubleClick = useCallback(() => {
-    if (!moved.current) onOpen(app.path)
-  }, [app.path, onOpen])
-
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    if (e.detail === 1) onOpen(app.path)
+  const handleKeyOpen = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(app.path) }
   }, [app.path, onOpen])
 
   return (
@@ -144,8 +146,8 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
     >
       <button
         type="button"
-        onDoubleClick={handleDoubleClick}
-        onClick={handleClick}
+        aria-label={`Open ${app.title}`}
+        onKeyDown={handleKeyOpen}
         className="group flex w-20 cursor-default flex-col items-center gap-1.5 rounded-md px-1 py-2 text-center transition-colors hover:bg-panel/25 focus-visible:bg-panel/30"
       >
         <span

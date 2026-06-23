@@ -120,18 +120,39 @@ export const osMachine = setup({
       }),
     },
     CLOSE: {
-      actions: assign(({ context, event }) => ({
-        windows: context.windows.filter((wn) => wn.key !== event.key),
-        focusedKey: context.focusedKey === event.key ? null : context.focusedKey,
-      })),
+      actions: assign(({ context, event }) => {
+        const remaining = context.windows.filter((wn) => wn.key !== event.key)
+        const needRefocus = context.focusedKey === event.key
+        return {
+          windows: remaining,
+          focusedKey: needRefocus
+            ? remaining.filter((wn) => !wn.minimized).sort((a, b) => b.z - a.z)[0]?.key ?? null
+            : context.focusedKey,
+        }
+      }),
     },
     CLOSE_ALL: {
       actions: assign(() => ({ windows: [], focusedKey: null })),
     },
     MINIMIZE: {
-      actions: assign(({ context, event }) => ({
-        windows: patch(context.windows, event.key, (wn) => ({ ...wn, minimized: event.value ?? !wn.minimized })),
-      })),
+      actions: assign(({ context, event }) => {
+        const willMinimize = event.value ?? !context.windows.find((wn) => wn.key === event.key)?.minimized
+        const z = willMinimize ? context.topZ : context.topZ + 1
+        const windows = patch(context.windows, event.key, (wn) => ({
+          ...wn,
+          minimized: willMinimize,
+          ...(!willMinimize && { z }),
+        }))
+        return {
+          topZ: z,
+          windows,
+          focusedKey: willMinimize
+            ? (context.focusedKey === event.key
+                ? windows.filter((wn) => !wn.minimized).sort((a, b) => b.z - a.z)[0]?.key ?? null
+                : context.focusedKey)
+            : event.key,
+        }
+      }),
     },
     MAXIMIZE: {
       actions: assign(({ context, event }) => ({

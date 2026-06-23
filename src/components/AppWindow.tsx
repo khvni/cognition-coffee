@@ -75,15 +75,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
     y.set(item.y)
   }, [item.x, item.y, x, y])
 
-  const resizing = useRef<{ startX: number; startY: number; w: number; h: number } | null>(null)
-
-  const onResizePointerMove = (e: PointerEvent) => {
-    const r = resizing.current
-    if (!r) return
-    const w = Math.max(MIN_W, r.w + (e.clientX - r.startX))
-    const h = Math.max(MIN_H, r.h + (e.clientY - r.startY))
-    updateWindow(item.key, { w, h })
-  }
+  const resizeListeners = useRef<{ move: (e: PointerEvent) => void; up: () => void } | null>(null)
 
   const setBodySelect = (on: boolean) => {
     const props = ["user-select", "-webkit-user-select"]
@@ -93,35 +85,35 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
 
   const guardSelection = () => {
     setBodySelect(true)
-    const clear = () => {
-      setBodySelect(false)
-      window.removeEventListener("pointerup", clear)
-    }
+    const clear = () => { setBodySelect(false); window.removeEventListener("pointerup", clear) }
     window.addEventListener("pointerup", clear)
-  }
-
-  const onResizePointerUp = () => {
-    resizing.current = null
-    window.removeEventListener("pointermove", onResizePointerMove)
-    window.removeEventListener("pointerup", onResizePointerUp)
   }
 
   const startResize = (e: React.PointerEvent) => {
     e.stopPropagation()
     focusWindow(item.key)
-    resizing.current = { startX: e.clientX, startY: e.clientY, w: item.w, h: item.h }
+    const startX = e.clientX, startY = e.clientY, startW = item.w, startH = item.h
+    const key = item.key
     guardSelection()
-    window.addEventListener("pointermove", onResizePointerMove)
-    window.addEventListener("pointerup", onResizePointerUp)
+    const move = (ev: PointerEvent) => {
+      updateWindow(key, { w: Math.max(MIN_W, startW + (ev.clientX - startX)), h: Math.max(MIN_H, startH + (ev.clientY - startY)) })
+    }
+    const up = () => {
+      window.removeEventListener("pointermove", move)
+      window.removeEventListener("pointerup", up)
+      resizeListeners.current = null
+    }
+    resizeListeners.current = { move, up }
+    window.addEventListener("pointermove", move)
+    window.addEventListener("pointerup", up)
   }
 
   useEffect(() => {
     return () => {
       setBodySelect(false)
-      window.removeEventListener("pointermove", onResizePointerMove)
-      window.removeEventListener("pointerup", onResizePointerUp)
+      const l = resizeListeners.current
+      if (l) { window.removeEventListener("pointermove", l.move); window.removeEventListener("pointerup", l.up) }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const maximized = item.maximized
@@ -131,6 +123,8 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
 
   return (
     <motion.div
+      role="dialog"
+      aria-label={item.title}
       className="absolute flex flex-col overflow-hidden rounded-win bg-panel shadow-window"
       style={{
         ...positionStyle,
@@ -147,7 +141,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
       dragMomentum={false}
       dragConstraints={constraintsRef}
       dragElastic={0}
-      onMouseDownCapture={() => focusWindow(item.key)}
+      onPointerDownCapture={() => focusWindow(item.key)}
       onDragEnd={() => updateWindow(item.key, { x: x.get(), y: y.get() })}
       initial={{ opacity: 0, scale: 0.97 }}
       animate={
