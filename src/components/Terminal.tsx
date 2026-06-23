@@ -1,23 +1,143 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useApp } from "@/context/App"
+import { blogPosts } from "@/content/blog"
+import { MENU_SECTIONS } from "@/data/menu"
 
-type FsNode = { name: string; type: "file" | "dir"; path?: string; children?: FsNode[] }
+type FsNode = {
+  name: string
+  type: "file" | "dir"
+  path?: string
+  description?: string
+  children?: FsNode[]
+}
+
+const CONFIG_JSON = `{
+  "mcpServers": {
+    "cua-driver": {
+      "command": "cua-driver",
+      "args": ["mcp"],
+      "transport": "stdio"
+    }
+  }
+}`
+
+const skill = (name: string, children: FsNode[] = []): FsNode => ({
+  name,
+  type: "dir",
+  children: [{ name: "SKILL.md", type: "file", description: `Devin skill configuration - ${name}` }, ...children],
+})
+
+const ref = (name: string): FsNode => ({ name, type: "file", description: `Devin reference: ${name}` })
+const playbook = (name: string): FsNode => ({ name, type: "file", description: `Devin playbook: ${name}` })
+
+const DEVIN_TREE: FsNode = {
+  name: ".devin",
+  type: "dir",
+  children: [
+    { name: "config.json", type: "file", description: CONFIG_JSON },
+    {
+      name: "skills",
+      type: "dir",
+      children: [
+        skill("impeccable", [
+          {
+            name: "scripts",
+            type: "dir",
+            children: [{ name: "cleanup-deprecated.mjs", type: "file", description: "Devin script: cleanup-deprecated.mjs" }],
+          },
+          {
+            name: "reference",
+            type: "dir",
+            children: [
+              "ux-writing.md",
+              "extract.md",
+              "spatial-design.md",
+              "craft.md",
+              "motion-design.md",
+              "typography.md",
+              "interaction-design.md",
+              "color-and-contrast.md",
+              "responsive-design.md",
+            ].map(ref),
+          },
+        ]),
+        skill("fardeem-frontend"),
+        skill("poteto-mode", [
+          { name: "references", type: "dir", children: [ref("plan.md")] },
+          {
+            name: "playbooks",
+            type: "dir",
+            children: [
+              "bug-fix.md",
+              "trace-forensics.md",
+              "multi-phase-plan.md",
+              "autonomous-run.md",
+              "authoring-a-skill.md",
+              "session-pickup.md",
+              "eval.md",
+              "prototype.md",
+              "investigation.md",
+              "opening-a-pr.md",
+              "pause-safely.md",
+              "feature.md",
+              "visual-parity.md",
+              "perf-issue.md",
+              "runtime-forensics.md",
+              "refactoring.md",
+            ].map(playbook),
+          },
+        ]),
+        skill("pg-write-simply"),
+        skill("caveman"),
+      ],
+    },
+  ],
+}
+
+const blogPostNodes: FsNode[] = blogPosts.map((p) => ({
+  name: `${p.slug}.tsx`,
+  type: "file",
+  description: `Blog post: ${p.slug} - ${p.frontmatter.title}`,
+}))
+
+const menuItemNodes: FsNode[] = MENU_SECTIONS.flatMap((s) =>
+  s.items.map((item) => ({
+    name: `${item.id}.tsx`,
+    type: "file",
+    description: `Menu item: ${item.name}`,
+  })),
+)
 
 const FS: FsNode = {
   name: "/",
   type: "dir",
   children: [
-    { name: "about.tsx", type: "file", path: "/about" },
-    { name: "blog.tsx", type: "file", path: "/blog" },
-    { name: "community.tsx", type: "file", path: "/community" },
-    { name: "menu.tsx", type: "file", path: "/menu" },
-    { name: "scott.png", type: "file", path: "/scott" },
+    DEVIN_TREE,
+    { name: "about.tsx", type: "file", path: "/about", description: "About - Who is Ali Khani? DevRel strategist, builder, community architect." },
+    { name: "community.tsx", type: "file", path: "/community", description: "Community - Events, chapters, and feedback loops." },
+    { name: "scott.png", type: "file", path: "/scott", description: "[binary: image/png - 480x400 - it's just Scott.]" },
+    {
+      name: "blog",
+      type: "dir",
+      children: [
+        { name: "blog.tsx", type: "file", path: "/blog", description: "Blog - Field notes on AI-native community building and DevRel." },
+        { name: "posts", type: "dir", children: blogPostNodes },
+      ],
+    },
+    {
+      name: "menu",
+      type: "dir",
+      children: [
+        { name: "menu.tsx", type: "file", path: "/menu", description: "Menu - Browse the catalog, pick a program, customize the execution." },
+        { name: "items", type: "dir", children: menuItemNodes },
+      ],
+    },
   ],
 }
 
 const COMMANDS: Record<string, string> = {
   help: "list available commands",
-  ls: "list files in current directory",
+  ls: "list files (usage: ls [-a] [dir])",
   cd: "change directory (usage: cd <dir>)",
   cat: "view file info (usage: cat <file>)",
   open: "open page in OS (usage: open <file>)",
@@ -35,11 +155,17 @@ const BANNER = `   ____                  _ _   _              ____       __  __
 type Line = { id: number; content: string; type: "output" | "prompt" | "banner" }
 
 function resolve(cwd: string, target: string): string {
-  if (target === "/") return "/"
-  if (target === "..") return "/"
-  if (target === "." || target === "") return cwd
-  if (target.startsWith("/")) return target
-  return cwd === "/" ? `/${target}` : `${cwd}/${target}`
+  if (!target || target === ".") return cwd
+  if (target === "~" || target === "/") return "/"
+  const segments = target.startsWith("/")
+    ? target.split("/").filter(Boolean)
+    : [...cwd.split("/").filter(Boolean), ...target.split("/").filter(Boolean)]
+  const result: string[] = []
+  for (const seg of segments) {
+    if (seg === "..") result.pop()
+    else if (seg !== ".") result.push(seg)
+  }
+  return "/" + result.join("/")
 }
 
 function findNode(path: string): FsNode | null {
@@ -98,13 +224,16 @@ export const Terminal: React.FC = () => {
           break
         }
         case "ls": {
-          const target = arg ? resolve(cwd, arg) : cwd
+          const showAll = args.some((t) => t.startsWith("-") && t.includes("a"))
+          const pathArgs = args.filter((t) => !t.startsWith("-"))
+          const target = pathArgs.length ? resolve(cwd, pathArgs[0]) : cwd
           const node = findNode(target)
           if (!node || node.type !== "dir") {
-            addLine(`ls: cannot access '${arg || target}': No such directory`)
+            addLine(`ls: cannot access '${pathArgs[0] || target}': No such directory`)
             break
           }
-          const items = node.children ?? []
+          let items = node.children ?? []
+          if (!showAll) items = items.filter((c) => !c.name.startsWith("."))
           const listing = items.map((c) => (c.type === "dir" ? `${c.name}/` : c.name)).join("  ")
           addLine(listing || "(empty)")
           break
@@ -142,14 +271,7 @@ export const Terminal: React.FC = () => {
             addLine(`cat: ${arg}: Is a directory`)
             break
           }
-          const descriptions: Record<string, string> = {
-            "about.tsx": "About - Who is Ali Khani? DevRel strategist, builder, community architect.",
-            "blog.tsx": "Blog - Field notes on AI-native community building and DevRel.",
-            "community.tsx": "Community - Events, chapters, and feedback loops.",
-            "menu.tsx": "Menu - Browse the catalog, pick a program, customize the execution.",
-            "scott.png": "[binary: image/png - 480x400 - it's just Scott.]",
-          }
-          addLine(descriptions[node.name] ?? `${node.name}: (no preview available)`)
+          addLine(node.description ?? `${node.name}: (no preview available)`)
           break
         }
         case "open": {
@@ -226,7 +348,7 @@ export const Terminal: React.FC = () => {
         const files = node?.children ?? []
         const match = files.find((f) => f.name.startsWith(partial))
         if (match) {
-          parts[parts.length - 1] = match.name
+          parts[parts.length - 1] = match.name + (match.type === "dir" ? "/" : "")
           setInput(parts.join(" "))
         }
       }

@@ -18,13 +18,24 @@ const stagger = (i: number): React.CSSProperties =>
 const IndexPage: React.FC = () => (
   <div className="page-column">
     <div className="reveal" style={stagger(0)}>
+      <img
+        src="/devindesktop.jpg"
+        alt="Devin's desktop - the otter hard at work"
+        width={800}
+        height={600}
+        className="mb-6 w-full rounded-win border border-line shadow-card"
+        loading="eager"
+      />
+    </div>
+
+    <div className="reveal" style={stagger(1)}>
       <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
         Cognition Coffee
       </h1>
       <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
     </div>
 
-    <div className="social-row reveal" style={stagger(1)} aria-label="Social links">
+    <div className="social-row reveal" style={stagger(2)} aria-label="Social links">
       {SOCIALS.map((s) => (
         <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank" className="transition-[color,transform] duration-150 ease-out hover:text-ink">
           {socialIcons[s.label] ?? null}
@@ -36,7 +47,7 @@ const IndexPage: React.FC = () => (
       <h2
         className="section-heading reveal font-mono uppercase tracking-[0.06em] text-[0.6875rem]"
         id="menu-heading"
-        style={stagger(2)}
+        style={stagger(3)}
       >
         Links
       </h2>
@@ -45,7 +56,7 @@ const IndexPage: React.FC = () => (
           <li
             key={a.id}
             className="entry-row reveal"
-            style={stagger(3 + i)}
+            style={stagger(4 + i)}
           >
             <Link className="entry-link py-1.5" to={a.path}>
               <strong>{a.title}</strong>

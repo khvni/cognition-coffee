@@ -12,6 +12,13 @@ import { SOCIALS } from "@/data/experience"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { OnboardingTerminal } from "./OnboardingTerminal"
 import { ONBOARDING_FLOW } from "@/data/onboarding"
+import { trackEvent } from "@/lib/posthog"
+
+declare global {
+  interface Window {
+    __onboardingName?: string
+  }
+}
 
 const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
@@ -130,16 +137,22 @@ const SiteFooter: React.FC = () => (
   </footer>
 )
 
-const ONBOARD_COOKIE = "ccvm_onboarded"
+const ONBOARD_SESSION_KEY = "ccvm_onboarded"
 
 function hasOnboarded(): boolean {
-  if (typeof document === "undefined") return true
-  return document.cookie.split(";").some((c) => c.trim().startsWith(`${ONBOARD_COOKIE}=`))
+  if (typeof window === "undefined") return true
+  try {
+    return sessionStorage.getItem(ONBOARD_SESSION_KEY) === "1"
+  } catch {
+    return true
+  }
 }
 
 function setOnboarded() {
-  if (typeof document === "undefined") return
-  document.cookie = `${ONBOARD_COOKIE}=1; max-age=31536000; path=/; SameSite=Lax`
+  if (typeof window === "undefined") return
+  try {
+    sessionStorage.setItem(ONBOARD_SESSION_KEY, "1")
+  } catch {}
 }
 
 /** Top-level chrome. `os` renders the windowed desktop; `site` renders pages inline. */
@@ -148,14 +161,33 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
   const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
-    if (!hasOnboarded()) setShowOnboarding(true)
+    if (!hasOnboarded()) {
+      setShowOnboarding(true)
+      trackEvent("onboarding_started")
+    }
+  }, [])
+
+  const handleNameEntered = useCallback((name: string) => {
+    if (typeof window !== "undefined") {
+      window.__onboardingName = name
+    }
   }, [])
 
   const completeOnboarding = useCallback(() => {
     setOnboarded()
     closeAll()
-    open("/")
+    open("/terminal")
     setShowOnboarding(false)
+    trackEvent("onboarding_completed")
+  }, [closeAll, open])
+
+  const skipOnboarding = useCallback(() => {
+    setOnboarded()
+    closeAll()
+    open("/terminal")
+    setShowOnboarding(false)
+    trackEvent("onboarding_skipped")
+    trackEvent("onboarding_completed")
   }, [closeAll, open])
 
   if (experience === "site") {
@@ -173,7 +205,7 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
           <SiteFooter />
         </div>
         {showOnboarding && (
-          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} />
+          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} onSkip={skipOnboarding} onNameEntered={handleNameEntered} />
         )}
       </ErrorBoundary>
     )
@@ -190,7 +222,7 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
         </AnimatePresence>
         <TaskBar />
         {showOnboarding && (
-          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} />
+          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} onSkip={skipOnboarding} onNameEntered={handleNameEntered} />
         )}
       </div>
     </ErrorBoundary>

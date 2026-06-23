@@ -113,7 +113,7 @@ const glyphs: Record<AppId, (uid: string) => React.ReactNode> = {
   ),
   terminal: (uid) => (
     <Tile uid={uid} from="#1a1a1a" to="#0d0d0d">
-      <text x="12" y="20" fill="#8ec07c" style={{ fontSize: "9px", fontFamily: "monospace" }}>$_</text>
+      <text x="12" y="20" fill="#8ec07c" style={{ fontSize: "9px", fontFamily: "'Geist Mono Variable', ui-monospace, monospace" }}>$_</text>
       <g stroke="#8ec07c" strokeWidth="1.2" strokeLinecap="round" fill="none">
         <polyline points="13,26 17,30 13,34" />
         <line x1="19" y1="34" x2="30" y2="34" />

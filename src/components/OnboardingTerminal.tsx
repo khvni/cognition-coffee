@@ -5,6 +5,8 @@ import type { OnboardingStep } from "@/data/onboarding"
 type Props = {
   steps: OnboardingStep[]
   onComplete: () => void
+  onSkip?: () => void
+  onNameEntered?: (name: string) => void
 }
 
 const CHAR_MS = 28
@@ -48,7 +50,7 @@ const Cursor: React.FC = () => (
   />
 )
 
-export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
+export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete, onSkip, onNameEntered }) => {
   const [stepId, setStepId] = useState(steps[0]?.id ?? "")
   const [typed, setTyped] = useState("")
   const [lineIdx, setLineIdx] = useState(0)
@@ -185,6 +187,39 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
             </motion.div>
           )}
 
+          {showChoices && step.input && !step.final && (
+            <motion.div
+              className="mt-8"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+            >
+              <p className="mb-3 font-mono text-sm text-accent" style={GLOW}>
+                {step.input.prompt}
+              </p>
+              <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
+                <span aria-hidden="true">&gt;</span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputVal}
+                  onChange={(e) => setInputVal(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && inputVal.trim()) {
+                      onNameEntered?.(inputVal.trim())
+                      goTo(step.input!.next)
+                    }
+                  }}
+                  className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
+                  placeholder={step.input.placeholder ?? "type here"}
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                />
+              </div>
+            </motion.div>
+          )}
+
           {showChoices && step.final && (
             <motion.div
               className="mt-10"
@@ -207,7 +242,7 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
 
       <button
         type="button"
-        onClick={onComplete}
+        onClick={onSkip ?? onComplete}
         className="fixed bottom-6 right-6 z-[10003] cursor-pointer font-mono text-xs text-muted transition-colors hover:text-accent"
       >
         Skip

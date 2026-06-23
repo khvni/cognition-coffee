@@ -2,6 +2,8 @@ export type OnboardingStep = {
   id: string
   lines: string[]
   choices?: { label: string; next: string }[]
+  /** Free-text input prompt. When present, show a text input instead of choices. */
+  input?: { prompt: string; next: string; placeholder?: string }
   final?: boolean
 }
 
@@ -16,7 +18,14 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
       "Welcome to the Cognition Coffee terminal.",
       "You've found the back room. Not many people make it here.",
     ],
-    choices: [{ label: "> Initialize", next: "pitch" }],
+    choices: [{ label: "> Initialize", next: "name" }],
+  },
+  {
+    id: "name",
+    lines: [
+      "Before we begin - what should I call you?",
+    ],
+    input: { prompt: "What's your first name?", next: "pitch", placeholder: "your first name" },
   },
   {
     id: "pitch",
