@@ -3,7 +3,7 @@ import { SOCIALS, WORK, PROJECTS } from "@/data/experience"
 
 export const frontmatter = {
   title: "About",
-  description: "Community builder and AI-native GTM engineer in the Bay Area.",
+  description: "Community builder in the Bay Area. I work on GTM at Keysight and founded MTC.",
   eyebrow: "About",
   layout: "about" as const,
 }
@@ -22,9 +22,9 @@ const Content: FC = () => (
     <img className="avatar reveal" src="/avatar-ali-khani.png" alt="Ali Khani" width={56} height={56} style={stagger(0)} />
 
     <div className="intro-copy reveal" style={stagger(1)}>
-      <p>I'm a community builder and AI-native GTM engineer in the Bay Area, currently automating GTM across Keysight.</p>
-      <p>I founded MTC — a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My experience spans SWE, cybersecurity, data, AI, and GTM engineering across startups and public companies.</p>
-      <p>I built this site with Devin to show, not tell, what a community for the first AI software engineer could be.</p>
+      <p>I'm a community builder in the Bay Area. I work on go-to-market at Keysight, finding ways to put AI to work across the business.</p>
+      <p>Before that I founded MTC, a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My background runs through software, security, data, and AI at startups and public companies.</p>
+      <p>I built this site with Devin to prove what a community for the first AI software engineer could be.</p>
     </div>
 
     <div className="social-row reveal" style={stagger(2)} aria-label="Social links">

@@ -116,7 +116,7 @@ const Content: FC = () => (
     <h3>Regional (Champions)</h3>
     <p>
       The top-tier ambassadors from{" "}
-      <a href="/blog/brewing-community-90-days/#days-6090-the-roasters-guild--the-ambassador-program">
+      <a href="/blog/brewing-community/#days-6090-the-roasters-guild--the-ambassador-program">
         the Roasters' Guild
       </a>
       . Each champion owns a metro area or university cluster. They coordinate local hosts, run regional events, and carry feedback from their community to the product team.
@@ -183,15 +183,15 @@ const Content: FC = () => (
     </p>
     <p>
       The next step is{" "}
-      <a href="/blog/brewing-community-90-days/#days-6090-the-roasters-guild--the-ambassador-program">
+      <a href="/blog/brewing-community/#days-6090-the-roasters-guild--the-ambassador-program">
         the ambassador program that powers it
       </a>
       , and{" "}
-      <a href="/blog/brewing-community-90-days/#days-030-the-house-roast--curriculum-and-certification">
+      <a href="/blog/brewing-community/#days-030-the-house-roast--curriculum-and-certification">
         the curriculum that gives people something to teach
       </a>
       . Or start from the top:{" "}
-      <a href="/blog/brewing-community-90-days/">the full 90-day plan</a>.
+      <a href="/blog/brewing-community/">the full 90-day plan</a>.
     </p>
     <p>
       Ready to brew? <a href="/about#contact">Let's talk</a>.

@@ -156,7 +156,7 @@ const Content: FC = () => (
     <p>
       If any of this resonates, I'd love to walk through the details:{" "}
       <a href="/#menu">the full menu</a>,{" "}
-      <a href="/blog/cafe-cursor-to-cafe-cognition/">
+      <a href="/blog/cafe-cognition/">
         the playbook behind Cafe Cognition
       </a>
       , or <a href="/blog/devin-beyond-code/">how Devin reaches beyond code</a>.

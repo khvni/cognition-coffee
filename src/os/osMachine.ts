@@ -38,6 +38,7 @@ export type OsEvent =
   | { type: "CLOSE_ALL" }
   | { type: "FOCUS"; key: string }
   | { type: "FOCUS_PATH"; path: string }
+  | { type: "DEFOCUS" }
   | { type: "MINIMIZE"; key: string; value?: boolean }
   | { type: "MAXIMIZE"; key: string }
   | { type: "RESTORE"; key: string }
@@ -121,6 +122,9 @@ export const osMachine = setup({
           windows: patch(context.windows, target.key, (wn) => ({ ...wn, z, minimized: false })),
         }
       }),
+    },
+    DEFOCUS: {
+      actions: assign({ focusedKey: null }),
     },
     CLOSE: {
       actions: assign(({ context, event }) => {

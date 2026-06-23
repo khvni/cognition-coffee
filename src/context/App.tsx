@@ -19,6 +19,7 @@ type AppContextValue = {
   closeWindow: (key: string) => void
   closeAll: () => void
   focusWindow: (key: string) => void
+  defocus: () => void
   minimizeWindow: (key: string, value?: boolean) => void
   toggleMaximize: (key: string) => void
   updateWindow: (key: string, patch: WindowPatch) => void
@@ -110,6 +111,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
   const closeWindow = (key: string) => send({ type: "CLOSE", key })
   const closeAll = () => send({ type: "CLOSE_ALL" })
   const focusWindow = (key: string) => send({ type: "FOCUS", key })
+  const defocus = () => send({ type: "DEFOCUS" })
   const minimizeWindow = (key: string, value?: boolean) => send({ type: "MINIMIZE", key, value })
 
   const toggleMaximize = (key: string) => {
@@ -147,6 +149,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     closeWindow,
     closeAll,
     focusWindow,
+    defocus,
     minimizeWindow,
     toggleMaximize,
     updateWindow,
