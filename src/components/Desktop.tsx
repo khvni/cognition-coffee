@@ -95,6 +95,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
   const moved = useRef(false)
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.button !== 0) return
     dragging.current = true
     moved.current = false
     startPos.current = { x: pos.x, y: pos.y }
@@ -122,6 +123,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
       const ny = Math.max(0, startPos.current.y + dy)
       onDragEnd(app.id, nx, ny)
     } else {
+      if (elRef.current) elRef.current.style.transform = `translate(${startPos.current.x}px, ${startPos.current.y}px)`
       onOpen(app.path)
     }
   }, [app.id, app.path, onDragEnd, onOpen])
