@@ -61,11 +61,6 @@ const BlogIndex: React.FC = () => {
           Blog
         </h1>
       </div>
-      <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
-        <p className="lead mt-4" style={{ textWrap: "pretty" }}>
-          Playbooks for building Devin's community.
-        </p>
-      </div>
 
       <div className="mt-14">
         {years.map((year) => (
@@ -97,5 +92,5 @@ const BlogIndex: React.FC = () => {
 export default BlogIndex
 
 export const Head: HeadFC = () => (
-  <SEO title="Blog" description="Playbooks for building Devin's community." />
+  <SEO title="Blog" description="Notes on community and agents." />
 )

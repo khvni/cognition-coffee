@@ -22,7 +22,7 @@ const Logo: React.FC = () => (
 const SiteNav: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line bg-chrome">
       <nav className={`${SITE_CONTAINER} flex items-center gap-2 py-2.5`}>
         <Link to="/" className="inline-flex min-h-[40px] items-center gap-2 text-[15px] font-medium tracking-tight text-ink">
           <Logo />
@@ -80,7 +80,7 @@ const SiteNav: React.FC = () => {
 const footerLink = "inline-flex min-h-[32px] items-center text-[13px] text-muted transition-colors hover:text-ink"
 
 const SiteFooter: React.FC = () => (
-  <footer className="mt-24 border-t border-line">
+  <footer className="mt-24 border-t border-line bg-chrome">
     <div className={`${SITE_CONTAINER} py-12`}>
       <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
         <div className="max-w-xs">
@@ -91,7 +91,7 @@ const SiteFooter: React.FC = () => (
             Built with Devin. Made for builders.
           </p>
         </div>
-        <div className="flex gap-12">
+        <div className="flex gap-6 sm:gap-12">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-wide text-muted">Pages</p>
             <ul className="mt-3 space-y-1">
@@ -152,7 +152,7 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
   if (experience === "site") {
     return (
       <ErrorBoundary>
-        <div className="flex min-h-screen flex-col bg-canvas text-ink">
+        <div className="site-shell flex min-h-screen flex-col bg-canvas text-ink">
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-canvas"

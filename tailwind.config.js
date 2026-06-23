@@ -12,6 +12,7 @@ module.exports = {
         ink: "#171717",
         muted: "#6b7280",
         line: "#e5e5e5",
+        chrome: "#E8E8E8",
         accent: "#317CFF",
         "accent-ink": "#285AC8",
         wallpaper: "#e0e0e0",

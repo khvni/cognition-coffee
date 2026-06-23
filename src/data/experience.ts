@@ -9,8 +9,8 @@ export const BIO = {
   hook: "We're brewing the community for the first AI software engineer.",
   oneLiner:
     "I'm a community builder. I scaled a national tech nonprofit from one Berkeley club " +
-    "to 30+ chapters \u2014 and I'm a top-200 global Devin power user. I built this site with " +
-    "Devin to show, not tell, what a community for Devin could be.",
+    "to 30+ chapters. I'm a top-200 global Devin power user, and I built this site with " +
+    "Devin to prove what a community for Devin could be.",
   thesis:
     "Devin gives engineers superpowers. I build the community that teaches the world how to use them.",
 };
@@ -29,7 +29,7 @@ export const WORK: WorkEntry[] = [
   { mark: "K", markClass: "bg-[#5f7f62]", company: "Keysight", role: "Growth Insights & AI", date: "Current" },
   { mark: "M", markClass: "bg-[#527899]", company: "MTC", role: "Founder", date: "2023–current" },
   { mark: "B", markClass: "bg-[#151515]", company: "Bloom AI", role: "Co-Founder & CEO", date: "2025" },
-  { mark: "F", markClass: "bg-[#777]", company: "Five9", role: "Security SWE Intern", date: "2022" },
+  { mark: "F", markClass: "bg-[#777]", company: "Five9", role: "Security SWE Intern", date: "2024" },
 ];
 
 export type Project = { title: string; href: string; desc: string };

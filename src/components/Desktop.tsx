@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
+import { navigate } from "gatsby"
 import { motion, useReducedMotion } from "framer-motion"
 import { useApp } from "@/context/App"
 import { APPS, type AppDef } from "@/lib/apps"
@@ -166,7 +167,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
 
 /** The OS backdrop: the otter photo wallpaper under a vintage CRT overlay, plus launchable app icons. */
 export const Desktop: React.FC = () => {
-  const { open } = useApp()
+  const { open, focusedKey, defocus } = useApp()
   const icons = APPS.filter((a) => a.desktop)
   const [positions, setPositions] = useState<IconPositions>(() => loadPositions(icons))
 
@@ -182,6 +183,12 @@ export const Desktop: React.FC = () => {
     })
   }, [])
 
+  const onWallpaperClick = useCallback((e: React.MouseEvent) => {
+    if (e.target !== e.currentTarget) return
+    if (focusedKey) defocus()
+    else navigate("/")
+  }, [focusedKey, defocus])
+
   return (
     <div className="absolute inset-0 bottom-10 overflow-hidden bg-wallpaper">
       <div
@@ -190,7 +197,7 @@ export const Desktop: React.FC = () => {
         style={{ backgroundImage: `url(${WALLPAPER})`, backgroundSize: "cover", backgroundPosition: "center" }}
       />
 
-      <div className="relative h-full w-full">
+      <div className="relative h-full w-full" onClick={onWallpaperClick}>
         {icons.map((app) => (
           <DraggableIcon
             key={app.id}
