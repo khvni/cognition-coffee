@@ -1,6 +1,8 @@
 import { resolve, dirname } from "path"
 import { fileURLToPath } from "url"
+import { writeFileSync } from "fs"
 import sharp from "sharp"
+import pngToIco from "png-to-ico"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const staticDir = resolve(__dirname, "..", "static")
@@ -11,6 +13,18 @@ await sharp(src)
   .png()
   .toFile(resolve(staticDir, "apple-touch-icon.png"))
 console.log("Generated apple-touch-icon.png")
+
+const icoBuffers = await Promise.all(
+  [16, 32, 48].map((size) =>
+    sharp(src)
+      .resize(size, size, { fit: "cover", position: "center" })
+      .png()
+      .toBuffer()
+  )
+)
+const ico = await pngToIco(icoBuffers)
+writeFileSync(resolve(staticDir, "favicon.ico"), ico)
+console.log("Generated favicon.ico")
 
 const ogWidth = 1200
 const ogHeight = 630
