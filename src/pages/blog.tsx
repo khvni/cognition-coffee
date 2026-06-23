@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, type HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
-import { blogPosts } from "@/content/blog"
-
-const fmtDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+import { blogPosts, readingTime, readingTimeBySlug } from "@/content/blog"
 
 interface ApiPost {
   slug: string
@@ -37,6 +34,7 @@ const BlogIndex: React.FC = () => {
         slug: p.slug,
         title: api?.title ?? p.frontmatter.title,
         date: api?.date ?? p.frontmatter.date,
+        readingTime: api ? readingTime(api.content) : readingTimeBySlug.get(p.slug) ?? 1,
       }
     })
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -75,9 +73,9 @@ const BlogIndex: React.FC = () => {
                 <li key={post.slug}>
                   <Link className="entry-link" to={`/blog/${post.slug}`}>
                     <strong>{post.title}</strong>
-                    <time style={{ fontVariantNumeric: "tabular-nums" }}>
-                      {fmtDate(post.date)}
-                    </time>
+                    <span className="read-time" style={{ fontVariantNumeric: "tabular-nums" }}>
+                      {post.readingTime} min read
+                    </span>
                   </Link>
                 </li>
               ))}

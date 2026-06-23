@@ -325,7 +325,8 @@ a.section-heading:hover svg {
   column-gap: 16px;
   align-items: baseline;
 }
-.dated-list .entry-link time {
+.dated-list .entry-link time,
+.dated-list .entry-link .read-time {
   text-align: right;
   font-size: 0.875rem;
   color: theme("colors.muted");
@@ -334,7 +335,8 @@ a.section-heading:hover svg {
   .dated-list .entry-link {
     grid-template-columns: 1fr;
   }
-  .dated-list .entry-link time {
+  .dated-list .entry-link time,
+  .dated-list .entry-link .read-time {
     text-align: left;
     font-size: 0.8125rem;
   }

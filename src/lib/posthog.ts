@@ -1,11 +1,5 @@
 import posthog from "posthog-js"
 
-declare global {
-  interface Window {
-    __onboardingName?: string
-  }
-}
-
 let initialized = false
 
 export function initPostHog() {
@@ -17,12 +11,6 @@ export function initPostHog() {
     api_host: host,
     autocapture: false,
     disable_session_recording: true,
-    loaded: (ph) => {
-      if (typeof window !== "undefined" && window.__onboardingName) {
-        ph.capture("onboarding_name_entered", { name: window.__onboardingName })
-        ph.identify(window.__onboardingName)
-      }
-    },
   })
   initialized = true
 }

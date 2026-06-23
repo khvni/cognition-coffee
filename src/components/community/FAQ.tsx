@@ -47,7 +47,7 @@ export const FAQ: React.FC<{ items: FaqItem[] }> = ({ items }) => {
                   {item.answer}
                   {item.links && item.links.length > 0 && (
                     <span className="ml-1">
-                      {item.links.map((link, idx) => (
+                      {item.links.map((link, idx, links) => (
                         <React.Fragment key={link.href}>
                           <a
                             href={link.href}
@@ -57,7 +57,7 @@ export const FAQ: React.FC<{ items: FaqItem[] }> = ({ items }) => {
                           >
                             {link.label}
                           </a>
-                          {idx < item.links.length - 1 ? " and " : ""}
+                          {idx < links.length - 1 ? " and " : ""}
                         </React.Fragment>
                       ))}
                       .

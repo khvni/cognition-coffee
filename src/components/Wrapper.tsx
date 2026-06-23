@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "gatsby"
 import { AnimatePresence } from "framer-motion"
 import { useApp } from "@/context/App"
@@ -10,15 +10,6 @@ import { ModeToggle } from "./ModeToggle"
 import { SITE_CONTAINER } from "@/lib/layout"
 import { SOCIALS } from "@/data/experience"
 import { ErrorBoundary } from "./ErrorBoundary"
-import { OnboardingTerminal } from "./OnboardingTerminal"
-import { ONBOARDING_FLOW } from "@/data/onboarding"
-import { trackEvent } from "@/lib/posthog"
-
-declare global {
-  interface Window {
-    __onboardingName?: string
-  }
-}
 
 const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
@@ -137,57 +128,34 @@ const SiteFooter: React.FC = () => (
   </footer>
 )
 
-const ONBOARD_SESSION_KEY = "ccvm_onboarded"
+const FIRST_BOOT_KEY = "ccvm_first_boot"
 
-function hasOnboarded(): boolean {
+function hasBooted(): boolean {
   if (typeof window === "undefined") return true
   try {
-    return sessionStorage.getItem(ONBOARD_SESSION_KEY) === "1"
+    return sessionStorage.getItem(FIRST_BOOT_KEY) === "1"
   } catch {
     return true
   }
 }
 
-function setOnboarded() {
+function setFirstBooted() {
   if (typeof window === "undefined") return
   try {
-    sessionStorage.setItem(ONBOARD_SESSION_KEY, "1")
+    sessionStorage.setItem(FIRST_BOOT_KEY, "1")
   } catch {}
 }
 
 /** Top-level chrome. `os` renders the windowed desktop; `site` renders pages inline. */
 export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { experience, windows, constraintsRef, closeAll, open } = useApp()
-  const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
-    if (!hasOnboarded()) {
-      setShowOnboarding(true)
-      trackEvent("onboarding_started")
+    if (!hasBooted()) {
+      setFirstBooted()
+      closeAll()
+      open("/")
     }
-  }, [])
-
-  const handleNameEntered = useCallback((name: string) => {
-    if (typeof window !== "undefined") {
-      window.__onboardingName = name
-    }
-  }, [])
-
-  const completeOnboarding = useCallback(() => {
-    setOnboarded()
-    closeAll()
-    open("/terminal")
-    setShowOnboarding(false)
-    trackEvent("onboarding_completed")
-  }, [closeAll, open])
-
-  const skipOnboarding = useCallback(() => {
-    setOnboarded()
-    closeAll()
-    open("/terminal")
-    setShowOnboarding(false)
-    trackEvent("onboarding_skipped")
-    trackEvent("onboarding_completed")
   }, [closeAll, open])
 
   if (experience === "site") {
@@ -204,9 +172,6 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
           <main id="main-content" tabIndex={-1} className="w-full flex-1">{children}</main>
           <SiteFooter />
         </div>
-        {showOnboarding && (
-          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} onSkip={skipOnboarding} onNameEntered={handleNameEntered} />
-        )}
       </ErrorBoundary>
     )
   }
@@ -221,9 +186,6 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
           ))}
         </AnimatePresence>
         <TaskBar />
-        {showOnboarding && (
-          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} onSkip={skipOnboarding} onNameEntered={handleNameEntered} />
-        )}
       </div>
     </ErrorBoundary>
   )

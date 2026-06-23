@@ -33,6 +33,11 @@ const IndexPage: React.FC = () => (
         Cognition Coffee
       </h1>
       <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+        I put this together to show what a Devin community could feel like: a place where builders gather around
+        coffee-shop energy, share what they ship, and help the product get better. The desktop is a nod to the
+        early-2000s internet cafe, when going online felt like going somewhere.
+      </p>
     </div>
 
     <div className="social-row reveal" style={stagger(2)} aria-label="Social links">
