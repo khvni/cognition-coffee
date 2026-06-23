@@ -9,7 +9,7 @@ export const ProseWaxFigure: React.FC<Props> = ({ caption, children }) => (
       {children}
     </div>
     {caption && (
-      <figcaption className="mt-3 text-center font-mono text-xs uppercase tracking-wide text-muted">{caption}</figcaption>
+      <figcaption className="mt-3 text-center text-xs uppercase tracking-wide text-muted">{caption}</figcaption>
     )}
   </figure>
 )

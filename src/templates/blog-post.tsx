@@ -14,10 +14,14 @@ interface ApiPost {
 }
 
 const fmtDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
 
 const fmtDateShort = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric" })
 
 const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
   const { slug } = pageContext as PageContext
@@ -61,7 +65,7 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
       <div className="post-stagger" style={{ "--stagger": s++ } as React.CSSProperties}>
         {date && (
           <p
-            className="mt-8 m-0 font-mono text-[0.75rem] text-muted"
+            className="mt-8 m-0 text-[0.75rem] text-muted"
             style={{ fontVariantNumeric: "tabular-nums" }}
           >
             {fmtDate(date)}
