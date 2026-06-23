@@ -100,11 +100,11 @@ const CHANNELS = [
   },
 ]
 
-const TAG_BG: Record<string, string> = {
-  VOICE: "bg-panel",
-  EVENT: "bg-accent/10 text-accent-ink",
-  PRESS: "bg-panel",
-  MEDIA: "bg-panel",
+const TAG_STYLE: Record<string, { bg: string; text?: string }> = {
+  VOICE: { bg: "bg-panel" },
+  EVENT: { bg: "bg-accent/10", text: "text-accent-ink" },
+  PRESS: { bg: "bg-panel" },
+  MEDIA: { bg: "bg-panel" },
 }
 
 const Arrow: FC = () => (
@@ -146,7 +146,7 @@ const Content: FC = () => {
           Vol. I
         </p>
         <h2
-          className="font-serif text-[1.625rem] font-medium leading-tight text-ink"
+          className="text-[1.625rem] font-medium leading-tight tracking-tight text-ink"
           style={{ margin: "8px 0 0", letterSpacing: "-0.01em", textWrap: "balance" }}
         >
           The Devin Dispatch
@@ -172,7 +172,7 @@ const Content: FC = () => {
         </span>
         <h2
           id="dispatch-featured"
-          className="font-serif text-[1.5rem] font-medium leading-snug text-ink"
+          className="text-[1.5rem] font-medium leading-snug tracking-tight text-ink"
           style={{ margin: "8px 0 0", textWrap: "balance" }}
         >
           S&atilde;o Paulo Hackathon Draws 355+ Builders
@@ -201,7 +201,7 @@ const Content: FC = () => {
             >
               <div className="flex items-center gap-2">
                 <span
-                  className={`inline-block rounded px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-wider text-muted ${TAG_BG[w.tag] ?? "bg-panel"}`}
+                  className={`inline-block rounded px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-wider ${(TAG_STYLE[w.tag]?.text) ?? "text-muted"} ${TAG_STYLE[w.tag]?.bg ?? "bg-panel"}`}
                 >
                   {w.tag}
                 </span>
@@ -282,8 +282,8 @@ const Content: FC = () => {
           href="https://lu.ma/devin"
           target="_blank"
           rel="noopener"
-          className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.75rem]"
-          style={{ color: "#285AC8", textDecoration: "none" }}
+          className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.75rem] text-accent-ink"
+          style={{ textDecoration: "none" }}
           whileTap={{ scale: 0.96 }}
         >
           Full calendar on lu.ma/devin
