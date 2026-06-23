@@ -50,10 +50,10 @@ describe("ModeToggle", () => {
     expect(mockSetExperience).toHaveBeenCalledWith("site")
   })
 
-  it("OS button has aria-pressed true when experience is os", () => {
+  it("OS button has aria-checked true when experience is os", () => {
     render(<ModeToggle />)
-    expect(screen.getByText("OS")).toHaveAttribute("aria-pressed", "true")
-    expect(screen.getByText("Site")).toHaveAttribute("aria-pressed", "false")
+    expect(screen.getByText("OS")).toHaveAttribute("aria-checked", "true")
+    expect(screen.getByText("Site")).toHaveAttribute("aria-checked", "false")
   })
 
   it("returns null on mobile", () => {

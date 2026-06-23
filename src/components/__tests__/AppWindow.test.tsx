@@ -37,12 +37,12 @@ vi.mock("framer-motion", () => {
           "drag", "dragControls", "dragListener", "dragMomentum",
           "dragConstraints", "dragElastic", "initial", "animate",
           "exit", "transition", "onAnimationComplete", "whileHover",
-          "whileTap", "variants", "onMouseDownCapture", "onDragEnd",
+          "whileTap", "variants", "onMouseDownCapture", "onPointerDownCapture", "onDragEnd",
         ])
         for (const [k, v] of Object.entries(props)) {
           if (!blocked.has(k)) domSafe[k] = v
         }
-        return <div style={safeStyle} onMouseDown={props.onMouseDownCapture} {...domSafe}>{children}</div>
+        return <div style={safeStyle} onMouseDown={props.onMouseDownCapture ?? props.onPointerDownCapture} {...domSafe}>{children}</div>
       },
     },
     useDragControls: () => ({ start: vi.fn() }),
@@ -116,8 +116,8 @@ describe("AppWindow", () => {
 
   it("focuses window on mousedown", () => {
     render(<AppWindow item={baseItem} />)
-    const container = screen.getByText("App Content").closest("div[style]")!
-    fireEvent.mouseDown(container)
+    const dialog = screen.getByRole("dialog")
+    fireEvent.mouseDown(dialog)
     expect(mockFocusWindow).toHaveBeenCalledWith("test-key")
   })
 
