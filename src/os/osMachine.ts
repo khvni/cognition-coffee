@@ -58,7 +58,7 @@ export const osMachine = setup({
   types: { context: {} as OsContext, events: {} as OsEvent },
 }).createMachine({
   id: "os",
-  initial: "os",
+  initial: "site",
   context: { windows: [], focusedKey: null, topZ: 10, keySeq: 0 },
   on: {
     OPEN: {

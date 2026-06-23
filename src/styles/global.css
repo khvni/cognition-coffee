@@ -1433,3 +1433,13 @@ a.section-heading:hover svg {
     max-height: 90%;
   }
 }
+
+/* No-flash mode gate: the pre-hydration script sets data-cc-mode. */
+html[data-cc-mode="os"] .site-shell {
+  display: none;
+}
+html[data-cc-mode="os"] body {
+  background-image: url(/wallpapers/otter-desktop.jpg);
+  background-size: cover;
+  background-position: center;
+}

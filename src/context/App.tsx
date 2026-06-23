@@ -67,11 +67,11 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     if (!isBrowser || booted.current) return
     booted.current = true
     mobile.current = isMobile()
-    if (mobile.current) { send({ type: "SET_MODE", mode: "site" }); return }
+    if (mobile.current) return
 
     const savedLocal = window.localStorage.getItem(STORE_KEY) as Experience | null
     const initial = savedLocal ?? (window.innerWidth < 880 ? "site" : "os")
-    if (initial !== "os") send({ type: "SET_MODE", mode: initial })
+    if (initial === "os") send({ type: "SET_MODE", mode: "os" })
 
     if (initial === "os" && !window.localStorage.getItem(BOOT_KEY)) {
       window.localStorage.setItem(BOOT_KEY, "1")
@@ -81,6 +81,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
 
   useEffect(() => {
     if (!isBrowser) return
+    document.documentElement.dataset.ccMode = experience
     window.localStorage.setItem(STORE_KEY, experience)
   }, [experience])
 
