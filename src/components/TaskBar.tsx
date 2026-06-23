@@ -18,7 +18,7 @@ export const TaskBar: React.FC = () => {
   const time = useClock()
 
   return (
-    <div className="absolute inset-x-0 bottom-0 z-[9999] flex h-10 items-center gap-2 border-t border-line bg-panel/90 px-3 backdrop-blur">
+    <div role="toolbar" aria-label="Taskbar" className="absolute inset-x-0 bottom-0 z-[9999] flex h-10 items-center gap-2 border-t border-line bg-panel/90 px-3 backdrop-blur">
       <span className="select-none whitespace-nowrap text-[13px] font-medium tracking-tight text-ink">
         Cognition <span className="text-accent-ink">Coffee</span>
       </span>

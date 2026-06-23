@@ -119,8 +119,11 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
     const dx = e.clientX - startMouse.current.x
     const dy = e.clientY - startMouse.current.y
     if (moved.current) {
-      const nx = Math.max(0, startPos.current.x + dx)
-      const ny = Math.max(0, startPos.current.y + dy)
+      const el = elRef.current
+      const iw = el?.offsetWidth ?? 80
+      const ih = el?.offsetHeight ?? 88
+      const nx = Math.min(window.innerWidth - iw, Math.max(0, startPos.current.x + dx))
+      const ny = Math.min(window.innerHeight - 40 - ih, Math.max(0, startPos.current.y + dy))
       onDragEnd(app.id, nx, ny)
     } else {
       if (elRef.current) elRef.current.style.transform = `translate(${startPos.current.x}px, ${startPos.current.y}px)`
@@ -143,6 +146,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
     >
       <button
         type="button"
+        aria-label={`Open ${app.title}`}
         onKeyDown={handleKeyOpen}
         className="group flex w-20 cursor-default flex-col items-center gap-1.5 rounded-md px-1 py-2 text-center transition-colors hover:bg-panel/25 focus-visible:bg-panel/30"
       >
