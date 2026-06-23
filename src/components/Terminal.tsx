@@ -113,6 +113,7 @@ const FS: FsNode = {
   type: "dir",
   children: [
     DEVIN_TREE,
+    { name: "home.tsx", type: "file", path: "/", description: "Home - Ali's house blend of engineering and community." },
     { name: "about.tsx", type: "file", path: "/about", description: "About - Who is Ali Khani? DevRel strategist, builder, community architect." },
     { name: "community.tsx", type: "file", path: "/community", description: "Community - Events, chapters, and feedback loops." },
     { name: "scott.png", type: "file", path: "/scott", description: "[binary: image/png - 480x400 - it's just Scott.]" },
