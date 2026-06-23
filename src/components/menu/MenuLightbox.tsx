@@ -112,7 +112,7 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) =>
               <p className="lightbox-desc">{item.description}</p>
 
               <section className="lightbox-section" aria-labelledby="lb-breakdown">
-                <details className="lightbox-details" open>
+                <details className="lightbox-details">
                   <summary className="lightbox-details__summary">
                     <span className="lightbox-section-heading" id="lb-breakdown">What's Included</span>
                     <svg className="lightbox-details__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
