@@ -38,13 +38,13 @@ export const TiptapEditor: React.FC<Props> = ({ content, onChange }) => {
     onUpdate: ({ editor: e }) => onChange(e.getHTML()),
   })
 
-  if (!editor) return null
-
   useEffect(() => {
-    if (content && content !== editor.getHTML()) {
+    if (editor && content && content !== editor.getHTML()) {
       editor.commands.setContent(content, { emitUpdate: false })
     }
   }, [content, editor])
+
+  if (!editor) return null
 
   const cmd = (fn: (c: Chain) => Chain) => () => fn(editor.chain().focus()).run()
 

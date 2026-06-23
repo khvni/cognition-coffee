@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import type { HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { TiptapEditor } from "@/components/editor/Editor"
+import { ErrorBoundary } from "@/components/ErrorBoundary"
 
 interface Post {
   slug: string
@@ -202,7 +203,9 @@ const AdminPage: React.FC = () => {
             placeholder="Excerpt (optional)"
             className="w-full rounded border border-line bg-surface px-3 py-2 text-ink placeholder:text-muted focus:border-accent focus:outline-none"
           />
-          <TiptapEditor content={html} onChange={setHtml} />
+          <ErrorBoundary>
+            <TiptapEditor content={html} onChange={setHtml} />
+          </ErrorBoundary>
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 
