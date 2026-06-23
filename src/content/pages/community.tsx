@@ -8,7 +8,7 @@ export const frontmatter = {
 }
 
 const targets = [
-  { value: "30+", unit: "cities", label: "Cafe Cognition cities (target Year 1)" },
+  { value: "30+", unit: "cities", label: "Cognition Coffee cities (target Year 1)" },
   { value: "4", unit: "hubs", label: "Devin Days flagship hubs" },
   { value: "3", unit: "tiers", label: "Ambassador tiers" },
   { value: "1", unit: "weekly", label: "Devin Office Hours" },
@@ -16,11 +16,11 @@ const targets = [
 
 const events = [
   { name: "Devin Day SF", place: "San Francisco, USA", date: "Jul 12" },
-  { name: "Cafe Cognition NYC", place: "New York, USA", date: "Jul 15" },
+  { name: "Cognition Coffee NYC", place: "New York, USA", date: "Jul 15" },
   { name: "Devin Builders Meetup", place: "Austin, USA", date: "Jul 18" },
   { name: "Orchestrating Fleets of Devins", place: "London, UK", date: "Jul 22" },
   { name: "Devin Hack Night", place: "Bangalore, India", date: "Jul 26" },
-  { name: "Cafe Cognition Berlin", place: "Berlin, Germany", date: "Jul 29" },
+  { name: "Cognition Coffee Berlin", place: "Berlin, Germany", date: "Jul 29" },
   { name: "Devin Office Hours (virtual)", place: "Remote", date: "Aug 1" },
   { name: "Non-coding Devin: Research & Docs", place: "Toronto, Canada", date: "Aug 5" },
 ]

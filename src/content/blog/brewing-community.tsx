@@ -76,12 +76,12 @@ const Content: FC = () => (
     <p>
       The curriculum isn't just courses. It's community-contributed playbooks, hands-on labs, and a strong focus on non-coding use cases (research synthesis, living documentation, design-system maintenance, GTM automation) that reach users beyond senior engineers.
     </p>
-    <h3>Days 30–60: Single-Origin Series, Cafe Cognition</h3>
+    <h3>Days 30–60: Single-Origin Series, Cognition Coffee</h3>
     <p>
-      With a curriculum in place, the next step is getting people together. Cafe Cognition is the meetup format: pop-ups in coffee shops, Devin credits, live demos, and local builders sharing what they've built.
+      With a curriculum in place, the next step is getting people together. Cognition Coffee is the meetup format: pop-ups in coffee shops, Devin credits, live demos, and local builders sharing what they've built.
     </p>
     <p>
-      But what sets this apart from a one-off event series is the <strong>meetup-in-a-box kit</strong>: everything a host needs in one package, run-of-show, slide deck, live-demo script, swag templates, and a photo checklist. Make it easy enough that a motivated developer in Bangalore or Berlin can run a Cafe Cognition with no coordination overhead.
+      But what sets this apart from a one-off event series is the <strong>meetup-in-a-box kit</strong>: everything a host needs in one package, run-of-show, slide deck, live-demo script, swag templates, and a photo checklist. Make it easy enough that a motivated developer in Bangalore or Berlin can run a Cognition Coffee with no coordination overhead.
     </p>
     <p>
       Pilot in SF and NYC first. Measure repeat attendance, builds shipped, and host satisfaction, not just headcount.
@@ -157,7 +157,7 @@ const Content: FC = () => (
       If any of this resonates, I'd love to walk through the details:{" "}
       <a href="/#menu">the full menu</a>,{" "}
       <a href="/blog/cafe-cognition/">
-        the playbook behind Cafe Cognition
+        the playbook behind Cognition Coffee
       </a>
       , or <a href="/blog/devin-beyond-code/">how Devin reaches beyond code</a>.
     </p>

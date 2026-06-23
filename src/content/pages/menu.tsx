@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, type FC } from "react"
 import { MENU_SECTIONS, type MenuItem } from "@/data/menu"
 import { MenuCard } from "@/components/menu/MenuCard"
 import { MenuLightbox } from "@/components/menu/MenuLightbox"
+import { Cart, type CartEntry } from "@/components/menu/Cart"
 
 export const frontmatter = {
   title: "The Menu",
@@ -11,6 +12,7 @@ export const frontmatter = {
 
 const Content: FC = () => {
   const [active, setActive] = useState<MenuItem | null>(null)
+  const [cart, setCart] = useState<CartEntry[]>([])
   const [currentSection, setCurrentSection] = useState(MENU_SECTIONS[0].id)
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map())
 
@@ -34,6 +36,16 @@ const Content: FC = () => {
     const el = sectionRefs.current.get(id)
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" })
   }, [])
+
+  const addToCart = useCallback((entry: CartEntry) => {
+    setCart((prev) => [...prev, entry])
+  }, [])
+
+  const removeFromCart = useCallback((key: string) => {
+    setCart((prev) => prev.filter((e) => e.key !== key))
+  }, [])
+
+  const clearCart = useCallback(() => setCart([]), [])
 
   return (
     <>
@@ -77,7 +89,8 @@ const Content: FC = () => {
         </section>
       ))}
 
-      <MenuLightbox item={active} onClose={() => setActive(null)} />
+      <MenuLightbox item={active} onClose={() => setActive(null)} onAddToCart={addToCart} />
+      <Cart items={cart} onRemove={removeFromCart} onClear={clearCart} />
     </>
   )
 }

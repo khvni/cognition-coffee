@@ -3,7 +3,7 @@ import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 import { ProseWaxFigure } from "@/components/prose/ProseWaxFigure"
 
 export const frontmatter = {
-  title: "From Cafe Cursor to Cafe Cognition",
+  title: "From Cafe Cursor to Cognition Coffee",
   description:
     "Cursor turned coffee shops into a 200-city community engine. Here's the playbook for doing it for Devin, and where a sustained chapter network beats pop-ups.",
   date: "2026-06-11",
@@ -71,12 +71,12 @@ const Content: FC = () => (
         <strong>The key:</strong> a shared playbook (meetup-in-a-box) plus tiered leadership (national, regional, local) that lets local leaders operate autonomously while staying aligned with the brand.
       </p>
     </ProseWaxFigure>
-    <h2>The Cafe Cognition playbook</h2>
+    <h2>The Cognition Coffee playbook</h2>
     <p>
-      Cafe Cognition combines Cafe Cursor's warmth with MTC's chapter structure. Here's how it works.
+      Cognition Coffee combines Cafe Cursor's warmth with MTC's chapter structure. Here's how it works.
     </p>
     <h3>The meetup-in-a-box kit</h3>
-    <p>Every Cafe Cognition host gets a single package with everything they need:</p>
+    <p>Every Cognition Coffee host gets a single package with everything they need:</p>
     <ul>
       <li>
         <strong>Run-of-show template</strong>: a minute-by-minute schedule that works for 15 or 50 attendees. Arrive, settle in, intro from the host, a 10-minute live Devin demo, open build time, show-and-tell, wrap.
@@ -95,7 +95,7 @@ const Content: FC = () => (
       </li>
     </ul>
     <p>
-      The kit reduces friction to near zero. A motivated developer in Bangalore, Berlin, or Buenos Aires can run a Cafe Cognition without calling anyone at Cognition HQ.
+      The kit reduces friction to near zero. A motivated developer in Bangalore, Berlin, or Buenos Aires can run a Cognition Coffee without calling anyone at Cognition HQ.
     </p>
     <h3>The host leaderboard</h3>
     <p>Good organizers are rare. When you find them, you keep them.</p>
@@ -123,7 +123,7 @@ const Content: FC = () => (
     </p>
     <h3>Local (Hosts)</h3>
     <p>
-      Individual organizers who run Cafe Cognition pop-ups using the kit. They know their city: which cafe has the best light, which coworking space has reliable Wi-Fi, which local Slack channel to promote in. That local knowledge is irreplaceable, and the chapter model lets them use it.
+      Individual organizers who run Cognition Coffee pop-ups using the kit. They know their city: which cafe has the best light, which coworking space has reliable Wi-Fi, which local Slack channel to promote in. That local knowledge is irreplaceable, and the chapter model lets them use it.
     </p>
     <ProseWaxFigure caption="How 1 club became 30+ chapters">
       <p>At MTC, the three-tier model worked because each level had a clear job:</p>
@@ -144,7 +144,7 @@ const Content: FC = () => (
     </ProseWaxFigure>
     <h2>Devin Days</h2>
     <p>
-      While Cafe Cognition is the grassroots engine, Devin Days are the flagship moments. Quarterly hack days in major tech hubs (SF, NYC, Austin, London, Bangalore) that bring together the best builders, debut new features, and create content that keeps momentum between events.
+      While Cognition Coffee is the grassroots engine, Devin Days are the flagship moments. Quarterly hack days in major tech hubs (SF, NYC, Austin, London, Bangalore) that bring together the best builders, debut new features, and create content that keeps momentum between events.
     </p>
     <p>
       Think of Devin Days as a product launch crossed with a community reunion. They give the distributed chapter network something to orbit.
@@ -162,7 +162,7 @@ const Content: FC = () => (
         <strong>Repeat hosts</strong>: the percentage of hosts who run a second event within 90 days
       </li>
       <li>
-        <strong>Builds shipped</strong>: projects started or completed at Cafe Cognition events (the signal that people are learning, not just attending)
+        <strong>Builds shipped</strong>: projects started or completed at Cognition Coffee events (the signal that people are learning, not just attending)
       </li>
       <li>
         <strong>Events per month (organic)</strong>: events run without central coordination, purely by local hosts using the kit

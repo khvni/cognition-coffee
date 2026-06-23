@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import type { MenuItem } from "@/data/menu"
+import type { CartEntry } from "./Cart"
 
 type Props = {
   item: MenuItem | null
   onClose: () => void
+  onAddToCart: (entry: CartEntry) => void
 }
 
-export const MenuLightbox: React.FC<Props> = ({ item, onClose }) => {
-  const [selected, setSelected] = useState<Record<string, string>>({})
+type Selections = Record<string, string | string[]>
+
+export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) => {
+  const [selected, setSelected] = useState<Selections>({})
 
   useEffect(() => {
     if (item) setSelected({})
@@ -30,6 +34,36 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose }) => {
       document.body.style.overflow = ""
     }
   }, [item, handleKeyDown])
+
+  const toggleSingle = (label: string, choice: string) =>
+    setSelected((prev) => {
+      const next = { ...prev }
+      if (next[label] === choice) delete next[label]
+      else next[label] = choice
+      return next
+    })
+
+  const toggleMulti = (label: string, choice: string) =>
+    setSelected((prev) => {
+      const cur = Array.isArray(prev[label]) ? prev[label] as string[] : []
+      const next = cur.includes(choice) ? cur.filter((c) => c !== choice) : [...cur, choice]
+      const out = { ...prev }
+      if (next.length === 0) delete out[label]
+      else out[label] = next
+      return out
+    })
+
+  const handleAdd = () => {
+    if (!item) return
+    onAddToCart({
+      key: `${item.id}-${Date.now()}`,
+      itemId: item.id,
+      itemName: item.name,
+      itemImage: item.image,
+      selections: selected,
+    })
+    onClose()
+  }
 
   return (
     <AnimatePresence initial={false}>
@@ -82,32 +116,47 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose }) => {
               </section>
 
               <section className="lightbox-section" aria-labelledby="lb-options">
-                <h3 className="lightbox-section-heading" id="lb-options">Customize</h3>
+                <h3 className="lightbox-section-heading" id="lb-options">Customize Your Order</h3>
                 <div className="lightbox-options">
                   {item.orderingOptions.map((opt) => (
                     <fieldset key={opt.label} className="lightbox-option-group">
-                      <legend className="lightbox-option-legend">{opt.label}</legend>
+                      <legend className="lightbox-option-legend">
+                        {opt.label}
+                        {opt.multi && <span className="lightbox-option-hint">Pick any</span>}
+                      </legend>
                       <div className="lightbox-radio-group">
-                        {opt.choices.map((choice) => (
-                          <label key={choice} className="lightbox-radio">
-                            <input
-                              type="radio"
-                              name={`opt-${item.id}-${opt.label}`}
-                              value={choice}
-                              checked={selected[opt.label] === choice}
-                              onChange={() =>
-                                setSelected((prev) => ({ ...prev, [opt.label]: choice }))
-                              }
-                            />
-                            <span className="lightbox-radio__indicator" aria-hidden="true" />
-                            <span className="lightbox-radio__text">{choice}</span>
-                          </label>
-                        ))}
+                        {opt.choices.map((choice) => {
+                          const isMulti = opt.multi
+                          const isChecked = isMulti
+                            ? Array.isArray(selected[opt.label]) && (selected[opt.label] as string[]).includes(choice)
+                            : selected[opt.label] === choice
+                          return (
+                            <label key={choice} className="lightbox-radio">
+                              <input
+                                type={isMulti ? "checkbox" : "radio"}
+                                name={`opt-${item.id}-${opt.label}`}
+                                value={choice}
+                                checked={isChecked}
+                                onChange={() =>
+                                  isMulti ? toggleMulti(opt.label, choice) : toggleSingle(opt.label, choice)
+                                }
+                              />
+                              <span className={`lightbox-radio__indicator${isMulti ? " lightbox-radio__indicator--check" : ""}`} aria-hidden="true" />
+                              <span className="lightbox-radio__text">{choice}</span>
+                            </label>
+                          )
+                        })}
                       </div>
                     </fieldset>
                   ))}
                 </div>
               </section>
+            </div>
+
+            <div className="lightbox-footer">
+              <button type="button" className="lightbox-add" onClick={handleAdd}>
+                Add to Order
+              </button>
             </div>
           </motion.div>
         </motion.div>
