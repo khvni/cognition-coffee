@@ -136,7 +136,7 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete }) => {
       <Crt />
       <div
         ref={scrollRef}
-        className="relative z-[10002] h-full w-full max-w-2xl overflow-y-auto px-6 py-10 sm:px-10 sm:py-24"
+        className="relative z-[10002] h-full w-full max-w-2xl overflow-y-auto bg-[#0a0a0a] px-8 py-12 sm:px-14 sm:py-24"
       >
         <pre
           className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-accent"
