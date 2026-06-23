@@ -14,7 +14,7 @@ import { ErrorBoundary } from "./ErrorBoundary"
 const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
 const Logo: React.FC = () => (
-  <img src="/cognitioncoffee.png" alt="Cognition Coffee" width={28} height={28} className="object-contain" />
+  <img src="/cognitioncoffee.png" alt="Cognition Coffee" width={36} height={36} className="object-contain sm:size-7" />
 )
 
 const SiteNav: React.FC = () => {
@@ -24,6 +24,7 @@ const SiteNav: React.FC = () => {
       <nav className={`${SITE_CONTAINER} flex items-center gap-2 py-2.5`}>
         <Link to="/" className="inline-flex min-h-[40px] items-center gap-2 text-[15px] font-medium tracking-tight text-ink">
           <Logo />
+          <span className="sm:hidden">Cognition Coffee</span>
         </Link>
         <ul className="ml-1 hidden items-center gap-0.5 sm:flex">
           {NAV.map((a) => (
