@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useEffect, useRef } from "react"
+import React, { createContext, useContext, useEffect, useRef, useState } from "react"
 import { navigate } from "gatsby"
 import { useMachine } from "@xstate/react"
 import { osMachine, type Experience, type WindowItem } from "@/os/osMachine"
 import { appForPath, APPS } from "@/lib/apps"
 import { isMobile } from "@/lib/mobile"
+import { useKeyboardShortcuts } from "@/lib/useKeyboardShortcuts"
+import { ShortcutsHelp } from "@/components/ShortcutsHelp"
 
 type WindowPatch = Partial<Pick<WindowItem, "x" | "y" | "w" | "h" | "minimized" | "maximized">>
 
@@ -54,6 +56,7 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
   const experience = state.value as Experience
   const { windows, focusedKey } = state.context
   const constraintsRef = useRef<HTMLDivElement | null>(null)
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
 
   const mobile = useRef(isBrowser && isMobile())
 
@@ -124,6 +127,16 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     }
   }
 
+  useKeyboardShortcuts({
+    experience,
+    windows,
+    focusedKey,
+    closeWindow,
+    minimizeWindow,
+    toggleMaximize,
+    onHelp: () => setShortcutsOpen(true),
+  })
+
   const value: AppContextValue = {
     experience,
     setExperience,
@@ -140,5 +153,10 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     constraintsRef,
   }
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+      {experience === "os" && <ShortcutsHelp open={shortcutsOpen} onOpenChange={setShortcutsOpen} />}
+    </AppContext.Provider>
+  )
 }

@@ -31,9 +31,11 @@ body {
   color: #fff;
 }
 
+:focus {
+  outline: none;
+}
 :focus-visible {
-  outline: 2px solid transparent;
-  box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
+  outline: none;
 }
 
 /* Long-form content rendered from Markdown/MDX — editorial STIX serif. */
@@ -283,8 +285,7 @@ a.section-heading:hover svg {
   text-underline-offset: 3px;
   transition: text-decoration-color 140ms ease;
 }
-.entry-link:hover strong,
-.entry-link:focus-visible strong {
+.entry-link:hover strong {
   text-decoration-color: currentColor;
 }
 .entry-link span {
@@ -391,11 +392,6 @@ a.section-heading:hover svg {
 }
 .social-row a:active {
   transform: scale(0.96);
-}
-.social-row a:focus-visible {
-  color: theme("colors.ink");
-  outline: 2px solid transparent;
-  box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
 }
 @media (max-width: 700px) {
   .social-row {
@@ -670,10 +666,6 @@ a.section-heading:hover svg {
 .menu-card:active {
   transform: scale(0.97);
 }
-.menu-card:focus-visible {
-  outline: 2px solid transparent;
-  box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
-}
 
 .menu-card__image {
   aspect-ratio: 16 / 10;
@@ -904,14 +896,8 @@ a.section-heading:hover svg {
   transition-duration: 150ms;
   transition-timing-function: ease;
 }
-.lightbox-radio input:focus-visible + .lightbox-radio__indicator {
-  box-shadow: inset 0 0 0 2px theme("colors.line"), 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
-}
 .lightbox-radio input:checked + .lightbox-radio__indicator {
   box-shadow: inset 0 0 0 5px theme("colors.accent");
-}
-.lightbox-radio input:checked:focus-visible + .lightbox-radio__indicator {
-  box-shadow: inset 0 0 0 5px theme("colors.accent"), 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
 }
 
 .lightbox-radio__text {

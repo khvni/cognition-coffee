@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useApp } from "@/context/App"
 import { isMobile } from "@/lib/mobile"
 
@@ -9,6 +9,7 @@ const spring = { type: "spring" as const, duration: 0.3, bounce: 0 }
 export const ModeToggle: React.FC = () => {
   const { experience, setExperience } = useApp()
   const [mobile, setMobile] = useState(false)
+  const reduce = useReducedMotion()
   useEffect(() => { setMobile(isMobile()) }, [])
   if (mobile) return null
   return (
@@ -19,7 +20,7 @@ export const ModeToggle: React.FC = () => {
           layoutId="mode-pill"
           className="absolute inset-y-0.5 rounded-full bg-ink"
           style={{ width: "calc(50% - 2px)", left: experience === "os" ? 2 : "calc(50%)" }}
-          transition={spring}
+          transition={reduce ? { duration: 0 } : spring}
         />
       </AnimatePresence>
       <button

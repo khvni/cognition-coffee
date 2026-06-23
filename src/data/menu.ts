@@ -30,13 +30,13 @@ export const MENU_SECTIONS: MenuSection[] = [
   {
     id: "ambassadors",
     title: "Ambassadors",
-    subtitle: "Recruit, onboard, and support Devin's power-user evangelist network.",
+    subtitle: "Turn Devin's most active users into community leaders.",
     items: [
       {
         id: "roasters-guild",
         name: "The Roasters' Guild",
         image: "/menu/roasters-guild.jpg",
-        subcaption: "Build a three-tier ambassador network of power users who evangelize Devin across their communities",
+        subcaption: "A three-tier ambassador program that turns power users into community leaders",
         description:
           "A structured recruiting engine that identifies top Devin power users and converts them into community leaders. Three tiers — Contributor, Advocate, Champion — with escalating access, recognition, and product-feedback seats.",
         breakdown: [
@@ -65,7 +65,7 @@ export const MENU_SECTIONS: MenuSection[] = [
         id: "first-brew",
         name: "First Brew",
         image: "/menu/first-brew.jpg",
-        subcaption: "Structured 30-day onboarding that turns new ambassadors into confident Devin evangelists",
+        subcaption: "A 30-day onboarding that takes new ambassadors from interested to hosting their first event",
         description:
           "A structured 30-day program that takes new ambassadors from 'interested' to 'hosting their first event.' Includes async modules, live cohort calls, a welcome kit, and a clear first-event playbook.",
         breakdown: [
@@ -94,7 +94,7 @@ export const MENU_SECTIONS: MenuSection[] = [
         id: "support-hub",
         name: "Support Hub",
         image: "/menu/support-hub.jpg",
-        subcaption: "Ongoing resources, recognition, and direct product-team access for active ambassadors",
+        subcaption: "The support backbone \u2014 dedicated channels, swag, and a direct line to the product team",
         description:
           "The operational backbone that keeps ambassadors engaged long-term. Dedicated Slack channels, monthly swag drops, quarterly recognition, and a direct feedback pipeline to Cognition's product team.",
         breakdown: [

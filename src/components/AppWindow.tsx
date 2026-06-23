@@ -142,14 +142,22 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
       dragConstraints={constraintsRef}
       dragElastic={0}
       onPointerDownCapture={() => focusWindow(item.key)}
-      onDragEnd={() => updateWindow(item.key, { x: x.get(), y: y.get() })}
-      initial={{ opacity: 0, scale: 0.97 }}
+      onDragEnd={() => {
+        let nx = x.get(), ny = y.get()
+        const vh = typeof window !== "undefined" ? window.innerHeight : 800
+        const vw = typeof window !== "undefined" ? window.innerWidth : 1280
+        ny = Math.max(0, Math.min(ny, vh - TASKBAR_H - 36))
+        nx = Math.max(-item.w + 100, Math.min(nx, vw - 100))
+        x.set(nx); y.set(ny)
+        updateWindow(item.key, { x: nx, y: ny })
+      }}
+      initial={reduce ? false : { opacity: 0, scale: 0.97 }}
       animate={
         item.minimized
           ? { opacity: 0, scale: 0.9, transitionEnd: { visibility: "hidden" } }
           : { opacity: 1, scale: 1, visibility: "visible" }
       }
-      exit={{ opacity: 0, scale: 0.97 }}
+      exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
       transition={reduce ? { duration: 0 } : { duration: 0.18, ease: "easeOut" }}
     >
       <div

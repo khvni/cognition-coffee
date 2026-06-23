@@ -32,6 +32,8 @@ export const TaskBar: React.FC = () => {
             <button
               key={w.key}
               type="button"
+              aria-label={`${w.title}${w.minimized ? " (minimized)" : ""}`}
+              aria-pressed={active}
               onClick={() => (w.minimized ? minimizeWindow(w.key, false) : active ? minimizeWindow(w.key, true) : focusWindow(w.key))}
               className={`flex max-w-[170px] shrink-0 items-center gap-1.5 rounded-md border px-2 py-1 text-[12px] transition-[color,background-color,border-color,transform] duration-150 ease-out active:scale-[0.96] ${
                 active ? "border-line bg-canvas text-ink" : "border-transparent text-muted hover:bg-canvas hover:text-ink"
@@ -39,7 +41,7 @@ export const TaskBar: React.FC = () => {
               title={w.title}
             >
               <AppIcon id={w.app.icon} size={13} />
-              <span className="truncate">{w.title}</span>
+              <span className={`truncate ${w.minimized ? "underline decoration-dashed decoration-muted/40 underline-offset-2" : ""}`}>{w.title}</span>
             </button>
           )
         })}

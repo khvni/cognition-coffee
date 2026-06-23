@@ -19,7 +19,7 @@ const IndexPage: React.FC = () => (
   <div className="page-column">
     <div className="reveal" style={stagger(0)}>
       <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
-        The Cognition Coffee Company
+        Cognition Coffee
       </h1>
       <p className="lead [text-wrap:pretty]">{BIO.hook}</p>
     </div>
@@ -69,7 +69,7 @@ const IndexPage: React.FC = () => (
         <span>Blog</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </Link>
-      <p className="empty-state [text-wrap:pretty]">Field notes on community and agents.</p>
+      <p className="empty-state [text-wrap:pretty]">Playbooks for building Devin's community.</p>
     </section>
   </div>
 )

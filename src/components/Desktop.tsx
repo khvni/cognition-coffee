@@ -148,7 +148,7 @@ const DraggableIcon: React.FC<DraggableIconProps> = ({ app, pos, onDragEnd, onOp
         type="button"
         aria-label={`Open ${app.title}`}
         onKeyDown={handleKeyOpen}
-        className="group flex w-20 cursor-default flex-col items-center gap-1.5 rounded-md px-1 py-2 text-center transition-colors hover:bg-panel/25 focus-visible:bg-panel/30"
+        className="group flex w-20 cursor-default flex-col items-center gap-1.5 rounded-md px-1 py-2 text-center transition-colors hover:bg-panel/25 active:scale-95 active:bg-panel/40"
       >
         <span
           className="block transition-transform group-hover:-translate-y-0.5"

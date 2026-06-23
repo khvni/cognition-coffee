@@ -14,7 +14,7 @@ import { ErrorBoundary } from "./ErrorBoundary"
 const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
 const Wordmark: React.FC = () => (
-  <>The Cognition <span className="text-accent-ink">Coffee</span> Company</>
+  <>Cognition <span className="text-accent-ink">Coffee</span></>
 )
 
 const SiteNav: React.FC = () => {
@@ -86,7 +86,7 @@ const SiteFooter: React.FC = () => (
             <Wordmark />
           </Link>
           <p className="mt-2 text-[13px] leading-relaxed text-muted">
-            Built with Devin. Fueled by coffee.
+            Built with Devin. Made for builders.
           </p>
         </div>
         <div className="flex gap-12">
@@ -129,8 +129,14 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
     return (
       <ErrorBoundary>
         <div className="flex min-h-screen flex-col bg-canvas text-ink">
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-canvas"
+          >
+            Skip to content
+          </a>
           <SiteNav />
-          <main className="w-full flex-1">{children}</main>
+          <main id="main-content" tabIndex={-1} className="w-full flex-1">{children}</main>
           <SiteFooter />
         </div>
       </ErrorBoundary>

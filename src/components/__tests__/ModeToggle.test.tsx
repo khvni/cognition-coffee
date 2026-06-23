@@ -17,6 +17,7 @@ vi.mock("framer-motion", () => ({
     span: ({ children, ...props }: any) => <span>{children}</span>,
   },
   AnimatePresence: ({ children }: any) => <>{children}</>,
+  useReducedMotion: () => false,
 }))
 
 let mockIsMobile = false

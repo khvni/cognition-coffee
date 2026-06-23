@@ -7,9 +7,9 @@ import type { GatsbyConfig } from "gatsby"
  */
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: "The Cognition Coffee Company",
+    title: "Cognition Coffee — Community for Devin Builders",
     description:
-      "Freshly brewed community for the first AI software engineer.",
+      "Curriculum, meetups, and ambassadors for developers building with Devin.",
     siteUrl: "https://cognitioncoffee.co",
     author: "Ali Khani",
   },
