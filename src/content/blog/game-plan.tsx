@@ -44,7 +44,7 @@ const Content: FC = () => (
     <p>
       Get people together in coffee shops with a <strong>meetup-in-a-box kit</strong>: run-of-show, slide deck, live-demo script, swag, and a host leaderboard. A motivated developer in Bangalore or Berlin can run one without calling HQ.
     </p>
-    <h3>Ambassadors: the Roasters' Guild</h3>
+    <h3>Ambassadors: Recruitment</h3>
     <p>
       Three tiers: Contributor, Advocate, and Champion. The key is the feedback loop: weekly Devin Office Hours where ambassadors surface real problems users hit, which feeds community playbooks and the product team.
     </p>

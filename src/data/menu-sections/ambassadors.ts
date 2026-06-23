@@ -6,16 +6,16 @@ export const ambassadorsSection: MenuSection = {
   subtitle: "Turn Devin's most active users into community leaders.",
   items: [
     {
-      id: "roasters-guild",
-      name: "The Roasters' Guild",
-      image: "/menu/roasters-guild.jpg",
+      id: "recruitment",
+      name: "Recruitment",
+      image: "/menu/recruitment.jpg",
       subcaption: "Three tiers. One pipeline from power user to community leader.",
       description:
         "Find the people already doing the work, then give them a title and a seat at the table. Three tiers, each with more access and more to lose. Promotions are earned, not handed out.",
       breakdown: [
         "Source from usage data, GitHub, and community activity",
         "Open applications with tier-specific criteria",
-        "Cohort onboarding with a 30-day activation sprint",
+        "Cohort intake with a 30-day activation sprint",
         "Quarterly tier reviews and public promotions",
         "Champions get a direct line to the product team",
       ],
@@ -49,9 +49,9 @@ export const ambassadorsSection: MenuSection = {
       ],
     },
     {
-      id: "first-brew",
-      name: "First Brew",
-      image: "/menu/first-brew.jpg",
+      id: "onboarding",
+      name: "Onboarding",
+      image: "/menu/onboarding.jpg",
       subcaption: "30 days from 'interested' to 'hosted their first event.'",
       description:
         "New ambassadors don't know what to do first. This gives them a calendar. Four weeks of async modules, two live calls, a welcome kit on their doorstep, and one concrete event to run by day 30.",
@@ -73,10 +73,17 @@ export const ambassadorsSection: MenuSection = {
         },
         {
           label: "Welcome Kit",
+          multi: true,
           choices: [
-            "Otter plushie + pin + sticker pack",
-            "Heavyweight tee + notebook + pen",
-            "Insulated bottle + keycap + tote",
+            "Otter plushie",
+            "Stickers",
+            "Pin",
+            "Heavyweight tee",
+            "Notebook",
+            "Pen",
+            "Insulated bottle",
+            "Keycap",
+            "Tote",
             "Full premium box",
           ],
         },

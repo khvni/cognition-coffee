@@ -74,8 +74,8 @@ const Content: FC = () => (
     <hr />
     <p>
       Read next:{" "}
-      <a href="/blog/brewing-community/#days-6090-the-roasters-guild--the-ambassador-program">
-        the Roasters' Guild
+      <a href="/blog/brewing-community/#days-6090-recruitment--the-ambassador-program">
+        Recruitment
       </a>
       ,{" "}
       <a href="/blog/brewing-community/#days-030-the-house-roast--curriculum-and-certification">

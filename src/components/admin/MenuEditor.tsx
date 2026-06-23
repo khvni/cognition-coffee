@@ -300,7 +300,7 @@ export function MenuEditor({ data, onSave, onBack }: MenuEditorProps) {
               type="text"
               value={draft.name}
               onChange={(e) => handleNameChange(e.target.value)}
-              placeholder="e.g. The Roasters' Guild"
+              placeholder="e.g. Recruitment"
               className={inputClass}
             />
           </Field>

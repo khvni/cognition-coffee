@@ -25,8 +25,8 @@ async function makeCoffeeImage() {
   await sharp(bg).jpeg({ quality: 85 }).toFile("static/menu/cognition-coffee-co.jpg")
 }
 
-// Cogs in the Machine — dark with gear icon
-async function makeCogsImage() {
+// Team Profiles — dark with gear icon
+async function makeTeamProfilesImage() {
   const bg = Buffer.from(
     `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -46,12 +46,12 @@ async function makeCogsImage() {
           return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="8" stroke-linecap="round"/>`
         }).join("")}
       </g>
-      <text x="${W/2}" y="${H - 50}" font-family="Geist Mono, monospace" font-size="18" font-weight="500" fill="#317CFF" text-anchor="middle" letter-spacing="1">COGS IN THE MACHINE</text>
+      <text x="${W/2}" y="${H - 50}" font-family="Geist Mono, monospace" font-size="18" font-weight="500" fill="#317CFF" text-anchor="middle" letter-spacing="1">TEAM PROFILES</text>
     </svg>`
   )
-  await sharp(bg).jpeg({ quality: 85 }).toFile("static/menu/cogs-in-the-machine.jpg")
+  await sharp(bg).jpeg({ quality: 85 }).toFile("static/menu/team-profiles.jpg")
 }
 
 await makeCoffeeImage()
-await makeCogsImage()
+await makeTeamProfilesImage()
 console.log("Generated 2 menu images")

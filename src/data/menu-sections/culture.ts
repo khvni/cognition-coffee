@@ -201,9 +201,9 @@ export const cultureSection: MenuSection = {
       ],
     },
     {
-      id: "cogs-in-the-machine",
-      name: "Cogs in the Machine",
-      image: "/menu/cogs-in-the-machine.jpg",
+      id: "team-profiles",
+      name: "Team Profiles",
+      image: "/menu/team-profiles.jpg",
       subcaption:
         "A series profiling the people behind Devin. Hobbies, quirks, side projects, pets.",
       description:

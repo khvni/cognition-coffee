@@ -17,7 +17,7 @@ users into a community that teaches the world how to build with agents:
 |---|-------|---------|
 | 01 | The House Roast | **Devin Mastery Curriculum & Certification** |
 | 02 | Single-Origin Series | **Cafe Cognition - a global meetup network** |
-| 03 | The Roasters' Guild | **The Devin Ambassador Program** |
+| 03 | Recruitment | **The Devin Ambassador Program** |
 
 Plus a reimagined community home and a set of field notes on community and agents.
 
