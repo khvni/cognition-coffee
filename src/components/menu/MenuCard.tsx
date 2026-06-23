@@ -9,13 +9,25 @@ type Props = {
 
 export const MenuCard: React.FC<Props> = ({ item, onClick, onAddToCart }) => (
   <div className="menu-card">
-    <button
-      type="button"
-      className="menu-card__image"
-      onClick={onClick}
-      aria-label={`View details for ${item.name}`}
-    >
-      <img src={item.image} alt={item.name} loading="lazy" />
+    <div className="menu-card__media">
+      <button
+        type="button"
+        className="menu-card__image"
+        onClick={onClick}
+        aria-label={`View details for ${item.name}`}
+      >
+        <img src={item.image} alt={item.name} loading="lazy" />
+      </button>
+      <button
+        type="button"
+        className="menu-card__expand"
+        onClick={onClick}
+        aria-label={`View details for ${item.name}`}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </button>
       {onAddToCart && (
         <button
           type="button"
@@ -28,7 +40,7 @@ export const MenuCard: React.FC<Props> = ({ item, onClick, onAddToCart }) => (
           </svg>
         </button>
       )}
-    </button>
+    </div>
     <button
       type="button"
       className="menu-card__body"
