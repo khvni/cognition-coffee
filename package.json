@@ -2,7 +2,7 @@
   "name": "cognition-coffee",
   "version": "1.0.0",
   "private": true,
-  "description": "The Cognition Coffee Company — a desktop-OS-style site for a Devin developer community, built with Gatsby.",
+  "description": "The Cognition Coffee Company - a desktop-OS-style site for a Devin developer community, built with Gatsby.",
   "engines": {
     "node": ">=20.0.0"
   },

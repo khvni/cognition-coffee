@@ -1,4 +1,4 @@
-# AGENTS.md — Conventions for building cognitioncoffee.co
+# AGENTS.md - Conventions for building cognitioncoffee.co
 
 Read this fully before touching code.
 
@@ -7,8 +7,8 @@ Read this fully before touching code.
 **The Cognition Coffee Company** is a concept site presenting a developer-community
 strategy for Cognition's Devin. It's built as a **PostHog-style mock OS**: a desktop
 with draggable windows plus a normal arranged-pages "site" view, toggled at runtime.
-The look is **clean and minimal** — a white canvas (`#ffffff`), near-black ink, and **Devin blue
-`#317CFF` as the single accent** — with the Devin otter as the OS wallpaper (a photo
+The look is **clean and minimal** - a white canvas (`#ffffff`), near-black ink, and **Devin blue
+`#317CFF` as the single accent** - with the Devin otter as the OS wallpaper (a photo
 under a subtle CRT overlay). Stack is **Gatsby 5 (React 18 + TypeScript)**; all page
 content is authored in `.tsx` content components.
 
@@ -17,34 +17,34 @@ content is authored in `.tsx` content components.
 Every Devin working in this repo operates in these modes. They keep the code clean,
 concise, and well-engineered, and the UI distinctive (not generic "AI aesthetic").
 The first three are **vendored into this repo at `.devin/skills/`**, so they're available
-in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` directly.
+in any cloud session - invoke `/poteto-mode`, `/caveman`, and `/impeccable` directly.
 
-- **`/poteto-mode`** — adopt poteto's disciplined engineering style. Read
+- **`/poteto-mode`** - adopt poteto's disciplined engineering style. Read
   `.devin/skills/poteto-mode/SKILL.md` (especially its **Principles** section) **before**
   writing code. Note: its trigger list references sibling skills (`how`, `architect`,
-  `unslop`, `babysit`, …) that are **not** all vendored here — apply its Principles
+  `unslop`, `babysit`, …) that are **not** all vendored here - apply its Principles
   regardless; don't block on a missing leaf skill.
-- **`/caveman` when coding** — maximum signal, minimum tokens. Terse, well-factored
+- **`/caveman` when coding** - maximum signal, minimum tokens. Terse, well-factored
   code: no filler, no over-engineering, no defensive bloat, minimal comments, shared
-  abstractions over copy-paste. Concise ≠ clever — keep it readable.
-- **`/impeccable` for design-system & UI work** — apply impeccable principles when
+  abstractions over copy-paste. Concise ≠ clever - keep it readable.
+- **`/impeccable` for design-system & UI work** - apply impeccable principles when
   building or extending components, layouts, and tokens: distinctive, production-grade
   interfaces that avoid the generic AI look. Pairs with `docs/DESIGN_SYSTEM.md`.
-- **`deslop` before every PR** — a git-diff slop detector
+- **`deslop` before every PR** - a git-diff slop detector
   (`github.com/dabit3/deslop`). Run `deslop -b main` and `deslop score` on your
   branch. **Required gate: 0 high-severity findings and a slop score in the clean band
-  (0–19).** It flags AI tells — obvious comments, triple null-checks, debug logs, empty
+  (0-19).** It flags AI tells - obvious comments, triple null-checks, debug logs, empty
   catch blocks, needless try/catch. Fix them, don't suppress them.
 
 > Note on comments: deslop rightly flags *obvious in-function comments* as slop. The
-> intentional file-header docblocks (explaining brand/architecture intent) are not slop —
+> intentional file-header docblocks (explaining brand/architecture intent) are not slop -
 > keep those terse and purposeful, and don't add line-by-line narration inside functions.
 
 ## Golden rules
 
 1. **The design system is law.** Colors, fonts, radii, and shadows are Tailwind tokens
    in `tailwind.config.js` (`theme.extend`); base/prose styles live in
-   `src/styles/global.css`. Never hardcode a hex that exists as a token — use the
+   `src/styles/global.css`. Never hardcode a hex that exists as a token - use the
    classes (`text-accent-ink`, `border-accent`, `bg-canvas`) or `theme("colors.x")`.
 2. **Reuse the primitives.** The OS/site shell is built from `Wrapper`, `Desktop`,
    `AppWindow`, `TaskBar`, `ModeToggle`, `Otter`, and `AppIcon`. Compose them; don't reinvent.
@@ -73,13 +73,31 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 - **Data lives in `src/data/` and `src/lib/`**, not inline in pages, so multiple pages
   share one source of truth.
 - **Images**: put static assets in `static/` (served at the site root). `public/` is
-  Gatsby **build output** — gitignored, wiped by `gatsby clean`; never put sources there.
+  Gatsby **build output** - gitignored, wiped by `gatsby clean`; never put sources there.
   Prefer SVG for marks/textures; compress anything > ~500 KB before committing.
 - **`@` alias**: `@/*` → `src/*`. It's configured in `tsconfig.json` **and** mirrored
-  into webpack via `onCreateWebpackConfig` in `gatsby-node.ts` — update both if it moves.
+  into webpack via `onCreateWebpackConfig` in `gatsby-node.ts` - update both if it moves.
 - **Accessibility**: real `alt` text, semantic headings (one `<h1>` per page),
   visible focus states (already styled), color contrast AA.
 - **Responsive**: design mobile-first; test at 375px, 768px, 1280px.
+
+## Protected assets
+
+- **Do NOT change `static/cognitioncoffee.png`.** This file is the official Cognition
+  Coffee logo - the Devin Otter holding a coffee mug. It must not be replaced with any
+  other image (generic coffee mug icons, alternate logo versions, etc.). Any change to
+  this file requires **explicit user approval**.
+
+## Build & test commands
+
+- **Build:** `env -u ELECTRON_RUN_AS_NODE npm run build`
+- **Test:** `env -u ELECTRON_RUN_AS_NODE npx vitest run`
+- **Dev:** `env -u ELECTRON_RUN_AS_NODE npm run dev`
+- **Clean:** `env -u ELECTRON_RUN_AS_NODE npm run clean`
+
+> The `env -u ELECTRON_RUN_AS_NODE` prefix unsets a variable that, when inherited from
+> an Electron-based host, breaks Node child processes used by Gatsby/Vitest. Always
+> include it when running build/test/dev from within such an environment.
 
 ## Commit / PR etiquette
 
@@ -93,7 +111,7 @@ in any cloud session — invoke `/poteto-mode`, `/caveman`, and `/impeccable` di
 ## What "done" looks like for any page
 
 - [ ] Builds clean (`npm run build`)
-- [ ] **`deslop -b main` → 0 high-severity; `deslop score` in the clean band (0–19)**
+- [ ] **`deslop -b main` → 0 high-severity; `deslop score` in the clean band (0-19)**
 - [ ] Built in `/poteto-mode`; coded `/caveman`-concise; UI follows `/impeccable`
 - [ ] Uses tokens + brand primitives (no rogue hexes/fonts)
 - [ ] Real, verified copy (or clearly-marked `TODO`)

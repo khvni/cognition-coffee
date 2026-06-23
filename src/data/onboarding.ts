@@ -27,7 +27,7 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
       "Devin gives engineers superpowers.",
       "The community teaches the world how to use them.",
       "",
-      "This entire site was built with Devin — to show, not tell, what's possible.",
+      "This entire site was built with Devin - to show, not tell, what's possible.",
     ],
     choices: [
       { label: "> Tell me about the design", next: "design" },
@@ -38,7 +38,7 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
     id: "design",
     lines: [
       "Cognition gave Devin his own machine. A full VM to think and build in.",
-      "This site borrows that idea — a virtual desktop you can explore.",
+      "This site borrows that idea - a virtual desktop you can explore.",
       "",
       "It's also a nod to the internet cafes of the early 2000s.",
       "When going online felt like going somewhere.",
@@ -53,9 +53,9 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
     lines: [
       "Three programs, like items on a cafe menu:",
       "",
-      "  House Roast — curriculum and workshops for learning to work with Devin.",
-      "  Single-Origin — local meetups and office hours in 30+ cities.",
-      "  Roasters' Guild — a three-tier ambassador program for Devin advocates.",
+      "  House Roast - curriculum and workshops for learning to work with Devin.",
+      "  Single-Origin - local meetups and office hours in 30+ cities.",
+      "  Roasters' Guild - a three-tier ambassador program for Devin advocates.",
       "",
       "Each one is designed to scale. Browse the Menu to see the full breakdown.",
     ],

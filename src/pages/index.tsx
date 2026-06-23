@@ -56,21 +56,6 @@ const IndexPage: React.FC = () => (
       </ul>
     </section>
 
-    <section
-      className="section-block reveal"
-      style={stagger(3 + sections.length)}
-      aria-labelledby="blog-heading"
-    >
-      <Link
-        className="section-heading font-mono uppercase tracking-[0.06em] text-[0.6875rem] transition-transform duration-150 active:scale-[0.96]"
-        id="blog-heading"
-        to="/blog"
-      >
-        <span>Blog</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </Link>
-      <p className="empty-state [text-wrap:pretty]">Notes on community and agents.</p>
-    </section>
   </div>
 )
 

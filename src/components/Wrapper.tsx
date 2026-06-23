@@ -144,7 +144,7 @@ function setOnboarded() {
 
 /** Top-level chrome. `os` renders the windowed desktop; `site` renders pages inline. */
 export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { experience, windows, constraintsRef } = useApp()
+  const { experience, windows, constraintsRef, closeAll, open } = useApp()
   const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
@@ -153,8 +153,10 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
   const completeOnboarding = useCallback(() => {
     setOnboarded()
+    closeAll()
+    open("/")
     setShowOnboarding(false)
-  }, [])
+  }, [closeAll, open])
 
   if (experience === "site") {
     return (

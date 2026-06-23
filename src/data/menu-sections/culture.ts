@@ -160,7 +160,7 @@ export const cultureSection: MenuSection = {
     {
       id: "cognition-coffee-co",
       name: "Cognition Coffee Co.",
-      image: "/menu/cognition-coffee-co.jpg",
+      image: "/cognitioncoffee.png",
       subcaption:
         "We send coffee, brewing gear, and Devin credits to your meetup. You fuel the builders.",
       description:
