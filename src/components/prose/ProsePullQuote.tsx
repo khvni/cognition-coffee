@@ -9,7 +9,7 @@ export const ProsePullQuote: React.FC<Props> = ({ cite, children }) => (
       {children}
     </blockquote>
     {cite && (
-      <figcaption className="mt-3 font-mono text-xs uppercase tracking-wide text-muted">— {cite}</figcaption>
+      <figcaption className="mt-3 font-mono text-xs uppercase tracking-wide text-muted">{cite}</figcaption>
     )}
   </figure>
 )

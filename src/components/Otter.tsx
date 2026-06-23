@@ -1,6 +1,6 @@
 import React from "react"
 
-/** Desktop mascot — faint ASCII otter wallpaper texture. */
+/** Desktop mascot - faint ASCII otter wallpaper texture. */
 const OTTER = String.raw`
                .-"""-.
              .'  ^   ^ '.             ~  ~  ~  ~

@@ -1,5 +1,5 @@
 /**
- * Menu catalog — structured like a coffee-shop ordering system.
+ * Menu catalog - structured like a coffee-shop ordering system.
  * Each section is a "menu category"; items are "menu options" with
  * ordering variations (like customizing a DoorDash catering order).
  *

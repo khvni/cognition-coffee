@@ -1,4 +1,4 @@
-/** Design tokens — reusable className fragments. Weight: 400 body, 500 headings, never >500. */
+/** Design tokens - reusable className fragments. Weight: 400 body, 500 headings, never >500. */
 
 export const text = {
   eyebrow: "font-mono text-[12px] uppercase tracking-wide text-muted",

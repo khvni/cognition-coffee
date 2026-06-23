@@ -1,5 +1,5 @@
 /**
- * The OS state machine — single source of truth for the windowed desktop.
+ * The OS state machine - single source of truth for the windowed desktop.
  * Window lifecycle (open/focus/close), z-order, minimize/maximize, geometry, and
  * the OS⇄site mode all live here so the React layer stays a thin view.
  */

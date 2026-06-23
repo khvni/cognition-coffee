@@ -2,9 +2,9 @@ import React, { type FC } from "react"
 import { ProsePullQuote } from "@/components/prose/ProsePullQuote"
 
 export const frontmatter = {
-  title: "The View Counter",
+  title: "What writing on Quora taught me about marketing",
   description:
-    "I have 7 million views on a Quora account I will not link you to. What the number taught me.",
+    "Seven million views on a Quora account I won't link. What the feedback loop taught me about marketing.",
   date: "2026-06-12",
   category: "Field Notes",
   order: 4,
@@ -14,13 +14,16 @@ export const frontmatter = {
 const Content: FC = () => (
   <>
     <p>
-      I have over seven million views on a Quora account I will not be linking you to. I purged most of the evidence. What's left is embarrassing enough.
+      I learned marketing by accident, on a question-and-answer site, under a fake name, at fourteen. The site was Quora. The fake name was Allen Kinney. And the education came from a feedback loop I couldn't fake or bribe: strangers deciding, in real time, whether to keep reading what I wrote.
     </p>
     <p>
-      I started writing on Quora at fourteen. I was a freshman with a theory about social media: that it would corrupt me, put me in contact with the wrong people, and derail whatever great ambition I had for myself at the time. So instead of Instagram, I found Quora, a question-and-answer site where I could absorb information about science, philosophy, technology, and history. A corner of the internet I could curate to feed my mind rather than rot it.
+      I have over seven million views on that account, which I will not be linking you to. I purged most of the evidence. What's left is embarrassing enough. But the number isn't the point. The point is what writing there taught me about how messages travel, why some land and some die, and what marketing actually is when you strip away the jargon.
     </p>
     <p>
-      Eventually I started writing answers. I did this under a pseudonym, Allen Kinney, initials AK, mirroring my real ones. A fake name let me say true things without a teacher, a parent, or a classmate reading over my shoulder. Nobody upvoted Allen out of friendship. Nobody was kind to him because they sat next to him in homeroom. When his answers worked, it was because they worked. When they didn't, they died quietly at two hundred views.
+      I started on Quora because I had a theory about social media: that it would corrupt me, put me in contact with the wrong people, and derail whatever great ambition I had for myself at the time. So instead of Instagram, I found a corner of the internet I could curate to feed my mind rather than rot it. Science, philosophy, technology, history.
+    </p>
+    <p>
+      Eventually I started writing answers under that pseudonym, initials AK, mirroring my real ones. The fake name let me say true things without a teacher, a parent, or a classmate reading over my shoulder. Nobody upvoted Allen out of friendship. Nobody was kind to him because they sat next to him in homeroom. When his answers worked, it was because they worked. When they didn't, they died quietly at two hundred views.
     </p>
     <p>
       The anonymity freed me. To be cringe is to be free. I wrote every chance I got: on my phone between classes, on the school computers during library lunch, on my laptop at home until two in the morning. By spring 2018 I was deep into teen Quora, a niche I rose through fast and told absolutely no one about. My double life: unremarkable student in the hallway, minor internet personality at night.
