@@ -148,8 +148,8 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
   const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
-    if (experience === "os" && !hasOnboarded()) setShowOnboarding(true)
-  }, [experience])
+    if (!hasOnboarded()) setShowOnboarding(true)
+  }, [])
 
   const completeOnboarding = useCallback(() => {
     setOnboarded()
@@ -170,6 +170,9 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
           <main id="main-content" tabIndex={-1} className="w-full flex-1">{children}</main>
           <SiteFooter />
         </div>
+        {showOnboarding && (
+          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} />
+        )}
       </ErrorBoundary>
     )
   }
