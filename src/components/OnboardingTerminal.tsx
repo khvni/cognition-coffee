@@ -42,8 +42,8 @@ const Crt: React.FC = () => {
 const Cursor: React.FC = () => (
   <motion.span
     className="ml-0.5 inline-block h-[1.1em] w-[0.55em] translate-y-[0.15em] bg-accent"
-    animate={{ opacity: [1, 0] }}
-    transition={{ duration: 0.7, repeat: Infinity, ease: "steps(2)" }}
+    animate={{ opacity: [1, 1, 0, 0] }}
+    transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1], ease: "linear" }}
     style={GLOW}
   />
 )
