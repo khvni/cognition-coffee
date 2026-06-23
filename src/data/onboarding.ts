@@ -1,9 +1,11 @@
 export type OnboardingStep = {
   id: string
   lines: string[]
-  choices?: { label: string; next: string }[]
-  /** Free-text input prompt. When present, show a text input instead of choices. */
+  type?: "yn" | "input" | "continue" | "final"
+  /** Free-text input prompt. Used when type is "input". */
   input?: { prompt: string; next: string; placeholder?: string }
+  /** Next step for "yn" or "continue" types. */
+  next?: string
   final?: boolean
 }
 
@@ -17,14 +19,16 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
       "",
       "Welcome to the Cognition Coffee terminal.",
       "You've found the back room. Not many people make it here.",
+      "",
+      "Ready to enter?",
     ],
-    choices: [{ label: "> Initialize", next: "name" }],
+    type: "yn",
+    next: "name",
   },
   {
     id: "name",
-    lines: [
-      "Before we begin - what should I call you?",
-    ],
+    lines: ["Before we begin - what should I call you?"],
+    type: "input",
     input: { prompt: "What's your first name?", next: "pitch", placeholder: "your first name" },
   },
   {
@@ -37,38 +41,11 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
       "The community teaches the world how to use them.",
       "",
       "This entire site was built with Devin - to show, not tell, what's possible.",
-    ],
-    choices: [
-      { label: "> Tell me about the design", next: "design" },
-      { label: "> I'm ready to explore", next: "launch" },
-    ],
-  },
-  {
-    id: "design",
-    lines: [
-      "Cognition gave Devin his own machine. A full VM to think and build in.",
-      "This site borrows that idea - a virtual desktop you can explore.",
       "",
-      "It's also a nod to the internet cafes of the early 2000s.",
-      "When going online felt like going somewhere.",
+      "Press Enter to continue.",
     ],
-    choices: [
-      { label: "> What are the programs?", next: "programs" },
-      { label: "> Let's begin", next: "launch" },
-    ],
-  },
-  {
-    id: "programs",
-    lines: [
-      "Three programs, like items on a cafe menu:",
-      "",
-      "  House Roast - curriculum and workshops for learning to work with Devin.",
-      "  Single-Origin - local meetups and office hours in 30+ cities.",
-      "  Roasters' Guild - a three-tier ambassador program for Devin advocates.",
-      "",
-      "Each one is designed to scale. Browse the Menu to see the full breakdown.",
-    ],
-    choices: [{ label: "> Let's begin", next: "launch" }],
+    type: "continue",
+    next: "launch",
   },
   {
     id: "launch",
@@ -76,7 +53,10 @@ export const ONBOARDING_FLOW: OnboardingStep[] = [
       "Loading desktop...",
       "",
       "Welcome to Cognition Coffee.",
+      "",
+      "Press Enter to begin.",
     ],
+    type: "final",
     final: true,
   },
 ]

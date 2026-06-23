@@ -123,13 +123,42 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete, onSkip,
   }, [showChoices])
 
   const handleInputSubmit = useCallback(() => {
-    const val = inputVal.trim().toLowerCase()
-    if (!val || !step?.choices) return
-    const match = step.choices.find((c) =>
-      c.label.toLowerCase().startsWith(val)
-    )
-    if (match) goTo(match.next)
-  }, [inputVal, step, goTo])
+    const val = inputVal.trim()
+    if (!val) return
+
+    if (step.type === "yn" && step.next) {
+      const lower = val.toLowerCase()
+      if (lower === "y") {
+        goTo(step.next)
+        return
+      }
+      if (lower === "n") {
+        setTyped((prev) => prev + "\n> " + val + "\nWhy would you say no? Try again: Y/n")
+        setInputVal("")
+        return
+      }
+      // Unknown input: re-prompt
+      setTyped((prev) => prev + "\n> " + val + "\nTry again: Y/n")
+      setInputVal("")
+      return
+    }
+
+    if (step.type === "input" && step.input?.next && val) {
+      onNameEntered?.(val)
+      goTo(step.input.next)
+      return
+    }
+
+    if (step.type === "continue" && step.next) {
+      goTo(step.next)
+      return
+    }
+
+    if (step.type === "final" || step.final) {
+      onComplete()
+      return
+    }
+  }, [inputVal, step, goTo, onNameEntered, onComplete])
 
   if (!step) return null
 
@@ -149,26 +178,81 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete, onSkip,
         </pre>
 
         <AnimatePresence>
-          {showChoices && !step.final && step.choices && (
+          {showChoices && !step.final && (
             <motion.div
-              className="mt-8 space-y-4"
+              className="mt-8"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
-              <div className="flex flex-wrap gap-3">
-                {step.choices.map((c) => (
-                  <button
-                    key={c.next}
-                    type="button"
-                    onClick={() => goTo(c.next)}
-                    className="cursor-pointer rounded border border-accent/40 px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
-                    style={GLOW}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
+              {step.type === "yn" && (
+                <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
+                  <span aria-hidden="true">&gt;</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleInputSubmit() }}
+                    className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
+                    placeholder="Y/n"
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                  />
+                </div>
+              )}
+
+              {step.type === "input" && step.input && (
+                <>
+                  <p className="mb-3 font-mono text-sm text-accent" style={GLOW}>
+                    {step.input.prompt}
+                  </p>
+                  <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
+                    <span aria-hidden="true">&gt;</span>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={inputVal}
+                      onChange={(e) => setInputVal(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === "Enter") handleInputSubmit() }}
+                      className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
+                      placeholder={step.input.placeholder ?? "type here"}
+                      autoComplete="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
+                    />
+                  </div>
+                </>
+              )}
+
+              {(step.type === "continue" || step.type === "final") && (
+                <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
+                  <span aria-hidden="true">&gt;</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleInputSubmit() }}
+                    className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
+                    placeholder="Press Enter"
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                  />
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {showChoices && step.final && (
+            <motion.div
+              className="mt-8"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
               <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
                 <span aria-hidden="true">&gt;</span>
                 <input
@@ -178,63 +262,12 @@ export const OnboardingTerminal: React.FC<Props> = ({ steps, onComplete, onSkip,
                   onChange={(e) => setInputVal(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") handleInputSubmit() }}
                   className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
-                  placeholder="type a choice"
+                  placeholder="Press Enter"
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck={false}
                 />
               </div>
-            </motion.div>
-          )}
-
-          {showChoices && step.input && !step.final && (
-            <motion.div
-              className="mt-8"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
-            >
-              <p className="mb-3 font-mono text-sm text-accent" style={GLOW}>
-                {step.input.prompt}
-              </p>
-              <div className="flex items-center gap-2 font-mono text-sm text-accent" style={GLOW}>
-                <span aria-hidden="true">&gt;</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputVal}
-                  onChange={(e) => setInputVal(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && inputVal.trim()) {
-                      onNameEntered?.(inputVal.trim())
-                      goTo(step.input!.next)
-                    }
-                  }}
-                  className="flex-1 border-none bg-transparent font-mono text-sm text-accent outline-none placeholder:text-accent/30"
-                  placeholder={step.input.placeholder ?? "type here"}
-                  autoComplete="off"
-                  autoCapitalize="off"
-                  spellCheck={false}
-                />
-              </div>
-            </motion.div>
-          )}
-
-          {showChoices && step.final && (
-            <motion.div
-              className="mt-10"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              <button
-                type="button"
-                onClick={onComplete}
-                className="cursor-pointer rounded bg-accent px-6 py-2.5 font-mono text-sm text-white transition-colors hover:bg-accent-ink"
-                style={{ textShadow: "none" }}
-              >
-                Begin
-              </button>
             </motion.div>
           )}
         </AnimatePresence>
