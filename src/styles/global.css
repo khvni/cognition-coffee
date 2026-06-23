@@ -10,6 +10,7 @@
 
 :root {
   color-scheme: light;
+  --accent-rgb: 49 124 255;
 }
 
 html,
