@@ -24,6 +24,7 @@ module.exports = {
       boxShadow: {
         window: "0px 0px 0px 1px rgba(0,0,0,0.08), 0 10px 30px -10px rgba(21, 23, 26, 0.35)",
         card: "0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)",
+        "card-lift": "0px 0px 0px 1px rgba(0,0,0,0.08), 0px 2px 8px -2px rgba(0,0,0,0.08), 0px 4px 12px 0px rgba(0,0,0,0.06)",
       },
       borderRadius: {
         win: "10px",
