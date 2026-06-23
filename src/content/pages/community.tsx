@@ -1,6 +1,6 @@
 import React, { type FC, useRef, useEffect, useState } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { eventCities, voices, events, links } from "@/data/community"
+import { eventCities, communityPhotos, voices, events, links, redditLinks } from "@/data/community"
 
 export const frontmatter = {
   title: "Community",
@@ -47,17 +47,16 @@ function toMercator(lat: number, lng: number): { x: number; y: number } {
 
 const EventMap: FC = () => {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { once: true, margin: "-80px" })
 
   return (
-    <div ref={ref} className="relative w-full overflow-hidden" style={{ aspectRatio: "2.4 / 1" }}>
+    <div ref={ref} className="relative w-full overflow-hidden rounded-win bg-panel" style={{ aspectRatio: "2.5 / 1" }}>
       <svg
-        viewBox="0 0 100 50"
+        viewBox="0 28 100 34"
         className="w-full h-full"
         preserveAspectRatio="xMidYMid meet"
         aria-label="Map of Devin community event locations"
       >
-        <rect width="100" height="50" fill="none" />
         {eventCities.map((city, i) => {
           const { x, y } = toMercator(city.lat, city.lng)
           return (
@@ -65,24 +64,23 @@ const EventMap: FC = () => {
               <circle
                 cx={x}
                 cy={y}
-                r="0.6"
-                fill="rgba(49, 124, 255, 0.15)"
+                r="1.4"
+                className="fill-accent/10"
                 style={{
                   transform: isInView ? "scale(1)" : "scale(0)",
                   transformOrigin: `${x}px ${y}px`,
-                  transition: `transform 600ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms`,
+                  transition: `transform 600ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms`,
                 }}
               />
               <circle
                 cx={x}
                 cy={y}
-                r="0.25"
-                fill="#317CFF"
-                className="origin-center"
+                r="0.5"
+                className="fill-accent"
                 style={{
                   transform: isInView ? "scale(1)" : "scale(0)",
                   transformOrigin: `${x}px ${y}px`,
-                  transition: `transform 500ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 120 + 100}ms`,
+                  transition: `transform 500ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 100 + 80}ms`,
                   animation: isInView ? `dot-pulse 3s ease-in-out ${i * 0.2}s infinite` : "none",
                 }}
               />
@@ -90,29 +88,35 @@ const EventMap: FC = () => {
           )
         })}
       </svg>
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-canvas via-transparent to-canvas opacity-30" />
     </div>
   )
 }
 
-const PhotoParallax: FC<{ src: string; alt: string }> = ({ src, alt }) => {
+const Polaroid: FC<{ src: string; alt: string; caption: string; delay?: number }> = ({ src, alt, caption, delay = 0 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  })
-  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"])
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
+  const y = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"])
 
   return (
-    <div ref={ref} className="relative w-full overflow-hidden rounded-win" style={{ height: "clamp(240px, 40vw, 420px)" }}>
-      <motion.img
-        src={src}
-        alt={alt}
-        style={{ y }}
-        className="absolute inset-0 w-full h-full object-cover scale-110"
-      />
-      <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.08)" }} />
-    </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay }}
+      className="relative overflow-hidden rounded-win bg-canvas shadow-card"
+    >
+      <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
+        <motion.img
+          src={src}
+          alt={alt}
+          style={{ y }}
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+          loading="lazy"
+        />
+      </div>
+      <p className="px-3 py-2.5 text-xs text-muted font-mono tracking-wide">{caption}</p>
+    </motion.div>
   )
 }
 
@@ -135,11 +139,25 @@ const Content: FC = () => {
   return (
     <div className="flex flex-col gap-0">
 
-      <section className="mb-24">
-        <PhotoParallax src="/menu/cafe-cognition.jpg" alt="Devin community builders at a Cognition Coffee event" />
+      <section className="mb-20">
+        <Reveal>
+          <p className="text-base leading-relaxed text-ink" style={{ maxWidth: "36rem", textWrap: "pretty" }}>
+            From San Francisco to São Paulo, builders meet up to hack with Devin,
+            share what they've shipped, and push each other forward. No keynotes,
+            no vendor booths — just laptops, good coffee, and the people next to you.
+          </p>
+        </Reveal>
       </section>
 
-      <section className="mb-24">
+      <section className="mb-20">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {communityPhotos.map((photo, i) => (
+            <Polaroid key={photo.src} src={photo.src} alt={photo.alt} caption={photo.caption} delay={i * 0.06} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-20">
         <Reveal>
           <div className="flex flex-wrap gap-x-12 gap-y-4">
             <div>
@@ -158,7 +176,7 @@ const Content: FC = () => {
         </Reveal>
       </section>
 
-      <section className="mb-24">
+      <section className="mb-20">
         <Reveal>
           <EventMap />
         </Reveal>
@@ -169,11 +187,7 @@ const Content: FC = () => {
         </Reveal>
       </section>
 
-      <section className="mb-24">
-        <PhotoParallax src="/menu/hack-with-devin.jpg" alt="Builders at a Devin hack night working on projects" />
-      </section>
-
-      <section className="mb-24">
+      <section className="mb-20">
         <Reveal>
           <h2 className="section-heading" id="voices-heading">What people are saying</h2>
         </Reveal>
@@ -194,20 +208,9 @@ const Content: FC = () => {
         </div>
       </section>
 
-      <section className="mb-24">
-        <PhotoParallax src="/menu/workshop-series.jpg" alt="Devin workshop in progress with participants building" />
-      </section>
-
-      <section className="mb-24">
+      <section className="mb-20">
         <Reveal>
-          <h2 className="section-heading" id="events-heading">
-            <a href={links.luma} target="_blank" rel="noopener" className="section-heading">
-              Upcoming events
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M2.5 6h7M6.5 3l3 3-3 3" />
-              </svg>
-            </a>
-          </h2>
+          <h2 className="section-heading" id="events-heading">Upcoming events</h2>
         </Reveal>
         <ul className="entry-list dated-list mt-4">
           {events.map((e, i) => (
@@ -221,22 +224,9 @@ const Content: FC = () => {
             </Reveal>
           ))}
         </ul>
-        <Reveal delay={0.4}>
-          <a
-            href={links.luma}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center gap-1.5 mt-6 text-sm text-accent-ink hover:text-ink transition-colors"
-          >
-            Full calendar on lu.ma/devin
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2.5 6h7M6.5 3l3 3-3 3" />
-            </svg>
-          </a>
-        </Reveal>
       </section>
 
-      <section className="mb-24">
+      <section className="mb-20">
         <Reveal>
           <h2 className="section-heading" id="program-heading">Ambassador program</h2>
         </Reveal>
@@ -254,17 +244,6 @@ const Content: FC = () => {
             scale — there's a place for you.
           </p>
         </Reveal>
-        <Reveal delay={0.3}>
-          <a
-            href={links.ambassador}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center justify-center mt-8 px-5 py-3 rounded-win bg-accent text-canvas text-sm font-medium transition-colors hover:bg-accent-ink active:scale-[0.97]"
-            style={{ transitionProperty: "background-color, transform", transitionDuration: "150ms" }}
-          >
-            Apply to become an ambassador
-          </a>
-        </Reveal>
       </section>
 
       <section className="mb-12">
@@ -276,7 +255,7 @@ const Content: FC = () => {
             <li className="entry-row">
               <a href={links.discord} target="_blank" rel="noopener" className="entry-link">
                 <strong>Discord</strong>
-                <span>Daily conversation, project showcases, help threads</span>
+                <span>104,609 members — conversation, showcases, help</span>
               </a>
             </li>
           </Reveal>
@@ -284,18 +263,36 @@ const Content: FC = () => {
             <li className="entry-row">
               <a href={links.luma} target="_blank" rel="noopener" className="entry-link">
                 <strong>Events on Luma</strong>
-                <span>Global event calendar — find a chapter near you</span>
+                <span>Global calendar — find a chapter near you</span>
               </a>
             </li>
           </Reveal>
           <Reveal delay={0.15}>
             <li className="entry-row">
-              <a href={links.github} target="_blank" rel="noopener" className="entry-link">
-                <strong>GitHub Discussions</strong>
-                <span>Long-form questions, RFCs, community playbooks</span>
+              <a href={links.ambassador} target="_blank" rel="noopener" className="entry-link">
+                <strong>Become an ambassador</strong>
+                <span>Host events, get funding, early access</span>
               </a>
             </li>
           </Reveal>
+          <Reveal delay={0.2}>
+            <li className="entry-row">
+              <a href={links.eventSupport} className="entry-link">
+                <strong>Event support</strong>
+                <span>Need help planning a Devin event? Reach out</span>
+              </a>
+            </li>
+          </Reveal>
+          {redditLinks.map((r, i) => (
+            <Reveal key={r.name} delay={0.25 + i * 0.05}>
+              <li className="entry-row">
+                <a href={r.href} target="_blank" rel="noopener" className="entry-link">
+                  <strong>{r.name}</strong>
+                  <span>Reddit</span>
+                </a>
+              </li>
+            </Reveal>
+          ))}
         </ul>
       </section>
     </div>

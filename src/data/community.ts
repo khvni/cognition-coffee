@@ -17,6 +17,15 @@ export const eventCities: { name: string; lat: number; lng: number }[] = [
   { name: "Singapore", lat: 1.35, lng: 103.82 },
 ]
 
+export const communityPhotos: { src: string; alt: string; caption: string }[] = [
+  { src: "/community/cafe-coding-1.jpg", alt: "People laughing and coding together at a cafe", caption: "Cognition Coffee, SF" },
+  { src: "/community/park-coding-2.jpg", alt: "Two developers pair programming on a project", caption: "Hack Night, Lagos" },
+  { src: "/community/beach-coding-7.jpg", alt: "Group of builders hacking at a table with laptops", caption: "Devin Workshop, Berlin" },
+  { src: "/community/nature-coding-8.jpg", alt: "Person coding on a laptop at a cafe window", caption: "Builders everywhere" },
+  { src: "/community/coworking-4.jpg", alt: "People collaborating at a coworking meetup", caption: "AI Builders Night, Vienna" },
+  { src: "/community/library-coding-3.jpg", alt: "Team building together at a community event", caption: "Hackathon, São Paulo" },
+]
+
 export const voices = [
   {
     text: "We merged 154 Devin PRs internally at Cognition in our best week.",
@@ -62,8 +71,15 @@ export const events = [
 ]
 
 export const links = {
-  discord: "https://discord.gg/GjCYNGChrw",
   luma: "https://lu.ma/devin",
-  github: "https://github.com/cognition-labs/devin/discussions",
   ambassador: "https://docs.google.com/forms/d/e/1FAIpQLSfMxOlLzPnG1-o8AoyrG4L-LoFZiJpJ-gZKJwgkr7MvhMVu8Q/viewform",
+  eventSupport: "mailto:community@cognition.ai",
+  discord: "https://discord.com/invite/GjCYNGChrw",
 }
+
+export const redditLinks = [
+  { name: "r/CognitionLabs", href: "https://reddit.com/r/CognitionLabs" },
+  { name: "r/windsurf", href: "https://reddit.com/r/windsurf" },
+  { name: "r/DevinAI", href: "https://reddit.com/r/DevinAI" },
+  { name: "r/DevinDesktop", href: "https://reddit.com/r/DevinDesktop" },
+]
