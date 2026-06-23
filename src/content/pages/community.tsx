@@ -1,5 +1,6 @@
 import React, { type FC } from "react"
 import { motion } from "framer-motion"
+import { cities, stats, wire, tagColor, voices, events, formats, tiers, links } from "@/data/community"
 
 export const frontmatter = {
   title: "The Devin Community",
@@ -16,90 +17,8 @@ const up = {
 }
 const vp = { once: true, margin: "-80px" as const }
 
-const SHADOW =
-  "0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)"
-const SHADOW_LIFT =
-  "0px 0px 0px 1px rgba(0,0,0,0.08), 0px 2px 8px -2px rgba(0,0,0,0.08), 0px 4px 12px 0px rgba(0,0,0,0.06)"
-
-const cities = [
-  "Barcelona", "Tokyo", "Nairobi", "San Francisco", "London",
-  "S\u00e3o Paulo", "Berlin", "Bangalore", "New York", "Seoul",
-  "Lagos", "Vancouver", "Bogot\u00e1", "Vienna",
-]
-
-const stats = [
-  { value: "58+", label: "cities" },
-  { value: "1,400+", label: "attendees" },
-  { value: "12\u00d7", label: "productivity" },
-  { value: "$492M", label: "run-rate" },
-]
-
-type WireEntry = {
-  tag: string
-  time: string
-  text: string
-  author?: string
-  href?: string
-}
-
-const wire: WireEntry[] = [
-  { tag: "VOICE", time: "Jun 21", author: "@kr0der", text: "\u201ci tried Devin when it was released and tried it again now, and i can confirm this billboard is true\u201d" },
-  { tag: "EVENT", time: "Jul 4", text: "Devin Hackathon: Agents Of Chaos \u2014 Vancouver", href: "https://lu.ma/devin" },
-  { tag: "VOICE", time: "Jun 19", author: "@morganlinton", text: "\u201cHoly moly, is it fast\u201d" },
-  { tag: "PRESS", time: "Jun 18", text: "Goldman Sachs testing Devin AI" },
-  { tag: "MEDIA", time: "Jun 15", text: "CodeWithHarry: 558K views \u2014 I Tried Devin" },
-  { tag: "VOICE", time: "Jun 14", author: "@petergyang", text: "\u201cHave to give the Devin/Windsurf team flowers\u201d" },
-]
-
-const tagColor: Record<string, string> = {
-  VOICE: "text-muted bg-panel",
-  EVENT: "text-accent-ink bg-accent/10",
-  PRESS: "text-muted bg-panel",
-  MEDIA: "text-muted bg-panel",
-}
-
-const voices = [
-  { name: "Scott Wu", handle: "@ScottWu46", text: "We merged 154 Devin PRs internally at Cognition in our best week" },
-  { name: "Piyush Puri", handle: "@ppuri96", text: "Devin works like an autonomous engineer that you interact with through Slack, Linear, and GitHub" },
-  { handle: "@trillhause_", text: "This is the first cloud agent that feels good" },
-  { name: "Morgan Linton", handle: "@morganlinton", text: "Using Devin\u2019s model to start, SWE-1.6 Fast. And holy moly, is it fast." },
-  { handle: "@kr0der", text: "i tried Devin when it was released and tried it again now, and i can confirm this billboard is true" },
-  { name: "Peter Yang", handle: "@petergyang", text: "Have to give the Devin/Windsurf team flowers for staying\u2026 I know many AI native builders who love Devin now" },
-]
-
-const events = [
-  { name: "Devin Hackathon: Agents Of Chaos", city: "Vancouver", date: "Jul 4" },
-  { name: "AI Builders Night", city: "Vienna", date: "Jul 10" },
-  { name: "Devin Medell\u00edn Workshop", city: "Medell\u00edn", date: "Jul 15" },
-  { name: "Hackathon Cognition S\u00e3o Paulo", city: "S\u00e3o Paulo", date: "Jul 18" },
-  { name: "Cognition Coffee Berlin", city: "Berlin", date: "Jul 22" },
-  { name: "Devin Hack Night", city: "Bangalore", date: "Jul 25" },
-  { name: "Devin Office Hours", city: "Remote", date: "Jul 29" },
-  { name: "Orchestrating Fleets of Devins", city: "London", date: "Aug 1" },
-]
-
-const formats = [
-  { name: "Cognition Coffee", desc: "Cafe takeovers \u2014 builders meet over espresso and ship side-projects with Devin." },
-  { name: "Hack Nights", desc: "Evening build sessions. Bring a laptop, leave with a deployed project." },
-  { name: "Workshops", desc: "Hands-on playbooks, fleet orchestration, and advanced prompting patterns." },
-  { name: "Office Hours", desc: "Weekly live sessions with the Devin team. Ask anything." },
-]
-
-const tiers = [
-  { name: "Student Builder", desc: "Students and early-career devs building with Devin.", perks: ["API credits", "Community recognition", "Devin swag"] },
-  { name: "Community Organizer", desc: "Run local chapters and events in your city.", perks: ["Compute credits", "Early access", "Product feedback channel", "Event funding"] },
-  { name: "Enterprise Champion", desc: "Ship Devin at scale inside your org.", perks: ["Priority API/compute", "Direct eng Slack", "Early access", "Speaking opportunities"] },
-]
-
-const links = [
-  { label: "Discord", href: "https://discord.gg/GjCYNGChrw", desc: "Daily conversation, project showcases, help threads" },
-  { label: "Events on Luma", href: "https://lu.ma/devin", desc: "Global event calendar \u2014 find a chapter near you" },
-  { label: "GitHub Discussions", href: "https://github.com/cognition-labs/devin/discussions", desc: "Long-form questions, RFCs, community playbooks" },
-]
-
 const Content: FC = () => (
   <div className="flex flex-col gap-20 sm:gap-24">
-    {/* Photo strip */}
     <motion.div
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       className="win-scroll -mx-6 flex gap-3 overflow-x-auto px-6 pb-4 sm:-mx-0 sm:px-0"
@@ -107,8 +26,7 @@ const Content: FC = () => (
       {cities.map((city) => (
         <motion.figure key={city} variants={up} className="flex-none">
           <div
-            className="h-36 w-52 rounded-lg bg-panel sm:h-44 sm:w-64"
-            style={{ boxShadow: SHADOW }}
+            className="h-36 w-52 rounded-lg bg-panel shadow-card sm:h-44 sm:w-64"
             role="img"
             aria-label={`Community event in ${city}`}
           />
@@ -117,7 +35,6 @@ const Content: FC = () => (
       ))}
     </motion.div>
 
-    {/* Stats */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       className="grid grid-cols-2 gap-3 sm:grid-cols-4"
@@ -126,8 +43,7 @@ const Content: FC = () => (
       {stats.map((s) => (
         <motion.div
           key={s.label} variants={up}
-          className="flex flex-col gap-1 rounded-lg bg-panel p-5"
-          style={{ boxShadow: SHADOW }}
+          className="flex flex-col gap-1 rounded-lg bg-panel p-5 shadow-card"
         >
           <span className="font-mono text-[1.5rem] font-medium leading-none text-ink" style={{ fontVariantNumeric: "tabular-nums" }}>
             {s.value}
@@ -137,7 +53,6 @@ const Content: FC = () => (
       ))}
     </motion.section>
 
-    {/* The Wire */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       aria-labelledby="wire-heading"
@@ -171,7 +86,6 @@ const Content: FC = () => (
       </motion.div>
     </motion.section>
 
-    {/* Community voices */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       aria-labelledby="voices-heading"
@@ -181,8 +95,7 @@ const Content: FC = () => (
         {voices.map((v) => (
           <motion.blockquote
             key={v.handle} variants={up}
-            className="mb-3 break-inside-avoid rounded-lg bg-panel p-4"
-            style={{ boxShadow: SHADOW }}
+            className="mb-3 break-inside-avoid rounded-lg bg-panel p-4 shadow-card"
           >
             <p className="m-0 text-[0.9375rem] leading-relaxed text-ink" style={{ textWrap: "pretty" }}>
               &ldquo;{v.text}&rdquo;
@@ -196,15 +109,13 @@ const Content: FC = () => (
       </motion.div>
     </motion.section>
 
-    {/* Upcoming events */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       aria-labelledby="events-heading"
     >
       <motion.h2 className="section-heading" id="events-heading" variants={up}>Upcoming events</motion.h2>
       <motion.ul
-        className="flex flex-col overflow-hidden rounded-lg"
-        style={{ boxShadow: SHADOW, listStyle: "none", margin: 0, padding: 0 }}
+        className="m-0 flex list-none flex-col overflow-hidden rounded-lg p-0 shadow-card"
         variants={container}
       >
         {events.map((e, i) => (
@@ -235,7 +146,6 @@ const Content: FC = () => (
       </motion.a>
     </motion.section>
 
-    {/* Event types */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       aria-labelledby="formats-heading"
@@ -245,8 +155,7 @@ const Content: FC = () => (
         {formats.map((f) => (
           <motion.div
             key={f.name} variants={up}
-            className="rounded-lg bg-panel p-5"
-            style={{ boxShadow: SHADOW }}
+            className="rounded-lg bg-panel p-5 shadow-card"
           >
             <h3 className="m-0 text-[1rem] font-medium leading-snug text-ink">{f.name}</h3>
             <p className="m-0 mt-1.5 text-[0.8125rem] leading-relaxed text-muted" style={{ textWrap: "pretty" }}>
@@ -257,7 +166,6 @@ const Content: FC = () => (
       </motion.div>
     </motion.section>
 
-    {/* Ambassador program */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       aria-labelledby="ambassador-heading"
@@ -274,8 +182,7 @@ const Content: FC = () => (
         {tiers.map((t) => (
           <motion.div
             key={t.name} variants={up}
-            className="flex flex-col rounded-lg bg-panel p-5"
-            style={{ boxShadow: SHADOW }}
+            className="flex flex-col rounded-lg bg-panel p-5 shadow-card"
           >
             <h3 className="m-0 text-[1rem] font-medium leading-snug text-ink">{t.name}</h3>
             <p className="m-0 mt-1.5 text-[0.8125rem] leading-relaxed text-muted" style={{ textWrap: "pretty" }}>
@@ -302,7 +209,6 @@ const Content: FC = () => (
       </motion.a>
     </motion.section>
 
-    {/* Get involved */}
     <motion.section
       initial="hidden" whileInView="visible" viewport={vp} variants={container}
       aria-labelledby="involved-heading"
@@ -315,9 +221,7 @@ const Content: FC = () => (
             href={l.href} target="_blank" rel="noopener"
             variants={up}
             whileTap={{ scale: 0.96 }}
-            className="group flex items-baseline justify-between gap-4 rounded-lg bg-panel px-4 py-3 no-underline"
-            style={{ boxShadow: SHADOW }}
-            whileHover={{ boxShadow: SHADOW_LIFT }}
+            className="group flex items-baseline justify-between gap-4 rounded-lg bg-panel px-4 py-3 no-underline shadow-card transition-shadow hover:shadow-card-lift"
           >
             <span className="min-w-0">
               <span className="block text-[1rem] font-medium text-ink">{l.label}</span>
