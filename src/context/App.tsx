@@ -37,6 +37,7 @@ const isBrowser = typeof window !== "undefined"
 const normPath = (p: string) => p.replace(/\/+$/, "") || "/"
 
 const STORE_KEY = "ccvm.experience"
+const BOOT_KEY = "ccvm.terminal-booted"
 
 type ProviderProps = {
   element: React.ReactNode
@@ -67,6 +68,11 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
     const savedLocal = window.localStorage.getItem(STORE_KEY) as Experience | null
     const initial = savedLocal ?? (window.innerWidth < 880 ? "site" : "os")
     if (initial !== "os") send({ type: "SET_MODE", mode: initial })
+
+    if (initial === "os" && !window.localStorage.getItem(BOOT_KEY)) {
+      window.localStorage.setItem(BOOT_KEY, "1")
+      setTimeout(() => navigate("/terminal"), 80)
+    }
   }, [send])
 
   useEffect(() => {
