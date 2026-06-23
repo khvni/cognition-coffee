@@ -12,7 +12,7 @@ export const ModeToggle: React.FC = () => {
   useEffect(() => { setMobile(isMobile()) }, [])
   if (mobile) return null
   return (
-    <div className="relative inline-flex items-center rounded-full bg-panel p-0.5 text-[12px] shadow-card">
+    <div role="radiogroup" aria-label="Experience mode" className="relative inline-flex items-center rounded-full bg-panel p-0.5 text-[12px] shadow-card">
       <AnimatePresence initial={false}>
         <motion.span
           key={experience}
@@ -25,7 +25,8 @@ export const ModeToggle: React.FC = () => {
       <button
         type="button"
         onClick={() => setExperience("os")}
-        aria-pressed={experience === "os"}
+        role="radio"
+        aria-checked={experience === "os"}
         className={`relative z-[1] flex min-h-[34px] items-center rounded-full px-3.5 transition-[color] duration-150 ${
           experience === "os" ? "text-panel" : "text-muted hover:text-ink"
         }`}
@@ -35,7 +36,8 @@ export const ModeToggle: React.FC = () => {
       <button
         type="button"
         onClick={() => setExperience("site")}
-        aria-pressed={experience === "site"}
+        role="radio"
+        aria-checked={experience === "site"}
         className={`relative z-[1] flex min-h-[34px] items-center rounded-full px-3.5 transition-[color] duration-150 ${
           experience === "site" ? "text-panel" : "text-muted hover:text-ink"
         }`}

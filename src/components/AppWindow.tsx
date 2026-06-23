@@ -123,6 +123,8 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
 
   return (
     <motion.div
+      role="dialog"
+      aria-label={item.title}
       className="absolute flex flex-col overflow-hidden rounded-win bg-panel shadow-window"
       style={{
         ...positionStyle,
