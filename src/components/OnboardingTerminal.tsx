@@ -148,7 +148,7 @@ export const OnboardingTerminal: React.FC<OnboardingTerminalProps> = ({ steps, o
             >
               {step.choices.map((c) => (
                 <button
-                  key={c.next}
+                  key={`${c.label}-${c.next}`}
                   type="button"
                   onClick={() => goTo(c.next)}
                   className="cursor-pointer rounded border border-accent/40 px-4 py-2 font-mono text-sm text-accent transition-colors hover:bg-accent/10"
@@ -170,7 +170,7 @@ export const OnboardingTerminal: React.FC<OnboardingTerminalProps> = ({ steps, o
               <button
                 type="button"
                 onClick={onComplete}
-                className="cursor-pointer rounded bg-accent px-6 py-2.5 font-mono text-sm text-white transition-colors hover:bg-accent-ink"
+                className="cursor-pointer rounded bg-accent px-6 py-2.5 font-mono text-sm text-canvas transition-colors hover:bg-accent-ink"
               >
                 Begin
               </button>
