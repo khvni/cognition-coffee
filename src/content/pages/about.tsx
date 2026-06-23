@@ -5,6 +5,7 @@ export const frontmatter = {
   title: "About",
   description: "Community builder and AI-native GTM engineer in the Bay Area.",
   eyebrow: "About",
+  layout: "about" as const,
 }
 
 const socialIcons: Record<string, React.ReactNode> = {
@@ -13,46 +14,49 @@ const socialIcons: Record<string, React.ReactNode> = {
   LinkedIn: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>,
 }
 
+const stagger = (i: number): React.CSSProperties =>
+  ({ "--stagger": i } as React.CSSProperties)
+
 const Content: FC = () => (
   <>
-    <div className="about-intro">
-      <p className="about-intro__lead">I'm a community builder and AI-native GTM engineer in the Bay Area, currently automating GTM across Keysight.</p>
-      <p className="about-intro__body">I founded MTC — a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My experience spans SWE, cybersecurity, data, AI, and GTM engineering across startups and public companies.</p>
-      <p className="about-intro__body">I built this site with Devin to show, not tell, what a community for the first AI software engineer could be.</p>
+    <img className="avatar reveal" src="/avatar-ali-khani.png" alt="Ali Khani" width={56} height={56} style={stagger(0)} />
+
+    <div className="intro-copy reveal" style={stagger(1)}>
+      <p>I'm a community builder and AI-native GTM engineer in the Bay Area, currently automating GTM across Keysight.</p>
+      <p>I founded MTC — a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My experience spans SWE, cybersecurity, data, AI, and GTM engineering across startups and public companies.</p>
+      <p>I built this site with Devin to show, not tell, what a community for the first AI software engineer could be.</p>
     </div>
 
-    <div className="about-socials" aria-label="Social links">
-      {SOCIALS.map((s, i) => (
-        <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank" className="about-social-link" style={{ animationDelay: `${i * 60}ms` }}>
+    <div className="social-row reveal" style={stagger(2)} aria-label="Social links">
+      {SOCIALS.map((s) => (
+        <a key={s.label} href={s.href} aria-label={s.label} rel="me noopener" target="_blank">
           {socialIcons[s.label] ?? null}
         </a>
       ))}
     </div>
 
-    <section className="about-section" aria-labelledby="work-heading" style={{ animationDelay: "180ms" }}>
-      <h2 className="about-section__heading" id="work-heading">Work</h2>
-      <ul className="about-work-list">
-        {WORK.map((w, i) => (
-          <li key={w.company} className="about-work-item" style={{ animationDelay: `${240 + i * 80}ms` }}>
-            <span className="about-work-item__left">
-              <span className={`about-work-mark ${w.markClass}`}>{w.mark}</span>
-              <span className="about-work-item__info">
-                <strong>{w.company}</strong>
-                <span className="about-work-item__role">{w.role}</span>
-              </span>
+    <section className="section-block reveal" style={stagger(3)} aria-labelledby="work-heading">
+      <h2 className="section-heading" id="work-heading">Work</h2>
+      <ul className="entry-list">
+        {WORK.map((w) => (
+          <li key={w.company} className="work-row">
+            <span className="company">
+              <span className={`mark ${w.markClass}`}>{w.mark}</span>
+              <strong>{w.company}</strong>
+              <span className="role">{w.role}</span>
             </span>
-            <span className="about-work-item__date">{w.date}</span>
+            <span>{w.date}</span>
           </li>
         ))}
       </ul>
     </section>
 
-    <section className="about-section" aria-labelledby="about-projects-heading" style={{ animationDelay: "500ms" }}>
-      <h2 className="about-section__heading" id="about-projects-heading">Projects</h2>
-      <ul className="about-project-list">
-        {PROJECTS.map((p, i) => (
-          <li key={p.title} className="about-project-item" style={{ animationDelay: `${560 + i * 80}ms` }}>
-            <a className="about-project-link" href={p.href} target="_blank" rel="noopener">
+    <section className="section-block reveal" style={stagger(4)} aria-labelledby="about-projects-heading">
+      <h2 className="section-heading" id="about-projects-heading">Projects</h2>
+      <ul className="entry-list">
+        {PROJECTS.map((p) => (
+          <li key={p.title}>
+            <a className="entry-link" href={p.href} target="_blank" rel="noopener">
               <strong>{p.title}</strong>
               <span>{p.desc}</span>
             </a>

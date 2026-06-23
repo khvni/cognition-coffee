@@ -7,7 +7,7 @@ export type PageFrontmatter = {
   title: string
   description?: string
   eyebrow?: string
-  layout?: "grid"
+  layout?: "grid" | "about"
 }
 
 export type ContentPage = {

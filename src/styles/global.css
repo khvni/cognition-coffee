@@ -364,6 +364,22 @@ a.section-heading:hover svg {
   }
 }
 
+/* About page — avatar + intro-copy + social-row + sections (matches alikhani.co). */
+.about-page {
+  padding-top: 128px;
+}
+.avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 32px;
+}
+@media (max-width: 700px) {
+  .about-page { padding-top: 96px; }
+}
+
 /* Social row — icon buttons with brand-color hovers. */
 .social-row {
   display: flex;

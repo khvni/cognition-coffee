@@ -14,6 +14,16 @@ const ContentPage: React.FC<PageProps> = ({ pageContext }) => {
   if (!page) return null
   const { Content, frontmatter: fm } = page
   const isGrid = fm.layout === "grid"
+  const isAbout = fm.layout === "about"
+
+  if (isAbout) {
+    return (
+      <div className="page-column about-page">
+        <Content />
+      </div>
+    )
+  }
+
   return (
     <motion.div
       className={isGrid ? "page-column-wide" : "page-column"}
