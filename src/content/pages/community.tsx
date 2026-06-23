@@ -1,240 +1,305 @@
-import React, { type FC } from "react"
-import { motion } from "framer-motion"
-import { cities, stats, wire, tagColor, voices, events, formats, tiers, links } from "@/data/community"
+import React, { type FC, useRef, useEffect, useState } from "react"
+import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { eventCities, voices, events, links } from "@/data/community"
 
 export const frontmatter = {
-  title: "The Devin Community",
-  description: "Where builders meet, hack, and ship — in 58 cities and counting.",
+  title: "Community",
+  description: "Builders gathering in cities around the world to hack, ship, and share.",
   eyebrow: "Community",
-  layout: "grid" as const,
 }
 
-const ease = [0.25, 0.1, 0.25, 1] as const
-const container = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }
-const up = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
+function useCounter(end: number, duration = 2000) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const hasRun = useRef(false)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasRun.current) {
+          hasRun.current = true
+          const start = performance.now()
+          const tick = (now: number) => {
+            const progress = Math.min((now - start) / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+            setCount(Math.round(eased * end))
+            if (progress < 1) requestAnimationFrame(tick)
+          }
+          requestAnimationFrame(tick)
+        }
+      },
+      { threshold: 0.5 },
+    )
+    observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [end, duration])
+
+  return { ref, count }
 }
-const vp = { once: true, margin: "-80px" as const }
 
-const Content: FC = () => (
-  <div className="flex flex-col gap-20 sm:gap-24">
-    <motion.div
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      className="win-scroll -mx-6 flex gap-3 overflow-x-auto px-6 pb-4 sm:-mx-0 sm:px-0"
-    >
-      {cities.map((city) => (
-        <motion.figure key={city} variants={up} className="flex-none">
-          <div
-            className="h-36 w-52 rounded-lg bg-panel shadow-card sm:h-44 sm:w-64"
-            role="img"
-            aria-label={`Community event in ${city}`}
-          />
-          <figcaption className="mt-2 font-mono text-[0.6875rem] text-muted">{city}</figcaption>
-        </motion.figure>
-      ))}
-    </motion.div>
+function toMercator(lat: number, lng: number): { x: number; y: number } {
+  const x = ((lng + 180) / 360) * 100
+  const latRad = (lat * Math.PI) / 180
+  const y = (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) * 50
+  return { x, y }
+}
 
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      className="grid grid-cols-2 gap-3 sm:grid-cols-4"
-      aria-label="Community metrics"
-    >
-      {stats.map((s) => (
-        <motion.div
-          key={s.label} variants={up}
-          className="flex flex-col gap-1 rounded-lg bg-panel p-5 shadow-card"
-        >
-          <span className="font-mono text-[1.5rem] font-medium leading-none text-ink" style={{ fontVariantNumeric: "tabular-nums" }}>
-            {s.value}
-          </span>
-          <span className="text-[0.8125rem] text-muted">{s.label}</span>
-        </motion.div>
-      ))}
-    </motion.section>
+const EventMap: FC = () => {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      aria-labelledby="wire-heading"
-    >
-      <motion.h2 className="section-heading" id="wire-heading" variants={up}>The Wire</motion.h2>
-      <motion.div variants={container} className="flex flex-col">
-        {wire.map((w, i) => (
-          <motion.div
-            key={i} variants={up}
-            className="flex flex-col gap-1 py-3"
-            style={i > 0 ? { boxShadow: "inset 0 1px 0 0 rgba(0,0,0,0.06)" } : undefined}
-          >
-            <div className="flex items-center gap-2">
-              <span className={`inline-block rounded px-1.5 py-0.5 font-mono text-[0.625rem] uppercase tracking-wider ${tagColor[w.tag] ?? "text-muted bg-panel"}`}>
-                {w.tag}
-              </span>
-              <time className="font-mono text-[0.625rem] text-muted" style={{ fontVariantNumeric: "tabular-nums" }}>
-                {w.time}
-              </time>
-            </div>
-            <p className="m-0 text-[0.875rem] leading-snug text-ink" style={{ textWrap: "pretty" }}>
-              {w.author && <span className="font-medium">{w.author}: </span>}
-              {w.href ? (
-                <a href={w.href} target="_blank" rel="noopener" className="text-ink no-underline hover:underline">
-                  {w.text}
-                </a>
-              ) : w.text}
-            </p>
-          </motion.div>
-        ))}
-      </motion.div>
-    </motion.section>
-
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      aria-labelledby="voices-heading"
-    >
-      <motion.h2 className="section-heading" id="voices-heading" variants={up}>Community voices</motion.h2>
-      <motion.div className="columns-1 gap-3 sm:columns-2 lg:columns-3" variants={container}>
-        {voices.map((v) => (
-          <motion.blockquote
-            key={v.handle} variants={up}
-            className="mb-3 break-inside-avoid rounded-lg bg-panel p-4 shadow-card"
-          >
-            <p className="m-0 text-[0.9375rem] leading-relaxed text-ink" style={{ textWrap: "pretty" }}>
-              &ldquo;{v.text}&rdquo;
-            </p>
-            <footer className="mt-3 text-[0.8125rem] text-muted">
-              {v.name && <span className="font-medium text-ink">{v.name} </span>}
-              <span className="font-mono text-[0.75rem]">{v.handle}</span>
-            </footer>
-          </motion.blockquote>
-        ))}
-      </motion.div>
-    </motion.section>
-
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      aria-labelledby="events-heading"
-    >
-      <motion.h2 className="section-heading" id="events-heading" variants={up}>Upcoming events</motion.h2>
-      <motion.ul
-        className="m-0 flex list-none flex-col overflow-hidden rounded-lg p-0 shadow-card"
-        variants={container}
+  return (
+    <div ref={ref} className="relative w-full overflow-hidden" style={{ aspectRatio: "2.4 / 1" }}>
+      <svg
+        viewBox="0 0 100 50"
+        className="w-full h-full"
+        preserveAspectRatio="xMidYMid meet"
+        aria-label="Map of Devin community event locations"
       >
-        {events.map((e, i) => (
-          <motion.li
-            key={e.name} variants={up}
-            className="group flex items-baseline justify-between gap-4 bg-panel px-4 py-3 transition-colors hover:bg-canvas"
-            style={i > 0 ? { boxShadow: "inset 0 1px 0 0 rgba(0,0,0,0.06)" } : undefined}
-          >
-            <span className="min-w-0">
-              <span className="block text-[0.9375rem] leading-relaxed text-ink" style={{ textWrap: "balance" }}>{e.name}</span>
-              <span className="block text-[0.8125rem] text-muted">{e.city}</span>
-            </span>
-            <time className="shrink-0 font-mono text-[0.75rem] text-muted" style={{ fontVariantNumeric: "tabular-nums" }}>
-              {e.date}
-            </time>
-          </motion.li>
-        ))}
-      </motion.ul>
-      <motion.a
-        href="https://lu.ma/devin" target="_blank" rel="noopener" variants={up}
-        whileTap={{ scale: 0.96 }}
-        className="mt-4 inline-flex items-center gap-1.5 font-mono text-[0.75rem] text-accent-ink no-underline transition-colors hover:text-ink"
-      >
-        Full calendar on lu.ma/devin
-        <svg className="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-          <path d="M4.5 2.5l3.5 3.5-3.5 3.5" />
-        </svg>
-      </motion.a>
-    </motion.section>
+        <rect width="100" height="50" fill="none" />
+        {eventCities.map((city, i) => {
+          const { x, y } = toMercator(city.lat, city.lng)
+          return (
+            <g key={city.name}>
+              <circle
+                cx={x}
+                cy={y}
+                r="0.6"
+                fill="rgba(49, 124, 255, 0.15)"
+                style={{
+                  transform: isInView ? "scale(1)" : "scale(0)",
+                  transformOrigin: `${x}px ${y}px`,
+                  transition: `transform 600ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms`,
+                }}
+              />
+              <circle
+                cx={x}
+                cy={y}
+                r="0.25"
+                fill="#317CFF"
+                className="origin-center"
+                style={{
+                  transform: isInView ? "scale(1)" : "scale(0)",
+                  transformOrigin: `${x}px ${y}px`,
+                  transition: `transform 500ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 120 + 100}ms`,
+                  animation: isInView ? `dot-pulse 3s ease-in-out ${i * 0.2}s infinite` : "none",
+                }}
+              />
+            </g>
+          )
+        })}
+      </svg>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-canvas via-transparent to-canvas opacity-30" />
+    </div>
+  )
+}
 
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      aria-labelledby="formats-heading"
-    >
-      <motion.h2 className="section-heading" id="formats-heading" variants={up}>What we do</motion.h2>
-      <motion.div className="grid gap-3 sm:grid-cols-2" variants={container}>
-        {formats.map((f) => (
-          <motion.div
-            key={f.name} variants={up}
-            className="rounded-lg bg-panel p-5 shadow-card"
-          >
-            <h3 className="m-0 text-[1rem] font-medium leading-snug text-ink">{f.name}</h3>
-            <p className="m-0 mt-1.5 text-[0.8125rem] leading-relaxed text-muted" style={{ textWrap: "pretty" }}>
-              {f.desc}
-            </p>
-          </motion.div>
-        ))}
-      </motion.div>
-    </motion.section>
+const PhotoParallax: FC<{ src: string; alt: string }> = ({ src, alt }) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"])
 
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      aria-labelledby="ambassador-heading"
-    >
-      <motion.h2 className="section-heading" id="ambassador-heading" variants={up}>Ambassador program</motion.h2>
-      <motion.p
-        variants={up}
-        className="mb-6 max-w-prose text-[0.9375rem] leading-relaxed text-muted"
-        style={{ textWrap: "pretty" }}
-      >
-        Help grow the Devin community in your city. Get early access, credits, and a direct line to the team.
-      </motion.p>
-      <motion.div className="grid gap-3 sm:grid-cols-3" variants={container}>
-        {tiers.map((t) => (
-          <motion.div
-            key={t.name} variants={up}
-            className="flex flex-col rounded-lg bg-panel p-5 shadow-card"
-          >
-            <h3 className="m-0 text-[1rem] font-medium leading-snug text-ink">{t.name}</h3>
-            <p className="m-0 mt-1.5 text-[0.8125rem] leading-relaxed text-muted" style={{ textWrap: "pretty" }}>
-              {t.desc}
-            </p>
-            <ul className="m-0 mt-4 flex list-none flex-col gap-1.5 p-0">
-              {t.perks.map((p) => (
-                <li key={p} className="flex items-center gap-2 text-[0.8125rem] text-ink">
-                  <span className="h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                  {p}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
-      </motion.div>
-      <motion.a
-        href="https://docs.google.com/forms/d/e/1FAIpQLSfMxOlKVqCnSyY2aAX3RYdCEYRc0u7wzaKQ79UqZCC6hs1TIw/viewform"
-        target="_blank" rel="noopener" variants={up}
-        whileTap={{ scale: 0.96 }}
-        className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2.5 text-[0.875rem] font-medium text-white no-underline transition-opacity hover:opacity-90"
-      >
-        Apply to become an ambassador
-      </motion.a>
-    </motion.section>
+  return (
+    <div ref={ref} className="relative w-full overflow-hidden rounded-win" style={{ height: "clamp(240px, 40vw, 420px)" }}>
+      <motion.img
+        src={src}
+        alt={alt}
+        style={{ y }}
+        className="absolute inset-0 w-full h-full object-cover scale-110"
+      />
+      <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.08)" }} />
+    </div>
+  )
+}
 
-    <motion.section
-      initial="hidden" whileInView="visible" viewport={vp} variants={container}
-      aria-labelledby="involved-heading"
-    >
-      <motion.h2 className="section-heading" id="involved-heading" variants={up}>Get involved</motion.h2>
-      <motion.div className="flex flex-col gap-3" variants={container}>
-        {links.map((l) => (
-          <motion.a
-            key={l.label}
-            href={l.href} target="_blank" rel="noopener"
-            variants={up}
-            whileTap={{ scale: 0.96 }}
-            className="group flex items-baseline justify-between gap-4 rounded-lg bg-panel px-4 py-3 no-underline shadow-card transition-shadow hover:shadow-card-lift"
-          >
-            <span className="min-w-0">
-              <span className="block text-[1rem] font-medium text-ink">{l.label}</span>
-              <span className="block text-[0.8125rem] text-muted" style={{ textWrap: "pretty" }}>{l.desc}</span>
-            </span>
-            <svg className="mt-0.5 h-3 w-3 shrink-0 text-muted transition-transform group-hover:translate-x-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-              <path d="M4.5 2.5l3.5 3.5-3.5 3.5" />
-            </svg>
-          </motion.a>
-        ))}
-      </motion.div>
-    </motion.section>
-  </div>
+const Reveal: FC<{ children: React.ReactNode; delay?: number }> = ({ children, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-60px" }}
+    transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay }}
+  >
+    {children}
+  </motion.div>
 )
+
+const Content: FC = () => {
+  const citiesCounter = useCounter(16)
+  const eventsCounter = useCounter(58)
+  const attendeesCounter = useCounter(1400)
+
+  return (
+    <div className="flex flex-col gap-0">
+
+      <section className="mb-24">
+        <PhotoParallax src="/menu/cafe-cognition.jpg" alt="Devin community builders at a Cognition Coffee event" />
+      </section>
+
+      <section className="mb-24">
+        <Reveal>
+          <div className="flex flex-wrap gap-x-12 gap-y-4">
+            <div>
+              <span ref={citiesCounter.ref} className="text-3xl font-medium tabular-nums text-ink">{citiesCounter.count}+</span>
+              <span className="ml-2 text-muted text-sm">cities</span>
+            </div>
+            <div>
+              <span ref={eventsCounter.ref} className="text-3xl font-medium tabular-nums text-ink">{eventsCounter.count}+</span>
+              <span className="ml-2 text-muted text-sm">events</span>
+            </div>
+            <div>
+              <span ref={attendeesCounter.ref} className="text-3xl font-medium tabular-nums text-ink">{attendeesCounter.count.toLocaleString()}+</span>
+              <span className="ml-2 text-muted text-sm">attendees</span>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="mb-24">
+        <Reveal>
+          <EventMap />
+        </Reveal>
+        <Reveal delay={0.3}>
+          <p className="text-muted text-sm mt-4 text-center">
+            {eventCities.map((c) => c.name).join(" · ")}
+          </p>
+        </Reveal>
+      </section>
+
+      <section className="mb-24">
+        <PhotoParallax src="/menu/hack-with-devin.jpg" alt="Builders at a Devin hack night working on projects" />
+      </section>
+
+      <section className="mb-24">
+        <Reveal>
+          <h2 className="section-heading" id="voices-heading">What people are saying</h2>
+        </Reveal>
+        <div className="flex flex-col gap-12 mt-6">
+          {voices.map((v, i) => (
+            <Reveal key={i} delay={i * 0.08}>
+              <blockquote className="m-0 pl-0">
+                <p className="text-xl leading-relaxed font-normal text-ink" style={{ textWrap: "pretty" }}>
+                  "{v.text}"
+                </p>
+                <footer className="mt-3 text-sm text-muted">
+                  {v.author && <span className="font-medium text-ink">{v.author} </span>}
+                  <span className="font-mono text-xs">{v.handle}</span>
+                </footer>
+              </blockquote>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-24">
+        <PhotoParallax src="/menu/workshop-series.jpg" alt="Devin workshop in progress with participants building" />
+      </section>
+
+      <section className="mb-24">
+        <Reveal>
+          <h2 className="section-heading" id="events-heading">
+            <a href={links.luma} target="_blank" rel="noopener" className="section-heading">
+              Upcoming events
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2.5 6h7M6.5 3l3 3-3 3" />
+              </svg>
+            </a>
+          </h2>
+        </Reveal>
+        <ul className="entry-list dated-list mt-4">
+          {events.map((e, i) => (
+            <Reveal key={i} delay={i * 0.05}>
+              <li className="entry-row">
+                <a href={links.luma} target="_blank" rel="noopener" className="entry-link">
+                  <strong>{e.name}<span className="font-normal text-muted ml-2">{e.city}</span></strong>
+                  <time className="font-mono">{e.date}</time>
+                </a>
+              </li>
+            </Reveal>
+          ))}
+        </ul>
+        <Reveal delay={0.4}>
+          <a
+            href={links.luma}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-1.5 mt-6 text-sm text-accent-ink hover:text-ink transition-colors"
+          >
+            Full calendar on lu.ma/devin
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2.5 6h7M6.5 3l3 3-3 3" />
+            </svg>
+          </a>
+        </Reveal>
+      </section>
+
+      <section className="mb-24">
+        <Reveal>
+          <h2 className="section-heading" id="program-heading">Ambassador program</h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="text-base leading-relaxed text-ink mt-4" style={{ maxWidth: "36rem", textWrap: "pretty" }}>
+            Help grow the Devin community in your city. Ambassadors host local events,
+            run chapters, and get early access to new features, compute credits, event
+            funding, and a direct line to the engineering team.
+          </p>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p className="text-base leading-relaxed text-muted mt-4" style={{ maxWidth: "36rem", textWrap: "pretty" }}>
+            Whether you're a student building your first project with Devin, a community
+            organizer running local meetups, or an enterprise champion shipping Devin at
+            scale — there's a place for you.
+          </p>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <a
+            href={links.ambassador}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center justify-center mt-8 px-5 py-3 rounded-win bg-accent text-canvas text-sm font-medium transition-colors hover:bg-accent-ink active:scale-[0.97]"
+            style={{ transitionProperty: "background-color, transform", transitionDuration: "150ms" }}
+          >
+            Apply to become an ambassador
+          </a>
+        </Reveal>
+      </section>
+
+      <section className="mb-12">
+        <Reveal>
+          <h2 className="section-heading" id="links-heading">Get involved</h2>
+        </Reveal>
+        <ul className="entry-list mt-4">
+          <Reveal delay={0.05}>
+            <li className="entry-row">
+              <a href={links.discord} target="_blank" rel="noopener" className="entry-link">
+                <strong>Discord</strong>
+                <span>Daily conversation, project showcases, help threads</span>
+              </a>
+            </li>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <li className="entry-row">
+              <a href={links.luma} target="_blank" rel="noopener" className="entry-link">
+                <strong>Events on Luma</strong>
+                <span>Global event calendar — find a chapter near you</span>
+              </a>
+            </li>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <li className="entry-row">
+              <a href={links.github} target="_blank" rel="noopener" className="entry-link">
+                <strong>GitHub Discussions</strong>
+                <span>Long-form questions, RFCs, community playbooks</span>
+              </a>
+            </li>
+          </Reveal>
+        </ul>
+      </section>
+    </div>
+  )
+}
 
 export default Content
