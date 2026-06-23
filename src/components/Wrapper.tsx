@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Link } from "gatsby"
 import { AnimatePresence } from "framer-motion"
 import { useApp } from "@/context/App"
@@ -10,6 +10,8 @@ import { ModeToggle } from "./ModeToggle"
 import { SITE_CONTAINER } from "@/lib/layout"
 import { SOCIALS } from "@/data/experience"
 import { ErrorBoundary } from "./ErrorBoundary"
+import { OnboardingTerminal } from "./OnboardingTerminal"
+import { ONBOARDING_FLOW } from "@/data/onboarding"
 
 const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
@@ -121,9 +123,31 @@ const SiteFooter: React.FC = () => (
   </footer>
 )
 
+const ONBOARD_COOKIE = "ccvm_onboarded"
+
+function hasOnboarded(): boolean {
+  if (typeof document === "undefined") return true
+  return document.cookie.split(";").some((c) => c.trim().startsWith(`${ONBOARD_COOKIE}=`))
+}
+
+function setOnboarded() {
+  if (typeof document === "undefined") return
+  document.cookie = `${ONBOARD_COOKIE}=1; max-age=31536000; path=/; SameSite=Lax`
+}
+
 /** Top-level chrome. `os` renders the windowed desktop; `site` renders pages inline. */
 export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { experience, windows, constraintsRef } = useApp()
+  const [showOnboarding, setShowOnboarding] = useState(false)
+
+  useEffect(() => {
+    if (experience === "os" && !hasOnboarded()) setShowOnboarding(true)
+  }, [experience])
+
+  const completeOnboarding = useCallback(() => {
+    setOnboarded()
+    setShowOnboarding(false)
+  }, [])
 
   if (experience === "site") {
     return (
@@ -153,6 +177,9 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
           ))}
         </AnimatePresence>
         <TaskBar />
+        {showOnboarding && (
+          <OnboardingTerminal steps={ONBOARDING_FLOW} onComplete={completeOnboarding} />
+        )}
       </div>
     </ErrorBoundary>
   )
