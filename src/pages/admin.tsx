@@ -31,6 +31,8 @@ const AdminPage: React.FC = () => {
   const [error, setError] = useState("")
 
   const [title, setTitle] = useState("")
+  const [slug, setSlug] = useState("")
+  const [slugEdited, setSlugEdited] = useState(false)
   const [excerpt, setExcerpt] = useState("")
   const [html, setHtml] = useState("")
 
@@ -78,6 +80,8 @@ const AdminPage: React.FC = () => {
   const openNew = () => {
     setEditing(null)
     setTitle("")
+    setSlug("")
+    setSlugEdited(false)
     setExcerpt("")
     setHtml("")
     setView("edit")
@@ -87,18 +91,33 @@ const AdminPage: React.FC = () => {
   const openEdit = (post: Post) => {
     setEditing(post)
     setTitle(post.title)
+    setSlug(post.slug)
+    setSlugEdited(false)
     setExcerpt(post.excerpt)
     setHtml(post.content)
     setView("edit")
     setError("")
   }
 
+  const handleTitleChange = (value: string) => {
+    setTitle(value)
+    if (!slugEdited && !editing) {
+      setSlug(value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""))
+    }
+  }
+
+  const handleSlugChange = (value: string) => {
+    setSlugEdited(true)
+    setSlug(value.toLowerCase().replace(/[^a-z0-9-]/g, ""))
+  }
+
   const handleSave = async () => {
     if (!title.trim()) { setError("Title required"); return }
+    if (!slug.trim()) { setError("Slug required"); return }
     setSaving(true)
     setError("")
 
-    const payload = { title, excerpt, content: html }
+    const payload = { title, excerpt, content: html, slug }
     const url = editing ? `/api/posts/${editing.slug}` : "/api/posts"
     const method = editing ? "PUT" : "POST"
 
@@ -192,10 +211,20 @@ const AdminPage: React.FC = () => {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => handleTitleChange(e.target.value)}
             placeholder="Title"
             className="w-full rounded border border-line bg-surface px-3 py-2 text-ink placeholder:text-muted focus:border-accent focus:outline-none"
           />
+          <div>
+            <label className="font-mono text-xs text-muted">Slug (URL: /blog/{slug || "..."})</label>
+            <input
+              type="text"
+              value={slug}
+              onChange={(e) => handleSlugChange(e.target.value)}
+              placeholder={editing ? "post-slug" : "auto-generated-from-title"}
+              className="mt-1 w-full rounded border border-line bg-surface px-3 py-2 font-mono text-sm text-ink placeholder:text-muted focus:border-accent focus:outline-none"
+            />
+          </div>
           <input
             type="text"
             value={excerpt}

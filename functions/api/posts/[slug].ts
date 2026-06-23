@@ -79,8 +79,8 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
   }
 
   const slug = context.params.slug as string
-  const { title, excerpt, content: html } = await context.request.json() as {
-    title: string; excerpt: string; content: string
+  const { title, excerpt, content: html, slug: newSlug } = await context.request.json() as {
+    title: string; excerpt: string; content: string; slug?: string
   }
 
   const { content: posts, sha } = await getPostsFile(context.env)
@@ -89,7 +89,18 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
   }
 
-  posts[idx] = { ...posts[idx], title, excerpt, content: html }
+  if (newSlug && newSlug !== slug) {
+    if (!/^[a-z0-9-]+$/.test(newSlug)) {
+      return new Response(JSON.stringify({ error: "Slug must be lowercase letters, numbers, and hyphens only" }), { status: 400 })
+    }
+    if (posts.some((p) => p.slug === newSlug)) {
+      return new Response(JSON.stringify({ error: "A post with this slug already exists" }), { status: 409 })
+    }
+    posts[idx] = { ...posts[idx], slug: newSlug, title, excerpt, content: html }
+  } else {
+    posts[idx] = { ...posts[idx], title, excerpt, content: html }
+  }
+
   await writePostsFile(context.env, posts, sha, `content: update "${title}"`)
   return new Response(JSON.stringify(posts[idx]), { headers: { "Content-Type": "application/json" } })
 }

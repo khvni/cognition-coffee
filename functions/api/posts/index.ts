@@ -84,12 +84,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const { title, excerpt, content: html } = await context.request.json() as {
-    title: string; excerpt: string; content: string
+  const { title, excerpt, content: html, slug: explicitSlug } = await context.request.json() as {
+    title: string; excerpt: string; content: string; slug?: string
   }
 
   const { content: posts, sha } = await getPostsFile(context.env)
-  const slug = slugify(title)
+  const slug = explicitSlug || slugify(title)
 
   if (posts.some((p) => p.slug === slug)) {
     return new Response(JSON.stringify({ error: "Post with this slug already exists" }), { status: 409 })
