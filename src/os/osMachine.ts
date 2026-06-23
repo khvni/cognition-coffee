@@ -68,7 +68,7 @@ export const osMachine = setup({
       actions: assign(({ context, event }) => {
         const z = context.topZ + 1
         const existing = context.windows.find(
-          (wn) => wn.path === event.path || wn.app.id === event.app.id
+          (wn) => wn.path === event.path || (wn.app.id === event.app.id && event.app.path !== "/")
         )
         if (existing) {
           return {
