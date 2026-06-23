@@ -20,13 +20,13 @@ export type AppDef = {
 }
 
 export const APPS: AppDef[] = [
-  { id: "home", title: "Welcome", path: "/", blurb: "The plan for Devin's community.", icon: "home", size: { w: 900, h: 600 }, center: true },
-  { id: "menu", title: "Menu", path: "/menu", blurb: "Programs we can brew for ya.", icon: "menu", size: { w: 680, h: 560 }, desktop: true },
-  { id: "blog", title: "Blog", path: "/blog", blurb: "Deep dives into relevant topics.", icon: "blog", size: { w: 760, h: 600 }, desktop: true },
-  { id: "community", title: "Community", path: "/community", blurb: "A redesigned Community page for Devin's friends.", icon: "community", size: { w: 680, h: 560 }, desktop: true },
-  { id: "about", title: "About", path: "/about", blurb: "Who I am and what I do.", icon: "about", size: { w: 640, h: 560 }, desktop: true },
-  { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 480, h: 400 }, desktop: true, nav: false },
-  { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 640, h: 420 }, center: true, desktop: true, nav: false },
+  { id: "home", title: "Welcome", path: "/", blurb: "The plan for Devin's community.", icon: "home", size: { w: 1000, h: 680 }, center: true },
+  { id: "menu", title: "Menu", path: "/menu", blurb: "Programs we can brew for ya.", icon: "menu", size: { w: 960, h: 680 }, desktop: true },
+  { id: "blog", title: "Blog", path: "/blog", blurb: "Deep dives into relevant topics.", icon: "blog", size: { w: 960, h: 680 }, desktop: true },
+  { id: "community", title: "Community", path: "/community", blurb: "A redesigned Community page for Devin's friends.", icon: "community", size: { w: 960, h: 680 }, desktop: true },
+  { id: "about", title: "About", path: "/about", blurb: "Who I am and what I do.", icon: "about", size: { w: 900, h: 680 }, desktop: true },
+  { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 600, h: 500 }, desktop: true, nav: false },
+  { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 760, h: 500 }, center: true, desktop: true, nav: false },
 ]
 
 export function appForPath(pathname: string): AppDef {
