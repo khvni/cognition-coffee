@@ -904,8 +904,14 @@ a.section-heading:hover svg {
   transition-duration: 150ms;
   transition-timing-function: ease;
 }
+.lightbox-radio input:focus-visible + .lightbox-radio__indicator {
+  box-shadow: inset 0 0 0 2px theme("colors.line"), 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
+}
 .lightbox-radio input:checked + .lightbox-radio__indicator {
   box-shadow: inset 0 0 0 5px theme("colors.accent");
+}
+.lightbox-radio input:checked:focus-visible + .lightbox-radio__indicator {
+  box-shadow: inset 0 0 0 5px theme("colors.accent"), 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
 }
 
 .lightbox-radio__text {
