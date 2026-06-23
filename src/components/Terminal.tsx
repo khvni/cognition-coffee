@@ -146,7 +146,7 @@ export const Terminal: React.FC = () => {
             "about.tsx": "About — Who is Ali Khani? DevRel strategist, builder, community architect.",
             "blog.tsx": "Blog — Field notes on AI-native community building and DevRel.",
             "community.tsx": "Community — Events, chapters, and feedback loops.",
-            "menu.tsx": "Programs — House Roast, Single-Origin, Roasters' Guild.",
+            "menu.tsx": "Menu — Browse the catalog, pick a program, customize the execution.",
             "scott.png": "[binary: image/png — 480x400 — it's just Scott.]",
           }
           addLine(descriptions[node.name] ?? `${node.name}: (no preview available)`)

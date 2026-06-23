@@ -32,13 +32,13 @@ const IndexPage: React.FC = () => (
       ))}
     </div>
 
-    <section className="section-block" aria-labelledby="programs-heading">
+    <section className="section-block" aria-labelledby="menu-heading">
       <h2
         className="section-heading reveal font-mono uppercase tracking-[0.06em] text-[0.6875rem]"
-        id="programs-heading"
+        id="menu-heading"
         style={stagger(2)}
       >
-        Programs
+        Menu
       </h2>
       <ul className="entry-list">
         {sections.map((a, i) => (

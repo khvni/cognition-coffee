@@ -526,3 +526,421 @@ a.section-heading:hover svg {
     line-height: 1.5;
   }
 }
+
+/* ── Wide page column ──────────────────────────────────── */
+
+.page-column-wide {
+  max-width: theme("maxWidth.wide");
+  margin: 0 auto;
+  padding: 128px 24px 110px;
+}
+
+@media (max-width: 700px) {
+  .page-column-wide {
+    padding: 96px 16px 80px;
+  }
+}
+
+/* ── Menu catalog ──────────────────────────────────────── */
+
+.menu-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin: 0 -24px;
+  padding: 0 24px;
+  box-shadow: 0 1px 0 theme("colors.line");
+}
+
+.menu-nav__track {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 12px 0;
+  -webkit-overflow-scrolling: touch;
+}
+.menu-nav__track::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-nav__pill {
+  flex-shrink: 0;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: theme("colors.muted");
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition-property: background-color, color, transform;
+  transition-duration: 180ms;
+  transition-timing-function: ease;
+  white-space: nowrap;
+}
+.menu-nav__pill:hover {
+  background: theme("colors.panel");
+  color: theme("colors.ink");
+}
+.menu-nav__pill:active {
+  transform: scale(0.96);
+}
+.menu-nav__pill--active {
+  background: theme("colors.ink");
+  color: theme("colors.canvas");
+}
+.menu-nav__pill--active:hover {
+  background: theme("colors.ink");
+  color: theme("colors.canvas");
+}
+
+.menu-section {
+  padding-top: 48px;
+  scroll-margin-top: 56px;
+}
+.menu-section + .menu-section {
+  margin-top: 16px;
+}
+
+.menu-section__title {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: theme("colors.ink");
+  text-wrap: balance;
+}
+
+.menu-section__subtitle {
+  margin: 0 0 24px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: theme("colors.muted");
+  text-wrap: pretty;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 640px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: theme("colors.canvas");
+  border-radius: theme("borderRadius.win");
+  box-shadow: theme("boxShadow.card");
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  overflow: hidden;
+  transition-property: box-shadow, transform;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 4px 16px -2px rgba(21, 23, 26, 0.12);
+}
+.menu-card:active {
+  transform: scale(0.97);
+}
+.menu-card:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
+}
+
+.menu-card__image {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+}
+.menu-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.menu-card__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.menu-card__body {
+  padding: 14px 16px 16px;
+}
+
+.menu-card__name {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.375;
+  color: theme("colors.ink");
+}
+
+.menu-card__caption {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: theme("colors.muted");
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-wrap: pretty;
+}
+
+/* ── Lightbox / Item detail modal ──────────────────────── */
+
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.lightbox-panel {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  background: theme("colors.canvas");
+  border-radius: 14px;
+  box-shadow:
+    0 24px 80px -12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: theme("colors.ink");
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  transition-property: background-color, transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+.lightbox-close:hover {
+  background: theme("colors.canvas");
+}
+.lightbox-close:active {
+  transform: scale(0.96);
+}
+
+.lightbox-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+}
+.lightbox-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lightbox-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.lightbox-body {
+  padding: 24px;
+  max-height: calc(85vh - 200px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: theme("colors.line") transparent;
+}
+
+.lightbox-title {
+  margin: 0 0 8px;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: theme("colors.ink");
+  text-wrap: balance;
+}
+
+.lightbox-desc {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: theme("colors.muted");
+  text-wrap: pretty;
+}
+
+.lightbox-section {
+  margin-top: 28px;
+}
+
+.lightbox-section-heading {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: theme("colors.muted");
+  font-family: theme("fontFamily.mono");
+}
+
+.lightbox-breakdown {
+  margin: 0;
+  padding-left: 20px;
+  list-style: decimal;
+}
+.lightbox-breakdown li {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: theme("colors.ink");
+  padding-left: 4px;
+}
+.lightbox-breakdown li + li {
+  margin-top: 8px;
+}
+
+.lightbox-options {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.lightbox-option-group {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lightbox-option-legend {
+  margin: 0 0 10px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.375;
+  color: theme("colors.ink");
+}
+
+.lightbox-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.lightbox-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+.lightbox-radio:hover {
+  background: theme("colors.panel");
+}
+
+.lightbox-radio input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lightbox-radio__indicator {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-top: 2px;
+  box-shadow: inset 0 0 0 2px theme("colors.line");
+  transition-property: box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+.lightbox-radio input:focus-visible + .lightbox-radio__indicator {
+  box-shadow: inset 0 0 0 2px theme("colors.line"), 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
+}
+.lightbox-radio input:checked + .lightbox-radio__indicator {
+  box-shadow: inset 0 0 0 5px theme("colors.accent");
+}
+.lightbox-radio input:checked:focus-visible + .lightbox-radio__indicator {
+  box-shadow: inset 0 0 0 5px theme("colors.accent"), 0 0 0 2px theme("colors.canvas"), 0 0 0 4px theme("colors.accent");
+}
+
+.lightbox-radio__text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: theme("colors.ink");
+}
+
+@media (max-width: 700px) {
+  .menu-nav {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+  .menu-section {
+    padding-top: 36px;
+  }
+  .menu-section__title {
+    font-size: 1.25rem;
+  }
+  .lightbox-backdrop {
+    padding: 16px;
+    align-items: end;
+  }
+  .lightbox-panel {
+    border-radius: 14px 14px 0 0;
+    max-width: 100%;
+  }
+  .lightbox-body {
+    max-height: calc(80vh - 160px);
+    padding: 20px;
+  }
+}
