@@ -67,13 +67,16 @@ export const osMachine = setup({
     OPEN: {
       actions: assign(({ context, event }) => {
         const z = context.topZ + 1
-        const existing = context.windows.find((wn) => wn.path === event.path)
+        const existing = context.windows.find(
+          (wn) => wn.path === event.path || wn.app.id === event.app.id
+        )
         if (existing) {
           return {
             topZ: z,
             focusedKey: existing.key,
             windows: patch(context.windows, existing.key, (wn) => ({
               ...wn,
+              path: event.path,
               element: event.element,
               title: event.title,
               z,

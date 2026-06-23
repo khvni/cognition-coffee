@@ -261,7 +261,7 @@ export const Terminal: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKey}
-            className="flex-1 border-none bg-transparent text-[#e0e0e0] outline-none caret-accent-ink"
+            className="flex-1 border-none bg-transparent text-[#e0e0e0] outline-none caret-accent-ink [&:focus-visible]:shadow-none"
             autoFocus
             spellCheck={false}
             autoComplete="off"
