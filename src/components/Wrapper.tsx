@@ -13,8 +13,8 @@ import { ErrorBoundary } from "./ErrorBoundary"
 
 const NAV = APPS.filter((a) => a.id !== "home" && a.nav !== false)
 
-const Wordmark: React.FC = () => (
-  <>Cognition <span className="text-accent-ink">Coffee</span></>
+const Logo: React.FC = () => (
+  <img src="/cognitioncoffee.png" alt="Cognition Coffee" width={28} height={28} className="object-contain" />
 )
 
 const SiteNav: React.FC = () => {
@@ -22,8 +22,8 @@ const SiteNav: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur">
       <nav className={`${SITE_CONTAINER} flex items-center gap-2 py-2.5`}>
-        <Link to="/" className="inline-flex min-h-[40px] items-center pr-2 text-[15px] font-medium tracking-tight text-ink">
-          <Wordmark />
+        <Link to="/" className="inline-flex min-h-[40px] items-center gap-2 text-[15px] font-medium tracking-tight text-ink">
+          <Logo />
         </Link>
         <ul className="ml-1 hidden items-center gap-0.5 sm:flex">
           {NAV.map((a) => (
@@ -82,8 +82,8 @@ const SiteFooter: React.FC = () => (
     <div className={`${SITE_CONTAINER} py-12`}>
       <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
         <div className="max-w-xs">
-          <Link to="/" className="inline-flex min-h-[36px] items-center text-[15px] font-medium tracking-tight text-ink">
-            <Wordmark />
+          <Link to="/" className="inline-flex min-h-[36px] items-center gap-2 text-[15px] font-medium tracking-tight text-ink">
+            <Logo />
           </Link>
           <p className="mt-2 text-[13px] leading-relaxed text-muted">
             Built with Devin. Made for builders.
