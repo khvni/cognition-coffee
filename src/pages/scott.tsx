@@ -2,11 +2,11 @@ import React from "react"
 import { SEO } from "@/components/SEO"
 
 const ScottPage: React.FC = () => (
-  <div className="flex items-center justify-center p-4">
+  <div className="flex h-full w-full items-center justify-center">
     <img
       src="/scott.png"
       alt="Scott"
-      className="max-h-[70vh] max-w-full rounded-lg shadow-card"
+      className="h-full w-full object-contain"
     />
   </div>
 )

@@ -25,7 +25,7 @@ export const APPS: AppDef[] = [
   { id: "blog", title: "Blog", path: "/blog", blurb: "Deep dives into relevant topics.", icon: "blog", size: { w: 960, h: 680 }, desktop: true },
   { id: "community", title: "Community", path: "/community", blurb: "A redesigned Community page for Devin's friends.", icon: "community", size: { w: 960, h: 680 }, desktop: true },
   { id: "about", title: "About", path: "/about", blurb: "Who I am and what I do.", icon: "about", size: { w: 900, h: 680 }, desktop: true },
-  { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 600, h: 500 }, desktop: true, nav: false },
+  { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 600, h: 374 }, desktop: true, nav: false },
   { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 760, h: 500 }, center: true, desktop: true, nav: false },
 ]
 
