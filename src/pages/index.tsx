@@ -19,46 +19,46 @@ const stagger = (i: number): React.CSSProperties =>
 
 const IndexPage: React.FC = () => (
   <div className="page-column pt-16 sm:pt-20">
-    <section className="relative -mx-6 mb-2 overflow-hidden px-6 py-6 sm:-mx-8 sm:px-8">
+    <section className="relative -mx-6 mb-6 overflow-hidden sm:-mx-8">
       <VantaFog />
-      <div className="relative z-10">
+      <div className="relative z-10 px-6 py-6 sm:px-8">
         <div className="reveal" style={stagger(0)}>
           <img
             src="/devindesktop.jpg"
             alt="Devin's desktop - the otter hard at work"
             width={800}
             height={600}
-            className="mx-auto mb-6 w-full max-w-lg rounded-win border border-line shadow-card"
+            className="mx-auto w-full max-w-lg rounded-win border border-line shadow-card"
             loading="eager"
           />
         </div>
-
-        <div className="reveal" style={stagger(1)}>
-          <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
-            Cognition Coffee
-          </h1>
-          <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
-          <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
-            Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
-            around the energy of a coffee shop. The &quot;OS&quot; (view this site on desktop if you aren&apos;t
-            already) is a nod to the early-2000s internet cafe, when going online felt like going somewhere.
-          </p>
-          <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
-            Look around for Easter eggs. Order something off the Menu. Read the papers in the Blog. If you like what
-            you see, let&apos;s chat about{" "}
-            <a
-              href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090"
-              target="_blank"
-              rel="noopener"
-              className="text-ink no-underline hover:underline"
-            >
-              why I&apos;ve brought you here
-            </a>
-            .
-          </p>
-        </div>
       </div>
     </section>
+
+    <div className="reveal" style={stagger(1)}>
+      <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
+        Cognition Coffee
+      </h1>
+      <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+        Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
+        around the energy of a coffee shop. The &quot;OS&quot; (view this site on desktop if you aren&apos;t
+        already) is a nod to the early-2000s internet cafe, when going online felt like going somewhere.
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+        Look around for Easter eggs. Order something off the Menu. Read the papers in the Blog. If you like what
+        you see, let&apos;s chat about{" "}
+        <a
+          href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090"
+          target="_blank"
+          rel="noopener"
+          className="text-ink no-underline hover:underline"
+        >
+          why I&apos;ve brought you here
+        </a>
+        .
+      </p>
+    </div>
 
     <div className="social-row reveal" style={stagger(2)} aria-label="Social links">
       {SOCIALS.map((s) => {
