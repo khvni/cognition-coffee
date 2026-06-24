@@ -1468,10 +1468,10 @@ a.section-heading:hover svg {
 }
 
 /* No-flash mode gate: the pre-hydration script sets data-cc-mode. */
-html[data-cc-mode="os"] .site-shell {
+html[data-cc-mode="os"]:not([data-cc-admin="true"]) .site-shell {
   display: none;
 }
-html[data-cc-mode="os"] body {
+html[data-cc-mode="os"]:not([data-cc-admin="true"]) body {
   background-image: url(/wallpapers/otter-desktop.jpg);
   background-size: cover;
   background-position: center;

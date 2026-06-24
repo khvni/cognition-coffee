@@ -82,8 +82,13 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
   useEffect(() => {
     if (!isBrowser) return
     document.documentElement.dataset.ccMode = experience
+    if (location.pathname.startsWith("/admin")) {
+      document.documentElement.dataset.ccAdmin = "true"
+    } else {
+      delete document.documentElement.dataset.ccAdmin
+    }
     window.localStorage.setItem(STORE_KEY, experience)
-  }, [experience])
+  }, [experience, location.pathname])
 
   useEffect(() => {
     const pathname = normPath(location.pathname)
