@@ -97,7 +97,7 @@ const DEVIN_TREE: FsNode = {
 const blogPostNodes: FsNode[] = blogPosts.map((p) => ({
   name: `${p.slug}.tsx`,
   type: "file",
-  description: `Blog post: ${p.slug} - ${p.frontmatter.title}`,
+  description: `Blog post: ${p.frontmatter.title}`,
 }))
 
 const menuItemNodes: FsNode[] = MENU_SECTIONS.flatMap((s) =>
