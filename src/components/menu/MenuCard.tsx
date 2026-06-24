@@ -16,7 +16,7 @@ export const MenuCard: React.FC<Props> = ({ item, onClick, onAddToCart }) => (
         onClick={onClick}
         aria-label={`View details for ${item.name}`}
       >
-        <img src={item.image} alt={item.name} loading="lazy" />
+        <img src={item.image} alt={item.name} />
       </button>
       <button
         type="button"
