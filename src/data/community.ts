@@ -33,7 +33,7 @@ export const faqs: { question: string; answer: string }[] = [
   },
   {
     question: "What does a Devin Ambassador do?",
-    answer: "Ambassadors host local events, create content, and move up through Contributor, Editor, and Correspondent tiers.",
+    answer: "Ambassadors host local events, create content, and advocate for Devin in their city. Everyone gets the same access to resources, swag, and support.",
   },
   {
     question: "How is Devin on Campus different?",

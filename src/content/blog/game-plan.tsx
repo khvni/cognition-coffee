@@ -46,7 +46,7 @@ const Content: FC = () => (
     </p>
     <h3>Ambassadors: Recruitment</h3>
     <p>
-      Three tiers: Contributor, Advocate, and Champion. The key is the feedback loop: weekly Devin Office Hours where ambassadors surface real problems users hit, which feeds community playbooks and the product team.
+      No tiers, no ladders. Find the people already doing the work and give them a title, a kit, and our full backing. The key is the feedback loop: weekly Devin Office Hours where ambassadors surface real problems users hit, which feeds community playbooks and the product team.
     </p>
     <h2>Why me</h2>
     <p>

@@ -9,15 +9,15 @@ export const ambassadorsSection: MenuSection = {
       id: "recruitment",
       name: "Recruitment",
       image: "/menu/recruitment.jpg",
-      subcaption: "Three tiers. One pipeline from power user to community leader.",
+      subcaption: "Find the people already doing the work, then give them a seat at the table.",
       description:
-        "Find the people already doing the work, then give them a title and a seat at the table. Three tiers, each with more access and more to lose. Promotions are earned, not handed out.",
+        "Find the people already hosting events, helping in Discord, and shipping with Devin. Give them a title, a kit, and our full backing. No tiers, no ladders. Everyone who's in gets the same access and the same support.",
       breakdown: [
         "Source from usage data, GitHub, and community activity",
-        "Open applications with tier-specific criteria",
-        "Cohort intake with a 30-day activation sprint",
-        "Quarterly tier reviews and public promotions",
-        "Champions get a direct line to the product team",
+        "Open applications, rolling intake",
+        "Cohort onboarding with a 30-day activation sprint",
+        "Public welcome announcement for each new ambassador",
+        "Direct line to the product team for everyone",
       ],
       orderingOptions: [
         {
@@ -31,11 +31,12 @@ export const ambassadorsSection: MenuSection = {
           ],
         },
         {
-          label: "Advancement Path",
+          label: "Recognition Style",
           choices: [
-            "3-tier ladder (Contributor → Advocate → Champion)",
-            "2-tier guild (Member → Lead)",
-            "Points-based unlock system",
+            "Public welcome post + badge",
+            "Ambassador spotlight blog series",
+            "Annual ambassador awards ceremony",
+            "LinkedIn endorsement from Cognition team",
           ],
         },
         {
@@ -60,7 +61,7 @@ export const ambassadorsSection: MenuSection = {
         "Week 2: live cohort call with current Champions",
         "Week 3: shadow an existing ambassador event",
         "Week 4: host your first micro-event",
-        "Graduation: badge, public shoutout, tier placement",
+        "Graduation: badge, public shoutout, full ambassador access",
       ],
       orderingOptions: [
         {
@@ -109,7 +110,7 @@ export const ambassadorsSection: MenuSection = {
         "Private Slack, channels split by region and topic",
         "Monthly office hours with Cognition engineers",
         "Quarterly swag refresh with new exclusive items",
-        "Annual Ambassador Summit, expenses paid for Champions",
+        "Annual Ambassador Summit, expenses paid",
         "Weekly digest of ambassador insights routed to PMs",
       ],
       orderingOptions: [

@@ -138,9 +138,10 @@ const Content: FC = () => {
         </Reveal>
         <Reveal delay={0.15}>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted [text-wrap:pretty]">
-            Every ambassador starts as a Contributor. Move up to Editor by hosting events and creating content, then to
-            Correspondent to partner directly with our team and unlock perks like early access, compute credits, and
-            event funding.
+            No tiers, no ladders, no unlocking perks. Once you're in, you're in. Every ambassador gets the same
+            access: compute credits, early builds, event funding, swag, and a direct line to the team. We spoil
+            you because you're doing real work, and we recognize you openly for it. The goal is simple: back
+            you so you can go advocate for Devin in your city.
           </p>
         </Reveal>
         <Reveal delay={0.2}>
@@ -184,7 +185,7 @@ const Content: FC = () => {
             <li>
               <a href={links.ambassador} target="_blank" rel="noopener" className="group block">
                 <span className="block text-base font-medium text-ink">Apply to lead</span>
-                <span className="block text-base text-muted">Host local events and unlock early access and perks.</span>
+                <span className="block text-base text-muted">Host local events with our backing, swag, and compute.</span>
               </a>
             </li>
           </Reveal>

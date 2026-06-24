@@ -8,14 +8,14 @@
         "id": "recruitment",
         "name": "Recruitment",
         "image": "/menu/recruitment.jpg",
-        "subcaption": "Three tiers. One pipeline from power user to community leader.",
-        "description": "Find the people already doing the work, then give them a title and a seat at the table. Three tiers, each with more access and more to lose. Promotions are earned, not handed out.",
+        "subcaption": "Find the people already doing the work, then give them a seat at the table.",
+        "description": "Find the people already hosting events, helping in Discord, and shipping with Devin. Give them a title, a kit, and our full backing. No tiers, no ladders. Everyone who's in gets the same access and the same support.",
         "breakdown": [
           "Source from usage data, GitHub, and community activity",
-          "Open applications with tier-specific criteria",
-          "Cohort intake with a 30-day activation sprint",
-          "Quarterly tier reviews and public promotions",
-          "Champions get a direct line to the product team"
+          "Open applications, rolling intake",
+          "Cohort onboarding with a 30-day activation sprint",
+          "Public welcome announcement for each new ambassador",
+          "Direct line to the product team for everyone"
         ],
         "orderingOptions": [
           {
@@ -41,11 +41,12 @@
             ]
           },
           {
-            "label": "Tier Structure",
+            "label": "Recognition Style",
             "choices": [
-              "3-tier (Contributor → Advocate → Champion)",
-              "2-tier (Member → Lead)",
-              "Points-based with unlockable perks"
+              "Public welcome post + badge",
+              "Ambassador spotlight blog series",
+              "Annual ambassador awards ceremony",
+              "LinkedIn endorsement from Cognition team"
             ]
           }
         ]
@@ -58,10 +59,10 @@
         "description": "New ambassadors don't know what to do first. This gives them a calendar. Four weeks of async modules, two live calls, a welcome kit on their doorstep, and one concrete event to run by day 30.",
         "breakdown": [
           "Week 1: welcome kit ships, async product deep-dive",
-          "Week 2: live cohort call with current Champions",
+          "Week 2: live cohort call with current ambassadors",
           "Week 3: shadow an existing ambassador event",
           "Week 4: host your first micro-event",
-          "Graduation: badge, public shoutout, tier placement"
+          "Graduation: badge, public shoutout, full ambassador access"
         ],
         "orderingOptions": [
           {
@@ -109,7 +110,7 @@
           "Private Slack, channels split by region and topic",
           "Monthly office hours with Cognition engineers",
           "Quarterly swag refresh with new exclusive items",
-          "Annual Ambassador Summit, expenses paid for Champions",
+          "Annual Ambassador Summit, expenses paid",
           "Weekly digest of ambassador insights routed to PMs"
         ],
         "orderingOptions": [
