@@ -138,10 +138,7 @@ const Content: FC = () => {
         </Reveal>
         <Reveal delay={0.15}>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted [text-wrap:pretty]">
-            No tiers, no ladders, no unlocking perks. Once you're in, you're in. Every ambassador gets the same
-            access: compute credits, early builds, event funding, swag, and a direct line to the team. We spoil
-            you because you're doing real work, and we recognize you openly for it. The goal is simple: back
-            you so you can go advocate for Devin in your city.
+            Ambassadors get compute credits, early builds, event funding, swag, and a direct line to the Cognition team.
           </p>
         </Reveal>
         <Reveal delay={0.2}>
