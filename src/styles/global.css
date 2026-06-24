@@ -1223,7 +1223,7 @@ a.section-heading:hover svg {
 /* ── Cart FAB + panel ───────────────────────────────── */
 
 .cart-fab {
-  position: absolute;
+  position: fixed;
   bottom: 24px;
   right: 24px;
   z-index: 90;
@@ -1267,7 +1267,7 @@ a.section-heading:hover svg {
 }
 
 .cart-backdrop {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 100;
   background: rgba(0, 0, 0, 0.45);
@@ -1279,7 +1279,7 @@ a.section-heading:hover svg {
 .cart-panel {
   width: 100%;
   max-width: 480px;
-  max-height: 85%;
+  max-height: 85vh;
   display: flex;
   flex-direction: column;
   background: theme("colors.canvas");
@@ -1434,7 +1434,7 @@ a.section-heading:hover svg {
 /* ── Cart toast ─────────────────────────────────────── */
 
 .cart-toast {
-  position: absolute;
+  position: fixed;
   bottom: 88px;
   left: 0;
   right: 0;
@@ -1463,7 +1463,7 @@ a.section-heading:hover svg {
     right: 16px;
   }
   .cart-panel {
-    max-height: 90%;
+    max-height: 90vh;
   }
 }
 

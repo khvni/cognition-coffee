@@ -195,7 +195,7 @@ export const AppWindow: React.FC<Props> = ({ item }) => {
         </div>
       </div>
 
-      <div className="win-scroll relative min-h-0 flex-1 overflow-auto rounded-b-[7px] bg-panel">{item.element}</div>
+      <div className="win-scroll min-h-0 flex-1 overflow-auto rounded-b-[7px] bg-panel">{item.element}</div>
 
       {!maximized && (
         <div
