@@ -5,7 +5,7 @@ import { useApp } from "@/context/App"
  * Shells a vendored, open-source game (loaded as-is from `static/vendor/games/`)
  * inside an OS window or site page, with a thin footer crediting the upstream repo.
  * The frame is served same-origin, so we hand keyboard focus straight to the game
- * on load and on pointer interaction - otherwise arrow/space keys hit the parent.
+ * on load and on pointer-down - otherwise arrow/space keys hit the parent.
  */
 type Props = { title: string; src: string; credit: string }
 
@@ -13,7 +13,7 @@ const Frame: React.FC<Props> = ({ title, src, credit }) => {
   const ref = useRef<HTMLIFrameElement>(null)
   const focusGame = () => ref.current?.contentWindow?.focus()
   return (
-    <div className="flex h-full w-full flex-col bg-panel" onPointerDown={focusGame} onMouseEnter={focusGame}>
+    <div className="flex h-full w-full flex-col bg-panel" onPointerDown={focusGame}>
       <iframe
         ref={ref}
         src={src}
