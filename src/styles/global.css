@@ -775,6 +775,12 @@ a.section-heading:hover svg {
   content: "";
   position: absolute;
   inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.92) 100%
+  );
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   pointer-events: none;
 }
@@ -791,10 +797,8 @@ a.section-heading:hover svg {
   border-radius: 50%;
   border: none;
   padding: 0;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: theme("colors.ink");
+  background: theme("colors.accent");
+  color: theme("colors.canvas");
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   transition-property: background-color, transform;
@@ -802,7 +806,7 @@ a.section-heading:hover svg {
   transition-timing-function: ease;
 }
 .menu-card__expand:hover {
-  background: theme("colors.canvas");
+  background: theme("colors.accent-ink");
 }
 .menu-card__expand:active {
   transform: scale(0.96);
@@ -820,15 +824,15 @@ a.section-heading:hover svg {
   border-radius: 999px;
   border: none;
   padding: 0;
-  background: theme("colors.canvas");
-  color: theme("colors.ink");
+  background: theme("colors.accent");
+  color: theme("colors.canvas");
   box-shadow: 0 2px 8px rgba(21, 23, 26, 0.12);
   cursor: pointer;
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 .menu-card__add:hover {
   transform: scale(1.05);
-  background: theme("colors.panel");
+  background: theme("colors.accent-ink");
 }
 .menu-card__add:active {
   transform: scale(0.95);
