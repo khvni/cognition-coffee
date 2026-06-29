@@ -1,8 +1,10 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useCallback } from "react"
 import { useEditor, EditorContent, type AnyExtension } from "@tiptap/react"
 import { Extension } from "@tiptap/core"
+import { Plugin, PluginKey } from "@tiptap/pm/state"
 import StarterKit from "@tiptap/starter-kit"
 import Link from "@tiptap/extension-link"
+import Image from "@tiptap/extension-image"
 
 const LinkShortcut = Extension.create({
   addKeyboardShortcuts() {
@@ -18,6 +20,62 @@ const LinkShortcut = Extension.create({
         return editor.chain().focus().setLink({ href: url }).run()
       },
     }
+  },
+})
+
+async function uploadImage(file: File): Promise<string | null> {
+  const form = new FormData()
+  form.append("file", file)
+  const res = await fetch("/api/upload", { method: "POST", body: form })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({ error: "Upload failed" }))
+    window.alert(data.error || "Upload failed")
+    return null
+  }
+  const { url } = await res.json() as { url: string }
+  return url
+}
+
+const ImagePaste = Extension.create({
+  addProseMirrorPlugins() {
+    const editor = this.editor
+    return [
+      new Plugin({
+        key: new PluginKey("imagePaste"),
+        props: {
+          handlePaste: (view, event) => {
+            const files = Array.from(event.clipboardData?.files ?? []).filter((f) =>
+              f.type.startsWith("image/")
+            )
+            if (!files.length) return false
+            event.preventDefault()
+            files.forEach(async (file) => {
+              const url = await uploadImage(file)
+              if (url) editor.chain().focus().setImage({ src: url, alt: file.name }).run()
+            })
+            return true
+          },
+          handleDrop: (view, event) => {
+            const files = Array.from(event.dataTransfer?.files ?? []).filter((f) =>
+              f.type.startsWith("image/")
+            )
+            if (!files.length) return false
+            event.preventDefault()
+            const dropPos = view.posAtCoords({ left: event.clientX, top: event.clientY })?.pos
+            files.forEach(async (file) => {
+              const url = await uploadImage(file)
+              if (url) {
+                const chain = editor.chain().focus()
+                if (dropPos != null) chain.insertContentAt(dropPos, { type: "image", attrs: { src: url, alt: file.name } })
+                else chain.setImage({ src: url, alt: file.name })
+                chain.run()
+              }
+            })
+            return true
+          },
+        },
+      }),
+    ]
   },
 })
 
@@ -51,7 +109,9 @@ export const TiptapEditor: React.FC<Props> = ({ content, onChange }) => {
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false }),
+      Image.configure({ inline: false, allowBase64: false }),
       LinkShortcut,
+      ImagePaste,
     ] as AnyExtension[],
     content,
     onUpdate: ({ editor: e }) => onChange(e.getHTML()),
@@ -66,6 +126,19 @@ export const TiptapEditor: React.FC<Props> = ({ content, onChange }) => {
   if (!editor) return null
 
   const cmd = (fn: (c: Chain) => Chain) => () => fn(editor.chain().focus()).run()
+
+  const handleImagePick = useCallback(() => {
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = "image/*"
+    input.onchange = async () => {
+      const file = input.files?.[0]
+      if (!file) return
+      const url = await uploadImage(file)
+      if (url) editor.chain().focus().setImage({ src: url, alt: file.name }).run()
+    }
+    input.click()
+  }, [editor])
 
   return (
     <div className="rounded border border-line">
@@ -104,6 +177,7 @@ export const TiptapEditor: React.FC<Props> = ({ content, onChange }) => {
         >
           Link
         </MenuButton>
+        <MenuButton onClick={handleImagePick}>Img</MenuButton>
       </div>
       <EditorContent
         editor={editor}
