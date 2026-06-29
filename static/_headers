@@ -6,3 +6,6 @@
 
 /favicon.ico
   Cache-Control: public, max-age=0, must-revalidate
+
+/logos/*
+  Cache-Control: public, max-age=0, must-revalidate

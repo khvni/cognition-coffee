@@ -1,5 +1,5 @@
 import React, { useState, useEffect, type FC } from "react"
-import { SOCIALS, WORK, PROJECTS, type WorkEntry } from "@/data/experience"
+import { SOCIALS, WORK, PROJECTS, type WorkEntry, type Project } from "@/data/experience"
 
 export const frontmatter = {
   title: "About",
@@ -31,11 +31,16 @@ const stagger = (i: number): React.CSSProperties =>
 const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
   const paragraphs = about?.paragraphs?.length ? about.paragraphs : defaultAboutParagraphs
   const [entries, setEntries] = useState<WorkEntry[]>(WORK)
+  const [projects, setProjects] = useState<Project[]>(PROJECTS)
 
   useEffect(() => {
     fetch("/api/experience")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => { if (Array.isArray(data) && data.length) setEntries(data) })
+      .catch(() => {})
+    fetch("/api/projects")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (Array.isArray(data) && data.length) setProjects(data) })
       .catch(() => {})
   }, [])
 
@@ -62,7 +67,20 @@ const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
           <li key={w.company} className="work-row">
             <span className="company">
               {w.logo ? (
-                <img src={w.logo} alt={`${w.company} logo`} width={28} height={28} className="rounded" />
+                <img
+                  src={w.logo}
+                  alt={`${w.company} logo`}
+                  width={28}
+                  height={28}
+                  className="rounded"
+                  onError={(e) => {
+                    const img = e.currentTarget
+                    const span = document.createElement("span")
+                    span.className = `mark ${w.markClass}`
+                    span.textContent = w.mark
+                    img.replaceWith(span)
+                  }}
+                />
               ) : (
                 <span className={`mark ${w.markClass}`}>{w.mark}</span>
               )}
@@ -78,7 +96,7 @@ const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
     <section className="section-block reveal" style={stagger(4)} aria-labelledby="about-projects-heading">
       <h2 className="section-heading" id="about-projects-heading">Projects</h2>
       <ul className="entry-list">
-        {PROJECTS.map((p) => (
+        {projects.map((p) => (
           <li key={p.title}>
             <a className="entry-link" href={p.href} target="_blank" rel="noopener">
               <strong>{p.title}</strong>
