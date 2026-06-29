@@ -38,7 +38,6 @@ vi.mock("@/lib/apps", () => ({
     { id: "menu", title: "Programs", path: "/menu", icon: "menu", desktop: true, size: { w: 680, h: 560 }, blurb: "" },
     { id: "blog", title: "Blog", path: "/blog", icon: "blog", desktop: true, size: { w: 760, h: 600 }, blurb: "" },
     { id: "community", title: "Community", path: "/community", icon: "community", desktop: true, size: { w: 680, h: 560 }, blurb: "" },
-    { id: "about", title: "About", path: "/about", icon: "about", desktop: true, size: { w: 640, h: 560 }, blurb: "" },
     { id: "scott", title: "scott.png", path: "/scott", icon: "scott", desktop: true, size: { w: 480, h: 400 }, blurb: "" },
     { id: "terminal", title: "Terminal", path: "/terminal", icon: "terminal", desktop: true, size: { w: 640, h: 420 }, blurb: "" },
   ],
@@ -48,7 +47,6 @@ const desktopApps = [
   { id: "menu", title: "Programs", path: "/menu", icon: "menu", desktop: true },
   { id: "blog", title: "Blog", path: "/blog", icon: "blog", desktop: true },
   { id: "community", title: "Community", path: "/community", icon: "community", desktop: true },
-  { id: "about", title: "About", path: "/about", icon: "about", desktop: true },
   { id: "scott", title: "scott.png", path: "/scott", icon: "scott", desktop: true },
   { id: "terminal", title: "Terminal", path: "/terminal", icon: "terminal", desktop: true },
 ]

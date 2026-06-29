@@ -1,5 +1,5 @@
 /** App registry - single source for OS apps and routes. */
-export type AppId = "home" | "menu" | "blog" | "community" | "about" | "scott" | "terminal"
+export type AppId = "home" | "menu" | "blog" | "community" | "scott" | "terminal"
 
 export type AppDef = {
   id: AppId
@@ -24,7 +24,6 @@ export const APPS: AppDef[] = [
   { id: "menu", title: "Menu", path: "/menu", blurb: "All the different things I can cook up.", icon: "menu", size: { w: 960, h: 680 }, desktop: true },
   { id: "blog", title: "Blog", path: "/blog", blurb: "Read up on what I bring to the table.", icon: "blog", size: { w: 960, h: 680 }, desktop: true },
   { id: "community", title: "Community", path: "/community", blurb: "Redesigning the Devin Community page to feel like home.", icon: "community", size: { w: 960, h: 680 }, desktop: true },
-  { id: "about", title: "About", path: "/about", blurb: "Who I am and what I do.", icon: "about", size: { w: 900, h: 680 }, desktop: true },
   { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 600, h: 374 }, desktop: true, nav: false },
   { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 760, h: 500 }, center: true, desktop: true, nav: false },
 ]

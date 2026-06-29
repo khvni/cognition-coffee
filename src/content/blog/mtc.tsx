@@ -223,7 +223,7 @@ const Content: FC = () => (
     <p>
       I built MTC from one Berkeley club to 30+ chapters. I'm building Cognition Coffee to do the same thing for Devin.{" "}
       <a href="/blog/game-plan/">The game plan is here</a>.{" "}
-      <a href="/about">Let's talk</a>.
+      Let's talk.
     </p>
   </>
 )
