@@ -13,6 +13,11 @@ interface Post {
   content: string
 }
 
+interface AboutContent {
+  description: string
+  paragraphs: string[]
+}
+
 interface MenuSection {
   id: string
   title: string
@@ -36,7 +41,16 @@ interface OrderingOption {
   multi?: boolean
 }
 
-type View = "list" | "edit" | "menu"
+interface ExperienceEntry {
+  mark: string
+  markClass: string
+  company: string
+  role: string
+  date: string
+  logo?: string
+}
+
+type View = "list" | "edit" | "about" | "menu" | "experience"
 
 const AdminPage: React.FC = () => {
   const [authed, setAuthed] = useState(false)
@@ -55,11 +69,31 @@ const AdminPage: React.FC = () => {
   const [excerpt, setExcerpt] = useState("")
   const [html, setHtml] = useState("")
 
+  const [aboutDesc, setAboutDesc] = useState("")
+  const [aboutParagraphs, setAboutParagraphs] = useState<string[]>([""])
+  const [aboutSaving, setAboutSaving] = useState(false)
+  const [aboutError, setAboutError] = useState("")
+  const [aboutSaved, setAboutSaved] = useState(false)
+
   const [menuData, setMenuData] = useState<MenuSection[]>([])
+
+  const [expEntries, setExpEntries] = useState<ExperienceEntry[]>([])
+  const [expSaving, setExpSaving] = useState(false)
+  const [expError, setExpError] = useState("")
+  const [expSaved, setExpSaved] = useState(false)
+  const [logoUploading, setLogoUploading] = useState<string | null>(null)
 
   const fetchPosts = useCallback(async () => {
     const res = await fetch("/api/posts")
     if (res.ok) setPosts(await res.json())
+  }, [])
+
+  const fetchAbout = useCallback(async () => {
+    const res = await fetch("/api/about")
+    if (!res.ok) return
+    const data = await res.json() as AboutContent
+    setAboutDesc(data.description ?? "")
+    setAboutParagraphs(data.paragraphs?.length ? data.paragraphs : [""])
   }, [])
 
   const fetchMenu = useCallback(async () => {
@@ -68,12 +102,21 @@ const AdminPage: React.FC = () => {
     setMenuData(await res.json() as MenuSection[])
   }, [])
 
+  const fetchExperience = useCallback(async () => {
+    const res = await fetch("/api/experience")
+    if (!res.ok) return
+    const data = await res.json()
+    if (Array.isArray(data)) setExpEntries(data)
+  }, [])
+
   useEffect(() => {
     if (authed) {
       fetchPosts()
+      fetchAbout()
       fetchMenu()
+      fetchExperience()
     }
-  }, [authed, fetchPosts, fetchMenu])
+  }, [authed, fetchPosts, fetchAbout, fetchMenu, fetchExperience])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -156,6 +199,36 @@ const AdminPage: React.FC = () => {
     if (res.ok) fetchPosts()
   }
 
+  const handleAboutSave = async () => {
+    setAboutSaving(true)
+    setAboutError("")
+    setAboutSaved(false)
+    const paragraphs = aboutParagraphs.map((p) => p.trim()).filter(Boolean)
+    const res = await fetch("/api/about", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ description: aboutDesc.trim(), paragraphs }),
+    })
+    setAboutSaving(false)
+    if (res.ok) {
+      const data = await res.json() as AboutContent
+      setAboutDesc(data.description)
+      setAboutParagraphs(data.paragraphs.length ? data.paragraphs : [""])
+      setAboutSaved(true)
+      setTimeout(() => setAboutSaved(false), 2000)
+    } else {
+      const data = await res.json().catch(() => ({ error: "Save failed" }))
+      setAboutError(data.error || "Save failed")
+    }
+  }
+
+  const updateParagraph = (i: number, value: string) => {
+    setAboutParagraphs((prev) => prev.map((p, idx) => (idx === i ? value : p)))
+  }
+  const addParagraph = () => setAboutParagraphs((prev) => [...prev, ""])
+  const removeParagraph = (i: number) =>
+    setAboutParagraphs((prev) => prev.filter((_, idx) => idx !== i))
+
   const handleMenuSave = useCallback(async (data: MenuSection[]): Promise<{ ok: boolean; error?: string; data?: MenuSection[] }> => {
     const res = await fetch("/api/menu", {
       method: "PUT",
@@ -170,6 +243,71 @@ const AdminPage: React.FC = () => {
     const err = await res.json().catch(() => ({ error: "Save failed" }))
     return { ok: false, error: err.error || "Save failed" }
   }, [])
+
+  const handleExperienceSave = async () => {
+    setExpSaving(true)
+    setExpError("")
+    setExpSaved(false)
+    const res = await fetch("/api/experience", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(expEntries),
+    })
+    setExpSaving(false)
+    if (res.ok) {
+      const data = await res.json()
+      if (Array.isArray(data)) setExpEntries(data)
+      setExpSaved(true)
+      setTimeout(() => setExpSaved(false), 2000)
+    } else {
+      const data = await res.json().catch(() => ({ error: "Save failed" }))
+      setExpError(data.error || "Save failed")
+    }
+  }
+
+  const updateExpEntry = (i: number, field: keyof ExperienceEntry, value: string) => {
+    setExpEntries((prev) => prev.map((e, idx) => (idx === i ? { ...e, [field]: value } : e)))
+  }
+
+  const addExpEntry = () => {
+    setExpEntries((prev) => [...prev, { mark: "", markClass: "bg-[#777]", company: "", role: "", date: "", logo: "" }])
+  }
+
+  const removeExpEntry = (i: number) => {
+    setExpEntries((prev) => prev.filter((_, idx) => idx !== i))
+  }
+
+  const moveExpEntry = (i: number, dir: -1 | 1) => {
+    setExpEntries((prev) => {
+      const next = [...prev]
+      const j = i + dir
+      if (j < 0 || j >= next.length) return prev
+      ;[next[i], next[j]] = [next[j], next[i]]
+      return next
+    })
+  }
+
+  const handleLogoUpload = async (i: number, file: File) => {
+    const company = expEntries[i]?.company
+    if (!company?.trim()) {
+      setExpError("Enter the company name before uploading a logo")
+      return
+    }
+    setLogoUploading(company)
+    setExpError("")
+    const form = new FormData()
+    form.append("file", file)
+    form.append("company", company)
+    const res = await fetch("/api/upload-logo", { method: "POST", body: form })
+    setLogoUploading(null)
+    if (res.ok) {
+      const { url } = await res.json() as { url: string }
+      updateExpEntry(i, "logo", url)
+    } else {
+      const data = await res.json().catch(() => ({ error: "Upload failed" }))
+      setExpError(data.error || "Upload failed")
+    }
+  }
 
   if (!authed) {
     return (
@@ -248,6 +386,164 @@ const AdminPage: React.FC = () => {
     )
   }
 
+  if (view === "about") {
+    return (
+      <div className="mx-auto max-w-reader px-6 py-8">
+        <button onClick={() => setView("list")} className="font-mono text-xs text-muted hover:text-ink">
+          &larr; Back
+        </button>
+        <h1 className="mt-4 text-2xl font-medium text-ink">Edit About page</h1>
+        <p className="mt-2 text-sm text-muted">
+          Edit the intro copy and SEO description. Experience and projects are edited separately.
+        </p>
+
+        <div className="mt-6 space-y-6">
+          <div>
+            <label className="font-mono text-xs text-muted">SEO description</label>
+            <input
+              type="text"
+              value={aboutDesc}
+              onChange={(e) => setAboutDesc(e.target.value)}
+              placeholder="Short description for search engines"
+              className="mt-1 w-full rounded border border-line bg-surface px-3 py-2 text-ink placeholder:text-muted focus:border-accent focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="font-mono text-xs text-muted">Intro paragraphs</label>
+            <div className="mt-1 space-y-3">
+              {aboutParagraphs.map((p, i) => (
+                <div key={i} className="flex gap-2">
+                  <textarea
+                    value={p}
+                    onChange={(e) => updateParagraph(i, e.target.value)}
+                    rows={3}
+                    placeholder={`Paragraph ${i + 1}`}
+                    className="w-full resize-y rounded border border-line bg-surface px-3 py-2 text-ink placeholder:text-muted focus:border-accent focus:outline-none"
+                  />
+                  {aboutParagraphs.length > 1 && (
+                    <button
+                      onClick={() => removeParagraph(i)}
+                      className="self-start rounded border border-line px-2 py-1 font-mono text-xs text-red-600 hover:bg-red-50"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={addParagraph}
+              className="mt-3 rounded border border-line px-2 py-1 font-mono text-xs text-muted hover:text-ink"
+            >
+              + Add paragraph
+            </button>
+          </div>
+
+          {aboutError && <p className="text-sm text-red-600">{aboutError}</p>}
+          {aboutSaved && <p className="text-sm text-green-600">Saved.</p>}
+
+          <button
+            onClick={handleAboutSave}
+            disabled={aboutSaving}
+            className="rounded bg-ink px-4 py-2 font-mono text-sm text-canvas hover:bg-accent-ink disabled:opacity-50"
+          >
+            {aboutSaving ? "Saving…" : "Save About"}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (view === "experience") {
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-8">
+        <button onClick={() => setView("list")} className="font-mono text-xs text-muted hover:text-ink">
+          &larr; Back
+        </button>
+        <h1 className="mt-4 text-2xl font-medium text-ink">Edit Experience</h1>
+        <p className="mt-2 text-sm text-muted">
+          Add, reorder, and edit your professional experience entries. Upload a company logo (png/jpeg/svg, 2 MB max) for each entry — if no logo is set, the text mark is used as fallback.
+        </p>
+
+        <div className="mt-6 space-y-4">
+          {expEntries.map((entry, i) => (
+            <div key={i} className="rounded border border-line bg-surface p-4">
+              <div className="flex items-center gap-3">
+                {entry.logo ? (
+                  <img src={entry.logo} alt={`${entry.company} logo`} width={36} height={36} className="rounded" />
+                ) : (
+                  <span className={`mark ${entry.markClass} flex h-9 w-9 items-center justify-center rounded text-sm font-medium text-canvas`}>
+                    {entry.mark}
+                  </span>
+                )}
+                <strong className="text-ink">{entry.company || "New entry"}</strong>
+                <div className="ml-auto flex gap-1">
+                  <button onClick={() => moveExpEntry(i, -1)} disabled={i === 0} className="rounded border border-line px-2 py-0.5 font-mono text-xs text-muted hover:text-ink disabled:opacity-30">&uarr;</button>
+                  <button onClick={() => moveExpEntry(i, 1)} disabled={i === expEntries.length - 1} className="rounded border border-line px-2 py-0.5 font-mono text-xs text-muted hover:text-ink disabled:opacity-30">&darr;</button>
+                  <button onClick={() => removeExpEntry(i)} className="rounded border border-line px-2 py-0.5 font-mono text-xs text-red-600 hover:bg-red-50">Remove</button>
+                </div>
+              </div>
+
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-mono text-xs text-muted">Company</label>
+                  <input type="text" value={entry.company} onChange={(e) => updateExpEntry(i, "company", e.target.value)} className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+                </div>
+                <div>
+                  <label className="font-mono text-xs text-muted">Role</label>
+                  <input type="text" value={entry.role} onChange={(e) => updateExpEntry(i, "role", e.target.value)} className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+                </div>
+                <div>
+                  <label className="font-mono text-xs text-muted">Date</label>
+                  <input type="text" value={entry.date} onChange={(e) => updateExpEntry(i, "date", e.target.value)} placeholder="e.g. 2024-present" className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+                </div>
+                <div>
+                  <label className="font-mono text-xs text-muted">Text mark (fallback)</label>
+                  <input type="text" value={entry.mark} onChange={(e) => updateExpEntry(i, "mark", e.target.value)} maxLength={2} className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+                </div>
+              </div>
+
+              <div className="mt-3">
+                <label className="font-mono text-xs text-muted">Company logo</label>
+                <div className="mt-1 flex items-center gap-3">
+                  <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                    onChange={(e) => { const f = e.target.files?.[0]; if (f) handleLogoUpload(i, f) }}
+                    className="text-xs text-muted file:mr-2 file:rounded file:border file:border-line file:px-2 file:py-1 file:font-mono file:text-xs file:text-ink hover:file:bg-surface"
+                  />
+                  {logoUploading === entry.company && <span className="font-mono text-xs text-muted">Uploading…</span>}
+                  {entry.logo && (
+                    <button onClick={() => updateExpEntry(i, "logo", "")} className="font-mono text-xs text-red-600 hover:underline">
+                      Remove logo
+                    </button>
+                  )}
+                </div>
+                {entry.logo && <p className="mt-1 font-mono text-xs text-muted">{entry.logo}</p>}
+              </div>
+            </div>
+          ))}
+
+          <button onClick={addExpEntry} className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink">
+            + Add entry
+          </button>
+
+          {expError && <p className="text-sm text-red-600">{expError}</p>}
+          {expSaved && <p className="text-sm text-green-600">Saved.</p>}
+
+          <button
+            onClick={handleExperienceSave}
+            disabled={expSaving}
+            className="rounded bg-ink px-4 py-2 font-mono text-sm text-canvas hover:bg-accent-ink disabled:opacity-50"
+          >
+            {expSaving ? "Saving…" : "Save Experience"}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (view === "menu") {
     return <MenuEditor data={menuData} onSave={handleMenuSave} onBack={() => setView("list")} />
   }
@@ -262,6 +558,18 @@ const AdminPage: React.FC = () => {
             className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink"
           >
             Edit Menu
+          </button>
+          <button
+            onClick={() => setView("about")}
+            className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink"
+          >
+            Edit About
+          </button>
+          <button
+            onClick={() => setView("experience")}
+            className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink"
+          >
+            Edit Experience
           </button>
           <button
             onClick={openNew}

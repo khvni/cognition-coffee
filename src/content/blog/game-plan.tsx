@@ -64,7 +64,7 @@ const Content: FC = () => (
       If any of this resonates, I'd love to walk through{" "}
       <a href="/#menu">the full menu</a> or{" "}
       <a href="/blog/cafe-cognition/">the Cognition Coffee playbook</a>.{" "}
-      <a href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090" target="_blank" rel="noopener">Get in touch</a>.
+      <a href="/about#contact">Get in touch</a>.
     </p>
   </>
 )

@@ -8,7 +8,7 @@ const mockMinimizeWindow = vi.fn()
 const mockWindows = [
   { key: "w1", title: "Programs", app: { id: "menu", icon: "menu" }, minimized: false },
   { key: "w2", title: "Blog", app: { id: "blog", icon: "blog" }, minimized: true },
-  { key: "w3", title: "Community", app: { id: "community", icon: "community" }, minimized: false },
+  { key: "w3", title: "About", app: { id: "about", icon: "about" }, minimized: false },
 ]
 
 vi.mock("@/context/App", () => ({
@@ -54,7 +54,7 @@ describe("TaskBar", () => {
     render(<TaskBar />)
     expect(screen.getByTitle("Programs")).toBeInTheDocument()
     expect(screen.getByTitle("Blog")).toBeInTheDocument()
-    expect(screen.getByTitle("Community")).toBeInTheDocument()
+    expect(screen.getByTitle("About")).toBeInTheDocument()
   })
 
   it("click focused window minimizes it", () => {
@@ -71,7 +71,7 @@ describe("TaskBar", () => {
 
   it("click unfocused window focuses it", () => {
     render(<TaskBar />)
-    fireEvent.click(screen.getByTitle("Community"))
+    fireEvent.click(screen.getByTitle("About"))
     expect(mockFocusWindow).toHaveBeenCalledWith("w3")
   })
 
