@@ -20,11 +20,14 @@ function decodeBase64(b64: string): string {
 }
 
 const DEFAULT_CONTENT: AboutContent = {
-  description: "Community builder in the Bay Area. I work on GTM at Keysight and founded MTC.",
+  description: "Software engineer by day, community builder by night, based in Berkeley. I automate GTM at Keysight and founded MTC, now 30+ chapters across North America.",
   paragraphs: [
-    "I'm a community builder in the Bay Area. I work on go-to-market at Keysight, finding ways to put AI to work across the business.",
-    "Before that I founded MTC, a national tech nonprofit that grew from one Berkeley club to 30+ chapters across North America. My background runs through software, security, data, and AI at startups and public companies.",
-    "I built this site with Devin to prove what a community for the first AI software engineer could be.",
+    "I'm a software engineer by day and community builder at night, based in sunny Berkeley, California.",
+    "In high school, I wrote on Quora under a pseudonym and went viral with 7M+ views.",
+    "In college, I founded MTC - a home for Muslim builders to solve the world's problems, now across 30+ of North America's greatest universities and cities.",
+    "At Keysight, I'm automating GTM workflows across every industry vertical to help unlock the next billion dollars in revenue.",
+    "I've hosted various hackathons, build nights, technical workshops, fireside chats, panels, and every other variation of a tech event you can think of. I've spoken at conferences and taught Berkeley's foundational CS 61A and CS 61B courses to thousands of students. I play tennis in SF, roadtrip around California every chance I get, and am currently learning photography with my wife's Fujifilm X-S20.",
+    "What I do is who I am: leveraging my talents, in pursuit of excellence, to do good in this world.",
   ],
 }
 
