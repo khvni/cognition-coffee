@@ -37,6 +37,18 @@ const Content: FC = () => (
     <p>
       I don't touch the account anymore. Some of what's there is as embarrassing as I warned you. But seven million views from strangers who owed me nothing is a number that doesn't lie.
     </p>
+    <figure className="my-9">
+      <img
+        src="/blog/quora/quorametrics.png"
+        alt="Quora analytics dashboard showing over seven million total views"
+        width={616}
+        height={362}
+        className="h-auto w-full rounded-lg border border-line"
+      />
+      <figcaption className="mt-3 text-center text-xs uppercase tracking-wide text-muted">
+        Seven million views from strangers who owed me nothing
+      </figcaption>
+    </figure>
   </>
 )
 
