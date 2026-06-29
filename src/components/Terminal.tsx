@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useApp } from "@/context/App"
 import { blogPosts } from "@/content/blog"
 import { MENU_SECTIONS } from "@/data/menu"
+import { APPS, appForPath, type AppDef } from "@/lib/apps"
 
 type FsNode = {
   name: string
@@ -110,6 +111,15 @@ const menuItemNodes: FsNode[] = MENU_SECTIONS.flatMap((s) =>
   })),
 )
 
+const appNode = (a: AppDef): FsNode => ({
+  name: `${a.id}.tsx`,
+  type: "file",
+  path: a.path,
+  description: `${a.title} - ${a.blurb}`,
+})
+
+const gameNodes: FsNode[] = APPS.filter((a) => a.side === "right").map(appNode)
+
 const FS: FsNode = {
   name: "/",
   type: "dir",
@@ -119,6 +129,8 @@ const FS: FsNode = {
     { name: "community.tsx", type: "file", path: "/community", description: "Community - Events, chapters, and feedback loops." },
     { name: "about.tsx", type: "file", path: "/about", description: "About - Who is Ali Khani? DevRel strategist, builder, community architect." },
     { name: "scott.png", type: "file", path: "/scott", description: "[binary: image/png - 480x400 - it's just Scott.]" },
+    appNode(appForPath("/terminal")),
+    { name: "games", type: "dir", children: gameNodes },
     {
       name: "blog",
       type: "dir",
