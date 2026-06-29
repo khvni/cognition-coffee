@@ -6,7 +6,7 @@ import { Cart, type CartEntry } from "@/components/menu/Cart"
 
 export const frontmatter = {
   title: "The Menu",
-  description: "Hungry for some bright ideas? Here's what we can brew for ya.",
+  description: "Hungry for some bright ideas? Order below!",
   eyebrow: "Menu",
   layout: "grid" as const,
 }
