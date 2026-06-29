@@ -41,9 +41,14 @@ const Content: FC = () => (
       weekend of logistics.
     </p>
     <p>
-      MTC's consulting arm pairs a student builder with a technical mentor. Old model: five students,
-      one semester, lots of meetings. New model: one builder, one mentor, AI tools, six weeks, real
-      output. The student ships and gets a direct reference for internships and full-time roles.
+      Our Projects division went through a full overhaul when AI coding tools got good. The old model
+      was five or six students, one semester, writing software by hand, lots of meetings, modest
+      output. Now it's 1-3 student devs paired with a technical mentor from industry who acts as an
+      external PM: they check in once a week, set the tech stack, define the product requirements, and
+      translate those into concrete technical requirements for the students to execute. The students
+      build using Cursor, Claude Code, Antigravity, and Codex. A team that used to take a semester to
+      ship something ships in six weeks. The student gets real project experience and a direct
+      reference from someone already in the industry.
     </p>
     <p>
       MTC Youth started as Python workshops at a community center. Then in April 2025 I ran a vibe
