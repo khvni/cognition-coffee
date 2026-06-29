@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { frontmatter as fm3, default as Content3 } from "./hackathons"
 import { frontmatter as fm4, default as Content4 } from "./quora"
-import { frontmatter as fm5, default as Content5 } from "./cognition-coffee"
+import { frontmatter as fm5, default as Content5 } from "./technical"
 import { frontmatter as fm6, default as Content6 } from "./mtc"
 import canonicalPosts from "../../../content/posts.json"
 
@@ -24,6 +24,6 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   { slug: "hackathons", frontmatter: fm3, Content: Content3 },
   { slug: "quora", frontmatter: fm4, Content: Content4 },
-  { slug: "cognition-coffee", frontmatter: fm5, Content: Content5 },
+  { slug: "technical", frontmatter: fm5, Content: Content5 },
   { slug: "mtc", frontmatter: fm6, Content: Content6 },
 ]
