@@ -118,19 +118,36 @@ const appNode = (a: AppDef): FsNode => ({
   description: `${a.title} - ${a.blurb}`,
 })
 
-const gameNodes: FsNode[] = APPS.filter((a) => a.side === "right").map(appNode)
+const gameNode = (a: AppDef): FsNode => ({
+  name: `${a.title.replace(/\s+/g, "_")}.tsx`,
+  type: "file",
+  path: a.path,
+  description: `${a.title} - ${a.blurb}`,
+})
+
+const applicationNodes: FsNode[] = APPS.filter((a) => a.side === "right").map(gameNode)
 
 const FS: FsNode = {
   name: "/",
   type: "dir",
   children: [
     DEVIN_TREE,
-    { name: "home.tsx", type: "file", path: "/", description: "Home - Ali's house blend of engineering and community." },
-    { name: "community.tsx", type: "file", path: "/community", description: "Community - Events, chapters, and feedback loops." },
-    { name: "about.tsx", type: "file", path: "/about", description: "About - Who is Ali Khani? DevRel strategist, builder, community architect." },
-    { name: "scott.png", type: "file", path: "/scott", description: "[binary: image/png - 480x400 - it's just Scott.]" },
-    appNode(appForPath("/terminal")),
-    { name: "games", type: "dir", children: gameNodes },
+    {
+      name: "Applications",
+      type: "dir",
+      children: applicationNodes,
+    },
+    {
+      name: "Pages",
+      type: "dir",
+      children: [
+        { name: "home.tsx", type: "file", path: "/", description: "Home - Ali's house blend of engineering and community." },
+        { name: "community.tsx", type: "file", path: "/community", description: "Community - Events, chapters, and feedback loops." },
+        { name: "about.tsx", type: "file", path: "/about", description: "About - Who is Ali Khani? DevRel strategist, builder, community architect." },
+        { name: "scott.png", type: "file", path: "/scott", description: "[binary: image/png - 480x400 - it's just Scott.]" },
+        appNode(appForPath("/terminal")),
+      ],
+    },
     {
       name: "blog",
       type: "dir",

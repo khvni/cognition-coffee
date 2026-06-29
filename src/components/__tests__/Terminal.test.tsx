@@ -34,32 +34,45 @@ beforeEach(() => {
 })
 
 describe("Terminal filesystem", () => {
-  it("lists games/ and terminal.tsx at root", () => {
+  it("lists Applications/ and Pages/ at root", () => {
     render(<Terminal />)
     run("ls")
-    const listing = screen.getByText(/home\.tsx/)
-    expect(listing.textContent).toContain("games/")
-    expect(listing.textContent).toContain("terminal.tsx")
+    const listing = screen.getByText(/Applications\//)
+    expect(listing.textContent).toContain("Applications/")
+    expect(listing.textContent).toContain("Pages/")
+    expect(listing.textContent).toContain("blog/")
+    expect(listing.textContent).toContain("menu/")
   })
 
-  it("lists one node per side:right game derived from APPS", () => {
+  it("lists games in Applications/ with title-based names derived from APPS", () => {
     render(<Terminal />)
-    run("ls games")
-    const listing = screen.getByText(/snake\.tsx/)
-    expect(listing.textContent).toContain("snake.tsx")
-    expect(listing.textContent).toContain("pong.tsx")
+    run("ls Applications")
+    const listing = screen.getByText(/Snake\.tsx/)
+    expect(listing.textContent).toContain("Snake.tsx")
+    expect(listing.textContent).toContain("Pong.tsx")
+  })
+
+  it("lists the site pages in Pages/", () => {
+    render(<Terminal />)
+    run("ls Pages")
+    const listing = screen.getByText(/home\.tsx/)
+    expect(listing.textContent).toContain("home.tsx")
+    expect(listing.textContent).toContain("community.tsx")
+    expect(listing.textContent).toContain("about.tsx")
+    expect(listing.textContent).toContain("terminal.tsx")
+    expect(listing.textContent).toContain("scott.png")
   })
 
   it("cat shows the game description from APPS data", () => {
     render(<Terminal />)
-    run("cat games/snake.tsx")
+    run("cat Applications/Snake.tsx")
     expect(screen.getByText(/Snake - Eat, grow/)).toBeInTheDocument()
   })
 
   it("open launches the game window via its path", () => {
     vi.useFakeTimers()
     render(<Terminal />)
-    run("open games/pong.tsx")
+    run("open Applications/Pong.tsx")
     vi.runAllTimers()
     expect(mockOpen).toHaveBeenCalledWith("/pong")
     vi.useRealTimers()
