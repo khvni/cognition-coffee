@@ -9,11 +9,12 @@ export const frontmatter = {
 }
 
 export const defaultAboutParagraphs: string[] = [
-  "Software engineer by day, community builder by night.",
+  "I'm a software engineer by day and community builder by night.",
   "In high school, I wrote on Quora under a pseudonym and went viral with 7M+ views.",
   "In college, I founded MTC - a home for Muslim builders to solve the world's problems, now across 30+ of North America's greatest universities and cities.",
   "At Keysight, I'm automating GTM workflows across every industry vertical to help unlock the next billion dollars in revenue.",
   "I've hosted various hackathons, build nights, technical workshops, fireside chats, panels, and every other variation of a tech event you can think of. I've spoken at conferences and taught Berkeley's foundational CS 61A and CS 61B courses to thousands of students.",
+  "",
   "I play tennis in SF, roadtrip around California every chance I get, and am currently learning photography with my wife's Fujifilm X-S20.",
   "What I do is who I am: leveraging my talents, in pursuit of excellence, to do good in this world.",
 ]
@@ -62,7 +63,7 @@ const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
     </header>
 
     <div className="intro-copy reveal" style={stagger(1)}>
-      {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+      {paragraphs.filter(p => p.trim()).map((p, i) => <p key={i}>{p}</p>)}
     </div>
 
     <div className="social-row reveal" style={stagger(2)} aria-label="Social links">
