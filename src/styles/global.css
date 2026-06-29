@@ -1012,7 +1012,7 @@ a.section-heading:hover svg {
 }
 .lightbox-details__chevron {
   flex-shrink: 0;
-  color: theme("colors.muted");
+  color: theme("colors.accent");
   transition: transform 200ms ease;
 }
 .lightbox-details[open] .lightbox-details__chevron {
@@ -1157,7 +1157,7 @@ a.section-heading:hover svg {
 
 .lightbox-option-hint {
   margin-left: 8px;
-  font-family: theme("fontFamily.mono");
+  font-family: theme("fontFamily.sans");
   font-size: 0.6875rem;
   font-weight: 400;
   letter-spacing: 0.03em;
