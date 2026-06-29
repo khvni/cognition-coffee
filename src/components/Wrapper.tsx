@@ -93,7 +93,11 @@ const SiteFooter: React.FC = () => (
             <Logo />
           </Link>
           <p className="mt-2 text-[13px] leading-relaxed text-ink/70">
-            Built with Devin. Made for builders.
+            Built with Devin by{" "}
+            <Link to="/about" className="underline transition-colors hover:text-ink">
+              Ali Khani
+            </Link>
+            .
           </p>
         </div>
         <div className="flex gap-6 sm:gap-12">

@@ -132,12 +132,16 @@ const Content: FC = () => {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink [text-wrap:pretty]">
-            Devin Ambassadors are local leaders who host events, share Devin, and bring builders together. This is
-            separate from Devin on Campus, which is for student-run university chapters.
+            Devin Ambassadors are local leaders who host events, share Devin, and bring builders together.
           </p>
         </Reveal>
         <Reveal delay={0.15}>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted [text-wrap:pretty]">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink [text-wrap:pretty]">
+            If you're a student, we're also kicking off the new Devin's Disciples campus ambassador program to help you bring Devin to your campus.
+          </p>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink [text-wrap:pretty]">
             Ambassadors get compute credits, early builds, event funding, swag, and a direct line to the Cognition team.
           </p>
         </Reveal>
