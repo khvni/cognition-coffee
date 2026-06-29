@@ -38,8 +38,11 @@ const IndexPage: React.FC = () => (
       </h1>
       <p className="m-0 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
-        around the energy of a coffee shop. The &quot;OS&quot; is a nod to the early-2000s internet cafe, when
-        going online felt like going somewhere. Here&apos;s what you can do:
+        around the energy of a coffee shop.
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
+        The &quot;OS&quot; is a nod to the early-2000s internet cafe, when going online felt like going
+        somewhere. Here&apos;s what you can do:
       </p>
       <ul className="mt-4 max-w-2xl list-disc space-y-1 pl-5 text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         <li>Browse around for Easter eggs.</li>

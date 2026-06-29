@@ -5,6 +5,7 @@ import "@fontsource-variable/geist-mono"
 import "./src/styles/global.css"
 import { AppProvider } from "./src/context/App"
 import { Wrapper } from "./src/components/Wrapper"
+import { DesktopNotice } from "./src/components/DesktopNotice"
 import { initPostHog, trackEvent } from "./src/lib/posthog"
 
 initPostHog()
@@ -20,6 +21,7 @@ export const wrapPageElement: GatsbyBrowser["wrapPageElement"] = ({ element, pro
   return (
     <AppProvider element={element} location={props.location}>
       <Wrapper>{element}</Wrapper>
+      <DesktopNotice />
     </AppProvider>
   )
 }
