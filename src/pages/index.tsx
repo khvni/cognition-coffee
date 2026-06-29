@@ -39,19 +39,21 @@ const IndexPage: React.FC = () => (
       <p className="m-0 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
         around the energy of a coffee shop. The &quot;OS&quot; is a nod to the early-2000s internet cafe, when
-        going online felt like going somewhere.
+        going online felt like going somewhere. Here&apos;s what you can do:
+      </p>
+      <ul className="mt-4 max-w-2xl list-disc space-y-1 pl-5 text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
+        <li>Browse around for Easter eggs.</li>
+        <li>Order something off the <Link to="/menu" className="text-black underline">Menu</Link>.</li>
+        <li>Read the papers in the <Link to="/blog" className="text-black underline">Blog</Link>.</li>
+        <li>Take a look under the hood in the <Link to="/terminal" className="text-black underline">Terminal</Link>.</li>
+        <li>Explore Devin.ai&apos;s new <Link to="/community" className="text-black underline">Community</Link> page, redesigned by yours truly.</li>
+      </ul>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
+        I&apos;ve got my battle scars scaling campus organizations. I&apos;m technical, quick to learn, and I can
+        write. I want to help spread the good word of Devin to the masses.
       </p>
       <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
-        Browse around for Easter eggs. Order something off the{" "}
-        <Link to="/menu" className="text-black underline">Menu</Link>. Read the papers in the{" "}
-        <Link to="/blog" className="text-black underline">Blog</Link>. Take a look under the hood in the{" "}
-        <Link to="/terminal" className="text-black underline">Terminal</Link>. And check out the redesigned{" "}
-        <Link to="/community" className="text-black underline">Community</Link> page, to showcase what
-        devin.ai/community can become.
-      </p>
-      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
-        I want to help spread the good word of Devin and build a community around it. Convenient that you&apos;re
-        currently looking for a{" "}
+        Convenient that you&apos;re currently looking for a{" "}
         <a
           href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090"
           target="_blank"
@@ -63,7 +65,7 @@ const IndexPage: React.FC = () => (
         , right?
       </p>
       <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
-        Hit me up on any of these:
+        Learn more about me <Link to="/about" className="text-black underline">here</Link>, then hit me up:
       </p>
     </div>
 
