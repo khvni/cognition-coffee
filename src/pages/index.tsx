@@ -33,36 +33,36 @@ const IndexPage: React.FC = () => (
     </section>
 
     <div className="reveal" style={stagger(1)}>
-      <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
+      <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-black [text-wrap:balance]">
         Cognition Coffee
       </h1>
-      <p className="m-0 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+      <p className="m-0 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
         around the energy of a coffee shop. The &quot;OS&quot; is a nod to the early-2000s internet cafe, when
         going online felt like going somewhere.
       </p>
-      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         Browse around for Easter eggs. Order something off the{" "}
-        <Link to="/menu" className="text-ink underline">Menu</Link>. Read the papers in the{" "}
-        <Link to="/blog" className="text-ink underline">Blog</Link>. Take a look under the hood in the{" "}
-        <Link to="/terminal" className="text-ink underline">Terminal</Link>. And check out the redesigned{" "}
-        <Link to="/community" className="text-ink underline">Community</Link> page, to showcase what
+        <Link to="/menu" className="text-black underline">Menu</Link>. Read the papers in the{" "}
+        <Link to="/blog" className="text-black underline">Blog</Link>. Take a look under the hood in the{" "}
+        <Link to="/terminal" className="text-black underline">Terminal</Link>. And check out the redesigned{" "}
+        <Link to="/community" className="text-black underline">Community</Link> page, to showcase what
         devin.ai/community can become.
       </p>
-      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         I want to help spread the good word of Devin and build a community around it. Convenient that you&apos;re
         currently looking for a{" "}
         <a
           href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090"
           target="_blank"
           rel="noopener"
-          className="text-ink underline"
+          className="text-black underline"
         >
           Developer Community Manager
         </a>
         , right?
       </p>
-      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         Hit me up on any of these:
       </p>
     </div>
