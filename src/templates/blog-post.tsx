@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link, type HeadProps, type PageProps } from "gatsby"
 import { SEO } from "@/components/SEO"
 import { blogPosts } from "@/content/blog"
+import { BIO, SOCIALS } from "@/data/experience"
 
 type PageContext = { slug: string }
 
@@ -118,6 +119,36 @@ const BlogPost: React.FC<PageProps> = ({ pageContext }) => {
           </ul>
         </div>
       )}
+
+      <div className="post-stagger mt-20" style={{ "--stagger": s++ } as React.CSSProperties}>
+        <div className="h-[3px] w-5 rounded bg-accent" />
+        <div className="mt-6 flex items-start gap-4">
+          <img
+            src="/avatar-ali-khani.jpg"
+            alt={BIO.name}
+            width={56}
+            height={56}
+            className="rounded-full border border-line"
+          />
+          <div className="flex-1">
+            <p className="m-0 font-medium text-ink">{BIO.name}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted">{BIO.oneLiner}</p>
+            <div className="mt-3 flex gap-3">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  className="font-mono text-xs text-muted hover:text-accent"
+                  target="_blank"
+                  rel="me noopener"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

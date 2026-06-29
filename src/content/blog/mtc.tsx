@@ -6,7 +6,7 @@ export const frontmatter = {
   title: "MTC's 30+ college chapters",
   description:
     "How I took a single student club at UC Berkeley and scaled it into a national organization with 30+ chapters, regional hubs, and the operational infrastructure to keep it running.",
-  date: "2026-06-23",
+  date: "2026-06-26",
   category: "Community",
   order: 0,
   draft: false,

@@ -1,6 +1,4 @@
 import type { FC } from "react"
-import { frontmatter as fm1, default as Content1 } from "./game-plan"
-import { frontmatter as fm2, default as Content2 } from "./learnings"
 import { frontmatter as fm3, default as Content3 } from "./hackathons"
 import { frontmatter as fm4, default as Content4 } from "./quora"
 import { frontmatter as fm5, default as Content5 } from "./cognition-coffee"
@@ -19,13 +17,11 @@ export const readingTimeBySlug = new Map(
 
 export type BlogPost = {
   slug: string
-  frontmatter: typeof fm1
+  frontmatter: typeof fm3
   Content: FC
 }
 
 export const blogPosts: BlogPost[] = [
-  { slug: "game-plan", frontmatter: fm1, Content: Content1 },
-  { slug: "learnings", frontmatter: fm2, Content: Content2 },
   { slug: "hackathons", frontmatter: fm3, Content: Content3 },
   { slug: "quora", frontmatter: fm4, Content: Content4 },
   { slug: "cognition-coffee", frontmatter: fm5, Content: Content5 },

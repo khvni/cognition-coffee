@@ -4,7 +4,7 @@ export const frontmatter = {
   title: "What writing on Quora taught me about marketing",
   description:
     "7M+ views in a year to avoid paying attention in class as a teenager",
-  date: "2026-06-12",
+  date: "2026-06-27",
   category: "Field Notes",
   order: 4,
   draft: false,

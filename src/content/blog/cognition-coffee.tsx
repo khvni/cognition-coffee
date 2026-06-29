@@ -6,7 +6,7 @@ export const frontmatter = {
   title: "How I built Cognition Coffee using Devin",
   description:
     "A walkthrough of the features, the merged PRs that built them, and the workflow I used to build a Gatsby OS-style site with Devin.",
-  date: "2026-06-23",
+  date: "2026-06-29",
   category: "Field Notes",
   order: 6,
   draft: false,

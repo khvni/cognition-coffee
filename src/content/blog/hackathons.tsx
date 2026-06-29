@@ -5,7 +5,7 @@ export const frontmatter = {
   title: "Great internal hackathons",
   description:
     "A rough manual on how to break the pattern of forgettable corporate hackathons and host winning ones, from running internal hackathons at Keysight.",
-  date: "2026-06-11",
+  date: "2026-06-28",
   category: "Field Notes",
   order: 5,
   draft: false,
