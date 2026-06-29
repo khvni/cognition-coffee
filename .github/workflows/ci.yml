@@ -19,8 +19,8 @@ jobs:
       - run: npm install
       - name: Build
         env:
-          GATSBY_POSTHOG_KEY: ${{ secrets.GATSBY_POSTHOG_KEY }}
-          GATSBY_POSTHOG_HOST: ${{ secrets.GATSBY_POSTHOG_HOST }}
+          GATSBY_POSTHOG_KEY: phc_p7D6e5BTGZL456Qt5jMMwL5d7ZQiS6MhnaXeFZGc6eZa
+          GATSBY_POSTHOG_HOST: https://us.i.posthog.com
         run: npm run build
       - name: Slop gate (deslop -b main)
         run: |
