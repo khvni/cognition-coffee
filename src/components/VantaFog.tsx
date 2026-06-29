@@ -65,7 +65,7 @@ export const VantaFog: React.FC = () => {
           midtoneColor: 0x317cff,
           lowlightColor: 0x2200ff,
           baseColor: 0xfae9cd,
-          speed: 0.8,
+          speed: 1.5,
         })
       })
       .catch(() => {})
