@@ -54,8 +54,15 @@ type IconPositions = Record<string, IconPos>
 
 function defaultPositions(icons: AppDef[]): IconPositions {
   const pos: IconPositions = {}
-  icons.forEach((app, i) => {
-    pos[app.id] = { x: 12, y: 12 + i * ICON_GAP }
+  const vw = typeof window !== "undefined" ? window.innerWidth : 1280
+  let left = 0
+  let right = 0
+  icons.forEach((app) => {
+    if (app.side === "right") {
+      pos[app.id] = { x: vw - 92, y: 12 + right++ * ICON_GAP }
+    } else {
+      pos[app.id] = { x: 12, y: 12 + left++ * ICON_GAP }
+    }
   })
   return pos
 }

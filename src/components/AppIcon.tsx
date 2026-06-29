@@ -120,6 +120,49 @@ const glyphs: Record<AppId, (uid: string) => React.ReactNode> = {
       </g>
     </Tile>
   ),
+  snake: (uid) => (
+    <Tile uid={uid} from="#5FB47A" to="#2C7A45">
+      <polyline
+        points="15,33 15,21 25,21 25,30 33,30"
+        fill="none"
+        stroke={CREAM}
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="33" cy="30" r="2" fill="#2C7A45" />
+      <circle cx="34.5" cy="16.5" r="3.4" fill="#E0533B" />
+      <path d="M34.6 13.1c1.7-1.3 3.2-.4 2.5 1.3-.5 1.1-1.8 1-2.5-.2z" fill="#7FB36A" />
+    </Tile>
+  ),
+  "space-invaders": (uid) => (
+    <Tile uid={uid} from="#1F1F1F" to="#0B0B0B">
+      <g fill="#8BE36B">
+        <rect x="17" y="14" width="3" height="3" />
+        <rect x="28" y="14" width="3" height="3" />
+        <rect x="20" y="17" width="8" height="3" />
+        <rect x="16" y="20" width="16" height="3" />
+        <rect x="13" y="23" width="22" height="4" />
+        <rect x="16" y="27" width="16" height="3" />
+        <rect x="13" y="30" width="3" height="3" />
+        <rect x="20" y="30" width="3" height="3" />
+        <rect x="25" y="30" width="3" height="3" />
+        <rect x="32" y="30" width="3" height="3" />
+      </g>
+      <g fill="#0B0B0B">
+        <rect x="18" y="23" width="3" height="3" />
+        <rect x="27" y="23" width="3" height="3" />
+      </g>
+    </Tile>
+  ),
+  pong: (uid) => (
+    <Tile uid={uid} from="#EDE4D2" to="#D6CBB3">
+      <ellipse cx="21" cy="19" rx="10.5" ry="11.5" fill="#7A5230" />
+      <ellipse cx="21" cy="19" rx="8.4" ry="9.4" fill="#C8432F" />
+      <rect x="18.4" y="27.5" width="6" height="13.5" rx="3" fill="#7A5230" />
+      <circle cx="34" cy="14" r="3.1" fill={CREAM} stroke={INK} strokeOpacity="0.14" strokeWidth="0.6" />
+    </Tile>
+  ),
 }
 
 /** Bespoke, real-OS-style app icons. Each app gets its own gradient tile + glyph. */

@@ -1,5 +1,7 @@
 /** App registry - single source for OS apps and routes. */
-export type AppId = "home" | "menu" | "blog" | "community" | "about" | "scott" | "terminal"
+export type AppId =
+  | "home" | "menu" | "blog" | "community" | "about" | "scott" | "terminal"
+  | "snake" | "space-invaders" | "pong"
 
 export type AppDef = {
   id: AppId
@@ -17,6 +19,8 @@ export type AppDef = {
   desktop?: boolean
   /** Show in site-mode nav, footer, and index grid. Defaults to true. */
   nav?: boolean
+  /** Anchor the desktop icon to the right edge instead of the left column. */
+  side?: "right"
 }
 
 export const APPS: AppDef[] = [
@@ -27,6 +31,9 @@ export const APPS: AppDef[] = [
   { id: "about", title: "About", path: "/about", blurb: "Who I am and what I do.", icon: "about", size: { w: 900, h: 680 }, desktop: true },
   { id: "scott", title: "scott.png", path: "/scott", blurb: "It's just Scott.", icon: "scott", size: { w: 600, h: 374 }, desktop: true, nav: false },
   { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 760, h: 500 }, center: true, desktop: true, nav: false },
+  { id: "snake", title: "Snake", path: "/snake", blurb: "Eat, grow, don't bite your tail.", icon: "snake", size: { w: 720, h: 640 }, desktop: true, nav: false, side: "right" },
+  { id: "space-invaders", title: "Space Invaders", path: "/space-invaders", blurb: "Hold the line against the swarm.", icon: "space-invaders", size: { w: 880, h: 760 }, desktop: true, nav: false, side: "right" },
+  { id: "pong", title: "Pong", path: "/pong", blurb: "Two paddles, one ball, endless rally.", icon: "pong", size: { w: 940, h: 620 }, desktop: true, nav: false, side: "right" },
 ]
 
 export function appForPath(pathname: string): AppDef {
