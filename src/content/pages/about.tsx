@@ -9,7 +9,7 @@ export const frontmatter = {
 }
 
 export const defaultAboutParagraphs: string[] = [
-  "I'm a software engineer by day and community builder by night.",
+  "Software engineer by day, community builder by night.",
   "In high school, I wrote on Quora under a pseudonym and went viral with 7M+ views.",
   "In college, I founded MTC - a home for Muslim builders to solve the world's problems, now across 30+ of North America's greatest universities and cities.",
   "At Keysight, I'm automating GTM workflows across every industry vertical to help unlock the next billion dollars in revenue.",
