@@ -9,11 +9,12 @@ export const frontmatter = {
 }
 
 export const defaultAboutParagraphs: string[] = [
-  "I'm a software engineer by day and community builder at night, based in sunny Berkeley, California.",
+  "Software engineer by day, community builder by night.",
   "In high school, I wrote on Quora under a pseudonym and went viral with 7M+ views.",
   "In college, I founded MTC - a home for Muslim builders to solve the world's problems, now across 30+ of North America's greatest universities and cities.",
   "At Keysight, I'm automating GTM workflows across every industry vertical to help unlock the next billion dollars in revenue.",
-  "I've hosted various hackathons, build nights, technical workshops, fireside chats, panels, and every other variation of a tech event you can think of. I've spoken at conferences and taught Berkeley's foundational CS 61A and CS 61B courses to thousands of students. I play tennis in SF, roadtrip around California every chance I get, and am currently learning photography with my wife's Fujifilm X-S20.",
+  "I've hosted various hackathons, build nights, technical workshops, fireside chats, panels, and every other variation of a tech event you can think of. I've spoken at conferences and taught Berkeley's foundational CS 61A and CS 61B courses to thousands of students.",
+  "I play tennis in SF, roadtrip around California every chance I get, and am currently learning photography with my wife's Fujifilm X-S20.",
   "What I do is who I am: leveraging my talents, in pursuit of excellence, to do good in this world.",
 ]
 
@@ -26,6 +27,8 @@ const socialIcons: Record<string, React.ReactNode> = {
   X: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>,
   GitHub: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.11 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .3z"/></svg>,
   LinkedIn: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>,
+  Substack: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 8.24H1.46V5.4h21.08v2.84zM1.46 10.81V24L12 18.11 22.54 24V10.81H1.46zM22.54 0H1.46v2.84h21.08V0z"/></svg>,
+  Instagram: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.7 4.92 4.92.06 1.26.07 1.64.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.22-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92-.06-1.26-.07-1.64-.07-4.85 0-3.2.01-3.58.07-4.85.15-3.23 1.66-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12c0 3.26.01 3.67.07 4.95.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>,
 }
 
 const stagger = (i: number): React.CSSProperties =>
@@ -44,7 +47,19 @@ const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
 
   return (
   <>
-    <img className="avatar reveal" src="/avatar-ali-khani.jpg" alt="Ali Khani" width={56} height={56} style={stagger(0)} />
+    <header className="profile-header reveal" style={stagger(0)}>
+      <img className="avatar" src="/avatar-ali-khani.jpg" alt="Ali Khani" width={56} height={56} />
+      <div className="profile-id">
+        <h1 className="profile-name">Ali Khani</h1>
+        <span className="profile-location">
+          <svg className="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Berkeley, CA
+        </span>
+      </div>
+    </header>
 
     <div className="intro-copy reveal" style={stagger(1)}>
       {paragraphs.map((p, i) => <p key={i}>{p}</p>)}

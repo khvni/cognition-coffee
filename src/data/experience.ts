@@ -21,7 +21,8 @@ export const SOCIALS: Social[] = [
   { label: "X", href: "https://x.com/alikhvni" },
   { label: "GitHub", href: "https://github.com/khvni" },
   { label: "LinkedIn", href: "https://linkedin.com/in/khni" },
-  { label: "Email", href: "mailto:byalikhani@gmail.com" },
+  { label: "Substack", href: "https://khvni.substack.com/" },
+  { label: "Instagram", href: "https://instagram.com/alikha.ni" },
 ];
 
 export type WorkEntry = { mark: string; markClass: string; company: string; role: string; date: string; logo?: string };

@@ -359,11 +359,11 @@ a.section-heading:hover svg {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 16px;
-  align-items: baseline;
+  align-items: center;
 }
 .work-row .company {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   min-width: 0;
   white-space: nowrap;
@@ -406,6 +406,7 @@ a.section-heading:hover svg {
   .work-row {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     column-gap: 8px;
   }
 }
@@ -420,7 +421,46 @@ a.section-heading:hover svg {
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* Profile header - avatar + name + location pin. */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 32px;
+}
+.profile-header .avatar {
+  flex: none;
+}
+.profile-id {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  min-width: 0;
+}
+.profile-name {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: theme("colors.ink");
+}
+.profile-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: theme("colors.muted");
+}
+.profile-location .pin {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: theme("colors.accent");
 }
 @media (max-width: 700px) {
   .about-page { padding-top: 96px; }
@@ -441,7 +481,7 @@ a.section-heading:hover svg {
   height: 32px;
   color: theme("colors.muted");
   border-radius: 6px;
-  transition: color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+  transition: color 140ms ease, transform 140ms ease;
 }
 .social-row a svg {
   width: 20px;
@@ -449,11 +489,31 @@ a.section-heading:hover svg {
   display: block;
 }
 .social-row a:hover {
-  color: theme("colors.ink");
-  box-shadow: 0 1px 3px rgba(21, 23, 26, 0.08);
+  /* No background on hover for clean blend */
 }
 .social-row a:active {
-  transform: scale(0.96);
+  transform: scale(0.94);
+}
+.social-row a:focus-visible {
+  color: theme("colors.ink");
+  outline: 2px solid theme("colors.ink");
+  outline-offset: 2px;
+}
+/* Brand colors on hover */
+.social-row a[aria-label="LinkedIn"]:hover {
+  color: #0A66C2;
+}
+.social-row a[aria-label="X"]:hover {
+  color: #000000;
+}
+.social-row a[aria-label="GitHub"]:hover {
+  color: #181717;
+}
+.social-row a[aria-label="Substack"]:hover {
+  color: #FF6719;
+}
+.social-row a[aria-label="Instagram"]:hover {
+  color: #E4405F;
 }
 @media (max-width: 700px) {
   .social-row {
