@@ -16,10 +16,14 @@ const Content: FC = () => (
       university chapters, city hubs in the Bay Area, Seattle, Houston, Atlanta, and New York, and a
       community Slack with 100+ organic members.
     </p>
-    <p>We didn't start with a mission statement. We built something.</p>
     <p>
-      People don't join organizations because of a vision. They join because there's something to do.
-      The mission is a lagging indicator.
+      The mission was what made it spread. A clear line about what MTC was for is how I recruited
+      chapter leads across the country, people who signed on without ever meeting me.
+    </p>
+    <p>
+      You still have to build real things and give people something to do. But the work only counts
+      when a mission sits behind it. That's what makes someone feel part of something bigger than
+      themselves, and what lets them carry it to the next person.
     </p>
     <p>
       The best event we ran at Berkeley was a career fair at Hearst Mining Building, Berkeley
