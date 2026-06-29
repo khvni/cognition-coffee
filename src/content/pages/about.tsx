@@ -32,7 +32,7 @@ const Content: FC<{ about?: AboutContent | null }> = ({ about }) => {
   const paragraphs = about?.paragraphs?.length ? about.paragraphs : defaultAboutParagraphs
   return (
   <>
-    <img className="avatar reveal" src="/avatar-ali-khani.png" alt="Ali Khani" width={56} height={56} style={stagger(0)} />
+    <img className="avatar reveal" src="/avatar-ali-khani.jpg" alt="Ali Khani" width={56} height={56} style={stagger(0)} />
 
     <div className="intro-copy reveal" style={stagger(1)}>
       {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
