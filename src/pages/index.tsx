@@ -43,6 +43,7 @@ const IndexPage: React.FC = () => (
       <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         The &quot;OS&quot; is an homage to both Cognition&apos;s early thesis around cloud agents with their own VMs,
         and to the internet cafes of the early 2000&apos;s around which the earliest irl developer communities formed.
+        Here&apos;s what you can do:
       </p>
       <ul className="mt-4 max-w-2xl list-disc space-y-1 pl-5 text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         <li>Browse around for Easter eggs.</li>
