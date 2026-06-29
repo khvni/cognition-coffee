@@ -56,10 +56,10 @@ export const DesktopNotice: React.FC = () => {
         onPointerDownOutside={dismiss}
         onEscapeKeyDown={dismiss}
       >
-        <DialogTitle className="text-[17px]">Best experienced on desktop</DialogTitle>
+        <DialogTitle className="text-[17px]">Howdy!</DialogTitle>
         <DialogDescription className="mt-2 text-[14px] text-ink/70">
-          This site is best experienced on desktop — we&apos;ve got an OS mode for you to
-          play around with!
+          This site is best experienced on desktop - we&apos;ve got an OS mode for you to
+          play around with there!
         </DialogDescription>
         <div className="mt-5 flex justify-end">
           <Button
