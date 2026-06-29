@@ -439,6 +439,7 @@ a.section-heading:hover svg {
   flex-wrap: wrap;
   gap: 4px 12px;
   min-width: 0;
+  flex: 1;
 }
 .profile-name {
   margin: 0;
@@ -449,6 +450,7 @@ a.section-heading:hover svg {
   color: theme("colors.ink");
 }
 .profile-location {
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 5px;
