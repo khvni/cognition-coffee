@@ -29,6 +29,14 @@ interface MenuSection {
 
 const FILE_PATH = "content/menu.json"
 
+function encodeBase64(str: string): string {
+  return btoa(unescape(encodeURIComponent(str)))
+}
+
+function decodeBase64(b64: string): string {
+  return decodeURIComponent(escape(atob(b64)))
+}
+
 function isAuthed(request: Request, env: Env): boolean {
   const cookie = request.headers.get("Cookie") || ""
   const match = cookie.match(/admin_session=([^;]+)/)
@@ -50,14 +58,14 @@ async function getMenuFile(env: Env): Promise<{ content: MenuSection[]; sha: str
     throw new Error(`GitHub API error: ${res.status}`)
   }
   const data = await res.json() as { content: string; sha: string }
-  const decoded = atob(data.content.replace(/\n/g, ""))
+  const decoded = decodeBase64(data.content.replace(/\n/g, ""))
   return { content: JSON.parse(decoded), sha: data.sha }
 }
 
 async function writeMenuFile(env: Env, menu: MenuSection[], sha: string, message: string): Promise<void> {
   const body: Record<string, string> = {
     message,
-    content: btoa(JSON.stringify(menu, null, 2)),
+    content: encodeBase64(JSON.stringify(menu, null, 2)),
     branch: "main",
   }
   if (sha) body.sha = sha
@@ -92,14 +100,18 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const incoming = await context.request.json() as MenuSection[]
-  if (!Array.isArray(incoming)) {
-    return new Response(JSON.stringify({ error: "Menu must be an array of sections" }), { status: 400 })
+  try {
+    const incoming = await context.request.json() as MenuSection[]
+    if (!Array.isArray(incoming)) {
+      return new Response(JSON.stringify({ error: "Menu must be an array of sections" }), { status: 400 })
+    }
+
+    const { content: current, sha } = await getMenuFile(context.env)
+    const updated = incoming.length ? incoming : current
+
+    await writeMenuFile(context.env, updated, sha, "content: update menu")
+    return new Response(JSON.stringify(updated), { headers: { "Content-Type": "application/json" } })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
   }
-
-  const { content: current, sha } = await getMenuFile(context.env)
-  const updated = incoming.length ? incoming : current
-
-  await writeMenuFile(context.env, updated, sha, "content: update menu")
-  return new Response(JSON.stringify(updated), { headers: { "Content-Type": "application/json" } })
 }

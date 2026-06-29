@@ -14,6 +14,14 @@ interface Post {
 
 const FILE_PATH = "content/posts.json"
 
+function encodeBase64(str: string): string {
+  return btoa(unescape(encodeURIComponent(str)))
+}
+
+function decodeBase64(b64: string): string {
+  return decodeURIComponent(escape(atob(b64)))
+}
+
 function isAuthed(request: Request, env: Env): boolean {
   const cookie = request.headers.get("Cookie") || ""
   const match = cookie.match(/admin_session=([^;]+)/)
@@ -35,14 +43,14 @@ async function getPostsFile(env: Env): Promise<{ content: Post[]; sha: string }>
     throw new Error(`GitHub API error: ${res.status}`)
   }
   const data = await res.json() as { content: string; sha: string }
-  const decoded = atob(data.content.replace(/\n/g, ""))
+  const decoded = decodeBase64(data.content.replace(/\n/g, ""))
   return { content: JSON.parse(decoded), sha: data.sha }
 }
 
 async function writePostsFile(env: Env, posts: Post[], sha: string, message: string): Promise<void> {
   const body: Record<string, string> = {
     message,
-    content: btoa(JSON.stringify(posts, null, 2)),
+    content: encodeBase64(JSON.stringify(posts, null, 2)),
     branch: "main",
   }
   if (sha) body.sha = sha
@@ -78,31 +86,35 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const slug = context.params.slug as string
-  const { title, excerpt, content: html, slug: newSlug } = await context.request.json() as {
-    title: string; excerpt: string; content: string; slug?: string
-  }
-
-  const { content: posts, sha } = await getPostsFile(context.env)
-  const idx = posts.findIndex((p) => p.slug === slug)
-  if (idx === -1) {
-    return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
-  }
-
-  if (newSlug && newSlug !== slug) {
-    if (!/^[a-z0-9-]+$/.test(newSlug)) {
-      return new Response(JSON.stringify({ error: "Slug must be lowercase letters, numbers, and hyphens only" }), { status: 400 })
+  try {
+    const slug = context.params.slug as string
+    const { title, excerpt, content: html, slug: newSlug } = await context.request.json() as {
+      title: string; excerpt: string; content: string; slug?: string
     }
-    if (posts.some((p) => p.slug === newSlug)) {
-      return new Response(JSON.stringify({ error: "A post with this slug already exists" }), { status: 409 })
-    }
-    posts[idx] = { ...posts[idx], slug: newSlug, title, excerpt, content: html }
-  } else {
-    posts[idx] = { ...posts[idx], title, excerpt, content: html }
-  }
 
-  await writePostsFile(context.env, posts, sha, `content: update "${title}"`)
-  return new Response(JSON.stringify(posts[idx]), { headers: { "Content-Type": "application/json" } })
+    const { content: posts, sha } = await getPostsFile(context.env)
+    const idx = posts.findIndex((p) => p.slug === slug)
+    if (idx === -1) {
+      return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
+    }
+
+    if (newSlug && newSlug !== slug) {
+      if (!/^[a-z0-9-]+$/.test(newSlug)) {
+        return new Response(JSON.stringify({ error: "Slug must be lowercase letters, numbers, and hyphens only" }), { status: 400 })
+      }
+      if (posts.some((p) => p.slug === newSlug)) {
+        return new Response(JSON.stringify({ error: "A post with this slug already exists" }), { status: 409 })
+      }
+      posts[idx] = { ...posts[idx], slug: newSlug, title, excerpt, content: html }
+    } else {
+      posts[idx] = { ...posts[idx], title, excerpt, content: html }
+    }
+
+    await writePostsFile(context.env, posts, sha, `content: update "${title}"`)
+    return new Response(JSON.stringify(posts[idx]), { headers: { "Content-Type": "application/json" } })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
+  }
 }
 
 export const onRequestDelete: PagesFunction<Env> = async (context) => {
@@ -110,14 +122,18 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const slug = context.params.slug as string
-  const { content: posts, sha } = await getPostsFile(context.env)
-  const idx = posts.findIndex((p) => p.slug === slug)
-  if (idx === -1) {
-    return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
-  }
+  try {
+    const slug = context.params.slug as string
+    const { content: posts, sha } = await getPostsFile(context.env)
+    const idx = posts.findIndex((p) => p.slug === slug)
+    if (idx === -1) {
+      return new Response(JSON.stringify({ error: "Not found" }), { status: 404 })
+    }
 
-  const removed = posts.splice(idx, 1)[0]
-  await writePostsFile(context.env, posts, sha, `content: delete "${removed.title}"`)
-  return new Response(JSON.stringify({ ok: true }), { headers: { "Content-Type": "application/json" } })
+    const removed = posts.splice(idx, 1)[0]
+    await writePostsFile(context.env, posts, sha, `content: delete "${removed.title}"`)
+    return new Response(JSON.stringify({ ok: true }), { headers: { "Content-Type": "application/json" } })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Delete failed" }), { status: 500 })
+  }
 }

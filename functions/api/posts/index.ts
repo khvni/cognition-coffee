@@ -14,6 +14,14 @@ interface Post {
 
 const FILE_PATH = "content/posts.json"
 
+function encodeBase64(str: string): string {
+  return btoa(unescape(encodeURIComponent(str)))
+}
+
+function decodeBase64(b64: string): string {
+  return decodeURIComponent(escape(atob(b64)))
+}
+
 function isAuthed(request: Request, env: Env): boolean {
   const cookie = request.headers.get("Cookie") || ""
   const match = cookie.match(/admin_session=([^;]+)/)
@@ -35,14 +43,14 @@ async function getPostsFile(env: Env): Promise<{ content: Post[]; sha: string }>
     throw new Error(`GitHub API error: ${res.status}`)
   }
   const data = await res.json() as { content: string; sha: string }
-  const decoded = atob(data.content.replace(/\n/g, ""))
+  const decoded = decodeBase64(data.content.replace(/\n/g, ""))
   return { content: JSON.parse(decoded), sha: data.sha }
 }
 
 async function writePostsFile(env: Env, posts: Post[], sha: string, message: string): Promise<void> {
   const body: Record<string, string> = {
     message,
-    content: btoa(JSON.stringify(posts, null, 2)),
+    content: encodeBase64(JSON.stringify(posts, null, 2)),
     branch: "main",
   }
   if (sha) body.sha = sha
@@ -84,20 +92,24 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const { title, excerpt, content: html, slug: explicitSlug } = await context.request.json() as {
-    title: string; excerpt: string; content: string; slug?: string
+  try {
+    const { title, excerpt, content: html, slug: explicitSlug } = await context.request.json() as {
+      title: string; excerpt: string; content: string; slug?: string
+    }
+
+    const { content: posts, sha } = await getPostsFile(context.env)
+    const slug = explicitSlug || slugify(title)
+
+    if (posts.some((p) => p.slug === slug)) {
+      return new Response(JSON.stringify({ error: "Post with this slug already exists" }), { status: 409 })
+    }
+
+    const post: Post = { slug, title, date: new Date().toISOString().split("T")[0], excerpt, content: html }
+    posts.unshift(post)
+
+    await writePostsFile(context.env, posts, sha, `content: add "${title}"`)
+    return new Response(JSON.stringify(post), { status: 201, headers: { "Content-Type": "application/json" } })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
   }
-
-  const { content: posts, sha } = await getPostsFile(context.env)
-  const slug = explicitSlug || slugify(title)
-
-  if (posts.some((p) => p.slug === slug)) {
-    return new Response(JSON.stringify({ error: "Post with this slug already exists" }), { status: 409 })
-  }
-
-  const post: Post = { slug, title, date: new Date().toISOString().split("T")[0], excerpt, content: html }
-  posts.unshift(post)
-
-  await writePostsFile(context.env, posts, sha, `content: add "${title}"`)
-  return new Response(JSON.stringify(post), { status: 201, headers: { "Content-Type": "application/json" } })
 }

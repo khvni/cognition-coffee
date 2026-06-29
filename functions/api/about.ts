@@ -11,6 +11,14 @@ interface AboutContent {
 
 const FILE_PATH = "content/about.json"
 
+function encodeBase64(str: string): string {
+  return btoa(unescape(encodeURIComponent(str)))
+}
+
+function decodeBase64(b64: string): string {
+  return decodeURIComponent(escape(atob(b64)))
+}
+
 const DEFAULT_CONTENT: AboutContent = {
   description: "Community builder in the Bay Area. I work on GTM at Keysight and founded MTC.",
   paragraphs: [
@@ -41,14 +49,14 @@ async function getAboutFile(env: Env): Promise<{ content: AboutContent; sha: str
     throw new Error(`GitHub API error: ${res.status}`)
   }
   const data = await res.json() as { content: string; sha: string }
-  const decoded = atob(data.content.replace(/\n/g, ""))
+  const decoded = decodeBase64(data.content.replace(/\n/g, ""))
   return { content: JSON.parse(decoded), sha: data.sha }
 }
 
 async function writeAboutFile(env: Env, content: AboutContent, sha: string, message: string): Promise<void> {
   const body: Record<string, string> = {
     message,
-    content: btoa(JSON.stringify(content, null, 2)),
+    content: encodeBase64(JSON.stringify(content, null, 2)),
     branch: "main",
   }
   if (sha) body.sha = sha
@@ -83,14 +91,18 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
-  const incoming = await context.request.json() as Partial<AboutContent>
-  const { content: current, sha } = await getAboutFile(context.env)
+  try {
+    const incoming = await context.request.json() as Partial<AboutContent>
+    const { content: current, sha } = await getAboutFile(context.env)
 
-  const updated: AboutContent = {
-    description: typeof incoming.description === "string" ? incoming.description : current.description,
-    paragraphs: Array.isArray(incoming.paragraphs) ? incoming.paragraphs.filter((p) => typeof p === "string") : current.paragraphs,
+    const updated: AboutContent = {
+      description: typeof incoming.description === "string" ? incoming.description : current.description,
+      paragraphs: Array.isArray(incoming.paragraphs) ? incoming.paragraphs.filter((p) => typeof p === "string") : current.paragraphs,
+    }
+
+    await writeAboutFile(context.env, updated, sha, "content: update about page")
+    return new Response(JSON.stringify(updated), { headers: { "Content-Type": "application/json" } })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
   }
-
-  await writeAboutFile(context.env, updated, sha, "content: update about page")
-  return new Response(JSON.stringify(updated), { headers: { "Content-Type": "application/json" } })
 }
