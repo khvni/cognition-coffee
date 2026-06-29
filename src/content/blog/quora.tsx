@@ -45,10 +45,13 @@ const Content: FC = () => (
     <p>Why some land and some die.</p>
     <p>When you strip away the jargon, you see marketing for what it actually is.</p>
     <p>
-      Feedback, too, was instant and (brutally) honest. I could post life advice on parenting and relationships (I was neither a father nor taken) and watch it climb the charts. I could write the magnum opus of my intellectual capability and watch it fizzle. Strangers online, after all, owed me nothing. If they kept reading, something got them hooked. If they didn't, something wasn't working.
+      Feedback, too, was instant and honest. I could post life advice on parenting and relationships (I was neither a father nor in a relationship) and watch it climb the charts. I could write the magnum opus of my intellectual capability and watch it fizzle. Strangers online, after all, owed me nothing. If they kept reading, something got them hooked. If they didn't, my clickbait needed some work.
     </p>
     <p>
-      Over time I stopped paying attention to the why. After all, I had a more powerful tool available:
+      Over time I stopped paying attention to the why.
+    </p>
+    <p>
+      After all, I had a more powerful tool available:
     </p>
     <p>Pattern recognition.</p>
     <p>
