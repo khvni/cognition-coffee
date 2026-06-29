@@ -34,8 +34,8 @@ const Content: FC = () => (
         height={362}
         className="h-auto w-full rounded-lg border border-line"
       />
-      <figcaption className="mt-3 text-center text-xs uppercase tracking-wide text-muted">
-        Seven million views from strangers who owed me nothing
+      <figcaption className="mt-3 text-left text-xs text-muted">
+        Originally, I would've linked the Quora profile until I read through the first three answers and cringed so hard I remembered why I wrote under a pseudonym.
       </figcaption>
     </figure>
     <p>
