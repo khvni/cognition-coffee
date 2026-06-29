@@ -38,13 +38,5 @@
     "role": "TA, Data Structures",
     "date": "Aug 2022-Aug 2023",
     "logo": "/logos/uc-berkeley-eecs.jpg"
-  },
-  {
-    "mark": "C",
-    "markClass": "bg-[#777]",
-    "company": "Convoy",
-    "role": "SWE Intern",
-    "date": "Jun 2022-Aug 2022",
-    "logo": "/logos/convoy.jpg"
   }
 ]
