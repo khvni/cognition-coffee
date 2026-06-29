@@ -49,8 +49,8 @@ const patch = (windows: WindowItem[], key: string, fn: (wn: WindowItem) => Windo
   windows.map((wn) => (wn.key === key ? fn(wn) : wn))
 
 function defaultPosition(app: AppDef, _count: number, vw: number, vh: number) {
-  const w = Math.min(app.size.w, vw - 32)
-  const h = Math.min(app.size.h, vh - 96)
+  const w = Math.min(app.size.w, Math.round(vw * 0.9))
+  const h = Math.min(app.size.h, Math.round(vh * 0.85))
   return { x: Math.max(16, (vw - w) / 2), y: Math.max(40, (vh - h) / 2 - 10), w, h }
 }
 
