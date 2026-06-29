@@ -10,7 +10,7 @@ export function initPostHog() {
   posthog.init(key, {
     api_host: host,
     autocapture: false,
-    disable_session_recording: true,
+    session_recording: { maskAllInputs: true },
   })
   initialized = true
 }
