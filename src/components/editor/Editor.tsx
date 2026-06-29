@@ -1,7 +1,25 @@
 import React, { useEffect } from "react"
 import { useEditor, EditorContent, type AnyExtension } from "@tiptap/react"
+import { Extension } from "@tiptap/core"
 import StarterKit from "@tiptap/starter-kit"
 import Link from "@tiptap/extension-link"
+
+const LinkShortcut = Extension.create({
+  addKeyboardShortcuts() {
+    return {
+      "Mod-k": () => {
+        const { editor } = this
+        if (editor.isActive("link")) return editor.chain().focus().unsetLink().run()
+        const url = window.prompt("URL")
+        if (!url) return true
+        if (editor.state.selection.empty) {
+          return editor.chain().focus().insertContent(`<a href="${url}">${url}</a>`).run()
+        }
+        return editor.chain().focus().setLink({ href: url }).run()
+      },
+    }
+  },
+})
 
 interface Props {
   content: string
@@ -33,6 +51,7 @@ export const TiptapEditor: React.FC<Props> = ({ content, onChange }) => {
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false }),
+      LinkShortcut,
     ] as AnyExtension[],
     content,
     onUpdate: ({ editor: e }) => onChange(e.getHTML()),
