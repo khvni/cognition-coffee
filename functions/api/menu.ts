@@ -1,7 +1,11 @@
+import { createPostHogClient } from "../lib/posthog"
+
 interface Env {
   GITHUB_TOKEN: string
   GITHUB_REPO: string
   ADMIN_PASSWORD: string
+  POSTHOG_KEY: string
+  POSTHOG_HOST: string
 }
 
 interface OrderingOption {
@@ -110,8 +114,20 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
     const updated = incoming.length ? incoming : current
 
     await writeMenuFile(context.env, updated, sha, "content: update menu")
+
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.capture({ distinctId: "admin", event: "menu_updated", properties: { section_count: updated.length } })
+      await posthog.shutdown()
+    }
+
     return new Response(JSON.stringify(updated), { headers: { "Content-Type": "application/json" } })
   } catch (err) {
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.captureException(err, "admin")
+      await posthog.shutdown()
+    }
     return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
   }
 }

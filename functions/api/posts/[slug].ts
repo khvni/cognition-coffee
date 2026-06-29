@@ -1,7 +1,11 @@
+import { createPostHogClient } from "../../lib/posthog"
+
 interface Env {
   GITHUB_TOKEN: string
   GITHUB_REPO: string
   ADMIN_PASSWORD: string
+  POSTHOG_KEY: string
+  POSTHOG_HOST: string
 }
 
 interface Post {
@@ -111,8 +115,20 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
     }
 
     await writePostsFile(context.env, posts, sha, `content: update "${title}"`)
+
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.capture({ distinctId: "admin", event: "post_updated", properties: { title, slug: posts[idx].slug } })
+      await posthog.shutdown()
+    }
+
     return new Response(JSON.stringify(posts[idx]), { headers: { "Content-Type": "application/json" } })
   } catch (err) {
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.captureException(err, "admin")
+      await posthog.shutdown()
+    }
     return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
   }
 }
@@ -132,8 +148,20 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
 
     const removed = posts.splice(idx, 1)[0]
     await writePostsFile(context.env, posts, sha, `content: delete "${removed.title}"`)
+
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.capture({ distinctId: "admin", event: "post_deleted", properties: { title: removed.title, slug: removed.slug } })
+      await posthog.shutdown()
+    }
+
     return new Response(JSON.stringify({ ok: true }), { headers: { "Content-Type": "application/json" } })
   } catch (err) {
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.captureException(err, "admin")
+      await posthog.shutdown()
+    }
     return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Delete failed" }), { status: 500 })
   }
 }

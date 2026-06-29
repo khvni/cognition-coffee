@@ -1,7 +1,11 @@
+import { createPostHogClient } from "../../lib/posthog"
+
 interface Env {
   GITHUB_TOKEN: string
   GITHUB_REPO: string
   ADMIN_PASSWORD: string
+  POSTHOG_KEY: string
+  POSTHOG_HOST: string
 }
 
 interface Post {
@@ -108,8 +112,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     posts.unshift(post)
 
     await writePostsFile(context.env, posts, sha, `content: add "${title}"`)
+
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.capture({ distinctId: "admin", event: "post_created", properties: { title, slug: post.slug } })
+      await posthog.shutdown()
+    }
+
     return new Response(JSON.stringify(post), { status: 201, headers: { "Content-Type": "application/json" } })
   } catch (err) {
+    if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+      const posthog = createPostHogClient(context.env)
+      posthog.captureException(err, "admin")
+      await posthog.shutdown()
+    }
     return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Save failed" }), { status: 500 })
   }
 }

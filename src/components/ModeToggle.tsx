@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useApp } from "@/context/App"
 import { isMobile } from "@/lib/mobile"
+import { trackEvent } from "@/lib/posthog"
 
 const spring = { type: "spring" as const, duration: 0.3, bounce: 0 }
 
@@ -25,7 +26,7 @@ export const ModeToggle: React.FC = () => {
       </AnimatePresence>
       <button
         type="button"
-        onClick={() => setExperience("os")}
+        onClick={() => { setExperience("os"); trackEvent("mode_switched", { mode: "os" }) }}
         role="radio"
         aria-checked={experience === "os"}
         className={`relative z-[1] flex min-h-[34px] items-center rounded-full px-3.5 transition-[color] duration-150 ${
@@ -36,7 +37,7 @@ export const ModeToggle: React.FC = () => {
       </button>
       <button
         type="button"
-        onClick={() => setExperience("site")}
+        onClick={() => { setExperience("site"); trackEvent("mode_switched", { mode: "site" }) }}
         role="radio"
         aria-checked={experience === "site"}
         className={`relative z-[1] flex min-h-[34px] items-center rounded-full px-3.5 transition-[color] duration-150 ${

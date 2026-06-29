@@ -6,6 +6,7 @@ import { appForPath, APPS } from "@/lib/apps"
 import { isMobile } from "@/lib/mobile"
 import { useKeyboardShortcuts } from "@/lib/useKeyboardShortcuts"
 import { ShortcutsHelp } from "@/components/ShortcutsHelp"
+import { trackEvent } from "@/lib/posthog"
 
 type WindowPatch = Partial<Pick<WindowItem, "x" | "y" | "w" | "h" | "minimized" | "maximized">>
 
@@ -111,6 +112,8 @@ const AppProviderInner: React.FC<ProviderProps> = ({ element, location, children
   }
 
   const open = (path: string, opts?: { newWindow?: boolean }) => {
+    const app = appForPath(path)
+    trackEvent("app_window_opened", { app_title: app.title, path })
     void navigate(path, { state: { newWindow: opts?.newWindow ?? false } })
   }
 

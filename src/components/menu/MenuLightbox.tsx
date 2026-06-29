@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import type { MenuItem } from "@/data/menu"
 import type { CartEntry } from "./Cart"
+import { trackEvent } from "@/lib/posthog"
 
 type Props = {
   item: MenuItem | null
@@ -19,6 +20,7 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) =>
     if (item) {
       setSelected({})
       setInstructions("")
+      trackEvent("menu_item_viewed", { item_id: item.id, item_name: item.name })
     }
   }, [item])
 
@@ -67,6 +69,7 @@ export const MenuLightbox: React.FC<Props> = ({ item, onClose, onAddToCart }) =>
       selections: selected,
       instructions: instructions.trim(),
     })
+    trackEvent("menu_item_added_to_cart", { item_id: item.id, item_name: item.name })
     onClose()
   }
 

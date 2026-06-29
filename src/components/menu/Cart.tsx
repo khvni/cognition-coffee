@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { trackEvent } from "@/lib/posthog"
 
 export type CartEntry = {
   key: string
@@ -28,6 +29,7 @@ export const Cart: React.FC<Props> = ({ items, onRemove, onClear }) => {
   if (items.length === 0 && !sent) return null
 
   const handleSend = () => {
+    trackEvent("cart_order_sent", { item_count: items.length })
     setSent(true)
     setOpen(false)
     onClear()

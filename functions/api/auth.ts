@@ -1,5 +1,9 @@
+import { createPostHogClient } from "../lib/posthog"
+
 interface Env {
   ADMIN_PASSWORD: string
+  POSTHOG_KEY: string
+  POSTHOG_HOST: string
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -9,6 +13,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       status: 401,
       headers: { "Content-Type": "application/json" },
     })
+  }
+
+  if (context.env.POSTHOG_KEY && context.env.POSTHOG_HOST) {
+    const posthog = createPostHogClient(context.env)
+    posthog.capture({ distinctId: "admin", event: "admin_logged_in" })
+    await posthog.shutdown()
   }
 
   return new Response(JSON.stringify({ ok: true }), {

@@ -1,0 +1,52 @@
+[
+  {
+    "event_name": "menu_item_viewed",
+    "event_description": "User opens a menu item lightbox to view details.",
+    "file": "src/components/menu/MenuLightbox.tsx"
+  },
+  {
+    "event_name": "menu_item_added_to_cart",
+    "event_description": "User adds a menu item to their order.",
+    "file": "src/components/menu/MenuLightbox.tsx"
+  },
+  {
+    "event_name": "cart_order_sent",
+    "event_description": "User submits their coffee order from the cart.",
+    "file": "src/components/menu/Cart.tsx"
+  },
+  {
+    "event_name": "mode_switched",
+    "event_description": "User toggles between the OS desktop experience and the plain site.",
+    "file": "src/components/ModeToggle.tsx"
+  },
+  {
+    "event_name": "app_window_opened",
+    "event_description": "User opens an app window on the desktop OS.",
+    "file": "src/context/App.tsx"
+  },
+  {
+    "event_name": "admin_logged_in",
+    "event_description": "Admin successfully authenticates to the admin panel.",
+    "file": "functions/api/auth.ts"
+  },
+  {
+    "event_name": "post_created",
+    "event_description": "Admin publishes a new blog post.",
+    "file": "functions/api/posts/index.ts"
+  },
+  {
+    "event_name": "post_updated",
+    "event_description": "Admin updates an existing blog post.",
+    "file": "functions/api/posts/[slug].ts"
+  },
+  {
+    "event_name": "post_deleted",
+    "event_description": "Admin deletes a blog post.",
+    "file": "functions/api/posts/[slug].ts"
+  },
+  {
+    "event_name": "menu_updated",
+    "event_description": "Admin saves changes to the service menu.",
+    "file": "functions/api/menu.ts"
+  }
+]

@@ -4,6 +4,7 @@ import { SEO } from "@/components/SEO"
 import { TiptapEditor } from "@/components/editor/Editor"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
 import { MenuEditor } from "@/components/admin/MenuEditor"
+import { identifyUser } from "@/lib/posthog"
 
 interface Post {
   slug: string
@@ -147,6 +148,7 @@ const AdminPage: React.FC = () => {
     })
     if (res.ok) {
       setAuthed(true)
+      identifyUser("admin")
     } else {
       setAuthError("Wrong password")
     }

@@ -24,3 +24,8 @@ export function identifyUser(id: string, properties?: Record<string, unknown>) {
   if (!initialized) return
   posthog.identify(id, properties)
 }
+
+export function captureException(error: unknown, properties?: Record<string, unknown>) {
+  if (!initialized) return
+  posthog.captureException(error, properties)
+}
