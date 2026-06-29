@@ -50,7 +50,13 @@ interface ExperienceEntry {
   logo?: string
 }
 
-type View = "list" | "edit" | "about" | "menu" | "experience"
+interface ProjectEntry {
+  title: string
+  href: string
+  desc: string
+}
+
+type View = "list" | "edit" | "about" | "menu" | "experience" | "projects"
 
 const AdminPage: React.FC = () => {
   const [authed, setAuthed] = useState(false)
@@ -83,6 +89,11 @@ const AdminPage: React.FC = () => {
   const [expSaved, setExpSaved] = useState(false)
   const [logoUploading, setLogoUploading] = useState<string | null>(null)
 
+  const [projEntries, setProjEntries] = useState<ProjectEntry[]>([])
+  const [projSaving, setProjSaving] = useState(false)
+  const [projError, setProjError] = useState("")
+  const [projSaved, setProjSaved] = useState(false)
+
   const fetchPosts = useCallback(async () => {
     const res = await fetch("/api/posts")
     if (res.ok) setPosts(await res.json())
@@ -109,14 +120,22 @@ const AdminPage: React.FC = () => {
     if (Array.isArray(data)) setExpEntries(data)
   }, [])
 
+  const fetchProjects = useCallback(async () => {
+    const res = await fetch("/api/projects")
+    if (!res.ok) return
+    const data = await res.json()
+    if (Array.isArray(data)) setProjEntries(data)
+  }, [])
+
   useEffect(() => {
     if (authed) {
       fetchPosts()
       fetchAbout()
       fetchMenu()
       fetchExperience()
+      fetchProjects()
     }
-  }, [authed, fetchPosts, fetchAbout, fetchMenu, fetchExperience])
+  }, [authed, fetchPosts, fetchAbout, fetchMenu, fetchExperience, fetchProjects])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -279,6 +298,49 @@ const AdminPage: React.FC = () => {
 
   const moveExpEntry = (i: number, dir: -1 | 1) => {
     setExpEntries((prev) => {
+      const next = [...prev]
+      const j = i + dir
+      if (j < 0 || j >= next.length) return prev
+      ;[next[i], next[j]] = [next[j], next[i]]
+      return next
+    })
+  }
+
+  const handleProjectsSave = async () => {
+    setProjSaving(true)
+    setProjError("")
+    setProjSaved(false)
+    const res = await fetch("/api/projects", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(projEntries),
+    })
+    setProjSaving(false)
+    if (res.ok) {
+      const data = await res.json()
+      if (Array.isArray(data)) setProjEntries(data)
+      setProjSaved(true)
+      setTimeout(() => setProjSaved(false), 2000)
+    } else {
+      const data = await res.json().catch(() => ({ error: "Save failed" }))
+      setProjError(data.error || "Save failed")
+    }
+  }
+
+  const updateProjEntry = (i: number, field: keyof ProjectEntry, value: string) => {
+    setProjEntries((prev) => prev.map((e, idx) => (idx === i ? { ...e, [field]: value } : e)))
+  }
+
+  const addProjEntry = () => {
+    setProjEntries((prev) => [...prev, { title: "", href: "", desc: "" }])
+  }
+
+  const removeProjEntry = (i: number) => {
+    setProjEntries((prev) => prev.filter((_, idx) => idx !== i))
+  }
+
+  const moveProjEntry = (i: number, dir: -1 | 1) => {
+    setProjEntries((prev) => {
       const next = [...prev]
       const j = i + dir
       if (j < 0 || j >= next.length) return prev
@@ -544,6 +606,66 @@ const AdminPage: React.FC = () => {
     )
   }
 
+  if (view === "projects") {
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-8">
+        <button onClick={() => setView("list")} className="font-mono text-xs text-muted hover:text-ink">
+          &larr; Back
+        </button>
+        <h1 className="mt-4 text-2xl font-medium text-ink">Edit Projects</h1>
+        <p className="mt-2 text-sm text-muted">
+          Add, reorder, and edit the projects shown on the About page.
+        </p>
+
+        <div className="mt-6 space-y-4">
+          {projEntries.map((entry, i) => (
+            <div key={i} className="rounded border border-line bg-surface p-4">
+              <div className="flex items-center gap-3">
+                <strong className="text-ink">{entry.title || "New entry"}</strong>
+                <div className="ml-auto flex gap-1">
+                  <button onClick={() => moveProjEntry(i, -1)} disabled={i === 0} className="rounded border border-line px-2 py-0.5 font-mono text-xs text-muted hover:text-ink disabled:opacity-30">&uarr;</button>
+                  <button onClick={() => moveProjEntry(i, 1)} disabled={i === projEntries.length - 1} className="rounded border border-line px-2 py-0.5 font-mono text-xs text-muted hover:text-ink disabled:opacity-30">&darr;</button>
+                  <button onClick={() => removeProjEntry(i)} className="rounded border border-line px-2 py-0.5 font-mono text-xs text-red-600 hover:bg-red-50">Remove</button>
+                </div>
+              </div>
+
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-mono text-xs text-muted">Title</label>
+                  <input type="text" value={entry.title} onChange={(e) => updateProjEntry(i, "title", e.target.value)} className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+                </div>
+                <div>
+                  <label className="font-mono text-xs text-muted">URL</label>
+                  <input type="text" value={entry.href} onChange={(e) => updateProjEntry(i, "href", e.target.value)} placeholder="https://" className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+                </div>
+              </div>
+
+              <div className="mt-3">
+                <label className="font-mono text-xs text-muted">Description</label>
+                <input type="text" value={entry.desc} onChange={(e) => updateProjEntry(i, "desc", e.target.value)} className="mt-1 w-full rounded border border-line bg-canvas px-3 py-2 text-ink focus:border-accent focus:outline-none" />
+              </div>
+            </div>
+          ))}
+
+          <button onClick={addProjEntry} className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink">
+            + Add entry
+          </button>
+
+          {projError && <p className="text-sm text-red-600">{projError}</p>}
+          {projSaved && <p className="text-sm text-green-600">Saved.</p>}
+
+          <button
+            onClick={handleProjectsSave}
+            disabled={projSaving}
+            className="rounded bg-ink px-4 py-2 font-mono text-sm text-canvas hover:bg-accent-ink disabled:opacity-50"
+          >
+            {projSaving ? "Saving…" : "Save Projects"}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (view === "menu") {
     return <MenuEditor data={menuData} onSave={handleMenuSave} onBack={() => setView("list")} />
   }
@@ -570,6 +692,12 @@ const AdminPage: React.FC = () => {
             className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink"
           >
             Edit Experience
+          </button>
+          <button
+            onClick={() => setView("projects")}
+            className="rounded border border-line px-3 py-1.5 font-mono text-xs text-muted hover:text-ink"
+          >
+            Edit Projects
           </button>
           <button
             onClick={openNew}

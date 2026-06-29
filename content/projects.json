@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Cognition Coffee",
+    "href": "https://cognitioncoffee.co",
+    "desc": "A collection of ideas for building Cognition's developer community"
+  },
+  {
+    "title": "Tinker",
+    "href": "https://tinker.so",
+    "desc": "Open-source Ramp Glass for GTM teams"
+  },
+  {
+    "title": "Monkeybot",
+    "href": "https://monkeybot-demo.pages.dev",
+    "desc": "Voice-driven computer-use agent for SaaS workflows"
+  }
+]
