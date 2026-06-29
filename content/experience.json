@@ -1,0 +1,50 @@
+[
+  {
+    "mark": "K",
+    "markClass": "bg-[#5f7f62]",
+    "company": "Keysight",
+    "role": "Growth Insights & AI",
+    "date": "Dec 2025-",
+    "logo": "/logos/keysight.jpg"
+  },
+  {
+    "mark": "M",
+    "markClass": "bg-[#527899]",
+    "company": "MTC",
+    "role": "Founder",
+    "date": "Jan 2023-",
+    "logo": "/logos/mtc.png"
+  },
+  {
+    "mark": "B",
+    "markClass": "bg-[#151515]",
+    "company": "Bloom AI",
+    "role": "Co-Founder, CEO",
+    "date": "Feb 2025-Apr 2025",
+    "logo": "/logos/bloom-ai.svg"
+  },
+  {
+    "mark": "F",
+    "markClass": "bg-[#777]",
+    "company": "Five9",
+    "role": "Security SWE Intern",
+    "date": "Jun 2024-Aug 2024",
+    "logo": "/logos/five9.png"
+  },
+  {
+    "mark": "U",
+    "markClass": "bg-[#777]",
+    "company": "UC Berkeley EECS",
+    "role": "Student Instructor, Data Structures",
+    "date": "Aug 2022-Aug 2023",
+    "logo": "/logos/uc-berkeley-eecs.jpg"
+  },
+  {
+    "mark": "C",
+    "markClass": "bg-[#777]",
+    "company": "Convoy",
+    "role": "SWE Intern",
+    "date": "Jun 2022-Aug 2022",
+    "logo": "/logos/convoy.jpg"
+  }
+]
