@@ -37,12 +37,12 @@ const IndexPage: React.FC = () => (
         Cognition Coffee
       </h1>
       <p className="m-0 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
-        Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
-        around the energy of a coffee shop.
+        Cognition Coffee is my take on what Devin&apos;s community could feel like: builders sharing what they ship,
+        with the buzz of a coffee shop.
       </p>
       <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
-        The &quot;OS&quot; is a nod to the early-2000s internet cafe, when going online felt like going
-        somewhere. Here&apos;s what you can do:
+        The &quot;OS&quot; is an homage to both Cognition&apos;s early thesis around cloud agents with their own VMs,
+        and to the internet cafes of the early 2000&apos;s around which the earliest irl developer communities formed.
       </p>
       <ul className="mt-4 max-w-2xl list-disc space-y-1 pl-5 text-[0.9375rem] font-normal leading-[1.6] text-black [text-wrap:pretty]">
         <li>Browse around for Easter eggs.</li>
