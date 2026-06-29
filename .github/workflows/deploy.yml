@@ -23,6 +23,9 @@ jobs:
           cache: npm
       - run: npm install
       - name: Build
+        env:
+          GATSBY_POSTHOG_KEY: ${{ secrets.GATSBY_POSTHOG_KEY }}
+          GATSBY_POSTHOG_HOST: ${{ secrets.GATSBY_POSTHOG_HOST }}
         run: npm run build
       - name: Upload source maps to PostHog
         continue-on-error: true
