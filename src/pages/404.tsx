@@ -3,6 +3,14 @@ import { SEO } from "@/components/SEO"
 
 const NotFoundPage: React.FC = () => {
   React.useEffect(() => {
+    const path = window.location.pathname
+    const reloaded = window.sessionStorage.getItem("cc.404-reload") === path
+    if (!reloaded) {
+      window.sessionStorage.setItem("cc.404-reload", path)
+      window.location.reload()
+      return
+    }
+    window.sessionStorage.removeItem("cc.404-reload")
     window.location.replace("/")
   }, [])
 
