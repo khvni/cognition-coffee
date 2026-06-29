@@ -1,11 +1,8 @@
 import React from "react"
 import { Link, type HeadFC } from "gatsby"
-import { BIO, SOCIALS } from "@/data/experience"
-import { APPS } from "@/lib/apps"
+import { SOCIALS } from "@/data/experience"
 import { SEO } from "@/components/SEO"
 import { VantaFog } from "@/components/VantaFog"
-
-const sections = APPS.filter((a) => a.id !== "home" && (a.nav ?? true))
 
 const socialIcons: Record<string, React.ReactNode> = {
   X: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>,
@@ -39,24 +36,34 @@ const IndexPage: React.FC = () => (
       <h1 className="m-0 mb-4 text-[1.375rem] font-medium leading-[1.7] tracking-tight text-ink [text-wrap:balance]">
         Cognition Coffee
       </h1>
-      <p className="m-0 text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">{BIO.hook}</p>
-      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
+      <p className="m-0 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
         Cognition Coffee is my take on what a Devin community could feel like: builders sharing what they ship,
-        around the energy of a coffee shop. The &quot;OS&quot; (view this site on desktop if you aren&apos;t
-        already) is a nod to the early-2000s internet cafe, when going online felt like going somewhere.
+        around the energy of a coffee shop. The &quot;OS&quot; is a nod to the early-2000s internet cafe, when
+        going online felt like going somewhere.
       </p>
-      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink/60 [text-wrap:pretty]">
-        Look around for Easter eggs. Order something off the Menu. Read the papers in the Blog. If you like what
-        you see, let&apos;s chat about{" "}
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+        Browse around for Easter eggs. Order something off the{" "}
+        <Link to="/menu" className="text-ink underline">Menu</Link>. Read the papers in the{" "}
+        <Link to="/blog" className="text-ink underline">Blog</Link>. Take a look under the hood in the{" "}
+        <Link to="/terminal" className="text-ink underline">Terminal</Link>. And check out the redesigned{" "}
+        <Link to="/community" className="text-ink underline">Community</Link> page, to showcase what
+        devin.ai/community can become.
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+        I want to help spread the good word of Devin and build a community around it. Convenient that you&apos;re
+        currently looking for a{" "}
         <a
           href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090"
           target="_blank"
           rel="noopener"
-          className="text-ink no-underline hover:underline"
+          className="text-ink underline"
         >
-          why I&apos;ve brought you here
+          Developer Community Manager
         </a>
-        .
+        , right?
+      </p>
+      <p className="mt-4 max-w-2xl text-[0.9375rem] font-normal leading-[1.6] text-ink [text-wrap:pretty]">
+        Hit me up on any of these:
       </p>
     </div>
 
@@ -70,30 +77,6 @@ const IndexPage: React.FC = () => (
         )
       })}
     </div>
-
-    <section className="section-block" aria-labelledby="menu-heading">
-      <h2
-        className="section-heading reveal font-mono uppercase tracking-[0.06em] text-[0.6875rem]"
-        id="menu-heading"
-        style={stagger(3)}
-      >
-        Links
-      </h2>
-      <ul className="entry-list">
-        {sections.map((a, i) => (
-          <li
-            key={a.id}
-            className="entry-row reveal"
-            style={stagger(4 + i)}
-          >
-            <Link className="entry-link py-1.5" to={a.path}>
-              <strong>{a.title}</strong>
-              <span className="[text-wrap:pretty]">{a.blurb}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
 
   </div>
 )
