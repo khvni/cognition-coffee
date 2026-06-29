@@ -37,13 +37,13 @@ const Content: FC = () => (
       MTC's consulting arm, Pulse Consulting, started the way most student projects start. Several engineers and a PM would take on a project for a local nonprofit or small business. Before AI, that meant web dev or inventory tracking tools. Useful, but slow. Teams of five or six, semester-long timelines, a lot of hand-holding.
     </p>
     <p>
-      Post-AI, a student with Devin and a mentor can ship what used to take a whole team a semester. Here's the new model, based on texts I sent to a friend running an MTC chapter.
+      Post-AI, a student with Devin and a mentor can ship what used to take a whole team a semester. Here's the new model, based on texts I sent to a friend running a chapter.
     </p>
     <p>
-      First, formalize the role. Make it stipend-based and selective. Don't ask people to volunteer time out of busy work and school schedules. Application-based.
+      First, formalize the role. Stipend-based, selective, application-based. Don't ask people to volunteer time out of busy work and school schedules.
     </p>
     <p>
-      Second, pair each builder with a technical mentor. The mentor volunteers and brings the project. Could be an idea they want to build out but don't have time to do themselves. The mentor gives the student or new grad who's actually building it the direction they need.
+      Second, pair each builder with a technical mentor who volunteers and brings the project — maybe an idea they want built but don't have time to build themselves. The mentor gives the student or new grad who's actually doing the work the direction they need.
     </p>
     <ProseWaxFigure caption="The new projects model">
       <p>
@@ -57,7 +57,7 @@ const Content: FC = () => (
       The mentor sets up a GitHub repo, picks the stack, and gives clear direction. "Use these technologies to build out the site. We need this done in six weeks. Text me updates every day and we'll check in every week to see where your progress is at."
     </p>
     <p>
-      This also means the builder has a direct connection with someone further along in their career. Someone who can vouch for their work ethic and coachability. Someone who can get them hired for internships and full-time roles afterwards.
+      This also means the builder has a direct line to someone further along who can vouch for their work ethic and coachability, and get them hired for internships and full-time roles afterwards.
     </p>
     <ProsePullQuote>
       How better to scout talent than to cultivate it from within?
@@ -88,7 +88,7 @@ const Content: FC = () => (
       The best event MTC Berkeley ever ran was a career fair in Hearst Mining Building. That's Berkeley Engineering's largest venue. The lobby is massive. We filled it with companies and students and it felt like a real conference, not a student club event.
     </p>
     <p>
-      Venue matters. A big, legit venue signals that this is a real thing. Companies take you more seriously when you book the engineering school's flagship building. Students show up dressed. The energy is different.
+      Venue matters. Book the engineering school's flagship building and companies take you more seriously, students show up dressed, the energy changes.
     </p>
     <p>
       We also ran fireside chats with founders and engineers. The format that worked best was short. 30 minutes of conversation, 15 minutes of Q&A, then food and mingling. No slides. No pitch. Just a person who's done something interesting talking about how they did it.
@@ -108,7 +108,7 @@ const Content: FC = () => (
       </p>
     </ProseWaxFigure>
     <p>
-      This year we also helped advise and organize mtchacks.com at UIUC. A large-scale hackathon with embroidered hoodies, stickers, sponsor t-shirts, the full production. It's coming back next year bigger. A hackathon is the highest-stakes event format we run. Sponsors, judges, venue, food, swag, website, registration, a weekend of logistics.
+      This year we helped organize mtchacks.com at UIUC — a full-production hackathon, embroidered hoodies and sponsor t-shirts included, coming back bigger next year. A hackathon is the highest-stakes format we run: sponsors, judges, venue, food, swag, registration, a weekend of logistics.
     </p>
 
     <h2>The operational infrastructure</h2>
@@ -134,10 +134,7 @@ const Content: FC = () => (
 
     <h3>NotebookLM for chapter operations</h3>
     <p>
-      This is the newest piece and the one I'm most excited about. We took every SOP, chapter operations doc, event planning guide, board recruitment playbook, and best-practice writeup we had, and loaded them into a shareable NotebookLM notebook.
-    </p>
-    <p>
-      Chapter leads can open it in their browser, type a question in plain English, and get an answer grounded in our actual documentation. "How do I book a room on campus?" "What's the budget for a kickoff event?" "How do I run a board election?" The notebook pulls from the source docs and cites them. No more scrolling through a 40-page Notion page or waiting for me to reply to a Slack DM.
+      We loaded every SOP, ops doc, event guide, and board playbook into a shared NotebookLM notebook. A chapter lead opens it in their browser, types "how do I book a room on campus" or "what's the budget for a kickoff event," and gets an answer pulled from our actual docs, with citations. No more scrolling a 40-page Notion page or waiting on me to reply to a Slack DM.
     </p>
     <ProsePullQuote>
       A chapter lead at 11pm can get an answer to "how do I structure my board" without waiting for anyone to be online.
@@ -145,13 +142,10 @@ const Content: FC = () => (
 
     <h3>Notion speaker CRM</h3>
     <p>
-      One of the hardest parts of running a chapter is finding speakers. Every chapter reinvents this. So we built a Notion database inside MTC National that serves as a rolodex of industry speakers we've hosted across all chapters.
+      Finding speakers is the hardest part of running a chapter, and every chapter reinvents it. So we keep a Notion database inside MTC National: a rolodex of every industry speaker any chapter has hosted, with name, company, topic, which chapter, when, contact info, and how the event went. A president at NYU can see that Berkeley hosted a founder from Levels.fyi in spring 2024 and reach out with context: "Hey, you spoke at MTC Berkeley last year. We're running a fireside chat series at NYU and would love to have you."
     </p>
     <p>
-      Each entry has the speaker's name, company, topic, which chapter hosted them, when, contact info, and notes on how the event went. A chapter president at NYU can search the database, see that Berkeley hosted a founder from Levels.fyi in spring 2024, and reach out with context. "Hey, you spoke at MTC Berkeley last year. We're running a fireside chat series at NYU and would love to have you."
-    </p>
-    <p>
-      It's a Notion table with a lot of rows, not a polished CRM. But it works because the data is real and the contact points are warm.
+      It's a Notion table with a lot of rows, not a polished CRM. It works because the data is real and the contact points are warm.
     </p>
 
     <h3>Quarterly regional syncs</h3>
@@ -159,7 +153,7 @@ const Content: FC = () => (
       Every quarter, I run a regional sync for each region. Bay Area. SoCal. Chicago. Atlanta. Texas. East Coast. Every chapter president in the region gets on a call. We go around the room. Each president shares what's working, what's broken, and what they're planning next.
     </p>
     <p>
-      The syncs are for troubleshooting, idea exchange, and accountability. If Berkeley's board is having a motivation problem, chances are SJSU is too, and hearing how Stanford handled it last semester saves everyone time. An event format that worked at Davis can be copied at UCSC the next week. And if a president knows they're presenting at the sync, they ship things.
+      If Berkeley's board has a motivation problem, chances are SJSU does too, and hearing how Stanford handled it last semester saves everyone time. An event format that worked at Davis gets copied at UCSC the next week. And a president who knows they're presenting at the sync ships things.
     </p>
     <p>
       I also hop on one-on-one calls with chapter presidents whenever they ask. If a president texts me at 10pm with a board crisis, I call them back. The organization is small enough that this still works, and it's the highest-leverage thing I do.
@@ -201,13 +195,7 @@ const Content: FC = () => (
 
     <h2>What's next</h2>
     <p>
-      Close the grant. Hire paid operators. Pick a focus and kill the rest.
-    </p>
-    <p>
-      $500K funds a full-time executive director, a community admin, and the engineering contractor we're already paying out of pocket. The only thing between us and that money is an email. Yousef hiring Osama was the best decision MTC made in 2026. We need to do it again: a $500/month VA for chapter outreach and Slack admin, and a community admin for LinkedIn and Instagram cadence.
-    </p>
-    <p>
-      And stop trying to do ten things. Pick one or two.
+      Close the grant. Hire paid operators. Pick a focus and kill the rest. The only thing between us and $500K is an email. We need another Osama: a $500/month VA for chapter outreach and Slack admin, and a community admin for LinkedIn and Instagram cadence. And we need to stop trying to do ten things.
     </p>
 
     <hr />
