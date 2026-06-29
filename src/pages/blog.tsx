@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, type HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
-import { blogPosts, readingTime, readingTimeBySlug } from "@/content/blog"
+import { blogPosts, readingTime } from "@/content/blog"
 
 interface ApiPost {
   slug: string
@@ -34,7 +34,7 @@ const BlogIndex: React.FC = () => {
         slug: p.slug,
         title: api?.title ?? p.frontmatter.title,
         date: api?.date ?? p.frontmatter.date,
-        readingTime: api ? readingTime(api.content) : readingTimeBySlug.get(p.slug) ?? 1,
+        readingTime: api ? readingTime(api.content) : p.readingTime,
       }
     })
     .sort((a, b) => b.date.localeCompare(a.date))
