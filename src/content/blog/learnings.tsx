@@ -83,7 +83,7 @@ const Content: FC = () => (
       </a>
       , or the full{" "}
       <a href="/blog/brewing-community/">90-day plan</a>.{" "}
-      <a href="/about#contact">Let's talk</a>.
+      <a href="https://jobs.ashbyhq.com/cognition/b24559d8-c742-4da9-aa6c-581a00e56090" target="_blank" rel="noopener">Let's talk</a>.
     </p>
   </>
 )
