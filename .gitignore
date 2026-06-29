@@ -28,5 +28,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# posthog wizard agent skill (auto-generated, claude-code-specific)
+.claude/skills/
+
 # macOS
 .DS_Store
