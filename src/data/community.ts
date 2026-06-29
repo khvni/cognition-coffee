@@ -2,7 +2,7 @@ export const communityPhotos: { src: string; alt: string; caption: string }[] = 
   { src: "/community/cafe-coding-1.jpg", alt: "People laughing and coding together at a cafe", caption: "Cognition Coffee, SF" },
   { src: "/community/park-coding-2.jpg", alt: "Two developers pair programming on a project", caption: "Hack Night, Lagos" },
   { src: "/community/beach-coding-7.jpg", alt: "Group of builders hacking at a table with laptops", caption: "Devin Workshop, Berlin" },
-  { src: "/community/nature-coding-8.jpg", alt: "Person coding on a laptop at a cafe window", caption: "Builders everywhere" },
+  { src: "/community/nature-coding-8.jpg", alt: "Student coding on a laptop at a cafe window", caption: "Devin on Campus, Berkeley" },
   { src: "/community/coworking-4.jpg", alt: "People collaborating at a coworking meetup", caption: "AI Builders Night, Vienna" },
   { src: "/community/library-coding-3.jpg", alt: "Team building together at a community event", caption: "Hackathon, São Paulo" },
 ]
