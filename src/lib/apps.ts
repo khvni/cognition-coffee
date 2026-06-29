@@ -33,7 +33,7 @@ export const APPS: AppDef[] = [
   { id: "terminal", title: "Terminal", path: "/terminal", blurb: "A UNIX-like terminal.", icon: "terminal", size: { w: 760, h: 500 }, center: true, desktop: true, nav: false },
   { id: "snake", title: "Snake", path: "/snake", blurb: "Eat, grow, don't bite your tail.", icon: "snake", size: { w: 720, h: 640 }, desktop: true, nav: false, side: "right" },
   { id: "space-invaders", title: "Space Invaders", path: "/space-invaders", blurb: "Hold the line against the swarm.", icon: "space-invaders", size: { w: 880, h: 760 }, desktop: true, nav: false, side: "right" },
-  { id: "pong", title: "Pong", path: "/pong", blurb: "The original. First to eleven.", icon: "pong", size: { w: 940, h: 620 }, desktop: true, nav: false, side: "right" },
+  { id: "pong", title: "Pong", path: "/pong", blurb: "Two paddles, one ball, endless rally.", icon: "pong", size: { w: 940, h: 620 }, desktop: true, nav: false, side: "right" },
 ]
 
 export function appForPath(pathname: string): AppDef {
