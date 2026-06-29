@@ -4,6 +4,10 @@
       "command": "cua-driver",
       "args": ["mcp"],
       "transport": "stdio"
+    },
+    "posthog": {
+      "url": "https://mcp.posthog.com/mcp",
+      "transport": "http"
     }
   }
 }
