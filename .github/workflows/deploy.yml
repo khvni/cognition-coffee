@@ -25,6 +25,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Upload source maps to PostHog
+        continue-on-error: true
         uses: PostHog/upload-source-maps@v2
         with:
           directory: public
