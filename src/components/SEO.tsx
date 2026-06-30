@@ -28,7 +28,7 @@ export const SEO: React.FC<Props> = ({ title, description, pathname, children })
     title: title ? `${title} · ${meta.title}` : meta.title,
     description: description || meta.description,
     url: `${meta.siteUrl}${pathname || ""}`,
-    image: `${meta.siteUrl}/og.png`,
+    image: `${meta.siteUrl}/og.png?v=2`,
   }
 
   return (
@@ -40,6 +40,9 @@ export const SEO: React.FC<Props> = ({ title, description, pathname, children })
       <meta property="og:type" content="website" />
       <meta property="og:url" content={seo.url} />
       <meta property="og:image" content={seo.image} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Ali <> Cognition? — Cognition Coffee, a Devin community concept" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:creator" content={meta.author} />
       <meta name="twitter:image" content={seo.image} />

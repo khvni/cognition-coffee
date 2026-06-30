@@ -7,7 +7,7 @@ import type { GatsbyConfig } from "gatsby"
  */
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: "Cognition Coffee - Community for Devin Builders",
+    title: "Cognition Coffee, a Devin community concept",
     description:
       "Curriculum, meetups, and ambassadors for developers building with Devin.",
     siteUrl: "https://cognitioncoffee.co",
