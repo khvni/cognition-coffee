@@ -15,19 +15,16 @@ export const frontmatter = {
 const Content: FC = () => (
   <>
     <p>
-      The Cognition Coffee site is built as an homage to both Devin's early thesis around cloud agents with their own VMs, and to the internet cafes of the early 2000's around which the earliest developer communities first formed. I took heavy inspiration from Posthog.com's mock OS: a desktop with draggable windows, a UNIX-like terminal, and a normal arranged-pages site you can toggle at runtime.
+      Cognition Coffee is a concept for what Devin's community could be. I built it as a mock OS: a desktop of draggable windows that toggles into a normal arranged-pages site. It nods to PostHog.com's mock OS, to Devin's original pitch of cloud agents with their own VMs, and to the early-2000s internet cafes where the first developer communities formed.
     </p>
     <p>
-      The desktop has seven app icons: Home, Menu, Blog, Community, About, Terminal, and a hidden <code>scott.png</code>. Each opens a draggable, resizable window. A taskbar tracks open windows, a clock, and the OS/Site toggle. The Menu page is the site reskinned as a coffee-shop order, with a lightbox and a floating cart. Community is a single-column editorial with a polaroid carousel and a wall of real tweets. About is Ali's page. The Terminal is a fake UNIX shell you can <code>ls</code>, <code>cd</code>, and <code>cat</code> through, with a virtual filesystem that mirrors the site. An admin at <code>/admin</code> lets me edit posts, the menu, and work history live through Cloudflare Functions and the GitHub Contents API.
-    </p>
-    <p>
-      The stack is Gatsby 5, React 18, TypeScript. Every page and post is a plain <code>.tsx</code> component registered in <code>src/content/blog/index.ts</code> and <code>src/content/pages/index.ts</code>, routed through <code>gatsby-node.ts</code>. No MDX, no filesystem sourcing, no CMS. The admin writes JSON; the rendered site is a Gatsby build.
+      The stack is Gatsby 5, React 18, TypeScript. Every page and post is a plain <code>.tsx</code> component registered in <code>src/content/blog/index.ts</code> and <code>src/content/pages/index.ts</code>, routed through <code>gatsby-node.ts</code>. No MDX, no CMS, no filesystem sourcing. The admin writes JSON; the live site is a Gatsby build.
     </p>
 
     <ProseWaxFigure caption="The Cognition Coffee mark">
       <img
         src="/cognitioncoffee.png"
-        alt="Cognition Coffee logo: a rounded cup mark on a warm tan field"
+        alt="Cognition Coffee logo: the Devin otter holding a coffee mug"
         width={720}
         className="h-auto w-full rounded-lg"
       />
@@ -41,19 +38,19 @@ const Content: FC = () => (
 
     <h3>OS mode and site mode</h3>
     <p>
-      The default view is a mock OS. The Devin otter is the wallpaper under a subtle CRT overlay. Seven app icons sit on the desktop: Home, Menu, Blog, Community, About, Terminal, and a hidden <code>scott.png</code>. Double-click an icon to open a draggable, resizable, focusable window. A taskbar at the bottom shows open windows, a clock, and the OS/Site toggle.
+      The default view is the OS. The Devin otter is the wallpaper under a faint CRT overlay; seven icons (Home, Menu, Blog, Community, About, Terminal, and a hidden <code>scott.png</code>) open draggable, resizable windows. A taskbar tracks them, with a clock and the OS/Site toggle.
     </p>
     <p>
-      <a href="https://github.com/khvni/cognition-coffee/pull/21">PR #21</a> replatformed from Astro to Gatsby and added the window manager. <a href="https://github.com/khvni/cognition-coffee/pull/36">PR #36</a> replaced ad-hoc React state with a single XState v5 machine in <code>src/os/osMachine.ts</code>, so window lifecycle, z-order, minimize/maximize, and mode switching all live in one place. <a href="https://github.com/khvni/cognition-coffee/pull/23">PR #23</a> bypasses the OS on mobile. <a href="https://github.com/khvni/cognition-coffee/pull/24">PR #24</a> added the macOS-style traffic-light controls and the minimize animation.
+      <a href="https://github.com/khvni/cognition-coffee/pull/21">PR #21</a> replatformed from Astro to Gatsby and added the window manager. <a href="https://github.com/khvni/cognition-coffee/pull/36">PR #36</a> moved window lifecycle, z-order, and mode switching into one XState v5 machine in <code>src/os/osMachine.ts</code>. <a href="https://github.com/khvni/cognition-coffee/pull/23">PR #23</a> skips the OS on mobile; <a href="https://github.com/khvni/cognition-coffee/pull/24">PR #24</a> added the macOS traffic-light controls.
     </p>
     <p>
-      The first desktop was unusable. Icons would not open on click: a pointer-capture bug redirected synthetic clicks away from the inner button. <a href="https://github.com/khvni/cognition-coffee/pull/49">PR #49</a> fixed it, but I shipped a broken desktop for a stretch before I dug in.
+      The first desktop was unusable. A pointer-capture bug ate icon clicks, so I shipped a broken desktop for a stretch before <a href="https://github.com/khvni/cognition-coffee/pull/49">PR #49</a> fixed it.
     </p>
 
-    <ProseWaxFigure caption="The OS desktop with draggable windows">
+    <ProseWaxFigure caption="The OS desktop: draggable windows, dock icons, and a UNIX-like terminal">
       <img
-        src="/screenshots/desktop.png"
-        alt="Screenshot of the OS desktop showing the otter wallpaper and several open windows"
+        src="/screenshots/desktop.jpg"
+        alt="Screenshot of the OS desktop with the otter wallpaper, app icons, and a Terminal window open over the Welcome window"
         width={720}
         className="h-auto w-full rounded-lg"
       />
@@ -61,13 +58,13 @@ const Content: FC = () => (
 
     <h3>Home page</h3>
     <p>
-      <code>src/pages/index.tsx</code> renders a hero image, a short explanation, social links, and a list of the site sections. The list comes from the same <code>APPS</code> registry in <code>src/lib/apps.ts</code> that drives the OS icons, so the home page and the desktop never drift. <a href="https://github.com/khvni/cognition-coffee/pull/47">PR #47</a> applied the Beautiful UI polish. <a href="https://github.com/khvni/cognition-coffee/pull/62">PR #62</a> made the mobile logo larger and added the brand name to the nav.
+      <code>src/pages/index.tsx</code> is a hero, a short intro, and the list of sections, pulled from the same <code>APPS</code> registry (<code>src/lib/apps.ts</code>) that drives the desktop icons, so the home page and the OS never drift. <a href="https://github.com/khvni/cognition-coffee/pull/47">PR #47</a> polished it; <a href="https://github.com/khvni/cognition-coffee/pull/62">PR #62</a> fixed the mobile logo.
     </p>
 
     <ProseWaxFigure caption="The home page in site mode">
       <img
-        src="/screenshots/homepage.png"
-        alt="Screenshot of the Cognition Coffee home page"
+        src="/screenshots/homepage.jpg"
+        alt="Screenshot of the Cognition Coffee home page in site mode"
         width={720}
         className="h-auto w-full rounded-lg"
       />
@@ -75,18 +72,15 @@ const Content: FC = () => (
 
     <h3>The Menu</h3>
     <p>
-      <code>src/content/pages/menu.tsx</code> is the site as a coffee-shop menu. A sticky category nav highlights the current section. Each item is a photo-dominant card. Click a card to open a lightbox with a full description, a numbered "What's Included" breakdown, radio-group customization options, and a special-instructions textarea. A quick-add button drops items into a floating cart scoped to the OS window (<code>src/components/menu/Cart.tsx</code>).
+      The Menu is the site dressed as a coffee-shop order (<code>src/content/pages/menu.tsx</code>): a sticky category nav, photo-dominant cards, and a lightbox with a "What's Included" breakdown, customization options, and a special-instructions field. A quick-add button drops items into a cart scoped to the OS window. Data lives in <code>src/data/menu.ts</code> and is served from <code>/api/menu</code> so the admin can edit it live. <a href="https://github.com/khvni/cognition-coffee/pull/43">PR #43</a> built the catalog; <a href="https://github.com/khvni/cognition-coffee/pull/58">PR #58</a> gave it the DoorDash-style overhaul.
     </p>
     <p>
-      Menu data lives in <code>src/data/menu.ts</code> and <code>src/data/menu-sections/*.ts</code>. The runtime menu is fetched from <code>/api/menu</code> so the admin can edit it live. <a href="https://github.com/khvni/cognition-coffee/pull/43">PR #43</a> was the first catalog rewrite, <a href="https://github.com/khvni/cognition-coffee/pull/58">PR #58</a> the DoorDash-style overhaul. Quick-add, special instructions, and the admin menu editor followed in <code>0c7f9c9</code>.
-    </p>
-    <p>
-      The cart leaked out of the OS window once. The floating button and toast were positioned against the browser viewport, so they sat on top of the taskbar and outside the window. <code>968180b</code> scoped them to the window.
+      The cart leaked out of the window once. The floating button and toast were positioned against the browser viewport, so they sat over the taskbar until <code>968180b</code> scoped them to the window.
     </p>
 
     <ProseWaxFigure caption="The Menu page in catalog mode">
       <img
-        src="/screenshots/menu.png"
+        src="/screenshots/menu.jpg"
         alt="Screenshot of the Menu page showing category pills and photo cards"
         width={720}
         className="h-auto w-full rounded-lg"
@@ -95,13 +89,13 @@ const Content: FC = () => (
 
     <h3>Community</h3>
     <p>
-      <code>src/content/pages/community.tsx</code> is a single-column editorial: a polaroid photo carousel of real community builders, animated counters for cities, events, and attendees, a wall of real tweets, the ambassador program, consolidated get-involved links, and a FAQ accordion. Data and photos live in <code>src/data/community.ts</code>, <code>src/components/community/PhotoCarousel.tsx</code>, <code>src/components/community/TweetWall.tsx</code>, and <code>src/components/community/FAQ.tsx</code>. <a href="https://github.com/khvni/cognition-coffee/pull/46">PR #46</a> overhauled the UI. <a href="https://github.com/khvni/cognition-coffee/pull/65">PR #65</a> fixed the map viewBox and replaced AI-generated images with Unsplash photos.
+      <code>src/content/pages/community.tsx</code> is a single-column editorial: a polaroid carousel of real community builders, animated counters for cities, events, and attendees, a wall of real tweets, the ambassador program, and an FAQ accordion. <a href="https://github.com/khvni/cognition-coffee/pull/46">PR #46</a> overhauled the UI; <a href="https://github.com/khvni/cognition-coffee/pull/65">PR #65</a> fixed the map and swapped AI-generated images for Unsplash photos.
     </p>
 
     <ProseWaxFigure caption="The Community page with the photo carousel">
       <img
-        src="/screenshots/community.png"
-        alt="Screenshot of the Community page showing the polaroid photo carousel"
+        src="/screenshots/community.jpg"
+        alt="Screenshot of the Community page showing the photo carousel and event counters"
         width={720}
         className="h-auto w-full rounded-lg"
       />
@@ -109,21 +103,35 @@ const Content: FC = () => (
 
     <h3>About</h3>
     <p>
-      <code>src/content/pages/about.tsx</code> is Ali's page: avatar, bio, social links, work history from <code>src/data/experience.ts</code>, and a projects list. Work entries render as panel cards with mono dates and concentric radii. The shape came from <a href="https://github.com/khvni/cognition-coffee/pull/10">PR #10</a>, the UI overhaul from <a href="https://github.com/khvni/cognition-coffee/pull/44">PR #44</a>. The page had a rough patch: <code>270bc62</code> removed it and the <code>/about</code> route entirely, then <code>ce6f1ef</code> brought it back with an Experience editor and logo upload in the admin.
+      <code>src/content/pages/about.tsx</code> is Ali's page: bio, social links, and work history from <code>src/data/experience.ts</code> as panel cards with mono dates. <a href="https://github.com/khvni/cognition-coffee/pull/10">PR #10</a> set the shape, <a href="https://github.com/khvni/cognition-coffee/pull/44">PR #44</a> the UI. It had a rough patch: <code>270bc62</code> deleted the page and the <code>/about</code> route, then <code>ce6f1ef</code> restored it with an Experience editor in the admin.
     </p>
     <p>
-      It rendered unstyled once. It used Tailwind classes that did not exist in the stylesheet. Build was green, page was not. Agents do not always verify a class name resolves.
+      It rendered unstyled once, using Tailwind classes that weren't in the stylesheet. Build green, page broken. Agents don't always check that a class name resolves.
     </p>
 
     <h3>Terminal</h3>
     <p>
-      <code>src/components/Terminal.tsx</code> is a fake UNIX shell rendered as an OS window. It has a virtual filesystem with the site pages, blog posts, and menu items as files, plus a <code>.devin</code> directory that mirrors the actual skills. Commands include <code>ls</code>, <code>cd</code>, <code>pwd</code>, <code>cat</code>, <code>open</code>, <code>help</code>, <code>clear</code>, arrow-key history, and tab completion. <code>open menu.tsx</code> literally opens the Menu page in a new OS window. <a href="https://github.com/khvni/cognition-coffee/pull/40">PR #40</a> built it. <a href="https://github.com/khvni/cognition-coffee/pull/57">PR #57</a> added first-visit autoboot and fixed the focus ring.
+      <code>src/components/Terminal.tsx</code> is a fake UNIX shell with a virtual filesystem that mirrors the site: <code>ls</code>, <code>cd</code>, <code>cat</code>, <code>open</code>, tab completion, and arrow-key history. <code>open menu.tsx</code> opens the Menu in a new OS window. <a href="https://github.com/khvni/cognition-coffee/pull/40">PR #40</a> built it; <a href="https://github.com/khvni/cognition-coffee/pull/57">PR #57</a> added first-visit autoboot.
     </p>
 
-    <ProseWaxFigure caption="The Terminal window on first visit">
+    <ProseWaxFigure caption="The Terminal on first visit">
       <img
-        src="/screenshots/terminal.png"
-        alt="Screenshot of the Terminal window showing the ASCII banner and prompt"
+        src="/screenshots/terminal.jpg"
+        alt="Screenshot of the Terminal window showing the ASCII banner and an ls listing"
+        width={720}
+        className="h-auto w-full rounded-lg"
+      />
+    </ProseWaxFigure>
+
+    <h3>Games</h3>
+    <p>
+      Three open-source games run as their own OS apps: Snake, Space Invaders, and Pong. Each is vendored as-is under <code>static/vendor/games/</code> and loaded in a same-origin iframe by <code>src/components/GamePage.tsx</code>, under a footer crediting the upstream repo. Because the frame shares the origin, it grabs keyboard focus on load and on click, so arrow and space keys reach the game instead of the window behind it. <a href="https://github.com/khvni/cognition-coffee/pull/68">PRs #68</a>–<a href="https://github.com/khvni/cognition-coffee/pull/70">#70</a> vendored the games; <a href="https://github.com/khvni/cognition-coffee/pull/71">#71</a> wired them in as apps; <a href="https://github.com/khvni/cognition-coffee/pull/72">#72</a> listed them in the terminal filesystem; and <a href="https://github.com/khvni/cognition-coffee/pull/73">#73</a> made them open windowed.
+    </p>
+
+    <ProseWaxFigure caption="Space Invaders running as an OS app">
+      <img
+        src="/screenshots/games.png"
+        alt="Screenshot of the vendored Space Invaders game in play, with a grid of invaders and the player ship"
         width={720}
         className="h-auto w-full rounded-lg"
       />
@@ -131,71 +139,59 @@ const Content: FC = () => (
 
     <h3>Blog and admin</h3>
     <p>
-      Blog posts are <code>.tsx</code> components in <code>src/content/blog/</code>. The index is <code>src/pages/blog.tsx</code>, the template <code>src/templates/blog-post.tsx</code>, which falls back to the static component if a post has not been edited through the admin.
-    </p>
-    <p>
-      The admin is a password-protected page at <code>/admin</code> with a TipTap editor (<code>src/components/editor/Editor.tsx</code>) and Cloudflare Functions in <code>functions/api/</code> that read and write JSON through the GitHub Contents API. It started with posts, about, and menu (<a href="https://github.com/khvni/cognition-coffee/pull/34">PR #34</a>). <a href="https://github.com/khvni/cognition-coffee/pull/39">PR #39</a> seeded the existing posts for live editing. <code>4a2a3c6</code> added two endpoints: <code>/api/experience</code> reads and writes <code>content/experience.json</code> so the admin can add, reorder, and edit work entries, and <code>/api/upload-logo</code> accepts a logo (png/jpeg/svg/webp, 2 MB max) and writes it to <code>static/logos/</code> via the Contents API, returning the URL the About page uses. Each save commits to the repo and triggers a Cloudflare Pages rebuild. <a href="https://github.com/khvni/cognition-coffee/pull/67">PR #67</a> kept the admin background always white via a <code>data-cc-admin</code> flag. <code>fb3dd6b</code> added image paste, drop, and upload in the editor.
+      Blog posts are <code>.tsx</code> components in <code>src/content/blog/</code>. <code>src/templates/blog-post.tsx</code> renders the admin-edited JSON, falling back to the static component when a post hasn't been touched. The admin at <code>/admin</code> is a password-gated TipTap editor backed by Cloudflare Functions that read and write JSON through the GitHub Contents API: posts, menu, work history, and logo upload. Each save commits to the repo and triggers a Cloudflare rebuild. <a href="https://github.com/khvni/cognition-coffee/pull/34">PR #34</a> built it; <a href="https://github.com/khvni/cognition-coffee/pull/67">PR #67</a> forced the admin background white.
     </p>
 
     <h3>Design system, tests, 404</h3>
     <p>
-      The look is restrained: warm canvas, near-black ink, Devin blue as the single accent. Tokens live in <code>tailwind.config.js</code> and <code>src/styles/global.css</code>. UI primitives live in <code>src/components/ui/</code> and <code>src/lib/tokens.ts</code>. <a href="https://github.com/khvni/cognition-coffee/pull/25">PR #25</a> set the palette and Geist typography. <a href="https://github.com/khvni/cognition-coffee/pull/33">PR #33</a> added the component library. <a href="https://github.com/khvni/cognition-coffee/pull/41">PR #41</a> and <a href="https://github.com/khvni/cognition-coffee/pull/42">PR #42</a> applied the <code>/make-interfaces-feel-better</code> polish.
-    </p>
-    <p>
-      The OS shell has 30 Vitest and React Testing Library tests in <code>src/components/__tests__/</code>. <a href="https://github.com/khvni/cognition-coffee/pull/50">PR #50</a> added the infrastructure. A <code>404.tsx</code> page (<code>beb23aa</code>) redirects unknown paths home.
+      The palette is warm canvas, near-black ink, and Devin blue as the only accent, with Geist for type. Tokens live in <code>tailwind.config.js</code> and <code>src/styles/global.css</code>. <a href="https://github.com/khvni/cognition-coffee/pull/25">PR #25</a> set the palette; <a href="https://github.com/khvni/cognition-coffee/pull/33">PR #33</a>, <a href="https://github.com/khvni/cognition-coffee/pull/41">#41</a>, and <a href="https://github.com/khvni/cognition-coffee/pull/42">#42</a> built and polished the component library. The OS shell has 30 Vitest tests (<a href="https://github.com/khvni/cognition-coffee/pull/50">PR #50</a>); <code>404.tsx</code> redirects unknown paths home.
     </p>
 
     <h2>How I used Devin</h2>
     <p>
-      I ran Devin Desktop on my laptop to orchestrate local and cloud agents. Pick the model for the job.
+      I ran Devin Desktop to orchestrate local and cloud agents, and picked the model for each job.
     </p>
     <ul>
       <li>
-        <strong>SWE-1.6</strong>, Devin's small model, handled tiny edits and one-line fixes.
+        <strong>SWE-1.6</strong>, Devin's small model, took the one-line fixes.
       </li>
       <li>
-        <strong>GLM-5.2</strong> did most of the frontend. Free in Devin at the time, surprisingly good at JSX, Tailwind, and layout. I stopped reaching for bigger models on UI once I saw it handle the shell components.
+        <strong>GLM-5.2</strong> did most of the frontend. Free in Devin at the time and unexpectedly good at JSX, Tailwind, and layout. I stopped reaching for bigger models on UI once I saw it handle the shell.
       </li>
       <li>
-        <strong>Kimi K2.6</strong> got the vision-heavy work, anything that started from a screenshot. "Make this look like the reference image" is a different task than "write this function," and Kimi read screenshots well.
+        <strong>Kimi K2.6</strong> got the vision work, anything that started from a screenshot. "Make this match the reference" is a different task than "write this function."
       </li>
       <li>
-        <strong>Opus 4.8, 1M context</strong> came out for the heaviest workloads that needed the whole codebase at once. Rare, but nothing else fit.
+        <strong>Opus 4.8, 1M context</strong> came out for the rare job that needed the whole codebase at once.
       </li>
     </ul>
     <p>
-      For bigger changes I used Devin Cloud with Devin Ultra and let one coordinator fan out to subagents: it broke the problem into independent chunks, spun up a child Devin per chunk in parallel, then combined the results. The UI overhaul wave is the cleanest example: PRs #41 through #47 each touched a different surface, built in parallel against the same design token file.
+      For big changes I let one Devin Ultra coordinator fan out to subagents working in parallel. The UI wave is the cleanest example: <a href="https://github.com/khvni/cognition-coffee/pull/41">PRs #41</a>–<a href="https://github.com/khvni/cognition-coffee/pull/47">#47</a> each took a different surface against the same token file. The cost is merge conflicts on shared files; next time I'd merge the design-system PR first.
     </p>
     <p>
-      Fan-out has a cost. PRs #40 through #46 landed in a wave, and several had to be combined and re-merged after conflicts on shared files. The fan-out was right in theory; the merge queue became its own bottleneck. Next time I would batch related UI work into fewer branches or merge the design-system PR first.
-    </p>
-    <p>
-      A few habits mattered more than the model choice:
+      A few habits mattered more than the model choice.
     </p>
     <ul>
       <li>
-        <strong>Delegate from anywhere.</strong> I used the Devin integration with <a href="https://poke.com">Poke</a> to kick off work on the go, or <a href="https://wisprflow.com">Wispr Flow</a> to dictate. On BART, walking to Elaichi SF, getting ready for bed. Most of my direction happened away from a desk.
+        <strong>Delegate from anywhere.</strong> I kicked off work from BART and from bed using the Devin integration with <a href="https://poke.com">Poke</a> and dictation with <a href="https://wisprflow.com">Wispr Flow</a>. Most of my direction happened away from a desk.
       </li>
       <li>
-        <strong>Brief up front, then let it cook.</strong> Before letting an agent work, I told it to ask anything that would fill in ambiguities up front. Give it everything it needs so it can work without stopping every few minutes. A two-minute brief saves an hour of round-trips.
+        <strong>Brief up front, then let it cook.</strong> I told each agent to ask its questions before starting, so it could run without stopping every few minutes. A two-minute brief saves an hour of round-trips.
       </li>
       <li>
-        <strong>Give Devin the right skills.</strong> A short list of references kept the output from looking generic: Brian Lovin's site (<a href="https://brianlovin.com">brianlovin.com</a>) for the blog reading layout, Matt Palmer's <a href="https://mattpalmer.io/beautiful-ui/">Beautiful UI Libraries</a>, the <a href="http://impeccable.style/">Impeccable</a> skillset, the <a href="https://github.com/dabit3/deslop">deslop</a> slop gate run before every PR, the <code>poteto-mode</code> skill from <a href="https://github.com/cursor/plugins/tree/main/pstack">pstack</a>, and shadcn UI primitives for the dialog and keyboard-shortcut helpers.
+        <strong>Hand it the right references.</strong> Brian Lovin's <a href="https://brianlovin.com">site</a> for the reading layout, Matt Palmer's <a href="https://mattpalmer.io/beautiful-ui/">Beautiful UI Libraries</a>, the <a href="http://impeccable.style/">Impeccable</a> skillset, and shadcn primitives kept the output from looking generic.
       </li>
       <li>
-        <strong>Let Devin write its own subagent prompts.</strong> My hand-written prompts were too vague; the child Devins wandered. Once I let Devin Ultra write its own child prompts, scope and file boundaries got sharp.
+        <strong>Let Devin write its own subagent prompts.</strong> Mine were too vague and the child Devins wandered; its own prompts drew sharp file boundaries.
       </li>
       <li>
-        <strong>Run a slop gate before every PR.</strong> <code>deslop -b main</code> and <code>deslop score</code> caught AI tells: obvious comments, triple null-checks, debug logs, empty catch blocks. The gate kept the code from feeling vibe-coded.
-      </li>
-      <li>
-        <strong>Make the build the final review.</strong> Every PR had to pass <code>npm run build</code> and <code>npx vitest run</code>. A broken build meant no merge. That caught class-name typos, missing imports, and type errors before they reached the live site.
+        <strong>Gate every PR.</strong> <a href="https://github.com/dabit3/deslop">deslop</a> caught AI tells — obvious comments, triple null-checks, debug logs — and a green <code>npm run build</code> plus <code>vitest</code> caught class-name typos and missing imports before they reached the live site.
       </li>
     </ul>
 
     <h2>Deployment</h2>
     <p>
-      Every push to <code>main</code> runs a GitHub Actions workflow that builds the site with Gatsby and deploys to Cloudflare Pages. <a href="https://github.com/khvni/cognition-coffee/pull/17">PR #17</a> added the conditional deploy step. <a href="https://github.com/khvni/cognition-coffee/pull/38">PR #38</a> added <code>wrangler</code> to devDependencies to resolve a peer-dependency conflict. The live site is at <a href="https://cognitioncoffee.co">cognitioncoffee.co</a>.
+      Every push to <code>main</code> builds with Gatsby and deploys to Cloudflare Pages (<a href="https://github.com/khvni/cognition-coffee/pull/17">PR #17</a>). The live site is <a href="https://cognitioncoffee.co">cognitioncoffee.co</a>.
     </p>
 
     <h2>Feature map</h2>
@@ -258,6 +254,11 @@ const Content: FC = () => (
             <td>Terminal</td>
             <td><code>src/components/Terminal.tsx</code>, <code>src/pages/terminal.tsx</code></td>
             <td><a href="https://github.com/khvni/cognition-coffee/pull/40">#40</a>, <a href="https://github.com/khvni/cognition-coffee/pull/57">#57</a></td>
+          </tr>
+          <tr>
+            <td>Games (Snake, Space Invaders, Pong)</td>
+            <td><code>src/components/GamePage.tsx</code>, <code>src/pages/&#123;snake,space-invaders,pong&#125;.tsx</code>, <code>static/vendor/games/*</code></td>
+            <td><a href="https://github.com/khvni/cognition-coffee/pull/68">#68</a>–<a href="https://github.com/khvni/cognition-coffee/pull/71">#71</a>, <a href="https://github.com/khvni/cognition-coffee/pull/73">#73</a></td>
           </tr>
           <tr>
             <td>Blog index and post template</td>
