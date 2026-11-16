@@ -33,8 +33,6 @@ The desktop is a real app registry (`src/lib/apps.ts`). Open any of these as a w
 - **About** — who I am and what I do.
 - **Terminal** — a UNIX-like terminal you can poke around in.
 - **Snake**, **Space Invaders**, **Pong** — playable, vendored in `static/vendor/games/`.
-- **Dangerous Dave** — the classic DOS platformer, newly added (OSS from
-  [AkhilRaja/Dave](https://github.com/AkhilRaja/Dave)).
 - **scott.png** — an Easter egg. It's just Scott.
 
 Prefer to read? Hit the mode toggle and the whole thing flattens into a normal site.
@@ -69,8 +67,12 @@ env -u ELECTRON_RUN_AS_NODE npm run build    # static output to ./public
 env -u ELECTRON_RUN_AS_NODE npm run serve    # preview the production build
 env -u ELECTRON_RUN_AS_NODE npm run test     # vitest
 env -u ELECTRON_RUN_AS_NODE npm run clean    # wipe cache + public
-npm run deploy                                # build + publish to Cloudflare Pages
 ```
+
+Pushing to `main` deploys to Cloudflare Pages via GitHub Actions; there is no deploy script.
+For a manual deploy, the `/admin` secrets, and running `/api/*` locally, see
+[`docs/DEPLOY.md`](docs/DEPLOY.md). Environment variables are listed in
+[`.env.example`](.env.example).
 
 > The `env -u ELECTRON_RUN_AS_NODE` prefix unsets a variable that, when inherited from
 > an Electron-based host, breaks the Node child processes Gatsby and Vitest spawn. Always
@@ -83,14 +85,18 @@ src/
   components/   OS shell primitives (Wrapper, Desktop, AppWindow, TaskBar, ModeToggle, AppIcon, Otter)
                 GamePage.tsx (shell for the vendored games)
   context/      App.tsx (OS/site mode state)
-  pages/        index.tsx · blog.tsx (React pages)
+  os/           osMachine.ts (XState machine: windows, focus, z-order, OS/site mode)
+  pages/        index.tsx · blog.tsx · admin.tsx · terminal, scott, and game pages
   templates/    blog-post.tsx · content-page.tsx (look up content by slug from registries)
   content/blog/ Field notes (.tsx) + index.ts registry
   content/pages/ Site pages (.tsx) + index.ts registry
-  data/         initiatives.ts · experience.ts · menu.ts · community.ts · tweets.ts (verified content)
-  lib/          site.ts (nav/meta) · apps.ts (app registry) · events.ts · os-session.ts
+  data/         experience.ts · menu.ts + menu-sections/ · community.ts · tweets.ts (verified content)
+  lib/          apps.ts (app registry + nav) · posthog.ts · tokens.ts · motion.ts · layout.ts
   styles/       global.css (design-token source of truth)
-functions/      Cloudflare Pages Functions (api/: posts, experience, menu, auth, upload)
+content/        JSON the admin edits (posts, menu, about, experience, projects)
+functions/      Cloudflare Pages Functions (api/: auth, posts, menu, about, experience,
+                projects, upload, upload-logo; lib/posthog.ts)
+scripts/        Favicon, menu-image, and posts.json sync helpers
 static/
   vendor/games/ Vendored game builds (pong, snake, space-invaders)
 gatsby-node.ts  Creates routes from content registries; mirrors @/ webpack alias
@@ -99,7 +105,8 @@ docs/
   BRAND.md          Brand concept, voice, motifs
   DESIGN_SYSTEM.md  Colors, type, components, do/don't
   ARCHITECTURE.md   Routes, data model, page specs
-  DEPLOY.md         Cloudflare Pages setup
+  COMPONENTS.md     Shell primitives and UI components
+  DEPLOY.md         Cloudflare Pages setup, secrets, admin publishing
 ```
 
 Conventions for contributors (and agents) live in [`AGENTS.md`](AGENTS.md).
