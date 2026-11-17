@@ -1,3 +1,5 @@
+import { verifyAdminSession } from "../lib/session"
+
 interface Env {
   GITHUB_TOKEN: string
   GITHUB_REPO: string
@@ -32,15 +34,11 @@ const DEFAULT_CONTENT: AboutContent = {
   ],
 }
 
-function isAuthed(request: Request, env: Env): boolean {
+async function isAuthed(request: Request, env: Env): Promise<boolean> {
   const cookie = request.headers.get("Cookie") || ""
   const match = cookie.match(/admin_session=([^;]+)/)
   if (!match) return false
-  try {
-    return atob(match[1]) === env.ADMIN_PASSWORD
-  } catch {
-    return false
-  }
+  return verifyAdminSession(match[1], env.ADMIN_PASSWORD)
 }
 
 async function getAboutFile(env: Env): Promise<{ content: AboutContent; sha: string }> {
@@ -91,7 +89,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 }
 
 export const onRequestPut: PagesFunction<Env> = async (context) => {
-  if (!isAuthed(context.request, context.env)) {
+  if (!(await isAuthed(context.request, context.env))) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 

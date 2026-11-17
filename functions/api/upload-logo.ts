@@ -1,3 +1,5 @@
+import { verifyAdminSession } from "../lib/session"
+
 interface Env {
   GITHUB_TOKEN: string
   GITHUB_REPO: string
@@ -8,15 +10,11 @@ const DIR = "static/logos"
 const MAX_BYTES = 2_000_000
 const ALLOWED = new Set(["image/png", "image/jpeg", "image/svg+xml", "image/webp"])
 
-function isAuthed(request: Request, env: Env): boolean {
+async function isAuthed(request: Request, env: Env): Promise<boolean> {
   const cookie = request.headers.get("Cookie") || ""
   const match = cookie.match(/admin_session=([^;]+)/)
   if (!match) return false
-  try {
-    return atob(match[1]) === env.ADMIN_PASSWORD
-  } catch {
-    return false
-  }
+  return verifyAdminSession(match[1], env.ADMIN_PASSWORD)
 }
 
 function extFromType(type: string): string {
@@ -34,7 +32,7 @@ function slugify(name: string): string {
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  if (!isAuthed(context.request, context.env)) {
+  if (!(await isAuthed(context.request, context.env))) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
   }
 
