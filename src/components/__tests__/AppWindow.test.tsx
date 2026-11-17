@@ -59,6 +59,7 @@ vi.mock("../AppIcon", () => ({
 const baseItem = {
   key: "test-key",
   title: "Test App",
+  path: "/menu",
   app: { id: "menu" as const, title: "Programs", path: "/menu", icon: "menu" as const, size: { w: 680, h: 560 }, blurb: "", desktop: true },
   element: <div>App Content</div>,
   x: 100,

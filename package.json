@@ -15,7 +15,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "slop": "deslop -b main",
-    "slop:score": "deslop score"
+    "slop:score": "deslop score",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",
@@ -52,6 +53,8 @@
     "autoprefixer": "^10.4.20",
     "deslop": "github:dabit3/deslop",
     "jsdom": "^28.1.0",
+    "lefthook": "^2.2.2",
+    "oxlint": "^1.94.0",
     "png-to-ico": "^3.0.1",
     "postcss": "^8.4.47",
     "sharp": "^0.35.2",

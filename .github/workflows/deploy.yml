@@ -3,6 +3,11 @@ name: Deploy
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - '.devin/**'
+      - '.agents/**'
   workflow_dispatch:
 
 concurrency:
@@ -21,7 +26,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm install
+      - run: npm ci
       - name: Build
         env:
           GATSBY_POSTHOG_KEY: phc_p7D6e5BTGZL456Qt5jMMwL5d7ZQiS6MhnaXeFZGc6eZa

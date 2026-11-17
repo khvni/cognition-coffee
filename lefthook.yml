@@ -1,0 +1,17 @@
+# Catch issues locally so CI can stay minimal.
+pre-commit:
+  piped: true
+  jobs:
+    - name: oxlint
+      glob: "*.{js,jsx,mjs,cjs,ts,tsx}"
+      run: npx oxlint --deny-warnings {staged_files}
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: lint
+      run: npx oxlint --deny-warnings .
+    - name: typecheck
+      run: npx tsc --noEmit
+    - name: test
+      run: npm test

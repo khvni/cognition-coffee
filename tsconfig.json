@@ -18,6 +18,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["./src/**/*", "./gatsby-*.ts", "./gatsby-*.tsx", "./plugins/**/*"],
+  "include": ["./src/**/*", "./gatsby-*.ts", "./gatsby-*.tsx", "./plugins/**/*", "./vitest.setup.ts"],
   "exclude": ["node_modules", "public", ".cache"]
 }

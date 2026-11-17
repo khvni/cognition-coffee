@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useRef, useState } from "r
 import { navigate } from "gatsby"
 import { useMachine } from "@xstate/react"
 import { osMachine, type Experience, type WindowItem } from "@/os/osMachine"
-import { appForPath, APPS } from "@/lib/apps"
+import { appForPath } from "@/lib/apps"
 import { isMobile } from "@/lib/mobile"
 import { useKeyboardShortcuts } from "@/lib/useKeyboardShortcuts"
 import { ShortcutsHelp } from "@/components/ShortcutsHelp"
