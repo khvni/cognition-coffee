@@ -1,4 +1,5 @@
 import { createPostHogClient } from "../lib/posthog"
+import { createAdminSession } from "../lib/session"
 
 interface Env {
   ADMIN_PASSWORD: string
@@ -21,11 +22,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     await posthog.shutdown()
   }
 
+  const session = await createAdminSession(context.env.ADMIN_PASSWORD)
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
     headers: {
       "Content-Type": "application/json",
-      "Set-Cookie": `admin_session=${btoa(password)}; Path=/; HttpOnly; SameSite=Strict; Secure; Max-Age=86400`,
+      "Set-Cookie": `admin_session=${session}; Path=/; HttpOnly; SameSite=Strict; Secure; Max-Age=86400`,
     },
   })
 }
