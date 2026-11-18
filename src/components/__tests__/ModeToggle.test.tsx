@@ -14,7 +14,7 @@ vi.mock("@/context/App", () => ({
 
 vi.mock("framer-motion", () => ({
   motion: {
-    span: ({ children, ...props }: any) => <span>{children}</span>,
+    span: ({ children }: any) => <span>{children}</span>,
   },
   AnimatePresence: ({ children }: any) => <>{children}</>,
   useReducedMotion: () => false,

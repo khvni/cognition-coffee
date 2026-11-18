@@ -1,4 +1,5 @@
-import React, { type HeadFC } from "react"
+import React from "react"
+import type { HeadFC } from "gatsby"
 import { SEO } from "@/components/SEO"
 
 const NotFoundPage: React.FC = () => {

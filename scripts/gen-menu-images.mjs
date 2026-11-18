@@ -1,5 +1,4 @@
 import sharp from "sharp"
-import { writeFileSync } from "fs"
 
 const W = 600, H = 400
 

@@ -5,7 +5,7 @@ import { PhotoCarousel, type Photo } from "../PhotoCarousel"
 vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => {
-      const { initial, animate, transition, variants, ...rest } = props
+      const { initial: _i, animate: _a, transition: _t, variants: _v, ...rest } = props
       return <div {...rest}>{children}</div>
     },
   },

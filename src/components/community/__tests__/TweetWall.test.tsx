@@ -6,11 +6,11 @@ import { TweetWall } from "../TweetWall"
 vi.mock("framer-motion", () => ({
   motion: {
     div: React.forwardRef(({ children, ...props }: any, ref: any) => {
-      const { initial, animate, transition, variants, ...rest } = props
+      const { initial: _i, animate: _a, transition: _t, variants: _v, ...rest } = props
       return <div ref={ref} {...rest}>{children}</div>
     }),
     a: React.forwardRef(({ children, ...props }: any, ref: any) => {
-      const { initial, animate, transition, variants, ...rest } = props
+      const { initial: _i, animate: _a, transition: _t, variants: _v, ...rest } = props
       return <a ref={ref} {...rest}>{children}</a>
     }),
   },
