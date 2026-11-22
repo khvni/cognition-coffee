@@ -94,6 +94,10 @@ in any cloud session - invoke `/poteto-mode`, `/caveman`, and `/impeccable` dire
 - **Test:** `env -u ELECTRON_RUN_AS_NODE npx vitest run`
 - **Dev:** `env -u ELECTRON_RUN_AS_NODE npm run dev`
 - **Clean:** `env -u ELECTRON_RUN_AS_NODE npm run clean`
+- **Hooks:** `lefthook` is installed by `npm install` (`prepare`). Pre-commit runs
+  `oxlint --deny-warnings` on staged files; pre-push runs lint, `tsc --noEmit`, and
+  `npm test`. CI/deploy workflows skip docs/meta-only changes (`paths-ignore`), so a
+  docs-only PR gets no CI run and a docs-only push to `main` does not redeploy.
 
 > The `env -u ELECTRON_RUN_AS_NODE` prefix unsets a variable that, when inherited from
 > an Electron-based host, breaks Node child processes used by Gatsby/Vitest. Always

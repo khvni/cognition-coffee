@@ -99,8 +99,10 @@ registry merges `content/posts.json` at build time.
 
 ## Admin and API (`functions/api/`)
 
-`/admin` logs in via `POST /api/auth` (checks `ADMIN_PASSWORD`, sets an `admin_session`
-cookie). Endpoints for `posts`, `menu`, `about`, `experience`, `projects`, `upload`, and
+`/admin` logs in via `POST /api/auth` (checks `ADMIN_PASSWORD`, sets a signed
+`admin_session` cookie: `nonce.expiry.hmac`, HMAC-SHA256 keyed by `ADMIN_PASSWORD`,
+24h TTL — `functions/lib/session.ts`). Endpoints for `posts`, `menu`, `about`,
+`experience`, `projects`, `upload`, and
 `upload-logo` read and write files in the repo through the GitHub Contents API
 (`GITHUB_TOKEN`, `GITHUB_REPO`), committing to `main`, which redeploys the site. Server
 events go to PostHog when `POSTHOG_KEY`/`POSTHOG_HOST` are set. Setup:
@@ -109,5 +111,6 @@ events go to PostHog when `POSTHOG_KEY`/`POSTHOG_HOST` are set. Setup:
 ## Build & deploy
 - Static output. `npm run build` (`gatsby build`) → `./public`.
 - Deploy to Cloudflare Pages via GitHub Actions (`.github/workflows/deploy.yml`) on push
-  to `main`: `wrangler pages deploy public --project-name=cognition-coffee --branch=main`.
+  to `main` — docs/meta-only pushes are skipped via `paths-ignore`:
+  `wrangler pages deploy public --project-name=cognition-coffee --branch=main`.
 - `siteUrl` is set in `gatsby-config.ts` (`siteMetadata.siteUrl`) for correct canonical URLs.
