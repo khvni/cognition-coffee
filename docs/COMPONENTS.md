@@ -163,7 +163,7 @@ Cloudflare Functions providing auth and blog CMS CRUD:
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
-| `/api/auth` | POST | Password auth → session cookie |
+| `/api/auth` | POST | Password auth → signed session cookie |
 | `/api/posts` | GET | List all posts |
 | `/api/posts` | POST | Create post (authed) |
 | `/api/posts/[slug]` | PUT | Update post (authed) |

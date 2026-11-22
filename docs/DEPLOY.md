@@ -2,8 +2,9 @@
 
 Static Gatsby site plus Pages Functions (`functions/api/*`, the admin backend) hosted on
 **Cloudflare Pages**. Deploys are automated via GitHub Actions
-(`.github/workflows/deploy.yml`) on every push to `main`. There is no `npm run deploy`
-script; see [Manual deploy](#manual-deploy).
+(`.github/workflows/deploy.yml`) on pushes to `main`, skipping docs- and meta-only
+changes (`docs/**`, `*.md`, `.devin/**`, `.agents/**`) via `paths-ignore`. There is no
+`npm run deploy` script; see [Manual deploy](#manual-deploy).
 
 ## One-time setup
 
@@ -64,7 +65,13 @@ triggers `deploy.yml`, so changes go live after the next build (a few minutes).
 
 - **Push to `main`** → `deploy.yml` builds (`npm run build`, i.e. `gatsby build`) and runs
   `wrangler pages deploy public --project-name=cognition-coffee --branch=main`.
-- **Pull requests** → `ci.yml` builds and runs the `deslop` gate (no deploy).
+  Docs/meta-only pushes are skipped (`paths-ignore`), and a new push cancels a stale
+  in-flight deploy (`concurrency` + `cancel-in-progress`).
+- **Pull requests** → `ci.yml` builds and runs the `deslop` gate (no deploy); the same
+  `paths-ignore` set skips docs/meta-only PRs, and pushing again cancels the stale run.
+- **Locally** → lefthook gates catch issues before CI: `oxlint --deny-warnings` on staged
+  files at commit, and lint + `tsc --noEmit` + `npm test` at push. Installed by
+  `npm install` (`prepare: lefthook install`).
 - Cloudflare gives every deploy a `*.cognition-coffee.pages.dev` URL. Pull-request
   branches that you deploy manually get preview URLs.
 

@@ -61,7 +61,7 @@ The blog is where the thinking lives. Current posts:
 ## Quickstart
 
 ```bash
-npm install
+npm install   # also installs the lefthook hooks below
 env -u ELECTRON_RUN_AS_NODE npm run dev      # http://localhost:8000
 env -u ELECTRON_RUN_AS_NODE npm run build    # static output to ./public
 env -u ELECTRON_RUN_AS_NODE npm run serve    # preview the production build
@@ -69,7 +69,13 @@ env -u ELECTRON_RUN_AS_NODE npm run test     # vitest
 env -u ELECTRON_RUN_AS_NODE npm run clean    # wipe cache + public
 ```
 
-Pushing to `main` deploys to Cloudflare Pages via GitHub Actions; there is no deploy script.
+Git hooks (lefthook, installed by `npm install`'s `prepare` script): pre-commit runs
+`oxlint --deny-warnings` on staged files; pre-push runs lint, `tsc --noEmit`, and
+`npm test` so failures surface before CI.
+
+Pushing to `main` deploys to Cloudflare Pages via GitHub Actions; there is no deploy
+script. Docs- and meta-only pushes (`docs/**`, `*.md`, `.devin/**`, `.agents/**`) are
+skipped via `paths-ignore`, so a docs-only change does not redeploy.
 For a manual deploy, the `/admin` secrets, and running `/api/*` locally, see
 [`docs/DEPLOY.md`](docs/DEPLOY.md). Environment variables are listed in
 [`.env.example`](.env.example).
